@@ -15,6 +15,7 @@
   --text: #111827;
   --dim: #6b7484;
   --light: #4b5563;
+  --profile-img: url("https://breezefeel.github.io/drpark/프로필-22(최종본).jpg");
   --green: #1a7a52;
   --green-mid: #22a06b;
   --green-light: #34c78a;
@@ -99,22 +100,40 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   overflow: hidden;
 }
 .hero-bg-img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center top;
   filter: blur(18px) brightness(1.05);
   transform: scale(1.08);
+  z-index: 0;
 }
 .hero-bg-overlay {
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: linear-gradient(
     180deg,
-    rgba(255,255,255,0.72) 0%,
-    rgba(255,255,255,0.58) 35%,
-    rgba(255,255,255,0.72) 100%
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.28) 35%,
+    rgba(255,255,255,0.42) 100%
   );
+}
+.hero-bg-spot{
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-image: var(--profile-img);
+  background-size: cover;
+  background-position: center 18%;
+  transform: scale(1.04);
+  opacity: .92;
+  /* 프로필 원형 위치에만 선명하게 */
+  -webkit-mask-image: radial-gradient(circle at 50% 205px, #000 0 140px, transparent 170px);
+  mask-image: radial-gradient(circle at 50% 205px, #000 0 140px, transparent 170px);
+  pointer-events: none;
 }
 
 .hero-inner {
@@ -122,7 +141,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   z-index: 2;
   max-width: 600px;
   margin: 0 auto;
-  padding: 22px 16px 48px;
+  padding: 0 16px 48px;
   text-align: center;
 }
 .hero-panel{
@@ -140,7 +159,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   position: relative;
   width: 220px;
   height: 220px;
-  margin: 2px auto 16px;
+  margin: 2px auto 14px;
   overflow: hidden;
   border-radius: 50%;
 }
@@ -148,12 +167,12 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: center 18%;
   border-radius: 50%;
   display: block;
   box-shadow: 0 12px 40px rgba(0,0,0,0.18);
-  transform: scale(1.55);
-  transform-origin: center 5%;
+  transform: scale(1.22);
+  transform-origin: center 18%;
 }
 .profile-circle-border {
   position: absolute;
@@ -456,7 +475,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .rs.active .rs-dot { background: var(--green); border-color: var(--green); color: white; font-weight: 700; font-size: 12px; }
 .rs.done .rs-dot { background: var(--green-bg); border-color: var(--green-border); color: var(--green); }
 .rs.dim-step .rs-dot { background: var(--bg3); border-color: var(--border); color: var(--border); }
-.rs-info {}
+.rs-info { min-width: 0; }
 .rs-label { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
 .rs.active .rs-label { color: var(--green); }
 .rs.dim-step .rs-label { color: var(--dim); }
@@ -533,6 +552,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
     <!-- 배경: 블러 처리된 사진 -->
     <div class="hero-bg-wrap">
       <img class="hero-bg-img" src="https://breezefeel.github.io/drpark/프로필-22(최종본).jpg" alt="">
+      <div class="hero-bg-spot" aria-hidden="true"></div>
       <div class="hero-bg-overlay"></div>
     </div>
 
