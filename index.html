@@ -162,6 +162,8 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   margin: 2px auto 14px;
   overflow: hidden;
   border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.12);
 }
 .profile-circle-img {
   width: 100%;
@@ -171,15 +173,15 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   border-radius: 50%;
   display: block;
   box-shadow: 0 12px 40px rgba(0,0,0,0.18);
-  transform: scale(1.22);
+  transform: scale(1.24);
   transform-origin: center 18%;
 }
 .profile-circle-border {
   position: absolute;
-  inset: 0;
+  inset: -2px;
   border-radius: 50%;
-  border: 10px solid #fff;
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.35), 0 16px 48px rgba(0,0,0,0.12);
+  border: 5px solid #fff;
+  box-shadow: 0 0 0 1px #fff;
   pointer-events: none;
 }
 
@@ -255,8 +257,13 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   box-shadow: 0 4px 16px rgba(0,0,0,0.07);
   text-align: left;
 }
+.hero-intro p{
+  text-align: left;
+}
+.hero-intro .hero-intro-left{ display:block; text-align:left; }
+.hero-intro .hero-intro-center{ display:block; text-align:center; }
 .hero-intro h3 {
-  font-size: 11px; font-weight: 700; color: var(--green);
+  font-size: 12px; font-weight: 800; color: var(--green);
   margin-bottom: 8px; font-family: 'DM Mono', monospace;
   text-transform: uppercase; letter-spacing: .1em;
 }
@@ -361,6 +368,11 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
     rgba(227,231,239,0) 100%
   );
 }
+
+/* ══════════════════════════════
+   부위 선택(사람 그림 + 리스트)
+══════════════════════════════ */
+
 
 /* ══════════════════════════════
    치료 vs 웰니스 시각화
@@ -571,7 +583,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
       <div class="hero-cred">미카닥 &nbsp;|&nbsp; 미국 카이로프랙틱 닥터 · 물리치료사</div>
       <div class="hero-desc">
         문제 해결을 위한 <strong style="color:#1a3a34;font-weight:700;">치료</strong>도 중요하지만,<br>
-        문제가 발생하지 않도록 <strong style="color:#1a3a34;font-weight:700;">예방</strong>하는 것도 중요합니다.<br>        
+        예방을 위한 <strong style="color:#1a3a34;font-weight:700;">관리</strong>도 중요합니다.<br>        
       </div>
 
       <a href="https://blog.naver.com/allenjoy/120205433765" target="_blank" class="profile-link-btn">👤 프로필 상세 보기</a>
@@ -589,7 +601,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
       <div class="hero-tags">
         <span class="hero-tag green">근막·근육·관절 치료</span>
         <span class="hero-tag green">척추 교정</span>
-        <span class="hero-tag blue">얼굴 교정 (IFC)</span>
+        <span class="hero-tag blue">얼굴 교정</span>
         <span class="hero-tag blue">자세·체형 교정</span>
         <span class="hero-tag amber">P-스트레칭</span>
         <span class="hero-tag amber">기능운동</span>
@@ -598,9 +610,14 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
       <div class="hero-intro">
         <h3>치료와 관리, 무엇이 먼저일까요?</h3>
         <p>
-          통증이 있을 땐 <strong style="color:#222;font-weight:600;">정확한 원인 평가와 치료</strong>가,
-          통증이 없다면 <strong style="color:#222;font-weight:600;">자세·움직임·생활습관 관리</strong>가 필요합니다.<br><br>
-          중요한 건 “무엇을 하느냐”가 아니라, <strong style="color:#222;font-weight:600;">"내 상태에 필요한 것"</strong>을 찾는 것입니다.
+          <span class="hero-intro-left">
+            1. 통증이 있을 땐 <strong style="color:#222;font-weight:600;">정확한 원인 평가와 치료</strong>,<br>
+            2. 통증이 없다면 <strong style="color:#222;font-weight:600;">자세·움직임·생활습관 관리</strong>.
+          </span>
+          <br>
+          <span class="hero-intro-center">
+            ※ 중요한 건 “무엇을 하느냐”가 아니라,<br><strong style="color:#222;font-weight:600;">"나에게 알맞는 것"</strong>을 찾는 것입니다.
+          </span>
         </p>
       </div>
 
@@ -610,7 +627,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
           <div class="cta-ico">🏥</div>
           <div>
             <div class="cta-label">환자·회원입니다</div>
-            <div class="cta-sub">몇 가지 질문으로 나에게 맞는 프로그램을 찾아드립니다</div>
+            <div class="cta-sub">메디컬 질문 기법으로 적합한 프로그램을 찾아드립니다</div>
           </div>
           <div class="cta-arr">›</div>
         </div>
@@ -618,7 +635,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
           <div class="cta-ico">🎓</div>
           <div>
             <div class="cta-label">전문가입니다</div>
-            <div class="cta-sub">더 성장 하고 싶은 파트가 있으신가요?</div>
+            <div class="cta-sub">지금보다 더 성장 하고 싶다면?</div>
           </div>
           <div class="cta-arr">›</div>
         </div>
@@ -646,20 +663,20 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
       <div class="zone-wellness">
         <div class="zone-icon">⬆️</div>
         <div>
-          <div class="zone-title">웰니스 영역</div>
-          <div class="zone-desc">통증 없음 · 더 좋은 상태로 끌어올리는 과정<br>Active + Resistive 프로그램</div>
+          <div class="zone-title">웰니스 영역: 통증 없음</div>
+          <div class="zone-desc">더 좋은 상태로 끌어올리는 과정<br>PAR 움직임 프로그램</div>
         </div>
       </div>
       <div class="zone-line">
         <div class="zone-line-dash"></div>
-        <div class="zone-line-label">0 — 편안한 상태 (기준선)</div>
+        <div class="zone-line-label">편안한 상태 (기준선)</div>
         <div class="zone-line-dash"></div>
       </div>
       <div class="zone-treatment">
         <div class="zone-icon">⬇️</div>
         <div>
-          <div class="zone-title">치료 영역</div>
-          <div class="zone-desc">통증·불편함 있음 · 정상으로 되돌리는 과정<br>Manual Therapy + Passive + Assisted Active</div>
+          <div class="zone-title">치료 영역: 통증 있음</div>
+          <div class="zone-desc">정상으로 되돌리는 과정<br>Manual Therapy + 약·시술·수술</div>
         </div>
       </div>
     </div>
@@ -678,7 +695,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
       <div class="option" style="border-color:var(--green-border);background:var(--green-bg);" onclick="pSet('mode','wellness'); bc('웰니스 영역'); goS('s-p-wellness')">
         <div class="opt-ico">🟢</div>
         <div>
-          <div class="opt-name" style="color:var(--green);">통증은 없지만 몸을 더 좋게 만들고 싶어요</div>
+          <div class="opt-name" style="color:var(--green);">몸을 더 좋게 만들고 싶어요</div>
           <div class="opt-desc">자세·체형·기능·예방 관리가 목표</div>
         </div>
         <div class="opt-arr">›</div>
@@ -823,7 +840,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
         <div class="opt-ico">✨</div><div><div class="opt-name">얼굴 교정 · 관리 (IFC)</div><div class="opt-desc">안면 비대칭 · 얼굴 축소 · 누구나 가능</div></div><div class="opt-arr">›</div>
       </div>
       <div class="option" onclick="eSet('want','pstr'); bc('Re:Al 움직임'); goS('s-e2')">
-        <div class="opt-ico">🤸</div><div><div class="opt-name">P-스트레칭 · 움직임</div><div class="opt-desc">PAR 운동 시스템 · 자세 교정 · 누구나 가능</div></div><div class="opt-arr">›</div>
+        <div class="opt-ico">🤸</div><div><div class="opt-name">P-스트레칭 · 움직임 (Re:Al)</div><div class="opt-desc">PAR 운동 시스템 · 자세 교정 · 누구나 가능</div></div><div class="opt-arr">›</div>
       </div>
     </div>
   </div>
@@ -837,11 +854,17 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
       <div class="q-title">어떤 분야에 계세요?</div>
       <div class="q-sub">현재 직군을 선택해주세요</div>
     </div>
-    <div class="option-list">
+    <div class="option-list" id="e2-default">
       <div class="option" onclick="eSet('type','medical'); bc('의료인'); goS('s-e3')"><div class="opt-ico">🏥</div><div><div class="opt-name">의사 · 물리치료사 · 카이로프랙터</div><div class="opt-desc">의료인 · 의료기사</div></div><div class="opt-arr">›</div></div>
       <div class="option" onclick="eSet('type','wellness'); bc('웰니스 전문가'); goS('s-e3')"><div class="opt-ico">🧘</div><div><div class="opt-name">필라테스 · 트레이너 · 요가 강사</div><div class="opt-desc">웰니스 · 피트니스 분야</div></div><div class="opt-arr">›</div></div>
       <div class="option" onclick="eSet('type','beginner'); bc('입문자'); goS('s-e3')"><div class="opt-ico">🌱</div><div><div class="opt-name">막 시작했거나 공부 중이에요</div><div class="opt-desc">경험이 많지 않지만 배우고 싶음</div></div><div class="opt-arr">›</div></div>
       <div class="option" onclick="eSet('type','other'); bc('기타'); goS('s-e3')"><div class="opt-ico">💼</div><div><div class="opt-name">기타</div><div class="opt-desc">다른 분야 · 개인 관심</div></div><div class="opt-arr">›</div></div>
+    </div>
+
+    <div class="option-list" id="e2-cmt" style="display:none;">
+      <div class="option" onclick="eSet('type','doctor'); bc('의사·한의사'); goS('s-e3')"><div class="opt-ico">🩺</div><div><div class="opt-name">의사 · 한의사</div><div class="opt-desc">의료인</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="eSet('type','pt'); bc('물리치료사'); goS('s-e3')"><div class="opt-ico">🧑‍⚕️</div><div><div class="opt-name">물리치료사</div><div class="opt-desc">의료기사</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="eSet('type','pt_student'); bc('물리치료학과 학생'); goS('s-e3')"><div class="opt-ico">🎓</div><div><div class="opt-name">물리치료학과 학생</div><div class="opt-desc">재학/실습 중</div></div><div class="opt-arr">›</div></div>
     </div>
   </div>
 </div>
@@ -891,6 +914,15 @@ function goS(id){
   document.querySelector('.screen.active').classList.remove('active');
   document.getElementById(id).classList.add('active');
   H.push(id);
+  if(id === 's-e2'){
+    const isCmt = E && E.want === 'cmt';
+    const elDefault = document.getElementById('e2-default');
+    const elCmt = document.getElementById('e2-cmt');
+    if(elDefault && elCmt){
+      elDefault.style.display = isCmt ? 'none' : '';
+      elCmt.style.display = isCmt ? '' : 'none';
+    }
+  }
   updateProgress(id);
   window.scrollTo(0,0);
 }
@@ -999,6 +1031,21 @@ function getTissueName(q){
   return q==='aching'?'근육 (Muscle)':q==='tight'?'근막 (Fascia)':q==='sharp'?'신경':q==='sharp_local'?'관절 (Joint)':'결합조직 (힘줄·인대)';
 }
 
+function renderRoadmapSteps(steps, activeId){
+  const stepIdx = Math.max(0, steps.findIndex(x => x.id === activeId));
+  return steps.map((s, thisIdx) => {
+    const isActive = s.id === activeId;
+    const isNext   = thisIdx > stepIdx;
+    const isPrev   = thisIdx < stepIdx;
+    return `<div class="rs ${isActive?'active':isNext?'done':isPrev?'dim-step':''}">
+      <div class="rs-dot">${isActive?'★':isNext?'✓':''}</div>
+      <div class="rs-info">
+        <div class="rs-label">${s.label}${isActive?'<span class="rs-badge">현재</span>':isNext?'<span class="rs-badge next-badge">다음</span>':''}</div>
+        <div class="rs-desc">${s.desc}${s.vas?` <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--border);">${s.vas}</span>`:''}</div>
+      </div></div>`;
+  }).join('');
+}
+
 function renderPatientResult(){
   const { severity, area, quality } = P;
   const areaName = area==='neck'?'목·어깨':area==='back'?'허리·골반':area==='leg'?'무릎·하지':'전신';
@@ -1018,43 +1065,20 @@ function renderPatientResult(){
   };
   const rec = recs[activeStep] || recs['manual'];
 
-  // 통합 로드맵
-  const medicalSteps = [
-    { id:'invasive', label:'침습적 치료', desc:'약물 · 주사 · 시술 · 수술', vas:'VAS 7~10' },
-    { id:'manual',   label:'도수치료 (Manual Therapy)', desc:'Fascia · Muscle · 관절 수기 치료', vas:'VAS 3~6' },
-    { id:'pstr',     label:'Passive Stretching', desc:'안전한 움직임 평가 + 케어 동시', vas:'VAS 0~3' },
-    { id:'aa',       label:'Assisted Active', desc:'ROM 회복 · CIE · Hold&Relax · Pull&Push', vas:'VAS 0~2' },
+  // 단일 로드맵(순서대로 연결)
+  const steps = [
+    { id:'invasive',  label:'침습적 치료', desc:'약물 · 주사 · 시술 · 수술', vas:'VAS 7~10' },
+    { id:'manual',    label:'도수치료 (Manual Therapy)', desc:'Fascia · Muscle · 관절 수기 치료', vas:'VAS 3~6' },
+    { id:'pstr',      label:'Passive Stretching', desc:'안전한 움직임 평가 + 유연성 향상', vas:'VAS 0~3' },
+    { id:'aa',        label:'Assisted Active', desc:'ROM 회복 · CIE · Hold&Relax · Pull&Push', vas:'' },
+    { id:'active',    label:'Active — 자세·생활습관', desc:'불필요한 긴장 최소화 · 편안한 호흡', vas:'' },
+    { id:'resistive', label:'Resistive — 기능운동', desc:'근막경선 운동 · 림프 전신 운동', vas:'' },
   ];
-  const wellnessSteps = [
-    { id:'active',     label:'Active — 자세·생활습관', desc:'불필요한 긴장 최소화 · 편안한 호흡', vas:'0 이상' },
-    { id:'resistive',  label:'Resistive — 기능운동', desc:'근막경선 운동 · 림프 전신 운동', vas:'0 이상' },
-  ];
-
-  const medStepsHtml = medicalSteps.map(s => {
-    const isActive = s.id === activeStep;
-    const stepIdx = medicalSteps.findIndex(x=>x.id===activeStep);
-    const thisIdx = medicalSteps.indexOf(s);
-    const isDone = thisIdx > stepIdx;
-    const isDim  = thisIdx < stepIdx;
-    return `<div class="rs ${isActive?'active':isDone?'done':isDim?'dim-step':''}">
-      <div class="rs-dot">${isActive?'★':isDone?'✓':''}</div>
-      <div class="rs-info">
-        <div class="rs-label">${s.label}${isActive?'<span class="rs-badge">현재</span>':isDone?'<span class="rs-badge next-badge">다음</span>':''}</div>
-        <div class="rs-desc">${s.desc} <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--border);">${s.vas}</span></div>
-      </div></div>`;
-  }).join('');
-
-  const wellStepsHtml = wellnessSteps.map(s => `
-    <div class="rs dim-step">
-      <div class="rs-dot"></div>
-      <div class="rs-info">
-        <div class="rs-label">${s.label}</div>
-        <div class="rs-desc">${s.desc}</div>
-      </div></div>`).join('');
+  const roadmapHtml = renderRoadmapSteps(steps, activeStep);
 
   return `
     <div class="result-hero treatment">
-      <div class="result-tag">맞춤 분석 완료 · 치료 영역</div>
+      <div class="result-tag">맞춤 분석 완료</div>
       <div class="result-title">${rec.name}</div>
       <div class="result-sub">${areaName} · 예상 원인: ${tissue}</div>
     </div>
@@ -1063,19 +1087,7 @@ function renderPatientResult(){
       <div class="roadmap-title">전체 로드맵 — 현재 위치</div>
 
       <div class="roadmap-section">
-        <div class="roadmap-section-label medical">⬇ 치료 영역 (0보다 아래)</div>
-        ${medStepsHtml}
-      </div>
-
-      <div class="divider-0">
-        <div class="divider-0-line"></div>
-        <div class="divider-0-label">0 — 편안한 상태 기준선</div>
-        <div class="divider-0-line"></div>
-      </div>
-
-      <div class="roadmap-section">
-        <div class="roadmap-section-label wellness-lbl">⬆ 웰니스 영역 (0보다 위)</div>
-        ${wellStepsHtml}
+        ${roadmapHtml}
       </div>
     </div>
 
@@ -1117,46 +1129,42 @@ const wellnessProgs = {
 function renderWellnessResult(){
   const prog = wellnessProgs[P.goal] || wellnessProgs['posture'];
 
-  const medStepsHtml = [
-    { label:'침습적 치료', desc:'약물 · 주사 · 시술', vas:'VAS 7↑' },
-    { label:'도수치료', desc:'Fascia · Muscle · 관절', vas:'VAS 3~6' },
-    { label:'Passive Stretching', desc:'평가 + 케어 동시', vas:'VAS 0~3' },
-    { label:'Assisted Active', desc:'ROM 회복 테크닉', vas:'VAS 0~2' },
-  ].map(s=>`<div class="rs dim-step">
-    <div class="rs-dot"></div>
-    <div class="rs-info"><div class="rs-label">${s.label}</div><div class="rs-desc">${s.desc}</div></div></div>`).join('');
+  // 목표별 시작 단계
+  // - 스트레칭/예방 셀프케어: Passive Stretching부터
+  // - 얼굴 교정: 도수치료 대신 '수기 관리'부터
+  let activeStep = 'active';
+  if(P.goal === 'stretch' || P.goal === 'prevention') activeStep = 'pstr';
+  if(P.goal === 'face') activeStep = 'hand';
 
-  const wellStepsHtml = [
-    { label:'Active — 자세·생활습관', desc:'불필요한 긴장 최소화 · 편안한 호흡 · 자기 조절', active: true },
-    { label:'Resistive — 기능운동', desc:'근막경선 운동 · 림프 전신 운동 · 밸런스 훈련', active: true },
-  ].map(s=>`<div class="rs active">
-    <div class="rs-dot">★</div>
-    <div class="rs-info"><div class="rs-label">${s.label}<span class="rs-badge">현재</span></div><div class="rs-desc">${s.desc}</div></div></div>`).join('');
+  const steps = [
+    { id:'invasive',  label:'침습적 치료', desc:'약물 · 주사 · 시술', vas:'VAS 7↑' },
+    { id:'hand',      label:'수기 관리', desc:'얼굴·두개·경추 라인 수기 케어', vas:'' },
+    { id:'manual',    label:'도수치료 (Manual Therapy)', desc:'Fascia · Muscle · 관절 수기 치료', vas:'VAS 3~6' },
+    { id:'pstr',      label:'Passive Stretching', desc:'유연성 향상', vas:'VAS 0~3' },
+    { id:'aa',        label:'Assisted Active', desc:'ROM 회복 테크닉', vas:'VAS 0~2' },
+    { id:'active',    label:'Active — 자세·생활습관', desc:'불필요한 긴장 최소화 · 편안한 호흡 · 자기 조절', vas:'' },
+    { id:'resistive', label:'Resistive — 기능운동', desc:'근막경선 운동 · 림프 전신 운동 · 밸런스 훈련', vas:'' },
+  ];
+
+  // 얼굴 교정의 경우 도수치료 단계를 로드맵에서 숨김(대신 수기 관리 사용)
+  const filteredSteps = (P.goal === 'face')
+    ? steps.filter(s => s.id !== 'manual')
+    : steps.filter(s => s.id !== 'hand');
+
+  const roadmapHtml = renderRoadmapSteps(filteredSteps, activeStep);
 
   return `
     <div class="result-hero wellness">
-      <div class="result-tag">맞춤 프로그램 추천 · 웰니스 영역</div>
+      <div class="result-tag">맞춤 프로그램 추천</div>
       <div class="result-title">${prog.name}</div>
-      <div class="result-sub">0보다 위 — 더 좋은 상태로 끌어올리는 과정</div>
+      <div class="result-sub">목표에 맞춰 순서대로 진행합니다</div>
     </div>
 
     <div class="roadmap-card">
       <div class="roadmap-title">전체 로드맵 — 현재 위치</div>
 
       <div class="roadmap-section">
-        <div class="roadmap-section-label medical">⬇ 치료 영역 (0보다 아래)</div>
-        ${medStepsHtml}
-      </div>
-
-      <div class="divider-0">
-        <div class="divider-0-line"></div>
-        <div class="divider-0-label">0 — 편안한 상태 기준선</div>
-        <div class="divider-0-line"></div>
-      </div>
-
-      <div class="roadmap-section">
-        <div class="roadmap-section-label wellness-lbl">⬆ 웰니스 영역 (0보다 위) — 현재 위치</div>
-        ${wellStepsHtml}
+        ${roadmapHtml}
       </div>
     </div>
 
@@ -1209,7 +1217,8 @@ function renderEduCard(edu, key){
 
 function renderExpertResult(){
   const { want, type, level } = E;
-  const blocked = want==='cmt' && (type==='wellness'||type==='beginner'||type==='other');
+  const cmtAllowed = ['doctor','pt','pt_student','medical'];
+  const blocked = want==='cmt' && !cmtAllowed.includes(type);
 
   if(blocked){
     const ifc = eduData['ifc'], ps = eduData['pstr'];
