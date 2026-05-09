@@ -3,1258 +3,1671 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>힐링트리 — 나에게 맞는 프로그램 찾기</title>
-<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/static/pretendard.css">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>평가 기반 의료 웰니스 로드맵</title>
 <style>
-:root {
-  --bg: #f7f8fa;
-  --bg2: #ffffff;
-  --bg3: #f1f3f7;
-  --border: #e3e7ef;
-  --text: #111827;
-  --dim: #6b7484;
-  --light: #4b5563;
-  --profile-img: url("https://breezefeel.github.io/drpark/프로필-22(최종본).jpg");
-  --green: #1a7a52;
-  --green-mid: #22a06b;
-  --green-light: #34c78a;
-  --green-bg: #f0faf5;
-  --green-border: #b8e4cc;
-  --amber: #b06d1a;
-  --amber-bg: #fef8f0;
-  --amber-border: #eecf9a;
-  --blue: #1a4fa8;
-  --blue-bg: #f0f5ff;
-  --blue-border: #b8ccf0;
-  --red: #c0392b;
-  --red-bg: #fdf2f1;
-  --red-border: #f0b8b2;
-  --shadow-sm: 0 1px 4px rgba(0,0,0,0.06);
-  --shadow-md: 0 4px 18px rgba(0,0,0,0.08);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap');
 
-/* ── SCREEN ── */
-.screen { display: none; min-height: 100vh; animation: fadeUp 0.3s ease; }
-.screen.active { display: block; }
-@keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  :root {
+    --bg: #0f1117;
+    --bg2: #161a24;
+    --bg3: #1e2333;
+    --border: #2a3050;
+    --text: #e8ecf4;
+    --text-dim: #8892aa;
+    --red: #e05c6a;
+    --orange: #e8934a;
+    --yellow: #e8c44a;
+    --green: #4acea8;
+    --blue: #4a9de8;
+    --purple: #9b6fe8;
+    --teal: #3bbfb0;
+    --accent: #4acea8;
+  }
 
-/* ── NAV ── */
-.nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  height: 56px; padding: 0 20px;
-  display: flex; align-items: center; justify-content: space-between;
-  background: rgba(247,248,250,0.97); backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-}
-.nav-logo { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-.nav-logo-mark { width: 28px; height: 28px; background: var(--green); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
-.nav-logo-text { font-family: 'Noto Serif KR', serif; font-size: 15px; font-weight: 700; }
-.nav-right { display: flex; align-items: center; gap: 8px; }
-.nav-back { font-size: 12px; color: var(--dim); cursor: pointer; display: flex; align-items: center; gap: 4px; padding: 5px 11px; border: 1px solid var(--border); border-radius: 20px; background: white; transition: all .2s; }
-.nav-back:hover { color: var(--text); border-color: var(--dim); }
-.nav-back.hidden { visibility: hidden; }
-.nav-home { font-size: 16px; cursor: pointer; padding: 5px 8px; border: 1px solid var(--border); border-radius: 20px; background: white; transition: all .2s; display: flex; align-items: center; }
-.nav-home:hover { background: var(--green-bg); border-color: var(--green-border); }
-.nav-home.hidden { display: none; }
-.nav-cta { font-size: 12px; font-weight: 600; color: white; background: var(--green); padding: 6px 14px; border-radius: 20px; text-decoration: none; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── PROGRESS ── */
-.progress-bar { position: fixed; top: 56px; left: 0; right: 0; z-index: 99; height: 3px; background: var(--border); }
-.progress-fill { height: 100%; background: var(--green); transition: width 0.4s ease; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
 
-/* ── BREADCRUMB (선택 경로) ── */
-.breadcrumb {
-  position: fixed; top: 59px; left: 0; right: 0; z-index: 98;
-  padding: 7px 20px; background: white; border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; gap: 5px; flex-wrap: wrap;
-  min-height: 34px; overflow-x: auto;
-}
-.bc-item { font-size: 10px; color: var(--dim); font-family: 'DM Mono', monospace; white-space: nowrap; }
-.bc-item.active { color: var(--green); font-weight: 600; }
-.bc-sep { color: var(--border); font-size: 10px; }
-.breadcrumb.hidden { display: none; }
+  /* Header */
+  .header {
+    padding: 56px 40px 40px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, #0f1117 0%, #161a24 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(74,206,168,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .header-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    border: 1px solid rgba(74,206,168,0.3);
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .header h1 {
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .header h1 span { color: var(--accent); }
+  .header p {
+    color: var(--text-dim);
+    font-size: 14px;
+    font-weight: 300;
+  }
 
-/* ── WRAP ── */
-.wrap { max-width: 600px; margin: 0 auto; padding: 108px 20px 80px; }
-.wrap.home-wrap { padding-top: 0; }
+  /* Main layout */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
 
-/* ══════════════════════════════
-   HERO (메인) — img 기반 구조
-══════════════════════════════ */
-.hero {
-  position: relative;
-  background: #f0ede8;
-  padding-top: 56px;
-  overflow: hidden;
-}
+  /* Section */
+  .section {
+    margin-bottom: 48px;
+  }
 
-/* 배경 블러 레이어 — 전체 흐리게 */
-.hero-bg-wrap {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-}
-.hero-bg-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  filter: blur(18px) brightness(1.05);
-  transform: scale(1.08);
-  z-index: 0;
-}
-.hero-bg-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,0.42) 0%,
-    rgba(255,255,255,0.28) 35%,
-    rgba(255,255,255,0.42) 100%
-  );
-}
-.hero-bg-spot{
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background-image: var(--profile-img);
-  background-size: cover;
-  background-position: center 18%;
-  transform: scale(1.04);
-  opacity: .92;
-  /* 프로필 원형 위치에만 선명하게 */
-  -webkit-mask-image: radial-gradient(circle at 50% 205px, #000 0 140px, transparent 170px);
-  mask-image: radial-gradient(circle at 50% 205px, #000 0 140px, transparent 170px);
-  pointer-events: none;
-}
+  /* Step header */
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .step-num.red { background: var(--red); }
+  .step-num.orange { background: var(--orange); }
+  .step-num.yellow { background: var(--yellow); color: #1a1600; }
+  .step-num.green { background: var(--green); }
+  .step-num.blue { background: var(--blue); }
+  .step-num.purple { background: var(--purple); }
 
-.hero-inner {
-  position: relative;
-  z-index: 2;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 0 16px 48px;
-  text-align: center;
-}
-.hero-panel{
-  background: rgba(255,255,255,0.78);
-  border: 1px solid rgba(255,255,255,0.8);
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.09);
-  padding: 18px 16px 16px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
+  .step-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .step-sub {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-weight: 300;
+    margin-top: 2px;
+  }
 
-/* 프로필 사진 — 원형 마스크 */
-.profile-circle-wrap {
-  position: relative;
-  width: 220px;
-  height: 220px;
-  margin: 2px auto 14px;
-  overflow: hidden;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 16px 48px rgba(0,0,0,0.12);
-}
-.profile-circle-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 18%;
-  border-radius: 50%;
-  display: block;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.18);
-  transform: scale(1.24);
-  transform-origin: center 18%;
-}
-.profile-circle-border {
-  position: absolute;
-  inset: -2px;
-  border-radius: 50%;
-  border: 5px solid #fff;
-  box-shadow: 0 0 0 1px #fff;
-  pointer-events: none;
-}
+  /* Card */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+    font-family: 'DM Mono', monospace;
+  }
 
-/* 이름 + 타이틀 */
-.hero-name {
-  font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  font-size: 24px;
-  font-weight: 800;
-  color: #0f2f2a;
-  margin-bottom: 6px;
-  letter-spacing: -0.02em;
-}
-.hero-cred {
-  font-size: 13px;
-  font-weight: 700;
-  color: #145c41;
-  margin-bottom: 10px;
-  font-family: 'Pretendard', monospace; letter-spacing: .05em;
-}
-.hero-desc {
-  font-size: 15px;
-  color: #1f2937;
-  line-height: 1.75;
-  font-weight: 400;
-  margin-bottom: 14px;
-  word-break: keep-all;
-}
+  /* Tissue table */
+  .tissue-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 600px) { .tissue-grid { grid-template-columns: 1fr; } }
 
-/* 태그 */
-.hero-tags {
-  display: flex; flex-wrap: wrap; gap: 7px;
-  justify-content: center; margin-bottom: 20px;
-}
-.hero-tag {
-  font-size: 12px;
-  padding: 5px 12px;
-  border-radius: 999px;
-  font-weight: 600;
-}
-.hero-tag.green { color: var(--green); background: rgba(240,250,245,0.9); border: 1px solid var(--green-border); }
-.hero-tag.blue  { color: var(--blue);  background: rgba(240,245,255,0.9); border: 1px solid var(--blue-border); }
-.hero-tag.amber { color: var(--amber); background: rgba(254,248,240,0.9); border: 1px solid var(--amber-border); }
+  .tissue-item {
+    background: var(--bg3);
+    border-radius: 8px;
+    padding: 14px 16px;
+    border-left: 3px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .tissue-item.muscle { border-left-color: var(--orange); }
+  .tissue-item.fascia { border-left-color: var(--blue); }
+  .tissue-item.nerve { border-left-color: var(--red); }
+  .tissue-item.tendon { border-left-color: var(--yellow); }
+  .tissue-item.ligament { border-left-color: var(--purple); }
+  .tissue-item.joint { border-left-color: var(--teal); }
 
-/* 통계 */
-.hero-stats {
-  display: grid; grid-template-columns: repeat(3,1fr);
-  gap: 8px; margin-bottom: 20px;
-}
-.hero-stat {
-  background: rgba(255,255,255,0.88);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(227,231,239,0.9);
-  border-radius: 12px; padding: 12px 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.07);
-  text-align: center;
-}
-.hero-stat-num {
-  font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  font-size: 19px; font-weight: 700;
-  color: #1a3a34; margin-bottom: 3px;
-}
-.hero-stat-label { font-size: 10px; color: var(--dim); line-height: 1.4; }
+  .tissue-name {
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .tissue-item.muscle .tissue-name { color: var(--orange); }
+  .tissue-item.fascia .tissue-name { color: var(--blue); }
+  .tissue-item.nerve .tissue-name { color: var(--red); }
+  .tissue-item.tendon .tissue-name { color: var(--yellow); }
+  .tissue-item.ligament .tissue-name { color: var(--purple); }
+  .tissue-item.joint .tissue-name { color: var(--teal); }
 
-/* 소개 카드 */
-.hero-intro {
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(227,231,239,0.95);
-  border-radius: 14px; padding: 16px 18px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
-  text-align: left;
-}
-.hero-intro p{
-  text-align: left;
-}
-.hero-intro .hero-intro-left{ display:block; text-align:left; }
-.hero-intro .hero-intro-center{ display:block; text-align:center; }
-.hero-intro h3 {
-  font-size: 12px; font-weight: 800; color: var(--green);
-  margin-bottom: 8px; font-family: 'DM Mono', monospace;
-  text-transform: uppercase; letter-spacing: .1em;
-}
-.hero-intro p { font-size: 13px; color: #444; line-height: 1.85; font-weight: 300; }
+  .tissue-symptom {
+    font-size: 12px;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .tissue-detail {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
 
-/* 섹션 구분선 */
-.hero-section-title {
-  font-size: 11px; font-weight: 700; color: #888;
-  text-transform: uppercase; letter-spacing: 2px;
-  display: flex; align-items: center; justify-content: center;
-  margin: 20px 0 14px;
-}
-.hero-section-title::before, .hero-section-title::after {
-  content: ''; flex: 1; height: 1px;
-  background: rgba(0,0,0,0.1); margin: 0 12px;
-}
+  /* VAS blocks */
+  .vas-block {
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    border: 1px solid;
+  }
+  .vas-block.high {
+    background: rgba(224,92,106,0.08);
+    border-color: rgba(224,92,106,0.25);
+  }
+  .vas-block.mid {
+    background: rgba(232,147,74,0.08);
+    border-color: rgba(232,147,74,0.25);
+  }
 
-/* CTA 카드 */
-.cta-group { display: flex; flex-direction: column; gap: 10px; }
-.cta-card {
-  background: rgba(255,255,255,0.94);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1.5px solid rgba(227,231,239,0.95);
-  border-radius: 16px; padding: 18px 20px;
-  cursor: pointer; transition: all .22s;
-  display: flex; align-items: center; gap: 14px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
-  text-align: left;
-}
-.cta-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.11); }
-.cta-card.green { border-color: var(--green-border); }
-.cta-card.green:hover { background: rgba(240,250,245,0.95); border-color: var(--green); }
-.cta-card.amber { border-color: var(--amber-border); }
-.cta-card.amber:hover { background: rgba(254,248,240,0.95); border-color: var(--amber); }
-.cta-ico { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
-.cta-card.green .cta-ico { background: var(--green-bg); }
-.cta-card.amber .cta-ico { background: var(--amber-bg); }
-.cta-label { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
-.cta-card.green .cta-label { color: #1a3a34; }
-.cta-card.amber .cta-label { color: var(--amber); }
-.cta-sub { font-size: 12px; color: var(--dim); line-height: 1.5; }
-.cta-arr { color: var(--border); font-size: 18px; margin-left: auto; flex-shrink: 0; transition: transform .2s; }
-.cta-card:hover .cta-arr { transform: translateX(3px); color: var(--dim); }
+  .vas-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .vas-badge {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+  }
+  .vas-block.high .vas-badge { background: rgba(224,92,106,0.2); color: var(--red); }
+  .vas-block.mid .vas-badge { background: rgba(232,147,74,0.2); color: var(--orange); }
 
-/* 프로필 링크 버튼 */
-.profile-link-btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 10px 18px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #1a3a34; text-decoration: none;
-  background: rgba(255,255,255,0.92);
-  border: 1px solid rgba(227,231,239,0.95);
-  border-radius: 25px; margin-bottom: 20px;
-  transition: all .25s;
-  backdrop-filter: blur(6px);
-}
+  .vas-content { font-size: 13px; color: var(--text); }
+  .vas-arrow {
+    color: var(--text-dim);
+    margin: 0 6px;
+    font-size: 12px;
+  }
 
-@media (max-width: 420px){
-  .profile-circle-wrap{ width: 188px; height: 188px; }
-  .hero-name{ font-size: 22px; }
-  .hero-desc{ font-size: 14px; }
-}
-.profile-link-btn:hover { background: #1a3a34; color: white; transform: translateY(-1px); }
+  /* Technique chain */
+  .tech-chain {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .tech-tag {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+  }
+  .tech-arrow {
+    color: var(--text-dim);
+    font-size: 12px;
+  }
 
-/* ══════════════════════════════
-   QUESTION 공통
-══════════════════════════════ */
-.q-header { margin-bottom: 20px; }
-.q-step { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--green); background: var(--green-bg); border: 1px solid var(--green-border); padding: 3px 10px; border-radius: 4px; margin-bottom: 10px; display: inline-block; letter-spacing: .1em; text-transform: uppercase; }
-.q-step.wellness { color: var(--green-mid); }
-.q-title { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; font-size: 20px; font-weight: 700; line-height: 1.4; margin-bottom: 5px; }
-.q-sub { font-size: 13px; color: var(--dim); font-weight: 300; }
+  /* Passive stretching decision tree */
+  .tree-root {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 4px;
+    color: var(--accent);
+  }
 
-.option-list { display: flex; flex-direction: column; gap: 9px; }
-.option { background: white; border: 1.5px solid var(--border); border-radius: 12px; padding: 14px 16px; cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow-sm); }
-.option:hover { border-color: var(--green); background: var(--green-bg); box-shadow: var(--shadow-md); }
-.opt-ico { font-size: 20px; flex-shrink: 0; width: 34px; text-align: center; }
-.opt-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
-.opt-desc { font-size: 11px; color: var(--dim); line-height: 1.4; }
-.opt-arr { color: var(--border); margin-left: auto; font-size: 15px; flex-shrink: 0; }
-.option:hover .opt-arr { color: var(--green); }
+  .tree-branches {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-top: 4px;
+    position: relative;
+  }
+  @media (max-width: 640px) { .tree-branches { grid-template-columns: 1fr; } }
 
-/* Q 화면: 설명/선택 구분 */
-.q-divider{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 14px 2px 10px;
-}
-.q-divider::before,
-.q-divider::after{
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg,
-    rgba(227,231,239,0) 0%,
-    rgba(184,228,204,1) 35%,
-    rgba(227,231,239,1) 50%,
-    rgba(240,184,178,1) 65%,
-    rgba(227,231,239,0) 100%
-  );
-}
+  .branch-connector {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 20px;
+    margin-bottom: 2px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+  .branch-connector span { display: block; }
 
-/* ══════════════════════════════
-   부위 선택(사람 그림 + 리스트)
-══════════════════════════════ */
+  .branch {
+    border-radius: 10px;
+    padding: 16px;
+    border: 1px solid;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .branch.pain {
+    background: rgba(224,92,106,0.07);
+    border-color: rgba(224,92,106,0.25);
+  }
+  .branch.flex {
+    background: rgba(232,196,74,0.07);
+    border-color: rgba(232,196,74,0.25);
+  }
+  .branch.ok {
+    background: rgba(74,206,168,0.07);
+    border-color: rgba(74,206,168,0.25);
+  }
 
+  .branch-condition {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: 'DM Mono', monospace;
+  }
+  .branch.pain .branch-condition { color: var(--red); }
+  .branch.flex .branch-condition { color: var(--yellow); }
+  .branch.ok .branch-condition { color: var(--green); }
 
-/* ══════════════════════════════
-   치료 vs 웰니스 시각화
-══════════════════════════════ */
-.zone-visual {
-  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.90));
-  border: 1px solid rgba(227,231,239,0.95);
-  border-radius: 14px;
-  overflow: hidden; margin-bottom: 18px; box-shadow: var(--shadow-sm);
-  --well-bg: #eef9f8;
-  --well-title: #155e63;
-  --well-line: #2aa9b3;
-  --treat-bg: #f6f1fb;
-  --treat-title: #6d28d9;
-  --treat-line: #a78bfa;
-}
-.zone-wellness {
-  background: var(--well-bg); padding: 14px 18px;
-  display: flex; align-items: center; gap: 10px;
-  border-bottom: none;
-}
-.zone-line {
-  padding: 10px 18px; background: white; border-top: 2.5px solid var(--well-line);
-  border-bottom: 2.5px solid var(--treat-line); display: flex; align-items: center; gap: 8px;
-}
-.zone-treatment {
-  background: var(--treat-bg); padding: 14px 18px;
-  display: flex; align-items: center; gap: 10px;
-}
-.zone-icon { font-size: 22px; flex-shrink: 0; }
-.zone-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
-.zone-desc { font-size: 11px; color: var(--dim); line-height: 1.4; }
-.zone-wellness .zone-title { color: var(--well-title); }
-.zone-treatment .zone-title { color: var(--treat-title); }
-.zone-line-label { font-size: 11px; color: var(--dim); font-weight: 500; }
-.zone-line-dash { flex: 1; border-top: 1px dashed var(--border); }
+  .branch-action {
+    font-size: 12px;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .branch-detail {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
 
-/* ══════════════════════════════
-   VAS 슬라이더
-══════════════════════════════ */
-.vas-container {
-  background: white; border: 1px solid var(--border); border-radius: 14px;
-  padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow-sm);
-}
-.vas-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
-.vas-sub { font-size: 11px; color: var(--dim); margin-bottom: 16px; }
+  /* Position steps */
+  .position-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
 
-.vas-scale {
-  position: relative; height: 48px; margin-bottom: 8px;
-  background: linear-gradient(90deg, var(--green-light), #a8d48a, #f0c040, #f08040, var(--red));
-  border-radius: 24px; cursor: pointer;
-  display: flex; align-items: center;
-}
-.vas-thumb {
-  position: absolute; width: 28px; height: 28px; background: white;
-  border: 3px solid var(--text); border-radius: 50%;
-  transform: translateX(-50%); transition: left .15s;
-  cursor: grab; box-shadow: var(--shadow-md);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 700;
-}
-.vas-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--dim); margin-bottom: 12px; font-family: 'DM Mono', monospace; }
+  .pos-card {
+    border-radius: 10px;
+    padding: 20px 22px;
+    border: 1px solid;
+  }
+  .pos-card.supine {
+    background: rgba(74,157,232,0.07);
+    border-color: rgba(74,157,232,0.25);
+  }
+  .pos-card.sitting {
+    background: rgba(232,147,74,0.07);
+    border-color: rgba(232,147,74,0.25);
+  }
+  .pos-card.standing {
+    background: rgba(74,206,168,0.07);
+    border-color: rgba(74,206,168,0.25);
+  }
 
-.vas-zones { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
-.vas-zone { border-radius: 8px; padding: 10px 12px; text-align: center; border: 1.5px solid transparent; cursor: pointer; transition: all .2s; }
-.vas-zone.low { background: rgba(52,199,138,0.08); border-color: var(--green-border); }
-.vas-zone.mid { background: rgba(240,192,64,0.08); border-color: #e8d090; }
-.vas-zone.high { background: var(--red-bg); border-color: var(--red-border); }
-.vas-zone.selected { transform: scale(1.03); box-shadow: var(--shadow-md); }
-.vas-zone.low.selected { border-color: var(--green); background: rgba(52,199,138,0.15); }
-.vas-zone.mid.selected { border-color: #d4a820; background: rgba(240,192,64,0.18); }
-.vas-zone.high.selected { border-color: var(--red); background: rgba(192,57,43,0.12); }
-.vz-range { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 700; margin-bottom: 4px; }
-.vas-zone.low .vz-range { color: var(--green); }
-.vas-zone.mid .vz-range { color: #b08020; }
-.vas-zone.high .vz-range { color: var(--red); }
-.vz-label { font-size: 11px; font-weight: 600; margin-bottom: 3px; }
-.vz-desc { font-size: 10px; color: var(--dim); line-height: 1.4; }
+  .pos-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .pos-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .pos-card.supine .pos-icon { background: rgba(74,157,232,0.15); }
+  .pos-card.sitting .pos-icon { background: rgba(232,147,74,0.15); }
+  .pos-card.standing .pos-icon { background: rgba(74,206,168,0.15); }
 
-.vas-confirm-btn {
-  width: 100%; padding: 13px; background: var(--green); color: white;
-  font-size: 13px; font-weight: 700; border: none; border-radius: 10px;
-  cursor: pointer; transition: background .2s; opacity: .4; pointer-events: none;
-}
-.vas-confirm-btn.ready { opacity: 1; pointer-events: all; }
-.vas-confirm-btn.ready:hover { background: var(--green-mid); }
+  .pos-name {
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .pos-card.supine .pos-name { color: var(--blue); }
+  .pos-card.sitting .pos-name { color: var(--orange); }
+  .pos-card.standing .pos-name { color: var(--green); }
 
-/* ══════════════════════════════
-   RESULT 공통
-══════════════════════════════ */
-.result-hero {
-  border-radius: 14px; padding: 20px 22px; margin-bottom: 16px; color: white;
-}
-.result-hero.treatment { background: linear-gradient(135deg, #1a5c3a, var(--green-mid)); }
-.result-hero.wellness { background: linear-gradient(135deg, #22706b, #2da068); }
-.result-tag { font-family: 'DM Mono', monospace; font-size: 10px; background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 4px; margin-bottom: 10px; display: inline-block; letter-spacing: .1em; }
-.result-title { font-family: 'Noto Serif KR', serif; font-size: 17px; font-weight: 700; margin-bottom: 5px; line-height: 1.4; }
-.result-sub { font-size: 12px; color: rgba(255,255,255,0.8); line-height: 1.6; }
+  .pos-gravity {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+  }
 
-/* 통합 로드맵 */
-.roadmap-card { background: white; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
-.roadmap-title { padding: 12px 18px; background: var(--bg3); border-bottom: 1px solid var(--border); font-size: 11px; font-weight: 700; color: var(--dim); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .08em; }
+  .pos-flow {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+  @media (max-width: 580px) { .pos-flow { grid-template-columns: 1fr; } }
 
-.roadmap-section { padding: 14px 18px; }
-.roadmap-section-label { font-size: 10px; font-weight: 700; font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
-.roadmap-section-label.medical { color: var(--red); }
-.roadmap-section-label.wellness-lbl { color: var(--green); }
+  .flow-step {
+    background: var(--bg3);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 12px;
+  }
+  .flow-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+    font-family: 'DM Mono', monospace;
+  }
+  .flow-content { color: var(--text); line-height: 1.5; }
+  .flow-content strong { font-weight: 600; }
 
-.rs { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); }
-.rs:last-child { border-bottom: none; }
-.rs-dot { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 10px; font-family: 'DM Mono', monospace; flex-shrink: 0; margin-top: 1px; color: var(--dim); background: white; }
-.rs.active .rs-dot { background: var(--green); border-color: var(--green); color: white; font-weight: 700; font-size: 12px; }
-.rs.done .rs-dot { background: var(--green-bg); border-color: var(--green-border); color: var(--green); }
-.rs.dim-step .rs-dot { background: var(--bg3); border-color: var(--border); color: var(--border); }
-.rs-info { min-width: 0; }
-.rs-label { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
-.rs.active .rs-label { color: var(--green); }
-.rs.dim-step .rs-label { color: var(--dim); }
-.rs-desc { font-size: 11px; color: var(--dim); line-height: 1.5; }
-.rs-badge { display: inline-block; font-size: 9px; background: var(--green); color: white; padding: 1px 7px; border-radius: 3px; margin-left: 6px; font-family: 'DM Mono', monospace; }
-.rs-badge.next-badge { background: var(--blue); }
+  /* Wellness */
+  .wellness-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 600px) { .wellness-grid { grid-template-columns: 1fr; } }
 
-.divider-0 { display: flex; align-items: center; gap: 10px; padding: 10px 18px; background: var(--bg3); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.divider-0-line { flex: 1; height: 2px; background: var(--green); }
-.divider-0-label { font-size: 11px; font-weight: 700; color: var(--green); font-family: 'DM Mono', monospace; white-space: nowrap; }
+  .wellness-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .wellness-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .wellness-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
 
-/* 권장·다음·대안 카드 */
-.info-card { border-radius: 11px; padding: 14px 16px; margin-bottom: 10px; }
-.info-card.rec { background: var(--green-bg); border: 1px solid var(--green-border); }
-.info-card.next { background: var(--blue-bg); border: 1px solid var(--blue-border); }
-.info-card.alt { background: var(--amber-bg); border: 1px solid var(--amber-border); }
-.info-card h4 { font-size: 12px; font-weight: 700; margin-bottom: 5px; }
-.info-card.rec h4 { color: var(--green); }
-.info-card.next h4 { color: var(--blue); }
-.info-card.alt h4 { color: var(--amber); }
-.info-card p { font-size: 12px; color: var(--light); line-height: 1.7; }
+  /* Divider */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+  }
 
-.contact-bar { background: var(--green); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; margin-top: 4px; text-decoration: none; transition: background .2s; box-shadow: var(--shadow-md); }
-.contact-bar:hover { background: var(--green-mid); }
-.ct-text { font-size: 14px; font-weight: 700; color: white; }
-.ct-sub { font-size: 11px; color: rgba(255,255,255,.75); margin-top: 2px; }
+  /* Flow connector */
+  .flow-connector {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 22px;
+    margin: 4px 0;
+  }
 
-/* 전문가 */
-.edu-card { background: white; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 10px; box-shadow: var(--shadow-sm); }
-.edu-head { padding: 11px 16px; background: var(--bg3); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-.edu-name { font-size: 13px; font-weight: 700; }
-.edu-lv { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--amber); background: var(--amber-bg); border: 1px solid var(--amber-border); padding: 2px 8px; border-radius: 4px; }
-.edu-body { padding: 13px 16px; }
-.edu-desc { font-size: 12px; color: var(--light); line-height: 1.7; margin-bottom: 10px; }
-.edu-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 11px; }
-.edu-tag { font-size: 11px; color: var(--light); background: var(--bg3); border: 1px solid var(--border); padding: 3px 8px; border-radius: 4px; }
-.edu-foot { padding-top: 10px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: var(--dim); font-family: 'DM Mono', monospace; }
-.edu-link { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--green); background: var(--green-bg); border: 1px solid var(--green-border); padding: 6px 12px; border-radius: 8px; text-decoration: none; transition: all .2s; }
-.edu-link:hover { background: var(--green-border); }
-.warn-box { background: var(--amber-bg); border: 1px solid var(--amber-border); border-radius: 11px; padding: 13px 16px; margin-bottom: 12px; }
-.warn-box h4 { font-size: 12px; font-weight: 700; color: var(--amber); margin-bottom: 4px; }
-.warn-box p { font-size: 12px; color: var(--light); line-height: 1.6; }
+  /* Palpation note */
+  .note-box {
+    background: rgba(74,206,168,0.06);
+    border: 1px solid rgba(74,206,168,0.2);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 16px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .note-icon { color: var(--accent); flex-shrink: 0; font-size: 14px; }
 
-.note-box { padding: 12px 14px; background: var(--bg3); border-radius: 9px; font-size: 11px; color: var(--dim); line-height: 1.6; margin-top: 12px; }
+  /* Advance condition */
+  .advance-box {
+    margin-top: 16px;
+    background: rgba(155,111,232,0.07);
+    border: 1px solid rgba(155,111,232,0.2);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 12px;
+    color: var(--text-dim);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .advance-icon { color: var(--purple); flex-shrink: 0; }
+
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav">
-  <div class="nav-logo" onclick="goHome()">
-    <div class="nav-logo-mark">🌿</div>
-    <div class="nav-logo-text">힐링트리</div>
-  </div>
-  <div class="nav-right">
-    <div class="nav-back hidden" id="backBtn" onclick="goBack()">← 이전</div>
-    <div class="nav-home hidden" id="homeBtn" onclick="goHome()">🏠</div>
-    <a href="http://pf.kakao.com/_nVSxdn/chat" target="_blank" class="nav-cta">문의</a>
-  </div>
-</nav>
+<div class="header">
+  <div class="header-badge">Clinical Protocol</div>
+  <h1>평가 기반 <span>의료 웰니스</span> 로드맵</h1>
+  <p>History Taking → Palpation → Manual → Movement</p>
+</div>
 
-<!-- PROGRESS -->
-<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+<div class="container">
 
-<!-- BREADCRUMB -->
-<div class="breadcrumb hidden" id="bcBar"></div>
+  <!-- PSP 섹션 -->
+  <div class="section">
 
-<!-- ══════════════════════════════
-     SCREEN 0 — 메인
-══════════════════════════════ -->
-<div class="screen active" id="s-home">
-  <div class="hero">
-
-    <!-- 배경: 블러 처리된 사진 -->
-    <div class="hero-bg-wrap">
-      <img class="hero-bg-img" src="https://breezefeel.github.io/drpark/프로필-22(최종본).jpg" alt="">
-      <div class="hero-bg-spot" aria-hidden="true"></div>
-      <div class="hero-bg-overlay"></div>
+    <!-- PSP 배지 + 제목 -->
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">
+      <div style="font-family:'DM Mono',monospace;font-size:13px;font-weight:700;color:var(--bg);background:var(--accent);padding:6px 14px;border-radius:6px;letter-spacing:0.12em;">PSP</div>
+      <div>
+        <div style="font-size:18px;font-weight:700;">Philosophy · Science · Practice</div>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:2px;">철학 배경의 과학적 체계, 과학 기반의 임상 실천</div>
+      </div>
     </div>
 
-    <div class="hero-inner">
-      <div class="hero-panel">
-
-      <!-- 프로필 사진 원형 -->
-      <div class="profile-circle-wrap">
-        <img class="profile-circle-img"
-             src="https://breezefeel.github.io/drpark/프로필-22(최종본).jpg"
-             alt="박준규 원장">
-        <div class="profile-circle-border"></div>
+    <!-- Philosophy — 배경 -->
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:700;color:var(--text-dim);background:var(--bg3);padding:3px 10px;border-radius:4px;letter-spacing:0.1em;">P — Philosophy</div>
       </div>
-
-      <div class="hero-name">박준규 원장</div>
-      <div class="hero-cred">미카닥 &nbsp;|&nbsp; 미국 카이로프랙틱 닥터 · 물리치료사</div>
-      <div class="hero-desc">
-        문제 해결을 위한 <strong style="color:#1a3a34;font-weight:700;">치료</strong>도 중요하지만,<br>
-        예방을 위한 <strong style="color:#1a3a34;font-weight:700;">관리</strong>도 중요합니다.<br>        
-      </div>
-
-      <a href="https://blog.naver.com/allenjoy/120205433765" target="_blank" class="profile-link-btn">👤 프로필 상세 보기</a>
-
-      <div class="hero-desc">        
-        건강을 위한 가이드: <strong style="color:#054f06;font-weight:700;">힐링트리</strong>
-      </div>
-
-      <div class="hero-stats">
-        <div class="hero-stat"><div class="hero-stat-num">20년+</div><div class="hero-stat-label">근골격계<br>임상 경력</div></div>
-        <div class="hero-stat"><div class="hero-stat-num">3,400+</div><div class="hero-stat-label">전문<br>블로그 포스트</div></div>
-        <div class="hero-stat"><div class="hero-stat-num">DC·PT</div><div class="hero-stat-label">미국 카이로<br>물리치료사</div></div>
-      </div>
-
-      <div class="hero-tags">
-        <span class="hero-tag green">근막·근육·관절 치료</span>
-        <span class="hero-tag green">척추 교정</span>
-        <span class="hero-tag blue">얼굴 교정</span>
-        <span class="hero-tag blue">자세·체형 교정</span>
-        <span class="hero-tag amber">P-스트레칭</span>
-        <span class="hero-tag amber">기능운동</span>
-      </div>
-
-      <div class="hero-intro">
-        <h3>치료와 관리, 무엇이 먼저일까요?</h3>
-        <p>
-          <span class="hero-intro-left">
-            1. 통증이 있을 땐 <strong style="color:#222;font-weight:600;">정확한 원인 평가와 치료</strong>,<br>
-            2. 통증이 없다면 <strong style="color:#222;font-weight:600;">자세·움직임·생활습관 관리</strong>.
-          </span>
-          <br>
-          <span class="hero-intro-center">
-            ※ 중요한 건 “무엇을 하느냐”가 아니라,<br><strong style="color:#222;font-weight:600;">"나에게 알맞는 것"</strong>을 찾는 것입니다.
-          </span>
-        </p>
-      </div>
-
-      <div class="hero-section-title">프로그램 찾기</div>
-      <div class="cta-group">
-        <div class="cta-card green" onclick="bc('환자·회원'); startPatient()">
-          <div class="cta-ico">🏥</div>
-          <div>
-            <div class="cta-label">환자·회원입니다</div>
-            <div class="cta-sub">메디컬 질문 기법으로 적합한 프로그램을 찾아드립니다</div>
+      <div style="background:var(--bg3);border-radius:8px;padding:14px 16px;border-left:3px solid var(--border);">
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.8;">
+          기능하는 모든 것에는 <strong style="color:var(--text)">공통점</strong>이 있다. 눈에 보이는 <strong style="color:var(--text)">물질</strong>과 눈에 보이지 않는 <strong style="color:var(--text)">에너지</strong>가 <strong style="color:var(--text)">함께 작동할 때 비로소 기능</strong>한다.<br><br>
+          자동차는 차체(물질)와 연료·전기(에너지)가 함께 있어야 달릴 수 있고, 사람의 몸은 세포(물질)와 영양소에 의해 만들어지는 <strong style="color:var(--text)">생체 에너지</strong>가 함께 작동해야 움직일 수 있다.<br><br>
+          돌처럼 물질은 크지만 에너지가 없거나, 빛처럼 에너지는 있지만 물질이 거의 없는 것처럼, <strong style="color:var(--text)">어느 한쪽으로 치우치면</strong> 존재는 하되 <strong style="color:var(--text)">온전히 살아있다고 할 수 없다</strong>.<br><br>
+          사람도 <strong style="color:var(--text)">물질과 에너지의 균형이 무너진 곳</strong>에서 문제가 생긴다. 따라서 <strong style="color:var(--text)">치료의 시작</strong>은 <strong style="color:var(--text)">균형이 깨진 부분을 찾고</strong>, 그것이 <strong style="color:var(--text)">물질의 문제인가, 에너지의 문제인가</strong>를 판단하는 것부터다.
+        </div>
+        <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div style="background:rgba(74,206,168,0.07);border-radius:6px;padding:10px 12px;border:1px solid rgba(74,206,168,0.15);">
+            <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:4px;">물질 영역</div>
+            <div style="font-size:10px;color:var(--text-dim);line-height:1.6;">근골격계 · 내장기관 · 구조적 문제<br><span style="color:var(--accent);">→ 메디컬적 접근</span></div>
           </div>
-          <div class="cta-arr">›</div>
-        </div>
-        <div class="cta-card amber" onclick="bc('전문가'); startExpert()">
-          <div class="cta-ico">🎓</div>
-          <div>
-            <div class="cta-label">전문가입니다</div>
-            <div class="cta-sub">지금보다 더 성장 하고 싶다면?</div>
+          <div style="background:rgba(155,111,232,0.07);border-radius:6px;padding:10px 12px;border:1px solid rgba(155,111,232,0.15);">
+            <div style="font-size:11px;font-weight:700;color:var(--purple);margin-bottom:4px;">에너지 영역</div>
+            <div style="font-size:10px;color:var(--text-dim);line-height:1.6;">심리 · 성향 · 자율신경 · 내장기 밸런스<br>한의학적 접근</div>
           </div>
-          <div class="cta-arr">›</div>
         </div>
-      </div>
-
+        <div style="margin-top:10px;font-size:10px;color:var(--text-dim);font-style:italic;">※ 이 프로토콜은 인체의 물질 영역 중 하나인 근골격계(系)에 집중하였습니다.</div>
       </div>
     </div>
-  </div>
-</div>
 
+    <!-- S와 P — 전면 (1열) -->
+    <div style="display:grid;grid-template-columns:1fr;gap:12px;">
 
-<!-- ══════════════════════════════
-     PATIENT Q1 — 치료 vs 웰니스
-══════════════════════════════ -->
-<div class="screen" id="s-p1">
-  <div class="wrap">
-    <div class="q-header">
-      <div class="q-step">1단계</div>
-      <div class="q-title">지금 몸 상태가 어떤가요?</div>
-      <div class="q-sub">해당하는 상태를 선택해주세요</div>
-    </div>
+      <!-- Science -->
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:700;color:var(--bg);background:var(--blue);padding:3px 10px;border-radius:4px;letter-spacing:0.1em;">S — Science</div>
+        </div>
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px;">과학적 이론과 체계적 평가</div>
+        <div style="font-size:11px;color:var(--text-dim);line-height:1.7;margin-bottom:14px;">
+          문제의 원인을 이론적으로 설명하고, 체계적인 평가 시스템으로 특정한다.
+        </div>
 
-    <!-- 치료/웰니스 시각화 -->
-    <div class="zone-visual">
-      <div class="zone-wellness">
-        <div class="zone-icon">⬆️</div>
+        <!-- 이론 근거 -->
+        <div style="margin-bottom:10px;">
+          <div style="font-size:10px;font-weight:700;color:var(--blue);font-family:'DM Mono',monospace;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em;">이론 근거</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;">
+            <span style="background:var(--bg3);border-radius:4px;padding:3px 8px;font-size:10px;color:var(--text-dim);">해부학</span>
+            <span style="background:var(--bg3);border-radius:4px;padding:3px 8px;font-size:10px;color:var(--text-dim);">신경생리학</span>
+            <span style="background:var(--bg3);border-radius:4px;padding:3px 8px;font-size:10px;color:var(--text-dim);">생체역학</span>
+            <span style="background:var(--bg3);border-radius:4px;padding:3px 8px;font-size:10px;color:var(--text-dim);">근막경선이론</span>
+            <span style="background:var(--bg3);border-radius:4px;padding:3px 8px;font-size:10px;color:var(--text-dim);">통증과학</span>
+            <span style="background:var(--bg3);border-radius:4px;padding:3px 8px;font-size:10px;color:var(--text-dim);">운동학</span>
+          </div>
+        </div>
+
+        <!-- 임상 평가 -->
+        <div style="margin-bottom:10px;">
+          <div style="font-size:10px;font-weight:700;color:var(--blue);font-family:'DM Mono',monospace;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em;">임상 평가</div>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="background:var(--bg3);border-radius:6px;padding:8px 12px;font-size:11px;color:var(--text-dim);">
+              <span style="color:var(--blue);font-weight:600;">History Taking</span> — C/C · OPPQRST · 통증 종류로 원인 예상
+            </div>
+            <div style="background:var(--bg3);border-radius:6px;padding:8px 12px;font-size:11px;color:var(--text-dim);">
+              <span style="color:var(--blue);font-weight:600;">Inspection</span> — 시각적 관찰 · 자세·체형·불균형 확인
+            </div>
+            <div style="background:var(--bg3);border-radius:6px;padding:8px 12px;font-size:11px;color:var(--text-dim);">
+              <span style="color:var(--blue);font-weight:600;">Movement Test</span> — A-ROM · P-ROM · 동작 패턴
+            </div>
+            <div style="background:var(--bg3);border-radius:6px;padding:8px 12px;font-size:11px;color:var(--text-dim);">
+              <span style="color:var(--blue);font-weight:600;">Palpation</span> — Fascia · Muscle · Joint 문제 확인
+            </div>
+          </div>
+        </div>
+
+        <!-- 영상 검사 -->
         <div>
-          <div class="zone-title">웰니스 영역: 통증 없음</div>
-          <div class="zone-desc">더 좋은 상태로 끌어올리는 과정<br>PAR 움직임 프로그램</div>
+          <div style="font-size:10px;font-weight:700;color:var(--blue);font-family:'DM Mono',monospace;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em;">영상 · 기타 검사</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;">
+            <span style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:3px 8px;font-size:10px;color:var(--text-dim);">Special Test</span>
+            <span style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:3px 8px;font-size:10px;color:var(--text-dim);">X-Ray</span>
+            <span style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:3px 8px;font-size:10px;color:var(--text-dim);">MRI</span>
+            <span style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:3px 8px;font-size:10px;color:var(--text-dim);">CT</span>
+            <span style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:3px 8px;font-size:10px;color:var(--text-dim);">초음파</span>
+            <span style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:3px 8px;font-size:10px;color:var(--text-dim);">근전도 (EMG)</span>
+            <span style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:3px 8px;font-size:10px;color:var(--text-dim);">혈액 검사</span>
+          </div>
         </div>
       </div>
-      <div class="zone-line">
-        <div class="zone-line-dash"></div>
-        <div class="zone-line-label">편안한 상태 (기준선)</div>
-        <div class="zone-line-dash"></div>
-      </div>
-      <div class="zone-treatment">
-        <div class="zone-icon">⬇️</div>
+
+      <!-- Practice -->
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:700;color:var(--bg);background:var(--orange);padding:3px 10px;border-radius:4px;letter-spacing:0.1em;">P — Practice</div>
+        </div>
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px;">실제로 행하는 모든 중재</div>
+        <div style="font-size:11px;color:var(--text-dim);line-height:1.7;margin-bottom:14px;">
+          평가 결과를 베이스로 계획된 중재를 실제로 행하는 것. 크게 Manual과 Exercise 두 축으로 구성된다.
+        </div>
+
+        <!-- Manual -->
+        <div style="margin-bottom:10px;">
+          <div style="font-size:10px;font-weight:700;color:var(--orange);font-family:'DM Mono',monospace;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em;">Manual Therapy</div>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="background:var(--bg3);border-radius:6px;padding:8px 12px;font-size:11px;color:var(--text-dim);">
+              <span style="color:var(--orange);font-weight:600;">Fascia</span> — Heat · Friction · Vibration · (-)Pressure · Cold
+            </div>
+            <div style="background:var(--bg3);border-radius:6px;padding:8px 12px;font-size:11px;color:var(--text-dim);">
+              <span style="color:var(--orange);font-weight:600;">Muscle</span> — Percussion · (+)Pressure
+            </div>
+            <div style="background:var(--bg3);border-radius:6px;padding:8px 12px;font-size:11px;color:var(--text-dim);">
+              <span style="color:var(--orange);font-weight:600;">관절</span> — Mobilization · Adjustment
+            </div>
+          </div>
+        </div>
+
+        <!-- PAR Exercise -->
         <div>
-          <div class="zone-title">치료 영역: 통증 있음</div>
-          <div class="zone-desc">정상으로 되돌리는 과정<br>Manual Therapy + 약·시술·수술</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <div style="font-size:10px;font-weight:700;color:var(--orange);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:0.08em;">Exercise — PAR</div>
+            <div style="font-size:9px;color:var(--bg);background:var(--orange);border-radius:3px;padding:1px 6px;font-family:'DM Mono',monospace;font-weight:700;">Passive · Active · Resistive</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="background:var(--bg3);border-radius:6px;padding:8px 12px;font-size:11px;color:var(--text-dim);border-left:2px solid rgba(74,157,232,0.5);">
+              <span style="color:var(--blue);font-weight:600;">P — Passive</span> — Passive Stretching
+            </div>
+            <div style="background:var(--bg3);border-radius:6px;padding:8px 12px;font-size:11px;color:var(--text-dim);border-left:2px solid rgba(232,196,74,0.5);">
+              <span style="color:var(--yellow);font-weight:600;">A — Active</span> — 생활습관 및 자세 교정 · Assisted Active (CIE · Hold&Relax · Pull&Push)
+            </div>
+            <div style="background:var(--bg3);border-radius:6px;padding:8px 12px;font-size:11px;color:var(--text-dim);border-left:2px solid rgba(74,206,168,0.5);">
+              <span style="color:var(--green);font-weight:600;">R — Resistive</span> — 기능운동 · 근막경선 기반 다관절 · 밸런스 중심
+            </div>
+          </div>
         </div>
+      </div>
+
+    </div>
+
+    <!-- 핵심 문장 -->
+    <div style="margin-top:12px;background:rgba(74,206,168,0.06);border:1px solid rgba(74,206,168,0.2);border-radius:10px;padding:16px 20px;text-align:center;">
+      <div style="font-size:13px;color:var(--text);line-height:1.8;">
+        <span style="color:var(--accent);font-weight:700;">"</span>
+        근골격계 문제를 <strong style="color:var(--text)">과학으로 찾고</strong>, <strong style="color:var(--text)">임상으로 해결한다</strong>.
+        <br>
+        <span style="font-size:11px;color:var(--text-dim);">궁극적 목표 — 먼저 구조를 해결하고, 기능을 회복한다.</span>
+        <span style="color:var(--accent);font-weight:700;">"</span>
       </div>
     </div>
 
-    <div class="q-divider" aria-hidden="true"></div>
+  </div>
 
-    <div class="option-list">
-      <div class="option" style="border-color:var(--red-border);background:var(--red-bg);" onclick="pSet('mode','treatment'); bc('치료 영역'); goS('s-p-vas')">
-        <div class="opt-ico">🔴</div>
+  <hr class="divider">
+  <div class="section">
+    <div class="step-header">
+      <div><div class="step-num">STEP 01</div></div>
+      <div>
+        <div class="step-title">초기 평가 — 4가지 평가 체계</div>
+        <div class="step-sub">History Taking · Inspection · Movement Test · Palpation — 시점에 따라 유기적으로 적용</div>
+      </div>
+    </div>
+
+    <!-- 4가지 평가 개요 -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px;">
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;">
+        <div style="font-size:12px;font-weight:700;color:var(--accent);">History Taking</div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:4px;line-height:1.5;">General Screen<br>증상 원인 예상</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;">
+        <div style="font-size:12px;font-weight:700;color:var(--blue);">Inspection</div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:4px;line-height:1.5;">시각적 관찰<br>자세·체형 확인</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;">
+        <div style="font-size:12px;font-weight:700;color:var(--yellow);">Movement Test</div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:4px;line-height:1.5;">움직임 관찰<br>A-ROM · P-ROM · 동작 패턴</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;">
+        <div style="font-size:12px;font-weight:700;color:var(--orange);">Palpation</div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:4px;line-height:1.5;">Part Assessment<br>조직 직접 확인</div>
+      </div>
+    </div>
+
+    <!-- PART A: History Taking -->
+    <div class="card" style="margin-bottom:16px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:700;color:var(--bg);background:var(--accent);padding:4px 12px;border-radius:4px;letter-spacing:0.1em;">PART A</div>
         <div>
-          <div class="opt-name" style="color:var(--red);">통증이나 불편함이 있어요</div>
-          <div class="opt-desc">아픈 곳이 있거나 움직임이 불편한 상태</div>
+          <div style="font-size:14px;font-weight:700;">History Taking</div>
+          <div style="font-size:11px;color:var(--text-dim);">통증 및 증상 원인을 <em>예상</em>하는 General Screen</div>
         </div>
-        <div class="opt-arr">›</div>
       </div>
-      <div class="option" style="border-color:var(--green-border);background:var(--green-bg);" onclick="pSet('mode','wellness'); bc('웰니스 영역'); goS('s-p-wellness')">
-        <div class="opt-ico">🟢</div>
+
+      <!-- C/C + 손 짚기 -->
+      <div style="background:rgba(74,206,168,0.07);border:1px solid rgba(74,206,168,0.2);border-radius:8px;padding:14px 16px;margin-bottom:16px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:700;color:var(--accent);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.1em;">시작 — Chief Complaint (C/C)</div>
+        <div style="font-size:12px;color:var(--text);font-weight:600;margin-bottom:8px;">① 내원 목적 확인 — "어제 오늘, 가장 불편한 게 뭔가요?"</div>
+        <div style="font-size:12px;color:var(--text);font-weight:600;margin-bottom:6px;">② 가장 아픈 부위를 손으로 짚어달라고 요청</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+          <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
+            <div style="font-size:11px;font-weight:700;color:var(--orange);margin-bottom:4px;">정확히 짚을 수 있음</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.5;">국소적 통증<br>→ 근육 또는 관절 문제 가능성</div>
+          </div>
+          <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
+            <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:4px;">애매하게 짚거나 넓은 범위</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.5;">방사통 또는 연관통 의심<br>→ 신경·트리거포인트 고려</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPPQRST -->
+      <div style="font-size:11px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.1em;font-family:'DM Mono',monospace;margin-bottom:10px;">OPPQRST — 순서대로 질문</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px;">
+
+        <div style="background:var(--bg3);border-radius:8px;padding:12px 16px;display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
+          <div style="font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:var(--accent);">O — Onset</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.6;">언제·어떻게 시작됐나 · 급성 vs 만성 · 외상 여부<br>
+            <span style="color:rgba(232,196,74,0.85);font-weight:600">외상·사건 없음</span> → 자세 불량·생활습관 문제일 가능성 높음</div>
+        </div>
+
+        <div style="background:var(--bg3);border-radius:8px;padding:12px 16px;border-left:3px solid var(--orange);">
+          <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;margin-bottom:8px;">
+            <div style="font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:var(--orange);">P — Provocation</div>
+            <div style="font-size:11px;color:var(--text-dim);">어떤 동작·자세에서 악화되는가</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div style="background:rgba(232,147,74,0.08);border-radius:6px;padding:9px 11px;">
+              <div style="font-size:11px;font-weight:700;color:var(--orange);margin-bottom:3px;">💪 힘을 쓸 때 악화</div>
+              <div style="font-size:10px;color:var(--text-dim);line-height:1.5;"><span style="color:var(--orange)">근육 · 힘줄</span> 의심<br>→ Muscle Test · Special Test 시행</div>
+            </div>
+            <div style="background:rgba(74,157,232,0.08);border-radius:6px;padding:9px 11px;">
+              <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:3px;">🤲 패시브하게 늘릴 때 악화</div>
+              <div style="font-size:10px;color:var(--text-dim);line-height:1.5;"><span style="color:var(--blue)">Fascia · 인대 · 관절</span> 의심<br>→ ROM 평가 · Special Test 시행</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--bg3);border-radius:8px;padding:12px 16px;display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;">
+          <div style="font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:var(--accent);">P — Palliation</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.6;">쉬면 좋아지나 · 움직이면 좋아지나 · 열/냉에 반응하는가</div>
+        </div>
+
+        <div style="background:rgba(74,206,168,0.07);border:2px solid rgba(74,206,168,0.35);border-radius:10px;padding:14px 16px;position:relative;">
+
+          <!-- 핵심 뱃지 -->
+          <div style="position:absolute;top:-10px;left:16px;background:var(--accent);color:var(--bg);font-size:10px;font-weight:700;font-family:'DM Mono',monospace;padding:2px 10px;border-radius:10px;letter-spacing:0.08em;">평가의 핵심</div>
+
+          <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;margin-bottom:12px;">
+            <div style="font-family:'DM Mono',monospace;font-size:13px;font-weight:700;color:var(--accent);">Q — Quality</div>
+            <div style="font-size:11px;color:var(--text);line-height:1.6;">
+              <strong style="color:var(--accent)">통증의 종류</strong> — 문제 조직을 가리키는 매우 중요한 단서<br>
+              <span style="font-size:10px;color:var(--text-dim);">숙련된 치료사는 환자의 통증 묘사에서 구체적인 평가 방향을 잡는다</span>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+            <div style="background:rgba(224,92,106,0.1);border-radius:5px;padding:9px 11px;border:1px solid rgba(224,92,106,0.2);">
+              <div style="font-size:10px;font-weight:700;color:var(--red);margin-bottom:2px;">⚡ 전기 튀는 날카로움</div>
+              <div style="font-size:10px;color:var(--text-dim);">신경 — Aδ 섬유 자극 · 방사</div>
+            </div>
+            <div style="background:rgba(224,92,106,0.1);border-radius:5px;padding:9px 11px;border:1px solid rgba(224,92,106,0.2);">
+              <div style="font-size:10px;font-weight:700;color:var(--red);margin-bottom:2px;">📍 한 점 날카로움</div>
+              <div style="font-size:10px;color:var(--text-dim);">관절 급성기 — nociceptor 과민화</div>
+            </div>
+            <div style="background:rgba(232,147,74,0.1);border-radius:5px;padding:9px 11px;border:1px solid rgba(232,147,74,0.2);">
+              <div style="font-size:10px;font-weight:700;color:var(--orange);margin-bottom:2px;">뻐근함 · 쥐어짜는</div>
+              <div style="font-size:10px;color:var(--text-dim);">근육 — 허혈 → 대사산물 → C섬유</div>
+            </div>
+            <div style="background:rgba(74,157,232,0.1);border-radius:5px;padding:9px 11px;border:1px solid rgba(74,157,232,0.2);">
+              <div style="font-size:10px;font-weight:700;color:var(--blue);margin-bottom:2px;">당기는 · 뻣뻣한</div>
+              <div style="font-size:10px;color:var(--text-dim);">Fascia — fascial adhesion · 선(line)</div>
+            </div>
+            <div style="background:rgba(155,111,232,0.1);border-radius:5px;padding:9px 11px;border:1px solid rgba(155,111,232,0.2);">
+              <div style="font-size:10px;font-weight:700;color:var(--purple);margin-bottom:2px;">찢어지는</div>
+              <div style="font-size:10px;color:var(--text-dim);">힘줄·인대·근육 파열 — 결합조직 손상</div>
+            </div>
+            <div style="background:rgba(232,147,74,0.1);border-radius:5px;padding:9px 11px;border:1px solid rgba(232,147,74,0.2);">
+              <div style="font-size:10px;font-weight:700;color:var(--orange);margin-bottom:2px;">욱씬거리는</div>
+              <div style="font-size:10px;color:var(--text-dim);">급성 염증 (근골격계) · 감염·혈관성 배제</div>
+            </div>
+            <div style="background:rgba(59,191,176,0.1);border-radius:5px;padding:9px 11px;border:1px solid rgba(59,191,176,0.2);grid-column:span 2;">
+              <div style="font-size:10px;font-weight:700;color:var(--teal);margin-bottom:2px;">저림 · 타는 듯한</div>
+              <div style="font-size:10px;color:var(--text-dim);">신경 만성 압박 — C섬유·탈수초화 · 방사 경로 따라</div>
+            </div>
+          </div>
+
+          <!-- 평가 방향 노트 -->
+          <div style="margin-top:10px;padding:10px 12px;background:rgba(74,206,168,0.08);border-radius:6px;font-size:11px;color:var(--text-dim);line-height:1.7;">
+            <span style="color:var(--accent);font-weight:700">예상 → 확인</span> — 문제가 되는 구조를 예상하고, Part Assessment에서 확인한다.<br>
+            -근육이 의심되면 Muscle Test, 신경이 의심되면 Nerve Test 등 각 예상 문제를 확인하는 평가를 시행.
+          </div>
+
+        </div>
+
+        <div style="background:var(--bg3);border-radius:8px;padding:12px 16px;border-left:3px solid var(--blue);">
+          <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;margin-bottom:8px;">
+            <div style="font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:var(--blue);">R — Region / Radiation</div>
+            <div style="font-size:11px;color:var(--text-dim);">통증 위치·범위 · 방사 여부</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div style="background:rgba(74,157,232,0.08);border-radius:6px;padding:9px 11px;">
+              <div style="font-size:11px;font-weight:700;color:var(--orange);margin-bottom:3px;">국소적 · 한 부위</div>
+              <div style="font-size:10px;color:var(--text-dim);">근육 · 관절 · 힘줄 문제 가능성</div>
+            </div>
+            <div style="background:rgba(74,157,232,0.08);border-radius:6px;padding:9px 11px;">
+              <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:3px;">경로를 따라 방사</div>
+              <div style="font-size:10px;color:var(--text-dim);">신경 압박 · 디스크 · 트리거포인트 연관통</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--bg3);border-radius:8px;padding:12px 16px;border-left:3px solid var(--accent);">
+          <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;margin-bottom:10px;">
+            <div style="font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:var(--accent);">S — Severity</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.6;"><strong style="color:var(--accent)">VAS 점수</strong> — 주관적 통증 수치 · 아래 기준으로 중증도 보완 판단<br>치료 프로그램을 결정하는 중요한 단서</div>
+          </div>
+          <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;font-size:10px;">
+              <thead>
+                <tr style="border-bottom:1px solid var(--border);">
+                  <th style="text-align:left;padding:6px 8px;color:var(--text-dim);font-weight:600;">기준</th>
+                  <th style="text-align:center;padding:6px 8px;color:var(--green);font-weight:600;">경증</th>
+                  <th style="text-align:center;padding:6px 8px;color:var(--orange);font-weight:600;">중등도</th>
+                  <th style="text-align:center;padding:6px 8px;color:var(--red);font-weight:600;">중증</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid rgba(42,48,80,0.5);">
+                  <td style="padding:6px 8px;color:var(--text-dim);">다른 사람 도움</td>
+                  <td style="text-align:center;padding:6px 8px;color:var(--green);">필요 없음</td>
+                  <td style="text-align:center;padding:6px 8px;color:var(--orange);">가끔 필요</td>
+                  <td style="text-align:center;padding:6px 8px;color:var(--red);">항상 필요</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(42,48,80,0.5);">
+                  <td style="padding:6px 8px;color:var(--text-dim);">가만히 있을 때</td>
+                  <td style="text-align:center;padding:6px 8px;color:var(--green);">통증 없음</td>
+                  <td style="text-align:center;padding:6px 8px;color:var(--orange);">약간 불편</td>
+                  <td style="text-align:center;padding:6px 8px;color:var(--red);">안정 시 통증</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 8px;color:var(--text-dim);">일상생활 통증</td>
+                  <td style="text-align:center;padding:6px 8px;color:var(--green);">가끔 아픔</td>
+                  <td style="text-align:center;padding:6px 8px;color:var(--orange);">자주 아픔</td>
+                  <td style="text-align:center;padding:6px 8px;color:var(--red);">지속적으로 아픔</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="background:var(--bg3);border-radius:8px;padding:12px 16px;border-left:3px solid var(--accent);">
+          <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;margin-bottom:8px;">
+            <div style="font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:var(--accent);">T — Timing</div>
+            <div style="font-size:11px;color:var(--text-dim);">지속적 vs 간헐적 · 시간대·활동별 변화</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div style="background:rgba(74,206,168,0.08);border-radius:6px;padding:9px 11px;">
+              <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:3px;">쉬면 나아짐</div>
+              <div style="font-size:10px;color:var(--text-dim);">과사용·염증성 문제 가능성<br>활동량 조절 필요</div>
+            </div>
+            <div style="background:rgba(74,206,168,0.08);border-radius:6px;padding:9px 11px;">
+              <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:3px;">특정 자세·시간대에 악화</div>
+              <div style="font-size:10px;color:var(--text-dim);">자세 불량·생활습관 문제<br>→ 반복 행동 패턴 파악</div>
+            </div>
+            <div style="background:rgba(74,206,168,0.08);border-radius:6px;padding:9px 11px;">
+              <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:3px;">아침에 심함</div>
+              <div style="font-size:10px;color:var(--text-dim);">Fascia 경직 · 염증성 관절 질환</div>
+            </div>
+            <div style="background:rgba(74,206,168,0.08);border-radius:6px;padding:9px 11px;">
+              <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:3px;">안정 시에도 지속</div>
+              <div style="font-size:10px;color:var(--text-dim);">급성 염증 · 신경성 통증<br>침습적 치료 고려</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- PART B: Inspection -->
+    <div class="card" style="margin-bottom:16px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:700;color:var(--bg);background:var(--blue);padding:4px 12px;border-radius:4px;letter-spacing:0.1em;">PART B</div>
         <div>
-          <div class="opt-name" style="color:var(--green);">몸을 더 좋게 만들고 싶어요</div>
-          <div class="opt-desc">자세·체형·기능·예방 관리가 목표</div>
-        </div>
-        <div class="opt-arr">›</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════
-     PATIENT VAS
-══════════════════════════════ -->
-<div class="screen" id="s-p-vas">
-  <div class="wrap">
-    <div class="q-header">
-      <div class="q-step">2단계</div>
-      <div class="q-title">통증이 어느 정도인가요?</div>
-      <div class="q-sub">해당하는 구간을 선택해주세요</div>
-    </div>
-
-    <div class="vas-container">
-      <div class="vas-title">통증 강도 (VAS 0~10)</div>
-      <div class="vas-sub">0 = 전혀 불편하지 않음 &nbsp;·&nbsp; 10 = 살면서 가장 아팠을 때</div>
-      <div class="vas-scale" id="vasScale" onclick="handleVasClick(event)">
-        <div class="vas-thumb" id="vasThumb" style="left:0%;display:none;">0</div>
-      </div>
-      <div class="vas-labels"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span></div>
-
-      <div class="vas-zones">
-        <div class="vas-zone low" id="vz-low" onclick="selectVasZone('low')">
-          <div class="vz-range">1 ~ 3</div>
-          <div class="vz-label">경증</div>
-          <div class="vz-desc">통증은 있지만<br>일상생활 가능</div>
-        </div>
-        <div class="vas-zone mid" id="vz-mid" onclick="selectVasZone('mid')">
-          <div class="vz-range">4 ~ 6</div>
-          <div class="vz-label">중등도</div>
-          <div class="vz-desc">일상이 힘들지만<br>스스로 생활 가능</div>
-        </div>
-        <div class="vas-zone high" id="vz-high" onclick="selectVasZone('high')">
-          <div class="vz-range">7 ~ 10</div>
-          <div class="vz-label">중증</div>
-          <div class="vz-desc">다른 사람 도움이<br>필요한 수준</div>
+          <div style="font-size:14px;font-weight:700;">Inspection — 시각적 관찰</div>
+          <div style="font-size:11px;color:var(--text-dim);">전반적 체형·불균형 관찰 · 생활습관 교정 직전 본격 자세 평가</div>
         </div>
       </div>
 
-      <button class="vas-confirm-btn" id="vasConfirmBtn" onclick="confirmVas()" style="display:none;">
-        다음 단계로 →
-      </button>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+
+        <div style="background:var(--bg3);border-radius:8px;padding:16px;border-top:2px solid var(--blue);">
+          <div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:10px;">전반적 관찰</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.8;">
+            · 체형 전반 · 좌우 불균형<br>
+            · 통증 부위 발적·부종·멍<br>
+            · 보행 패턴 · 동작 습관<br>
+            · 표정·긴장 부위 관찰<br>
+            · 간단한 자세 확인
+          </div>
+        </div>
+
+        <div style="background:var(--bg3);border-radius:8px;padding:16px;border-top:2px solid rgba(74,157,232,0.5);">
+          <div style="font-size:12px;font-weight:700;color:rgba(74,157,232,0.8);margin-bottom:10px;">생활습관 교정 직전 — 본격 자세 평가</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.8;">
+            · 전·측·후면 자세 분석<br>
+            · 척추 만곡 · 골반 기울기<br>
+            · 어깨·두부 위치<br>
+            · 무게중심 편향<br>
+            · 교정 전·후 비교 기준점
+          </div>
+        </div>
+
+      </div>
+
+      <div class="note-box" style="margin-top:14px;">
+        <span class="note-icon">◎</span>
+        <span>Inspection은 별도 시간보다 <strong style="color:var(--accent)">흐름 속에서 자연스럽게</strong> 이루어진다. 생활습관 교정 직전의 본격 자세 평가는 교정 후 변화를 비교하는 기준점이 된다.</span>
+      </div>
+    </div>
+
+    <!-- PART C: Movement Test -->
+    <div class="card" style="margin-bottom:16px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:700;color:var(--bg);background:var(--yellow);padding:4px 12px;border-radius:4px;letter-spacing:0.1em;">PART C</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;">Movement Test</div>
+          <div style="font-size:11px;color:var(--text-dim);">A-ROM · P-ROM · 동작 패턴 · Muscle Test · Nerve Test</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div style="background:var(--bg3);border-radius:8px;padding:14px;border-left:3px solid var(--orange);">
+          <div style="font-size:12px;font-weight:700;color:var(--orange);margin-bottom:8px;">💪 힘을 쓸 때 — Muscle / Special Test</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.7;">
+            · 능동 저항 검사 (근육 수축)<br>
+            · 저항 검사 — 힘줄 통증 재현<br>
+            · 근력 검사 (근절별)<br>
+            · 트리거포인트 압통 재현
+          </div>
+        </div>
+        <div style="background:var(--bg3);border-radius:8px;padding:14px;border-left:3px solid var(--blue);">
+          <div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px;">🤲 패시브하게 늘릴 때 — ROM</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.7;">
+            · 수동 가동범위 측정<br>
+            · Fascia · 인대 · 관절낭 긴장<br>
+            · End-range 통증 확인<br>
+            · Passive Stretching과 병행
+          </div>
+        </div>
+        <div style="background:var(--bg3);border-radius:8px;padding:14px;border-left:3px solid var(--red);grid-column:span 2;">
+          <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:8px;">⚡ 신경 의심 — Nerve Test</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.7;">
+            · SLR · 신경 긴장 검사 · 반사 검사 (DTR) · 피부분절 감각 검사
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PART D: Palpation -->
+    <div class="card" style="margin-bottom:16px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:700;color:var(--bg);background:var(--orange);padding:4px 12px;border-radius:4px;letter-spacing:0.1em;">PART D</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;">Palpation — Part Assessment</div>
+          <div style="font-size:11px;color:var(--text-dim);">이전 평가 결과로 예상된 Fascia / Muscle / Joint 문제를 직접 확인하고 구분</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+        <div style="background:var(--bg3);border-radius:8px;padding:14px;border-top:2px solid var(--blue);">
+          <div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px;">Fascia</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.7;">
+            · 근막층 간 활주 저항 확인<br>
+            · 조직 질감 — 들러붙는 느낌<br>
+            · 신장 시 장력 방향<br>
+            · 근막 경선(line)을 따라 탐색
+          </div>
+        </div>
+        <div style="background:var(--bg3);border-radius:8px;padding:14px;border-top:2px solid var(--orange);">
+          <div style="font-size:12px;font-weight:700;color:var(--orange);margin-bottom:8px;">Muscle</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.7;">
+            · 긴장도(tone) — 과긴장 부위<br>
+            · 트리거포인트 — 압통 + 연관통<br>
+            · 주소 통증 재현 여부<br>
+            · 근섬유 방향 따라 촉진
+          </div>
+        </div>
+        <div style="background:var(--bg3);border-radius:8px;padding:14px;border-top:2px solid var(--teal);">
+          <div style="font-size:12px;font-weight:700;color:var(--teal);margin-bottom:8px;">Joint</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.7;">
+            · 관절 위치 이상<br>
+            · 관절낭 긴장도 · 내압<br>
+            · 수동 관절 유희(joint play)<br>
+            · 관절음(crepitus) 여부
+          </div>
+        </div>
+      </div>
+
+      <div class="note-box" style="margin-top:14px;">
+        <span class="note-icon">◎</span>
+        <span>Palpation은 History Taking의 <strong style="color:var(--accent)">예상을 검증</strong>하는 단계. 촉진 시 주소 통증 재현 여부로 문제 조직을 특정하고 중재 방향을 확정한다.</span>
+      </div>
+    </div>
+
+    <!-- PART E: 추가 검사 -->
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:700;color:var(--bg);background:var(--purple);padding:4px 12px;border-radius:4px;letter-spacing:0.1em;">PART E</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;">추가 검사 — 예상 조직별 확인</div>
+          <div style="font-size:11px;color:var(--text-dim);">Fascia·Muscle·Joint 이외 문제가 예상될 때 적용</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+
+        <div style="background:var(--bg3);border-radius:8px;padding:14px;border-left:3px solid var(--purple);">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <div style="font-size:12px;font-weight:700;color:var(--purple);">인대 · 힘줄</div>
+            <div style="font-size:10px;color:var(--bg);background:var(--purple);border-radius:3px;padding:2px 6px;font-family:'DM Mono',monospace;">Special Test</div>
+          </div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.7;">
+            · 스트레스 검사 — 인대 불안정성<br>
+            · 저항 검사 — 힘줄 통증 재현<br>
+            · 특이적 정형외과적 검사<br>
+            <span style="font-size:10px;color:var(--text-dim);margin-top:4px;display:block;">확인 후 충격파·주사·침 + 생활 관리</span>
+          </div>
+        </div>
+
+        <div style="background:var(--bg3);border-radius:8px;padding:14px;border-left:3px solid var(--yellow);">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <div style="font-size:12px;font-weight:700;color:var(--yellow);">골절 의심</div>
+            <div style="font-size:10px;color:var(--bg);background:var(--yellow);border-radius:3px;padding:2px 6px;font-family:'DM Mono',monospace;">X-Ray</div>
+          </div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.7;">
+            · 외상 후 극심한 국소 통증<br>
+            · 부종·변형·체중 부하 불가<br>
+            · Percussion test 양성<br>
+            <span style="font-size:10px;color:var(--text-dim);margin-top:4px;display:block;">즉시 영상 검사 의뢰</span>
+          </div>
+        </div>
+
+        <div style="background:var(--bg3);border-radius:8px;padding:14px;border-left:3px solid var(--blue);grid-column:span 2;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <div style="font-size:12px;font-weight:700;color:var(--blue);">디스크 · 척추 문제</div>
+            <div style="font-size:10px;color:var(--bg);background:var(--blue);border-radius:3px;padding:2px 6px;font-family:'DM Mono',monospace;">MRI</div>
+          </div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.7;">
+            · 방사통 + 신경 증상 동반 · 신경 검사 이상 소견 · 보존 치료 반응 없을 때<br>
+            <span style="font-size:10px;color:var(--text-dim);margin-top:4px;display:block;">정확한 레벨 확인 후 중재 방향 결정</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- STEP 2: 통증 있음 / VAS -->
+  <div class="section">
+    <div class="step-header">
+      <div class="step-num red">STEP 02</div>
+      <div>
+        <div class="step-title">중재 — VAS 기준 치료 방향 선택</div>
+        <div class="step-sub">의료 영역 · 근골격계 중심</div>
+      </div>
+    </div>
+
+    <!-- VAS 0~2 -->
+    <div style="background:rgba(74,206,168,0.07);border:1px solid rgba(74,206,168,0.25);border-radius:10px;padding:16px 18px;margin-bottom:10px;">
+      <div class="vas-label" style="margin-bottom:8px;">
+        <span style="background:rgba(74,206,168,0.2);color:var(--green);border-radius:4px;padding:3px 10px;font-size:11px;font-weight:700;font-family:'DM Mono',monospace;">VAS 0~2</span>
+        운동 치료 중심
+      </div>
+      <div style="font-size:11px;color:var(--text-dim);line-height:1.6;">통증이 거의 없거나 경미한 수준 → <strong style="color:var(--text)">STEP 03 움직임 평가 & 운동 치료</strong>로 바로 진행</div>
+    </div>
+
+    <!-- VAS 3~6 간단 버전 -->
+    <div class="vas-block mid" style="margin-bottom:10px;">
+      <div class="vas-label">
+        <span class="vas-badge">VAS 3~6</span>
+        STEP 02 비침습 Manual Therapy → 아래 상세 참고
+      </div>
+      <div class="tech-chain" style="margin-top:8px;">
+        <span class="tech-tag" style="border-color:rgba(74,157,232,0.4);color:var(--blue)">Fascia</span>
+        <span class="tech-arrow">→</span>
+        <span class="tech-tag" style="border-color:rgba(232,147,74,0.4);color:var(--orange)">Muscle</span>
+        <span class="tech-arrow">→</span>
+        <span class="tech-tag" style="border-color:rgba(59,191,176,0.4);color:var(--teal)">Joint</span>
+        <span class="tech-arrow">→</span>
+        <span class="tech-tag">STEP 03</span>
+      </div>
+    </div>
+
+    <!-- VAS 6 이상 -->
+    <div class="vas-block high" style="margin-bottom:20px;">
+      <div class="vas-label">
+        <span class="vas-badge">VAS 6 이상</span>
+        침습적 치료 단계적 고려 (임상 판단 하에)
+      </div>
+      <div style="font-size:11px;color:var(--text-dim);margin-bottom:10px;">※ VAS는 주관적 수치. 비침습 치료로 효과 없을 시 또는 구조적 손상이 확인될 때 적용</div>
+      <div class="tech-chain">
+        <span class="tech-tag">약물</span>
+        <span class="tech-arrow">→</span>
+        <span class="tech-tag">주사</span>
+        <span class="tech-arrow">→</span>
+        <span class="tech-tag">시술</span>
+        <span class="tech-arrow">→</span>
+        <span class="tech-tag">수술</span>
+      </div>
+    </div>   
+
+    <!-- 치료 접근 철학 -->
+    <div class="card" style="margin-bottom:14px;">
+      <div class="card-title">Manual Therapy 접근</div>
+      <div style="font-size:12px;color:var(--text-dim);line-height:1.85;margin-bottom:16px;">
+        ※ 사고나 특별한 이벤트 없이 발생한 근골격계 문제는 갑자기 생기지 않는다.<br>
+        따라서 어떤 문제로 내원했든, <strong style="color:var(--text)">Fascia → Muscle → Joint 순으로</strong> 문제점이 있는지 찾아보고, 치료하며, 그 변화를 관찰한다.
+      </div>
+
+      <!-- Fascia / Muscle / Joint 요약 -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;">
+        <div style="background:rgba(74,157,232,0.07);border-radius:7px;padding:12px;border:1px solid rgba(74,157,232,0.2);text-align:center;">
+          <div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:4px;">Fascia</div>
+          <div style="font-size:10px;color:var(--text-dim);line-height:1.5;">근막층 간 활주 저하<br>들러붙음 (Adhesion)</div>
+        </div>
+        <div style="background:rgba(232,147,74,0.07);border-radius:7px;padding:12px;border:1px solid rgba(232,147,74,0.2);text-align:center;">
+          <div style="font-size:12px;font-weight:700;color:var(--orange);margin-bottom:4px;">Muscle</div>
+          <div style="font-size:10px;color:var(--text-dim);line-height:1.5;">근섬유 과긴장<br>트리거포인트 · 뭉침</div>
+        </div>
+        <div style="background:rgba(59,191,176,0.07);border-radius:7px;padding:12px;border:1px solid rgba(59,191,176,0.2);text-align:center;">
+          <div style="font-size:12px;font-weight:700;color:var(--teal);margin-bottom:4px;">Joint</div>
+          <div style="font-size:10px;color:var(--text-dim);line-height:1.5;">관절 저가동성<br>Hypomobility · 고정</div>
+        </div>
+      </div>
+
+      <!-- 3가지 키워드 -->
+      <div style="font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.1em;font-family:'DM Mono',monospace;margin-bottom:10px;">Manual Therapy 3가지 핵심 원칙</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;">
+        <div style="background:var(--bg3);border-radius:8px;padding:14px;border-top:2px solid var(--blue);text-align:center;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--blue);margin-bottom:8px;letter-spacing:0.08em;">PRINCIPLE 01</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;">표층 → 심층</div>
+          <div style="font-size:10px;color:var(--text-dim);line-height:1.6;">Fascia → Muscle → Joint<br>피부층에서 깊은 구조로</div>
+        </div>
+        <div style="background:var(--bg3);border-radius:8px;padding:14px;border-top:2px solid var(--orange);text-align:center;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--orange);margin-bottom:8px;letter-spacing:0.08em;">PRINCIPLE 02</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;">중심 → 말단</div>
+          <div style="font-size:10px;color:var(--text-dim);line-height:1.6;">척추(중심)에서<br>사지(말단) 방향으로</div>
+        </div>
+        <div style="background:var(--bg3);border-radius:8px;padding:14px;border-top:2px solid var(--teal);text-align:center;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);margin-bottom:8px;letter-spacing:0.08em;">PRINCIPLE 03</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;">Static → Motion</div>
+          <div style="font-size:10px;color:var(--text-dim);line-height:1.6;">정적 상태 해소 후<br>동적 움직임으로 전환</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VAS 3~6 상세 Manual Therapy -->
+    <div style="font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.1em;font-family:'DM Mono',monospace;margin-bottom:12px;">Manual Therapy Technique 상세</div>
+
+    <div class="vas-block mid">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:8px;">
+
+        <div style="background:var(--bg3);border-radius:8px;padding:14px;border-top:2px solid var(--blue);">
+          <div class="flow-label" style="color:var(--blue);margin-bottom:10px;">Fascia 테크닉</div>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;">
+            <span>Heat</span>
+            <span style="color:var(--text-dim);font-size:10px;">↓</span>
+            <span>Friction</span>
+            <span style="color:var(--text-dim);font-size:10px;">↓</span>
+            <span>Vibration</span>
+            <span style="color:var(--text-dim);font-size:10px;">↓</span>
+            <span>(-)Pressure</span>
+          </div>
+          <div style="margin-top:10px;font-size:10px;color:var(--text-dim);line-height:1.5;border-top:1px solid var(--border);padding-top:8px;">근막 활주 저하 해소<br>표층에서 심층으로</div>
+        </div>
+
+        <div style="background:var(--bg3);border-radius:8px;padding:14px;border-top:2px solid var(--orange);">
+          <div class="flow-label" style="color:var(--orange);margin-bottom:10px;">Muscle 테크닉</div>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;">
+            <span>Percussion</span>
+            <span style="color:var(--text-dim);font-size:10px;">↓</span>
+            <span>(+)Pressure</span>
+          </div>
+          <div style="margin-top:10px;font-size:10px;color:var(--text-dim);line-height:1.5;border-top:1px solid var(--border);padding-top:8px;">근섬유 긴장 완화<br>트리거포인트 해소</div>
+        </div>
+
+        <div style="background:var(--bg3);border-radius:8px;padding:14px;border-top:2px solid var(--teal);">
+          <div class="flow-label" style="color:var(--teal);margin-bottom:10px;">관절 테크닉</div>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;">
+            <span>Mobilization</span>
+            <span style="color:var(--text-dim);font-size:10px;">↓</span>
+            <span>Adjustment</span>
+          </div>
+          <div style="margin-top:10px;font-size:10px;color:var(--text-dim);line-height:1.5;border-top:1px solid var(--border);padding-top:8px;">관절 가동성 회복<br>positional fault 교정</div>
+        </div>
+
+      </div>
+
+      <!-- Cold 공통 -->
+      <div style="margin-top:10px;background:var(--bg3);border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:12px;font-weight:700;color:var(--text-dim);font-family:'DM Mono',monospace;">Cold</span>
+        <span style="font-size:11px;color:var(--text-dim);">— Fascia·Muscle·관절 공통 적용 · 치료 마무리 시 염증 억제·혈관 수축 목적</span>
+      </div>
+
+      <div class="note-box" style="margin-top:12px;">
+        <span class="note-icon">→</span>
+        <span>통증 해결 시 <strong style="color:var(--accent)">움직임 평가(STEP 03)</strong>로 이동 · 인대·힘줄 결합조직 손상 시 프로토콜은 <strong style="color:var(--purple)">POSITION 3 하단</strong> 참고</span>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- STEP 3: Passive Stretching -->
+  <div class="section">
+    <div class="step-header">
+      <div class="step-num yellow">STEP 03</div>
+      <div>
+        <div class="step-title">Passive Stretching</div>
+        <div class="step-sub">안전한 움직임의 시작이자 동시에 P-ROM 평가 · 3가지 결과에 따라 분기</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+        <div class="card-title" style="margin-bottom:0;">Passive Stretching 분기 로직 (공통)</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--yellow);background:rgba(232,196,74,0.1);border:1px solid rgba(232,196,74,0.25);border-radius:4px;padding:2px 8px;">= P-ROM</div>
+      </div>
+      <div style="background:rgba(232,196,74,0.06);border:1px solid rgba(232,196,74,0.15);border-radius:7px;padding:10px 14px;margin-bottom:14px;font-size:11px;color:var(--text-dim);line-height:1.6;">
+        <strong style="color:var(--yellow)">P-ROM</strong> — Passive Stretching 시행 자체가 관절 가동범위와 질을 평가하는 과정.
+      </div>
+      <div class="tree-root">Passive Stretching 시행<br><span style="font-size:11px;font-weight:400;color:rgba(74,206,168,0.7)">안전한 움직임 + P-ROM 평가</span></div>
+      <div class="flow-connector">↓</div>
+      <div class="branch-connector">
+        <span>↙</span><span>↓</span><span>↘</span>
+      </div>
+      <div class="tree-branches">
+        <div class="branch pain">
+          <div class="branch-condition">통증 있음</div>
+          <div class="branch-action">통증 종류 확인</div>
+          <div class="branch-detail" style="display:flex;flex-direction:column;gap:6px;">
+            <div style="background:rgba(224,92,106,0.1);border-radius:5px;padding:7px 9px;font-size:10px;line-height:1.5;">
+              <span style="color:var(--blue);font-weight:700">Fascia</span> — 당기는 · 뻣뻣한<br>
+              <span style="color:var(--orange);font-weight:700">Muscle</span> — 뻐근한 · 쥐어짜는<br>
+              <span style="color:var(--teal);font-weight:700">Joint</span> — 날카로운 · 깊고 둔한
+            </div>
+            <div style="font-size:10px;color:var(--text-dim);">↓ Palpation으로 확인</div>
+            <div style="font-size:10px;color:var(--text);">Pin &amp; Stretching<br>소도구를 이용한 자극 운동</div>
+          </div>
+        </div>
+        <div class="branch flex">
+          <div class="branch-condition">통증 없음<br>유연성 저하</div>
+          <div class="branch-action">Assisted Active</div>
+          <div class="branch-detail">
+            <div style="font-size:10px;color:var(--yellow);margin-bottom:5px;font-weight:600;">단관절 — 해당 관절 ROM 회복</div>
+            CIE 기법<br>Hold &amp; Relax<br>Pull &amp; Push
+          </div>
+        </div>
+        <div class="branch ok">
+          <div class="branch-condition">통증 없음<br>가동범위 정상</div>
+          <div class="branch-action">자세·생활습관 교육</div>
+          <div class="branch-detail">
+            수행 가능 시<br>
+            <div style="margin-top:6px;font-size:10px;color:var(--green);font-weight:600;">기능운동</div>
+            <div style="font-size:10px;color:var(--text-dim);">다관절 — 근막경선을 따라<br>말단→근위부 순차 활성화</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 자세별 스텝 -->
+    <div class="position-steps">
+
+      <!-- Supine/Prone -->
+      <div class="pos-card supine">
+        <div class="pos-header">
+          <div class="pos-icon">🔵</div>
+          <div>
+            <div class="pos-name">POSITION 1 — Supine / Prone (누운 자세)</div>
+            <div class="pos-gravity">중력 부하 최소 · 4파트 순서로 진행</div>
+          </div>
+        </div>
+
+        <!-- 공통 흐름 -->
+        <div style="background:rgba(74,157,232,0.06);border:1px solid rgba(74,157,232,0.15);border-radius:7px;padding:10px 14px;margin-bottom:12px;">
+          <div style="font-size:10px;font-weight:700;color:var(--blue);font-family:'DM Mono',monospace;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em;">각 파트 공통 진행 흐름</div>
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:11px;">
+            <span style="background:rgba(224,92,106,0.15);color:var(--red);border-radius:4px;padding:3px 8px;font-weight:600;">Passive</span>
+            <span style="color:var(--text-dim);">통증 있음 → Pin&Stretching · 소도구 자극</span>
+            <span style="color:var(--text-dim);margin-left:6px;">/ 통증 없음 + ROM↓</span>
+            <span style="color:var(--text-dim);">→</span>
+            <span style="background:rgba(232,196,74,0.15);color:var(--yellow);border-radius:4px;padding:3px 8px;font-weight:600;">AA</span>
+            <span style="color:var(--text-dim);">CIE · Hold&Relax · Pull&Push</span>
+            <span style="color:var(--text-dim);">→</span>
+            <span style="background:rgba(74,206,168,0.15);color:var(--green);border-radius:4px;padding:3px 8px;font-weight:600;">ROM 정상</span>
+            <span style="color:var(--text-dim);">→ 생활습관·자세 교육 → 기능운동</span>
+          </div>
+        </div>
+
+        <!-- 4파트 그리드 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+
+          <!-- Supine Lower -->
+          <div style="background:var(--bg3);border-radius:8px;padding:14px;border-top:2px solid var(--blue);">
+            <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:8px;font-family:'DM Mono',monospace;">SUPINE — Lower</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.9;">
+              · SLR (하지직거상)<br>
+              · Hip Flexion 패시브<br>
+              · 고관절 내·외회전<br>
+              · Knee-to-chest<br>
+              · Knee drop (흉요추 회전)
+            </div>
+          </div>
+
+          <!-- Supine Upper -->
+          <div style="background:var(--bg3);border-radius:8px;padding:14px;border-top:2px solid var(--blue);">
+            <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:8px;font-family:'DM Mono',monospace;">SUPINE — Upper</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.9;">
+              · 경추 굴곡·측굴·회전 패시브<br>
+              · 어깨 굴곡·외전 패시브<br>
+              · 어깨 외·내회전<br>
+              · 흉추 신전 (foam roller)<br>
+              · Chin tuck
+            </div>
+          </div>
+
+          <!-- Prone Lower -->
+          <div style="background:var(--bg3);border-radius:8px;padding:14px;border-top:2px solid rgba(74,157,232,0.5);">
+            <div style="font-size:11px;font-weight:700;color:rgba(74,157,232,0.8);margin-bottom:8px;font-family:'DM Mono',monospace;">PRONE — Lower</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.9;">
+              · 고관절 Extension 패시브<br>
+              · Prone knee bend (슬굴곡)<br>
+              · 고관절 내·외회전<br>
+              · 발목 배굴 패시브
+            </div>
+          </div>
+
+          <!-- Prone Upper -->
+          <div style="background:var(--bg3);border-radius:8px;padding:14px;border-top:2px solid rgba(74,157,232,0.5);">
+            <div style="font-size:11px;font-weight:700;color:rgba(74,157,232,0.8);margin-bottom:8px;font-family:'DM Mono',monospace;">PRONE — Upper</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.9;">
+              · 흉추 Extension 패시브 (Cobra)<br>
+              · 경추 Extension·회전<br>
+              · 어깨 외회전·신전 패시브<br>
+              · 견갑 내전 패시브
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 생활습관 교육 -->
+        <div style="background:rgba(74,206,168,0.06);border:1px solid rgba(74,206,168,0.15);border-radius:7px;padding:12px 14px;margin-bottom:10px;">
+          <div style="font-size:10px;font-weight:700;color:var(--accent);font-family:'DM Mono',monospace;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">ROM 정상 후 → 자세·생활습관 교육</div>
+          <div style="font-size:11px;color:var(--text-dim);">편하게 호흡하는 법 · 누운 자세에서 긴장 부위 인식</div>
+          <div style="font-size:11px;color:var(--text);font-weight:600;margin-bottom:6px;">목표 — 불필요한 긴장의 최소화</div>          
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.7;margin-bottom:10px;">
+            바른 자세의 궁극적인 목표는 올바른 형태가 아니라 <strong style="color:var(--text)">긴장 없는 상태</strong>다.
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px;">
+            <div style="background:var(--bg3);border-radius:6px;padding:8px;text-align:center;">
+              <div style="font-size:14px;margin-bottom:3px;">🌬</div>
+              <div style="font-size:10px;font-weight:600;color:var(--text);margin-bottom:2px;">편안한 호흡</div>
+              <div style="font-size:9px;color:var(--text-dim);">자연스럽게 흐름</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:6px;padding:8px;text-align:center;">
+              <div style="font-size:14px;margin-bottom:3px;">🧠</div>
+              <div style="font-size:10px;font-weight:600;color:var(--text);margin-bottom:2px;">긴장 자각</div>
+              <div style="font-size:9px;color:var(--text-dim);">스스로 판단</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:6px;padding:8px;text-align:center;">
+              <div style="font-size:14px;margin-bottom:3px;">🔄</div>
+              <div style="font-size:10px;font-weight:600;color:var(--text);margin-bottom:2px;">자기 조절</div>
+              <div style="font-size:9px;color:var(--text-dim);">스스로 해소</div>
+            </div>
+          </div>          
+          <div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-style:italic;">코치의 역할 — 이 세 가지를 스스로 할 수 있도록 안내하는 것</div>
+        </div>
+
+        <!-- 기능운동 -->
+        <div style="background:rgba(74,157,232,0.06);border:1px solid rgba(74,157,232,0.15);border-radius:8px;padding:14px;">
+          <div style="font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:0.1em;font-family:'DM Mono',monospace;margin-bottom:10px;">기능운동 — 천천히 · 밸런스 관찰 중심</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
+              <div style="font-size:11px;font-weight:700;color:var(--text-dim);margin-bottom:6px;">Supine 기반</div>
+              <div style="font-size:11px;color:var(--text);line-height:1.9;">
+                1) 발끝 pump → 무릎 굴신<br>
+                골반 틸트 (요추 분절)<br>
+                Chin tuck → 경추 굴곡<br>
+                <strong>2) Sit-up</strong> — 6단계 분절별<br>
+                <span style="font-size:10px;color:var(--text-dim);">천천히 · 좌우 밸런스 확인</span>
+              </div>
+            </div>
+            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
+              <div style="font-size:11px;font-weight:700;color:var(--text-dim);margin-bottom:6px;">Prone 기반</div>
+              <div style="font-size:11px;color:var(--text);line-height:1.9;">               
+                <strong>1) 손·발 들기 6단계</strong><br>
+                <span style="font-size:10px;color:var(--text-dim);">① 한팔 ② 한발 ③ 양팔<br>④ 양발 ⑤ 대각선 ⑥ 전신</span><br>
+                <strong>2) Push-up</strong> — 체간 안정 확인
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="advance-box">
+          <span class="advance-icon">↓</span>
+          <span>충족 시 다음 단계로 이동 : <strong style="color:var(--purple)">ROM 정상 + 교육 수행 + 기능운동 밸런스 확인</strong></span>
+        </div>
+      </div>
+
+      <!-- Sitting -->
+      <div class="pos-card sitting">
+        <div class="pos-header">
+          <div class="pos-icon">🟡</div>
+          <div>
+            <div class="pos-name">POSITION 2 — Sitting / 네발기기 자세</div>
+            <div class="pos-gravity">부분 하중 · Supine/Prone에서 주요 조직 문제 해결 후 진행</div>
+          </div>
+        </div>
+
+        <!-- 전제 설명 -->
+        <div style="background:rgba(232,147,74,0.06);border:1px solid rgba(232,147,74,0.15);border-radius:7px;padding:10px 14px;margin-bottom:10px;font-size:11px;color:var(--text-dim);line-height:1.6;">
+          Fascia·Muscle·Joint 문제는 Position 1에서 대부분 해결됐다고 예상 → <strong style="color:var(--text)">Active Stretching</strong> 중심으로 진행. Manual로 돌아갈 정도의 문제는 없을 것으로 예상.
+        </div>
+
+        <!-- Active Stretching — 경선별 4동작 -->
+        <div style="background:rgba(232,147,74,0.05);border:1px solid rgba(232,147,74,0.12);border-radius:7px;padding:12px 14px;margin-bottom:10px;">
+          <div style="font-size:10px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:0.1em;font-family:'DM Mono',monospace;margin-bottom:10px;">Active Stretching — 근막경선별 4동작</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+
+            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
+              <div style="font-size:10px;font-weight:700;color:var(--blue);margin-bottom:5px;">전방 경선 (Superficial Front Line)</div>
+              <div style="font-size:11px;color:var(--text-dim);line-height:1.8;">
+                ① 앉아서 경추 굴곡<br>
+                ② 흉추 굴곡 (라운드백)<br>
+                ③ 고관절 굴곡 (무릎 당기기)<br>
+                ④ 발목 배굴
+              </div>
+            </div>
+
+            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
+              <div style="font-size:10px;font-weight:700;color:var(--orange);margin-bottom:5px;">후방 경선 (Superficial Back Line)</div>
+              <div style="font-size:11px;color:var(--text-dim);line-height:1.8;">
+                ① 앉아서 경추 신전<br>
+                ② 흉추 신전 (가슴 열기)<br>
+                ③ 햄스트링 신장 (다리 뻗기)<br>
+                ④ 발목 저굴
+              </div>
+            </div>
+
+            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
+              <div style="font-size:10px;font-weight:700;color:var(--purple);margin-bottom:5px;">측방 경선 (Lateral Line)</div>
+              <div style="font-size:11px;color:var(--text-dim);line-height:1.8;">
+                ① 경추 측굴<br>
+                ② 흉추 측굴<br>
+                ③ 고관절 외전 신장<br>
+                ④ 발목 내·외번
+              </div>
+            </div>
+
+            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
+              <div style="font-size:10px;font-weight:700;color:var(--teal);margin-bottom:5px;">나선·회전 경선 (Spiral / Arm Line)</div>
+              <div style="font-size:11px;color:var(--text-dim);line-height:1.8;">
+                ① 경추 회전<br>
+                ② 흉추 회전 (한팔 열기)<br>
+                ③ 견갑 상방·하방 회전<br>
+                ④ GH Joint 내·외회전
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 생활습관 -->
+        <div style="background:rgba(74,206,168,0.06);border:1px solid rgba(74,206,168,0.15);border-radius:7px;padding:12px 14px;margin-bottom:10px;">
+          <div style="font-size:10px;font-weight:700;color:var(--accent);font-family:'DM Mono',monospace;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">자세·생활습관 교육</div>
+          <div style="font-size:11px;color:var(--text);font-weight:600;margin-bottom:4px;">목표 — 불필요한 긴장의 최소화</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.7;">
+            바르게 앉는 법 · 앉은 자세에서 척추 중립 + 긴장 부위 인식<br>
+            <span style="font-size:10px;">→ 편안한 호흡과 함께 불필요한 긴장 여부를 스스로 판단할 수 있도록 안내</span>
+          </div>
+        </div>
+
+        <!-- 기능운동 -->
+        <div style="padding:14px 16px;background:rgba(232,147,74,0.06);border:1px solid rgba(232,147,74,0.15);border-radius:8px;">
+          <div style="font-size:11px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:0.1em;font-family:'DM Mono',monospace;margin-bottom:10px;">기능운동 — 천천히 · 밸런스 관찰 중심</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
+              <div style="font-size:11px;font-weight:700;color:var(--text-dim);margin-bottom:6px;">스쿼트 5단계</div>
+              <div style="font-size:11px;color:var(--text);line-height:1.9;">
+                ① 의자에서 일어나는 법<br>
+                <div style="background:rgba(74,206,168,0.08);border:1px solid rgba(74,206,168,0.2);border-radius:5px;padding:6px 9px;margin:4px 0;">
+                  <span style="color:var(--accent);font-weight:700;">② 골반 중립 + 허리 이완 기립</span><br>
+                  <span style="font-size:10px;color:var(--text-dim);">천천히 일어나면서 골반 중립 위치 유지<br>허리 긴장 빼고 그 상태 인지하면서 기립<br>서는 과정의 몸 인식에 초점</span>
+                </div>
+                ③ 하프 스쿼트 — 천천히 앉기·서기<br>
+                <span style="font-size:10px;color:var(--text-dim);padding-left:12px;">발끝·무릎·고관절 정렬 확인</span><br>
+                ④ 풀 스쿼트<br>
+                <span style="font-size:10px;color:var(--text-dim);padding-left:12px;">최하단에서 골반 중립·허리 이완 유지</span><br>
+                ⑤ <strong style="color:var(--orange)">스쿼트 완성</strong><br>
+                <span style="font-size:10px;color:var(--text-dim);padding-left:12px;">템포 조절 · 좌우 밸런스 확인</span>
+              </div>
+            </div>
+            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
+              <div style="font-size:11px;font-weight:700;color:var(--text-dim);margin-bottom:6px;">척추·견갑·GH 분절 운동</div>
+              <div style="font-size:11px;color:var(--text);line-height:1.8;">
+                Flexion / Extension<br>
+                <span style="font-size:10px;color:var(--text-dim);">↓ 경추→흉추→요추 분절별</span><br>
+                Lateral Flexion<br>
+                Rotation<br>
+                <span style="font-size:10px;color:var(--text-dim);">↓ 견갑 + GH Joint 포함</span><br>
+                <span style="font-size:10px;color:var(--text-dim);">좌우 대칭·밸런스 관찰</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="advance-box">
+          <span class="advance-icon">↓</span>
+          <span>충족 시 다음 단계로 이동 : <strong style="color:var(--purple)">스트레칭 완료 + 교육 수행 + 스쿼트 밸런스 확인</strong></span>
+        </div>
+      </div>
+
+      <!-- Standing -->
+      <div class="pos-card standing">
+        <div class="pos-header">
+          <div class="pos-icon">🟢</div>
+          <div>
+            <div class="pos-name">POSITION 3 — Standing (선 자세)</div>
+            <div class="pos-gravity">완전 하중 · 최종 기능 확인 단계</div>
+          </div>
+        </div>
+
+        <!-- 전제 설명 -->
+        <div style="background:rgba(74,206,168,0.06);border:1px solid rgba(74,206,168,0.15);border-radius:7px;padding:10px 14px;margin-bottom:10px;font-size:11px;color:var(--text-dim);line-height:1.6;">
+          Position 1·2에서 조직 문제 해결 완료 후 진행 → <strong style="color:var(--text)">Active Stretching</strong> 중심. 상체 4가지·하체 4가지 동작으로 구성.
+        </div>
+
+        <!-- Active Stretching — 상체·하체 4동작 -->
+        <div style="background:rgba(74,206,168,0.05);border:1px solid rgba(74,206,168,0.12);border-radius:7px;padding:12px 14px;margin-bottom:10px;">
+          <div style="font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.1em;font-family:'DM Mono',monospace;margin-bottom:10px;">Active Stretching — 상체 4 · 하체 4</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+
+            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
+              <div style="font-size:10px;font-weight:700;color:var(--blue);margin-bottom:6px;">상체 (Upper) × 4</div>
+              <div style="font-size:11px;color:var(--text-dim);line-height:1.9;">
+                ① 경추 굴신·측굴·회전<br>
+                ② 흉추 신전 (팔 교차 뒤로)<br>
+                ③ 흉추 회전 (서서 한팔 열기)<br>
+                ④ 어깨 굴곡·수평 내전<br>
+                <span style="font-size:10px;color:var(--text-dim);">↓ Roll down — 경추→흉추→요추 순</span>
+              </div>
+            </div>
+
+            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
+              <div style="font-size:10px;font-weight:700;color:var(--orange);margin-bottom:6px;">하체 (Lower) × 4</div>
+              <div style="font-size:11px;color:var(--text-dim);line-height:1.9;">
+                ① 서서 햄스트링 스트레칭<br>
+                ② 서서 고관절 굴곡근 스트레칭<br>
+                ③ 종아리·발목 스트레칭<br>
+                ④ 측굴 — IT band·외측 경선<br>
+                <span style="font-size:10px;color:var(--text-dim);">↓ Roll up — 요추→흉추→경추 순</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 생활습관 -->
+        <div style="background:rgba(74,206,168,0.06);border:1px solid rgba(74,206,168,0.15);border-radius:7px;padding:12px 14px;margin-bottom:10px;">
+          <div style="font-size:10px;font-weight:700;color:var(--accent);font-family:'DM Mono',monospace;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">자세·생활습관 교육</div>
+          <div style="font-size:11px;color:var(--text);font-weight:600;margin-bottom:4px;">목표 — 불필요한 긴장의 최소화</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.7;">
+            바르게 서는 법 · 바르게 걷는 법<br>
+            <span style="font-size:10px;">→ 이상적인 자세의 최종 목표: 편안한 호흡과 함께 스스로 불필요한 긴장을 인지하고 해소할 수 있는 상태</span>
+          </div>
+        </div>
+
+        <!-- 기능운동 -->
+        <div style="background:rgba(74,206,168,0.04);border:1px solid rgba(74,206,168,0.2);border-radius:8px;padding:16px 18px;">
+          <div style="font-size:11px;font-weight:700;color:var(--green);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">기능운동 — 전신 통합</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+
+            <div style="background:var(--bg3);border-radius:6px;padding:12px 14px;">
+              <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:6px;">림프 전신 운동</div>
+              <div style="font-size:11px;color:var(--text-dim);line-height:1.8;">
+                전신 림프 순환 촉진<br>
+                리듬감 있는 반복 동작<br>
+                <span style="font-size:10px;color:var(--text-dim);">정체된 체액·노폐물 순환<br>면역·회복 기능 활성화</span>
+              </div>
+            </div>
+
+            <div style="background:var(--bg3);border-radius:6px;padding:12px 14px;">
+              <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:6px;">근막경선 운동</div>
+              <div style="font-size:11px;color:var(--text-dim);line-height:1.8;">
+                경선을 따라 순차 활성화<br>
+                말단→근위부 · Flexion/Extension<br>
+                <span style="font-size:10px;color:var(--text-dim);">척추 분절별 움직임<br>전신 장력 통합 인식</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 인대 · 힘줄 결합조직 손상 — 치료 옵션 & 생활 관리 (중재보다 관리 우선) -->
+        <div style="margin-top:16px;background:rgba(155,111,232,0.08);border:1px solid rgba(155,111,232,0.28);border-radius:10px;padding:18px 20px;">
+          <div style="font-size:12px;font-weight:700;color:var(--purple);margin-bottom:4px;font-family:'DM Mono',monospace;letter-spacing:0.06em;">인대 · 힘줄 결합조직 손상</div>          
+
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.65;margin-bottom:14px;">
+            인대·힘줄·근육 파열은 모두 <strong style="color:var(--text)">콜라겐 섬유(결합조직)의 찢어짐</strong>으로 비슷한 통증을 보일 수 있어 역할에 따라 감별한다.
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:16px;">
+            <div style="background:var(--bg3);border-radius:7px;padding:12px 13px;border-left:3px solid var(--purple);">
+              <div style="font-size:12px;font-weight:700;color:var(--purple);margin-bottom:6px;">인대 (Ligament)</div>
+              <div style="font-size:11px;color:var(--text-dim);line-height:1.55;">
+                <span style="color:var(--blue);font-weight:600">유발:</span> 패시브하게 늘렸을 때 · end-range 통증 · 스트레스 검사 양성 · 불안정감
+              </div>
+            </div>
+            <div style="background:var(--bg3);border-radius:7px;padding:12px 13px;border-left:3px solid var(--yellow);">
+              <div style="font-size:12px;font-weight:700;color:var(--yellow);margin-bottom:6px;">힘줄 (Tendon)</div>
+              <div style="font-size:11px;color:var(--text-dim);line-height:1.55;">
+                <span style="color:var(--orange);font-weight:600">유발:</span> 힘을 줄 때 · 부착부 압통 · 저항 검사 양성
+              </div>
+            </div>
+            <div style="background:var(--bg3);border-radius:7px;padding:12px 13px;border-left:3px solid var(--orange);">
+              <div style="font-size:12px;font-weight:700;color:var(--orange);margin-bottom:6px;">근육 파열</div>
+              <div style="font-size:11px;color:var(--text-dim);line-height:1.55;">
+                <span style="color:var(--orange);font-weight:600">유발:</span> 수축·저항 시 · 근복부 압통·멍 · 근력 저하
+              </div>
+            </div>
+          </div>
+
+          <div style="background:rgba(155,111,232,0.12);border-radius:8px;padding:12px 14px;margin-bottom:14px;">
+            <div style="font-size:11px;font-weight:700;color:var(--purple);margin-bottom:8px;">임상에서 추천하는 치료 옵션</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.65;">
+              증상 완화·조직 환경 개선 목적으로 <strong style="color:var(--text)">주사 · 충격파 · 침</strong> 등을 단계적으로 고려할 수 있다. 다만 이들은 <strong style="color:var(--text)">치료보다 관리가 우선</strong>일 때 비로소 의미가 있다.
+            </div>
+          </div>
+
+          <div style="font-size:11px;font-weight:700;color:var(--purple);margin-bottom:8px;">치료보다 관리가 더 중요한 이유</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.75;margin-bottom:14px;">
+            손상된 부위는 말 그대로 <strong style="color:var(--text)">찢어진 상태</strong>다. 그 부위에 계속해서 찢어지게 하는 스트레스가 반복되면, 아무리 좋은 치료를 받아도 <strong style="color:var(--text)">아물 만 하면 다시 찢히고</strong>, 그 결과 <strong style="color:var(--text)">회복 기간이 점점 길어진다</strong>.
+          </div>
+
+          <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:8px;">생활·운동 관리 포인트</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.75;margin-bottom:14px;">
+            <strong style="color:var(--text)">족저근막염·테니스 엘보</strong> 등에서는 통증 부위를 <strong style="color:var(--text)">늘리거나 당기는 동작</strong>을 가급적 피한다. Manual Therapy와 병행하여 힘줄과 연관된 근육의 <strong style="color:var(--text)">tightness를 잘 풀어 주면</strong> 손상된 힘줄에 가해지는 <strong style="color:var(--text)">장력을 줄여</strong> 회복에 도움이 된다.
+          </div>
+
+          <div style="background:var(--bg3);border-radius:8px;padding:12px 14px;border-left:3px solid rgba(224,92,106,0.6);">
+            <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:8px;">약 3주 Rule &amp; 재손상 주의</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.75;">
+              대략 <strong style="color:var(--text)">3주 정도는 통증이 나타나는 동작을 하지 않도록</strong> 안내한다. 괜히 “나았는지 확인”하려고 움직였다가 통증이 다시 뜨면 <strong style="color:var(--text)">다시 찢은 것</strong>으로 보고, 회복 타이밍이 <strong style="color:var(--text)">처음부터 다시 시작</strong>된다고 분명히 안내한다.
+            </div>
+          </div>
+        </div>
+
+        <div class="advance-box">
+          <span class="advance-icon">✓</span>
+          <span>충족 시 프로토콜 완료 : <strong style="color:var(--purple)">스트레칭 완료 + 교육 수행 + 기능운동 밸런스 확인</strong></span>
+        </div>
+      </div>
+
     </div>
   </div>
+
 </div>
-
-<!-- ══════════════════════════════
-     PATIENT Q — 부위
-══════════════════════════════ -->
-<div class="screen" id="s-p2">
-  <div class="wrap">
-    <div class="q-header">
-      <div class="q-step">3단계</div>
-      <div class="q-title">어디가 불편하세요?</div>
-      <div class="q-sub">가장 불편한 부위를 선택해주세요</div>
-    </div>
-    <div class="option-list">
-      <div class="option" onclick="pSet('area','neck'); bc('목·어깨'); goS('s-p3')"><div class="opt-ico">🔵</div><div><div class="opt-name">목·어깨</div><div class="opt-desc">목 통증, 어깨 뭉침, 두통 포함</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="pSet('area','back'); bc('허리·골반'); goS('s-p3')"><div class="opt-ico">🟠</div><div><div class="opt-name">허리·골반</div><div class="opt-desc">허리 통증, 골반 불균형, 좌골신경통 포함</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="pSet('area','leg'); bc('무릎·하지'); goS('s-p3')"><div class="opt-ico">🟡</div><div><div class="opt-name">무릎·하지</div><div class="opt-desc">무릎 통증, 발목, 종아리, 고관절 포함</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="pSet('area','full'); bc('전신'); goS('s-p3')"><div class="opt-ico">🔴</div><div><div class="opt-name">여러 곳이 불편해요</div><div class="opt-desc">특정 부위를 딱 짚기 어려운 경우</div></div><div class="opt-arr">›</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- PATIENT Q — 통증 종류 -->
-<div class="screen" id="s-p3">
-  <div class="wrap">
-    <div class="q-header">
-      <div class="q-step">4단계</div>
-      <div class="q-title">어떻게 아프세요?</div>
-      <div class="q-sub">가장 가까운 느낌을 선택해주세요</div>
-    </div>
-    <div class="option-list">
-      <div class="option" onclick="pSet('quality','aching'); bc('뻐근·묵직'); showPatientResult()"><div class="opt-ico">😤</div><div><div class="opt-name">뻐근하고 묵직해요</div><div class="opt-desc">누르면 시원한 느낌 · 근육이 뭉친 느낌</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="pSet('quality','tight'); bc('당김·뻣뻣'); showPatientResult()"><div class="opt-ico">↔️</div><div><div class="opt-name">당기고 뻣뻣해요</div><div class="opt-desc">늘릴 때 당기는 느낌 · 아침에 특히 심함</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="pSet('quality','sharp'); bc('찌릿·저림'); showPatientResult()"><div class="opt-ico">⚡</div><div><div class="opt-name">찌릿하거나 저려요</div><div class="opt-desc">전기 오는 느낌 · 팔다리로 뻗는 통증</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="pSet('quality','sharp_local'); bc('날카로운'); showPatientResult()"><div class="opt-ico">📍</div><div><div class="opt-name">날카롭게 한 점이 아파요</div><div class="opt-desc">특정 동작에서 강하게 · 관절 느낌</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="pSet('quality','tear'); bc('찢어지는'); showPatientResult()"><div class="opt-ico">💥</div><div><div class="opt-name">찢어지는 느낌이에요</div><div class="opt-desc">갑자기 생긴 강한 통증 · 부종 동반</div></div><div class="opt-arr">›</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════
-     WELLNESS Q — 프로그램 선택
-══════════════════════════════ -->
-<div class="screen" id="s-p-wellness">
-  <div class="wrap">
-    <div class="q-header">
-      <div class="q-step wellness">웰니스 · 2단계</div>
-      <div class="q-title">어떤 프로그램을 원하세요?</div>
-      <div class="q-sub">목표에 맞는 프로그램을 선택해주세요</div>
-    </div>
-    <div class="option-list">
-      <div class="option" style="border-color:var(--green-border);" onclick="pSet('goal','stretch'); bc('스트레칭'); showWellnessResult()">
-        <div class="opt-ico">🤸</div><div><div class="opt-name">스트레칭</div><div class="opt-desc">P-스트레칭 · 근막경선 스트레칭 · 유연성 향상</div></div><div class="opt-arr">›</div>
-      </div>
-      <div class="option" style="border-color:var(--green-border);" onclick="pSet('goal','posture'); bc('자세·체형 교정'); showWellnessResult()">
-        <div class="opt-ico">📐</div><div><div class="opt-name">자세·체형 교정</div><div class="opt-desc">거북목, 굽은 어깨, 골반 불균형 개선</div></div><div class="opt-arr">›</div>
-      </div>
-      <div class="option" style="border-color:var(--green-border);" onclick="pSet('goal','fitness'); bc('기능·체력 향상'); showWellnessResult()">
-        <div class="opt-ico">💪</div><div><div class="opt-name">기능·체력 향상</div><div class="opt-desc">기능운동, 근막경선 운동, 전신 밸런스</div></div><div class="opt-arr">›</div>
-      </div>
-      <div class="option" style="border-color:var(--green-border);" onclick="pSet('goal','face'); bc('얼굴 교정·관리'); showWellnessResult()">
-        <div class="opt-ico">✨</div><div><div class="opt-name">얼굴 교정·관리</div><div class="opt-desc">안면 비대칭, 얼굴 축소, 균형 회복</div></div><div class="opt-arr">›</div>
-      </div>
-      <div class="option" style="border-color:var(--green-border);" onclick="pSet('goal','prevention'); bc('예방·셀프 케어'); showWellnessResult()">
-        <div class="opt-ico">🌿</div><div><div class="opt-name">예방·유지 관리 (셀프 통증 케어)</div><div class="opt-desc">스스로 관리하는 법 습득 · 재발 방지</div></div><div class="opt-arr">›</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- RESULT 화면 -->
-<div class="screen" id="s-result">
-  <div class="wrap">
-    <div id="result-content"></div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════
-     EXPERT Q1 — 원하는 것
-══════════════════════════════ -->
-<div class="screen" id="s-e1">
-  <div class="wrap">
-    <div class="q-header">
-      <div class="q-step" style="background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber);">전문가 · 1/3</div>
-      <div class="q-title">어떤 걸 배우고 싶으세요?</div>
-      <div class="q-sub">가장 관심 있는 분야를 선택해주세요</div>
-    </div>
-    <div class="option-list">
-      <div class="option" onclick="eSet('want','cmt'); bc('CMT 도수치료'); goS('s-e2')">
-        <div class="opt-ico">🦴</div><div><div class="opt-name">카이로프랙틱 · 도수치료 (CMT)</div><div class="opt-desc">근막·근육·관절 치료 · 척추 교정 · 의료인 대상</div></div><div class="opt-arr">›</div>
-      </div>
-      <div class="option" onclick="eSet('want','ifc'); bc('IFC 얼굴교정'); goS('s-e2')">
-        <div class="opt-ico">✨</div><div><div class="opt-name">얼굴 교정 · 관리 (IFC)</div><div class="opt-desc">안면 비대칭 · 얼굴 축소 · 누구나 가능</div></div><div class="opt-arr">›</div>
-      </div>
-      <div class="option" onclick="eSet('want','pstr'); bc('Re:Al 움직임'); goS('s-e2')">
-        <div class="opt-ico">🤸</div><div><div class="opt-name">P-스트레칭 · 움직임 (Re:Al)</div><div class="opt-desc">PAR 운동 시스템 · 자세 교정 · 누구나 가능</div></div><div class="opt-arr">›</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- EXPERT Q2 -->
-<div class="screen" id="s-e2">
-  <div class="wrap">
-    <div class="q-header">
-      <div class="q-step" style="background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber);">전문가 · 2/3</div>
-      <div class="q-title">어떤 분야에 계세요?</div>
-      <div class="q-sub">현재 직군을 선택해주세요</div>
-    </div>
-    <div class="option-list" id="e2-default">
-      <div class="option" onclick="eSet('type','medical'); bc('의료인'); goS('s-e3')"><div class="opt-ico">🏥</div><div><div class="opt-name">의사 · 물리치료사 · 카이로프랙터</div><div class="opt-desc">의료인 · 의료기사</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="eSet('type','wellness'); bc('웰니스 전문가'); goS('s-e3')"><div class="opt-ico">🧘</div><div><div class="opt-name">필라테스 · 트레이너 · 요가 강사</div><div class="opt-desc">웰니스 · 피트니스 분야</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="eSet('type','beginner'); bc('입문자'); goS('s-e3')"><div class="opt-ico">🌱</div><div><div class="opt-name">막 시작했거나 공부 중이에요</div><div class="opt-desc">경험이 많지 않지만 배우고 싶음</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="eSet('type','other'); bc('기타'); goS('s-e3')"><div class="opt-ico">💼</div><div><div class="opt-name">기타</div><div class="opt-desc">다른 분야 · 개인 관심</div></div><div class="opt-arr">›</div></div>
-    </div>
-
-    <div class="option-list" id="e2-cmt" style="display:none;">
-      <div class="option" onclick="eSet('type','doctor'); bc('의사·한의사'); goS('s-e3')"><div class="opt-ico">🩺</div><div><div class="opt-name">의사 · 한의사</div><div class="opt-desc">의료인</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="eSet('type','pt'); bc('물리치료사'); goS('s-e3')"><div class="opt-ico">🧑‍⚕️</div><div><div class="opt-name">물리치료사</div><div class="opt-desc">의료기사</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="eSet('type','pt_student'); bc('물리치료학과 학생'); goS('s-e3')"><div class="opt-ico">🎓</div><div><div class="opt-name">물리치료학과 학생</div><div class="opt-desc">재학/실습 중</div></div><div class="opt-arr">›</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- EXPERT Q3 -->
-<div class="screen" id="s-e3">
-  <div class="wrap">
-    <div class="q-header">
-      <div class="q-step" style="background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber);">전문가 · 3/3</div>
-      <div class="q-title">현재 경험이 어느 정도인가요?</div>
-      <div class="q-sub">비슷한 교육을 받아본 적 있나요?</div>
-    </div>
-    <div class="option-list">
-      <div class="option" onclick="eSet('level','none'); bc('처음'); showExpertResult()"><div class="opt-ico">🌱</div><div><div class="opt-name">처음입니다</div><div class="opt-desc">관련 교육을 거의 받아본 적 없어요</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="eSet('level','basic'); bc('기초 있음'); showExpertResult()"><div class="opt-ico">📚</div><div><div class="opt-name">기초 지식은 있어요</div><div class="opt-desc">이론은 알지만 실습이 부족해요</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="eSet('level','advanced'); bc('실무 중'); showExpertResult()"><div class="opt-ico">⚡</div><div><div class="opt-name">실무 중입니다</div><div class="opt-desc">현장에서 쓰고 있지만 더 배우고 싶어요</div></div><div class="opt-arr">›</div></div>
-    </div>
-  </div>
-</div>
-
-<script>
-// ── STATE ──
-const H = ['s-home'];
-let P = {}, E = {};
-let selectedVasZone = null;
-let bcPath = [];
-
-function pSet(k,v){ P[k]=v; }
-function eSet(k,v){ E[k]=v; }
-
-function bc(label){
-  bcPath.push(label);
-  updateBc();
-}
-
-function updateBc(){
-  const bar = document.getElementById('bcBar');
-  if(bcPath.length === 0){ bar.classList.add('hidden'); return; }
-  bar.classList.remove('hidden');
-  bar.innerHTML = ['홈', ...bcPath].map((c,i,arr) => {
-    const isLast = i === arr.length - 1;
-    return `<span class="bc-item${isLast?' active':''}">${c}</span>${!isLast?'<span class="bc-sep">›</span>':''}`;
-  }).join('');
-}
-
-function goS(id){
-  document.querySelector('.screen.active').classList.remove('active');
-  document.getElementById(id).classList.add('active');
-  H.push(id);
-  if(id === 's-e2'){
-    const isCmt = E && E.want === 'cmt';
-    const elDefault = document.getElementById('e2-default');
-    const elCmt = document.getElementById('e2-cmt');
-    if(elDefault && elCmt){
-      elDefault.style.display = isCmt ? 'none' : '';
-      elCmt.style.display = isCmt ? '' : 'none';
-    }
-  }
-  updateProgress(id);
-  window.scrollTo(0,0);
-}
-
-function goBack(){
-  if(H.length<=1) return;
-  H.pop();
-  // 브레드크럼도 되돌리기
-  if(bcPath.length>0){ bcPath.pop(); updateBc(); }
-  const prev = H[H.length-1];
-  document.querySelector('.screen.active').classList.remove('active');
-  document.getElementById(prev).classList.add('active');
-  updateProgress(prev);
-  window.scrollTo(0,0);
-}
-
-function goHome(){
-  H.length=0; H.push('s-home');
-  P={}; E={}; bcPath=[]; selectedVasZone=null;
-  document.querySelector('.screen.active').classList.remove('active');
-  document.getElementById('s-home').classList.add('active');
-  document.getElementById('bcBar').classList.add('hidden');
-  document.getElementById('progressFill').style.width='0%';
-  document.getElementById('backBtn').classList.add('hidden');
-  document.getElementById('homeBtn').classList.add('hidden');
-  // VAS 초기화
-  document.getElementById('vasThumb').style.display='none';
-  ['vz-low','vz-mid','vz-high'].forEach(id=>document.getElementById(id).classList.remove('selected'));
-  document.getElementById('vasConfirmBtn').classList.remove('ready');
-  window.scrollTo(0,0);
-}
-
-function startPatient(){ goS('s-p1'); }
-function startExpert(){ goS('s-e1'); }
-
-const treatmentFlow = ['s-home','s-p1','s-p-vas','s-p2','s-p3','s-result'];
-const wellnessFlow  = ['s-home','s-p1','s-p-wellness','s-result'];
-const expertFlow    = ['s-home','s-e1','s-e2','s-e3','s-result'];
-
-function updateProgress(id){
-  const isHome = H.length <= 1;
-  document.getElementById('backBtn').classList.toggle('hidden', isHome);
-  document.getElementById('homeBtn').classList.toggle('hidden', isHome);
-  let pct = 0;
-  if(treatmentFlow.includes(id)){
-    const idx = treatmentFlow.indexOf(id);
-    pct = Math.min((idx/5)*100, 100);
-  } else if(wellnessFlow.includes(id)){
-    const idx = wellnessFlow.indexOf(id);
-    pct = Math.min((idx/3)*100, 100);
-  } else if(expertFlow.includes(id)){
-    const idx = expertFlow.indexOf(id);
-    pct = Math.min((idx/4)*100, 100);
-  }
-  document.getElementById('progressFill').style.width = pct + '%';
-}
-
-// ── VAS ──
-function handleVasClick(e){
-  const scale = document.getElementById('vasScale');
-  const rect = scale.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const pct = Math.max(0, Math.min(1, x / rect.width));
-  const val = Math.round(pct * 10);
-  const thumb = document.getElementById('vasThumb');
-  thumb.style.display = 'flex';
-  thumb.style.left = (pct*100) + '%';
-  thumb.textContent = val;
-  // 자동 존 선택
-  if(val <= 3) selectVasZone('low');
-  else if(val <= 6) selectVasZone('mid');
-  else selectVasZone('high');
-}
-
-function selectVasZone(zone){
-  selectedVasZone = zone;
-  ['vz-low','vz-mid','vz-high'].forEach(id => document.getElementById(id).classList.remove('selected'));
-  document.getElementById('vz-'+zone).classList.add('selected');
-  P.severity = zone === 'low' ? 'mild' : zone === 'mid' ? 'moderate' : 'severe';
-  const thumb = document.getElementById('vasThumb');
-  thumb.style.display = 'flex';
-  if(zone==='low'){ thumb.style.left='15%'; thumb.textContent='2'; }
-  else if(zone==='mid'){ thumb.style.left='50%'; thumb.textContent='5'; }
-  else { thumb.style.left='85%'; thumb.textContent='8'; }
-  // bc 중복 방지 — VAS 관련 항목 제거 후 새로 추가
-  bcPath = bcPath.filter(x => !x.includes('경증') && !x.includes('중등도') && !x.includes('중증'));
-  const label = zone==='low'?'경증 (1~3)':zone==='mid'?'중등도 (4~6)':'중증 (7~10)';
-  bcPath.push(label);
-  updateBc();
-  // 바로 다음 단계로 이동
-  setTimeout(() => goS('s-p2'), 300);
-}
-
-function confirmVas(){
-  if(!selectedVasZone) return;
-  goS('s-p2');
-}
-
-// ── PATIENT RESULT ──
-function showPatientResult(){
-  document.getElementById('result-content').innerHTML = renderPatientResult();
-  goS('s-result');
-}
-
-function getTissueName(q){
-  return q==='aching'?'근육 (Muscle)':q==='tight'?'근막 (Fascia)':q==='sharp'?'신경':q==='sharp_local'?'관절 (Joint)':'결합조직 (힘줄·인대)';
-}
-
-function renderRoadmapSteps(steps, activeId){
-  const stepIdx = Math.max(0, steps.findIndex(x => x.id === activeId));
-  return steps.map((s, thisIdx) => {
-    const isActive = s.id === activeId;
-    const isNext   = thisIdx > stepIdx;
-    const isPrev   = thisIdx < stepIdx;
-    return `<div class="rs ${isActive?'active':isNext?'done':isPrev?'dim-step':''}">
-      <div class="rs-dot">${isActive?'★':isNext?'✓':''}</div>
-      <div class="rs-info">
-        <div class="rs-label">${s.label}${isActive?'<span class="rs-badge">현재</span>':isNext?'<span class="rs-badge next-badge">다음</span>':''}</div>
-        <div class="rs-desc">${s.desc}${s.vas?` <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--border);">${s.vas}</span>`:''}</div>
-      </div></div>`;
-  }).join('');
-}
-
-function renderPatientResult(){
-  const { severity, area, quality } = P;
-  const areaName = area==='neck'?'목·어깨':area==='back'?'허리·골반':area==='leg'?'무릎·하지':'전신';
-  const tissue = getTissueName(quality);
-
-  // 현재 단계 결정
-  let activeStep = 'manual';
-  if(severity==='severe') activeStep = 'invasive';
-  else if(severity==='mild' && quality==='tight') activeStep = 'pstr';
-  else if(severity==='mild') activeStep = 'pstr';
-
-  // 권장 문구
-  const recs = {
-    invasive: { name:'전문 의료 상담 권장', desc:'통증이 심한 상태입니다. 정확한 평가 후 약물·주사·시술 등 침습적 치료 방향을 결정하는 것이 좋습니다.', next:'통증이 줄어들면 도수치료(Manual Therapy)로 이어집니다.', alt:'영상 검사(X-Ray·MRI)로 구조적 원인을 먼저 확인하는 것을 권장합니다.' },
-    manual:   { name:'도수치료 + P-스트레칭', desc:`예상 원인: <strong>${tissue}</strong>. 손으로 직접 근막·근육·관절을 풀어내고 이후 단계적 운동으로 이어집니다.`, next:'P-스트레칭 → Assisted Active → Active 운동으로 진행합니다.', alt:'여러 세션 후 개선이 없다면 촉진(Palpation) 재평가 후 접근법을 변경합니다.' },
-    pstr:     { name:'P-스트레칭 + 자세 교정', desc:'통증은 경미하지만 근막·관절의 움직임을 회복하는 것이 핵심입니다.', next:'기능운동 → 자세 교정 → 일상 유지로 이어집니다.', alt:'운동 중 통증이 심해지면 도수치료로 돌아가 재평가합니다.' },
-  };
-  const rec = recs[activeStep] || recs['manual'];
-
-  // 단일 로드맵(순서대로 연결)
-  const steps = [
-    { id:'invasive',  label:'침습적 치료', desc:'약물 · 주사 · 시술 · 수술', vas:'VAS 7~10' },
-    { id:'manual',    label:'도수치료 (Manual Therapy)', desc:'Fascia · Muscle · 관절 수기 치료', vas:'VAS 3~6' },
-    { id:'pstr',      label:'Passive Stretching', desc:'안전한 움직임 평가 + 유연성 향상', vas:'VAS 0~3' },
-    { id:'aa',        label:'Assisted Active', desc:'ROM 회복 · CIE · Hold&Relax · Pull&Push', vas:'' },
-    { id:'active',    label:'Active — 자세·생활습관', desc:'불필요한 긴장 최소화 · 편안한 호흡', vas:'' },
-    { id:'resistive', label:'Resistive — 기능운동', desc:'근막경선 운동 · 림프 전신 운동', vas:'' },
-  ];
-  const roadmapHtml = renderRoadmapSteps(steps, activeStep);
-
-  return `
-    <div class="result-hero treatment">
-      <div class="result-tag">맞춤 분석 완료</div>
-      <div class="result-title">${rec.name}</div>
-      <div class="result-sub">${areaName} · 예상 원인: ${tissue}</div>
-    </div>
-
-    <div class="roadmap-card">
-      <div class="roadmap-title">전체 로드맵 — 현재 위치</div>
-
-      <div class="roadmap-section">
-        ${roadmapHtml}
-      </div>
-    </div>
-
-    <div class="info-card rec">
-      <h4>✅ 권장 프로그램</h4>
-      <p>${rec.desc}</p>
-    </div>
-    <div class="info-card next">
-      <h4>➡️ 개선되면 다음 단계</h4>
-      <p>${rec.next}</p>
-    </div>
-    <div class="info-card alt">
-      <h4>⚠️ 개선이 안 된다면</h4>
-      <p>${rec.alt}</p>
-    </div>
-
-    <a href="http://pf.kakao.com/_nVSxdn/chat" target="_blank" class="contact-bar">
-      <div><div class="ct-text">지금 바로 상담 시작하기</div><div class="ct-sub">결과를 바탕으로 정확한 안내를 드립니다</div></div>
-      <span style="font-size:22px;">💬</span>
-    </a>
-    <div class="note-box">※ 이 결과는 간단한 자가 가이드이며, 정확한 평가는 전문가 상담이 필요합니다.</div>
-  `;
-}
-
-// ── WELLNESS RESULT ──
-function showWellnessResult(){
-  document.getElementById('result-content').innerHTML = renderWellnessResult();
-  goS('s-result');
-}
-
-const wellnessProgs = {
-  stretch:    { name:'P-스트레칭 프로그램',   desc:'Passive Stretching부터 근막경선 Active 스트레칭까지. 유연성과 가동범위를 단계적으로 회복합니다.', next:'스트레칭이 익숙해지면 기능운동·체력 향상으로 연결됩니다.' },
-  posture:    { name:'자세·체형 교정 프로그램', desc:'불필요한 긴장을 없애고 편안한 호흡이 기준이 되는 바른 자세를 만들어갑니다. 누운 자세→앉기→서기 순으로 진행합니다.', next:'자세가 안정되면 기능운동·스포츠 활동으로 이어집니다.' },
-  fitness:    { name:'기능·체력 향상 프로그램', desc:'PAR 시스템(Passive·Active·Resistive)으로 단계적으로 기능과 체력을 끌어올립니다. 림프 전신 운동과 근막경선 운동이 포함됩니다.', next:'기능이 향상되면 스포츠·고강도 훈련으로 연결할 수 있습니다.' },
-  face:       { name:'IFC 얼굴 교정 프로그램',  desc:'두개골·안면 구조와 자세의 연결에서 접근합니다. 비수술 비침습으로 자연스러운 얼굴 균형을 회복합니다.', next:'얼굴 교정 후 자세·체형 관리와 병행하면 더욱 효과적입니다.' },
-  prevention: { name:'예방·셀프 케어 프로그램',  desc:'생활습관 코칭 중심으로 스스로 몸을 관리하는 법을 익힙니다. 재발 방지와 장기적인 건강 유지가 목표입니다.', next:'셀프 케어 습득 후 정기적인 체크업으로 유지합니다.' },
-};
-
-function renderWellnessResult(){
-  const prog = wellnessProgs[P.goal] || wellnessProgs['posture'];
-
-  // 목표별 시작 단계
-  // - 스트레칭/예방 셀프케어: Passive Stretching부터
-  // - 얼굴 교정: 도수치료 대신 '수기 관리'부터
-  let activeStep = 'active';
-  if(P.goal === 'stretch' || P.goal === 'prevention') activeStep = 'pstr';
-  if(P.goal === 'face') activeStep = 'hand';
-
-  const steps = [
-    { id:'invasive',  label:'침습적 치료', desc:'약물 · 주사 · 시술', vas:'VAS 7↑' },
-    { id:'hand',      label:'수기 관리', desc:'얼굴·두개·경추 라인 수기 케어', vas:'' },
-    { id:'manual',    label:'도수치료 (Manual Therapy)', desc:'Fascia · Muscle · 관절 수기 치료', vas:'VAS 3~6' },
-    { id:'pstr',      label:'Passive Stretching', desc:'유연성 향상', vas:'VAS 0~3' },
-    { id:'aa',        label:'Assisted Active', desc:'ROM 회복 테크닉', vas:'VAS 0~2' },
-    { id:'active',    label:'Active — 자세·생활습관', desc:'불필요한 긴장 최소화 · 편안한 호흡 · 자기 조절', vas:'' },
-    { id:'resistive', label:'Resistive — 기능운동', desc:'근막경선 운동 · 림프 전신 운동 · 밸런스 훈련', vas:'' },
-  ];
-
-  // 얼굴 교정의 경우 도수치료 단계를 로드맵에서 숨김(대신 수기 관리 사용)
-  const filteredSteps = (P.goal === 'face')
-    ? steps.filter(s => s.id !== 'manual')
-    : steps.filter(s => s.id !== 'hand');
-
-  const roadmapHtml = renderRoadmapSteps(filteredSteps, activeStep);
-
-  return `
-    <div class="result-hero wellness">
-      <div class="result-tag">맞춤 프로그램 추천</div>
-      <div class="result-title">${prog.name}</div>
-      <div class="result-sub">목표에 맞춰 순서대로 진행합니다</div>
-    </div>
-
-    <div class="roadmap-card">
-      <div class="roadmap-title">전체 로드맵 — 현재 위치</div>
-
-      <div class="roadmap-section">
-        ${roadmapHtml}
-      </div>
-    </div>
-
-    <div class="info-card rec">
-      <h4>✅ 프로그램 내용</h4>
-      <p>${prog.desc}</p>
-    </div>
-    <div class="info-card next">
-      <h4>➡️ 프로그램 이후</h4>
-      <p>${prog.next}</p>
-    </div>
-    <div class="info-card alt">
-      <h4>⚠️ 프로그램 중 통증이 생기면</h4>
-      <p>웰니스 운동 중 통증이 발생하면 먼저 치료 평가를 받는 것을 권장합니다. 치료 후 다시 웰니스로 이어집니다.</p>
-    </div>
-
-    <a href="http://pf.kakao.com/_nVSxdn/chat" target="_blank" class="contact-bar">
-      <div><div class="ct-text">프로그램 상담 시작하기</div><div class="ct-sub">목표에 맞는 일정을 함께 잡아드립니다</div></div>
-      <span style="font-size:22px;">💬</span>
-    </a>
-    <div class="note-box">※ 웰니스 프로그램 중 통증이 생기면 먼저 치료 평가를 받는 것을 권장합니다.</div>
-  `;
-}
-
-// ── EXPERT RESULT ──
-function showExpertResult(){
-  document.getElementById('result-content').innerHTML = renderExpertResult();
-  goS('s-result');
-}
-
-const eduData = {
-  cmt:  { name:'카이로프랙틱 · 도수치료 (CMT) 아카데미', sub:'평가부터 교정까지 임상 실전 과정', desc:'평가 체계부터 실전 테크닉까지. 어떤 케이스가 와도 스스로 판단할 수 있는 임상 사고를 배웁니다.', tags:['경추','흉/요추','골반','온라인+오프라인'], schedule:'3월·9월 개강 · 48시간', link:'https://cafe.naver.com/ksnim/1066', type:'medical', next:'IFC 또는 Re:Al 움직임과 연계해 전문 영역을 확장할 수 있습니다.' },
-  ifc:  { name:'IFC 국제얼굴교정학회', sub:'안면 비대칭 및 축소 · 얼굴 중심 통합 교정', desc:'비수술 얼굴 교정의 원리와 실전을 배웁니다. 의료인·비의료인 모두 수강 가능합니다.', tags:['얼굴 해부학','촉진법','축소법','스마일호흡'], schedule:'4월·10월 개강 · 24시간', link:'https://cafe.naver.com/ifc/54', type:'all', next:'CMT 또는 Re:Al 움직임과 연계하면 더욱 효과적입니다.' },
-  pstr: { name:'Re:Al 움직임 · P-스트레칭 과정', sub:'PAR 운동 시스템 — Passive · Active · Resistive', desc:'움직임 평가부터 기능운동까지. 트레이너·필라테스 강사에게도 최적화된 움직임 기반 과정입니다.', tags:['자세 교정','기능운동','생활습관 코칭'], schedule:'6월·12월 개강', link:'https://cafe.naver.com/ksnim/1167', type:'all', next:'IFC 또는 CMT와 연계하면 종합 전문가로 성장합니다.' },
-};
-const levelMsg = { none:'처음 시작하시는 분께 기초부터 체계적으로 안내해 드립니다.', basic:'이론 기반이 있으시니 실습 중심으로 빠르게 익히실 수 있습니다.', advanced:'현장 경험을 체계화하고 더 깊은 임상 사고를 쌓을 수 있습니다.' };
-
-function renderEduCard(edu, key){
-  return `<div class="edu-card">
-    <div class="edu-head">
-      <div class="edu-name">${edu.name}</div>
-      <div class="edu-lv">${edu.type==='all'?'누구나':key==='cmt'?'의료인':'전문가'}</div>
-    </div>
-    <div class="edu-body">
-      <div class="edu-desc">${edu.desc}</div>
-      <div class="edu-tags">${edu.tags.map(t=>`<span class="edu-tag">${t}</span>`).join('')}</div>
-      <div class="edu-foot"><span>${edu.schedule}</span><a href="${edu.link}" target="_blank" class="edu-link">자세히 →</a></div>
-    </div></div>`;
-}
-
-function renderExpertResult(){
-  const { want, type, level } = E;
-  const cmtAllowed = ['doctor','pt','pt_student','medical'];
-  const blocked = want==='cmt' && !cmtAllowed.includes(type);
-
-  if(blocked){
-    const ifc = eduData['ifc'], ps = eduData['pstr'];
-    return `
-      <div class="result-hero" style="background:linear-gradient(135deg,#7a4a10,var(--amber));">
-        <div class="result-tag">과정 안내</div>
-        <div class="result-title">카이로프랙틱 · 도수치료(CMT)는 의료인 대상 과정입니다</div>
-        <div class="result-sub">대신 아래 두 과정은 누구나 수강 가능합니다</div>
-      </div>
-      <div class="warn-box"><h4>왜 의료인만 가능한가요?</h4><p>척추·관절 도수치료는 의료행위에 해당하므로 의료인·의료기사만 수강 가능합니다. 얼굴 교정과 움직임 과정은 누구나 가능합니다.</p></div>
-      ${renderEduCard(ifc,'ifc')}
-      ${renderEduCard(ps,'pstr')}
-      <a href="http://pf.kakao.com/_nVSxdn/chat" target="_blank" class="contact-bar" style="background:var(--amber);">
-        <div><div class="ct-text">교육 상담 문의하기</div><div class="ct-sub">상황에 맞게 안내해 드립니다</div></div>
-        <span style="font-size:22px;">💬</span>
-      </a>`;
-  }
-
-  const edu = eduData[want];
-  return `
-    <div class="result-hero" style="background:linear-gradient(135deg,#7a4a10,var(--amber));">
-      <div class="result-tag">맞춤 과정 추천</div>
-      <div class="result-title">${edu.name}</div>
-      <div class="result-sub">${levelMsg[level]||''}</div>
-    </div>
-    ${renderEduCard(edu, want)}
-    <div class="info-card next"><h4>➡️ 이 과정 이후</h4><p>${edu.next}</p></div>
-    <a href="http://pf.kakao.com/_nVSxdn/chat" target="_blank" class="contact-bar" style="background:var(--amber);">
-      <div><div class="ct-text">교육 상담 문의하기</div><div class="ct-sub">일정·비용·내용을 자세히 안내해 드립니다</div></div>
-      <span style="font-size:22px;">💬</span>
-    </a>
-    <div class="note-box">※ 과정 일정은 변경될 수 있으니 문의로 최신 일정을 확인해 주세요.</div>
-  `;
-}
-
-updateProgress('s-home');
-</script>
 </body>
 </html>
