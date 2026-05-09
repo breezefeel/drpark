@@ -3,11 +3,787 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>평가 기반 의료 웰니스 로드맵</title>
+<title>힐링트리 — 나에게 맞는 프로그램 찾기</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/static/pretendard.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap');
+:root {
+  --bg: #f7f8fa;
+  --bg2: #ffffff;
+  --bg3: #f1f3f7;
+  --border: #e3e7ef;
+  --text: #111827;
+  --dim: #6b7484;
+  --light: #4b5563;
+  --profile-img: url("https://breezefeel.github.io/drpark/프로필-22(최종본).jpg");
+  --green: #1a7a52;
+  --green-mid: #22a06b;
+  --green-light: #34c78a;
+  --green-bg: #f0faf5;
+  --green-border: #b8e4cc;
+  --amber: #b06d1a;
+  --amber-bg: #fef8f0;
+  --amber-border: #eecf9a;
+  --blue: #1a4fa8;
+  --blue-bg: #f0f5ff;
+  --blue-border: #b8ccf0;
+  --red: #c0392b;
+  --red-bg: #fdf2f1;
+  --red-border: #f0b8b2;
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 18px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
 
-  :root {
+/* ── SCREEN ── */
+.screen { display: none; min-height: 100vh; animation: fadeUp 0.3s ease; }
+.screen.active { display: block; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+/* ── NAV ── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 56px; padding: 0 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(247,248,250,0.97); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.nav-logo-mark { width: 28px; height: 28px; background: var(--green); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+.nav-logo-text { font-family: 'Noto Serif KR', serif; font-size: 15px; font-weight: 700; }
+.nav-right { display: flex; align-items: center; gap: 8px; }
+.nav-back { font-size: 12px; color: var(--dim); cursor: pointer; display: flex; align-items: center; gap: 4px; padding: 5px 11px; border: 1px solid var(--border); border-radius: 20px; background: white; transition: all .2s; }
+.nav-back:hover { color: var(--text); border-color: var(--dim); }
+.nav-back.hidden { visibility: hidden; }
+.nav-home { font-size: 16px; cursor: pointer; padding: 5px 8px; border: 1px solid var(--border); border-radius: 20px; background: white; transition: all .2s; display: flex; align-items: center; }
+.nav-home:hover { background: var(--green-bg); border-color: var(--green-border); }
+.nav-home.hidden { display: none; }
+.nav-cta { font-size: 12px; font-weight: 600; color: white; background: var(--green); padding: 6px 14px; border-radius: 20px; text-decoration: none; }
+
+/* ── PROGRESS ── */
+.progress-bar { position: fixed; top: 56px; left: 0; right: 0; z-index: 99; height: 3px; background: var(--border); }
+.progress-fill { height: 100%; background: var(--green); transition: width 0.4s ease; }
+
+/* ── BREADCRUMB (선택 경로) ── */
+.breadcrumb {
+  position: fixed; top: 59px; left: 0; right: 0; z-index: 98;
+  padding: 7px 20px; background: white; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 5px; flex-wrap: wrap;
+  min-height: 34px; overflow-x: auto;
+}
+.bc-item { font-size: 10px; color: var(--dim); font-family: 'DM Mono', monospace; white-space: nowrap; }
+.bc-item.active { color: var(--green); font-weight: 600; }
+.bc-sep { color: var(--border); font-size: 10px; }
+.breadcrumb.hidden { display: none; }
+
+/* ── WRAP ── */
+.wrap { max-width: 600px; margin: 0 auto; padding: 108px 20px 80px; }
+.wrap.home-wrap { padding-top: 0; }
+
+/* ══════════════════════════════
+   HERO (메인) — img 기반 구조
+══════════════════════════════ */
+.hero {
+  position: relative;
+  background: #f0ede8;
+  padding-top: 56px;
+  overflow: hidden;
+}
+
+/* 배경 블러 레이어 — 전체 흐리게 */
+.hero-bg-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.hero-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: blur(18px) brightness(1.05);
+  transform: scale(1.08);
+  z-index: 0;
+}
+.hero-bg-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.28) 35%,
+    rgba(255,255,255,0.42) 100%
+  );
+}
+.hero-bg-spot{
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-image: var(--profile-img);
+  background-size: cover;
+  background-position: center 18%;
+  transform: scale(1.04);
+  opacity: .92;
+  /* 프로필 원형 위치에만 선명하게 */
+  -webkit-mask-image: radial-gradient(circle at 50% 205px, #000 0 140px, transparent 170px);
+  mask-image: radial-gradient(circle at 50% 205px, #000 0 140px, transparent 170px);
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 16px 48px;
+  text-align: center;
+}
+.hero-panel{
+  background: rgba(255,255,255,0.78);
+  border: 1px solid rgba(255,255,255,0.8);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.09);
+  padding: 18px 16px 16px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* 프로필 사진 — 원형 마스크 */
+.profile-circle-wrap {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 2px auto 14px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+}
+.profile-circle-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  border-radius: 50%;
+  display: block;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+  transform: scale(1.24);
+  transform-origin: center 18%;
+}
+.profile-circle-border {
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  box-shadow: 0 0 0 1px #fff;
+  pointer-events: none;
+}
+
+/* 이름 + 타이틀 */
+.hero-name {
+  font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f2f2a;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+.hero-cred {
+  font-size: 13px;
+  font-weight: 700;
+  color: #145c41;
+  margin-bottom: 10px;
+  font-family: 'Pretendard', monospace; letter-spacing: .05em;
+}
+.hero-desc {
+  font-size: 15px;
+  color: #1f2937;
+  line-height: 1.75;
+  font-weight: 400;
+  margin-bottom: 14px;
+  word-break: keep-all;
+}
+
+/* 태그 */
+.hero-tags {
+  display: flex; flex-wrap: wrap; gap: 7px;
+  justify-content: center; margin-bottom: 20px;
+}
+.hero-tag {
+  font-size: 12px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+.hero-tag.green { color: var(--green); background: rgba(240,250,245,0.9); border: 1px solid var(--green-border); }
+.hero-tag.blue  { color: var(--blue);  background: rgba(240,245,255,0.9); border: 1px solid var(--blue-border); }
+.hero-tag.amber { color: var(--amber); background: rgba(254,248,240,0.9); border: 1px solid var(--amber-border); }
+
+/* 통계 */
+.hero-stats {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 8px; margin-bottom: 20px;
+}
+.hero-stat {
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(227,231,239,0.9);
+  border-radius: 12px; padding: 12px 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+  text-align: center;
+}
+.hero-stat-num {
+  font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 19px; font-weight: 700;
+  color: #1a3a34; margin-bottom: 3px;
+}
+.hero-stat-label { font-size: 10px; color: var(--dim); line-height: 1.4; }
+
+/* 소개 카드 */
+.hero-intro {
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(227,231,239,0.95);
+  border-radius: 14px; padding: 16px 18px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  text-align: left;
+}
+.hero-intro p{
+  text-align: left;
+}
+.hero-intro .hero-intro-left{ display:block; text-align:left; }
+.hero-intro .hero-intro-center{ display:block; text-align:center; }
+.hero-intro h3 {
+  font-size: 12px; font-weight: 800; color: var(--green);
+  margin-bottom: 8px; font-family: 'DM Mono', monospace;
+  text-transform: uppercase; letter-spacing: .1em;
+}
+.hero-intro p { font-size: 13px; color: #444; line-height: 1.85; font-weight: 300; }
+
+/* 섹션 구분선 */
+.hero-section-title {
+  font-size: 11px; font-weight: 700; color: #888;
+  text-transform: uppercase; letter-spacing: 2px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 20px 0 14px;
+}
+.hero-section-title::before, .hero-section-title::after {
+  content: ''; flex: 1; height: 1px;
+  background: rgba(0,0,0,0.1); margin: 0 12px;
+}
+
+/* CTA 카드 */
+.cta-group { display: flex; flex-direction: column; gap: 10px; }
+.cta-card {
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(227,231,239,0.95);
+  border-radius: 16px; padding: 18px 20px;
+  cursor: pointer; transition: all .22s;
+  display: flex; align-items: center; gap: 14px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  text-align: left;
+}
+.cta-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.11); }
+.cta-card.green { border-color: var(--green-border); }
+.cta-card.green:hover { background: rgba(240,250,245,0.95); border-color: var(--green); }
+.cta-card.amber { border-color: var(--amber-border); }
+.cta-card.amber:hover { background: rgba(254,248,240,0.95); border-color: var(--amber); }
+.cta-ico { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.cta-card.green .cta-ico { background: var(--green-bg); }
+.cta-card.amber .cta-ico { background: var(--amber-bg); }
+.cta-label { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+.cta-card.green .cta-label { color: #1a3a34; }
+.cta-card.amber .cta-label { color: var(--amber); }
+.cta-sub { font-size: 12px; color: var(--dim); line-height: 1.5; }
+.cta-arr { color: var(--border); font-size: 18px; margin-left: auto; flex-shrink: 0; transition: transform .2s; }
+.cta-card:hover .cta-arr { transform: translateX(3px); color: var(--dim); }
+
+/* 프로필 링크 버튼 */
+.profile-link-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 18px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a3a34; text-decoration: none;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(227,231,239,0.95);
+  border-radius: 25px; margin-bottom: 20px;
+  transition: all .25s;
+  backdrop-filter: blur(6px);
+}
+
+@media (max-width: 420px){
+  .profile-circle-wrap{ width: 188px; height: 188px; }
+  .hero-name{ font-size: 22px; }
+  .hero-desc{ font-size: 14px; }
+}
+.profile-link-btn:hover { background: #1a3a34; color: white; transform: translateY(-1px); }
+.hero-btn-stack { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 20px; }
+.hero-btn-stack .profile-link-btn { margin-bottom: 0; }
+.psp-concept-btn {
+  cursor: pointer;
+  font-family: inherit;
+  border: 1px solid rgba(26, 122, 82, 0.35);
+  background: linear-gradient(180deg, rgba(240, 250, 245, 0.98), rgba(255, 255, 255, 0.92));
+  color: #145c41;
+}
+.psp-concept-btn:hover { background: #1a3a34; color: #fff; border-color: #1a3a34; }
+
+/* ══════════════════════════════
+   PSP 컨셉 뷰 (protocol 동기화)
+══════════════════════════════ */
+.psp-screen-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f2f2a;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.psp-screen-sub {
+  font-size: 13px;
+  color: var(--dim);
+  text-align: center;
+  margin-bottom: 22px;
+  line-height: 1.6;
+}
+.psp-core-box {
+  background: linear-gradient(145deg, #1a3a34 0%, #145c41 100%);
+  color: #fff;
+  border-radius: 16px;
+  padding: 22px 20px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow-md);
+}
+.psp-core-box p {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.85;
+  text-align: center;
+}
+.psp-core-box p em { font-style: normal; color: #7ec8a4; }
+.psp-core-box .psp-core-foot {
+  font-size: 11px;
+  opacity: 0.72;
+  margin-top: 12px;
+  text-align: center;
+  font-weight: 300;
+}
+.psp-step-list { display: flex; flex-direction: column; gap: 0; margin-bottom: 20px; }
+.psp-step {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border);
+}
+.psp-step:last-child { border-bottom: none; }
+.psp-step-num {
+  width: 38px; height: 38px;
+  border: 2px solid var(--green-border);
+  color: var(--green);
+  border-radius: 50%;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+}
+.psp-step-label { font-size: 15px; font-weight: 700; color: #1a3a34; margin-bottom: 6px; }
+.psp-step-label span { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--green); margin-left: 8px; font-weight: 500; }
+.psp-step-desc { font-size: 13px; color: var(--light); line-height: 1.75; font-weight: 300; }
+.psp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.psp-tag { font-size: 11px; padding: 4px 10px; border-radius: 20px; background: var(--bg3); border: 1px solid var(--border); color: var(--dim); }
+.psp-tag.g { background: var(--green-bg); border-color: var(--green-border); color: var(--green); }
+.psp-tag.a { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber); }
+.psp-scope {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 18px;
+  margin-bottom: 18px;
+}
+.psp-scope h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; color: #1a3a34; }
+.psp-scope p { font-size: 13px; color: var(--light); line-height: 1.85; font-weight: 300; }
+.psp-goal {
+  text-align: center;
+  padding: 22px 16px;
+  border: 1.5px solid var(--green-border);
+  border-radius: 14px;
+  background: var(--green-bg);
+  margin-bottom: 20px;
+}
+.psp-goal .gl { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: var(--green); margin-bottom: 10px; text-transform: uppercase; }
+.psp-goal .gt { font-family: 'Noto Serif KR', serif; font-size: 16px; font-weight: 700; color: #0f2f2a; line-height: 1.65; margin-bottom: 8px; }
+.psp-goal .gs { font-size: 12px; color: var(--dim); font-weight: 300; line-height: 1.65; }
+.psp-next-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; padding: 14px 18px;
+  font-size: 14px; font-weight: 700;
+  color: #fff; background: var(--green); border: none; border-radius: 14px;
+  cursor: pointer; box-shadow: var(--shadow-md);
+  transition: transform .2s, box-shadow .2s;
+}
+.psp-next-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+.psp-next-btn.secondary { background: #fff; color: var(--green); border: 2px solid var(--green-border); }
+
+/* PSP 인터랙티브 마인드맵 (라이트) */
+.psp-mm-wrap { max-width: 560px; margin: 0 auto; }
+.psp-mm-center {
+  background: linear-gradient(135deg, var(--green-mid), var(--green));
+  border-radius: 14px; padding: 14px 22px; text-align: center;
+  color: #fff; margin-bottom: 4px;
+  box-shadow: 0 8px 24px rgba(26, 122, 82, 0.25);
+}
+.psp-mm-center .l1 { font-size: 16px; font-weight: 800; }
+.psp-mm-center .l2 { font-size: 11px; opacity: 0.9; margin-top: 4px; }
+.psp-mm-v { width: 2px; height: 16px; background: var(--border); margin: 0 auto; }
+.psp-mm-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 0; }
+.psp-mm-col { display: flex; flex-direction: column; align-items: center; }
+.psp-mm-node {
+  border-radius: 10px; padding: 10px 8px; text-align: center; cursor: pointer;
+  transition: all .2s; border: 2px solid var(--border); background: #fff;
+  width: 100%; max-width: 168px;
+}
+.psp-mm-node:hover { transform: scale(1.02); box-shadow: var(--shadow-sm); }
+.psp-mm-node.p { border-color: rgba(155, 111, 232, 0.45); background: rgba(155, 111, 232, 0.06); }
+.psp-mm-node.s { border-color: rgba(26, 79, 168, 0.35); background: var(--blue-bg); }
+.psp-mm-node.pr { border-color: rgba(176, 109, 26, 0.4); background: var(--amber-bg); }
+.psp-mm-node .nl { font-size: 12px; font-weight: 700; color: #1a3a34; }
+.psp-mm-node.p .nl { color: #6b4eae; }
+.psp-mm-node.s .nl { color: var(--blue); }
+.psp-mm-node.pr .nl { color: var(--amber); }
+.psp-mm-node .ns { font-size: 10px; color: var(--dim); margin-top: 3px; }
+.psp-mm-children { display: none; flex-direction: column; align-items: stretch; width: 100%; max-width: 168px; margin-top: 6px; gap: 4px; }
+.psp-mm-children.open { display: flex; }
+.psp-mm-child {
+  background: var(--bg3); border: 1px solid var(--border); border-radius: 8px;
+  padding: 8px 10px; cursor: pointer; text-align: left; transition: border .2s;
+}
+.psp-mm-child:hover, .psp-mm-child.on { border-color: var(--green); background: var(--green-bg); }
+.psp-mm-child .cl { font-size: 11px; font-weight: 600; color: var(--text); }
+.psp-mm-child .cs { font-size: 10px; color: var(--dim); margin-top: 2px; }
+.psp-mm-detail {
+  display: none; font-size: 10px; color: var(--light); line-height: 1.65;
+  padding: 8px 10px; background: #fff; border: 1px solid var(--green-border);
+  border-radius: 8px; margin-top: 4px;
+}
+.psp-mm-detail.open { display: block; }
+.psp-mm-detail strong { color: var(--green); font-weight: 600; }
+.psp-mm-hint {
+  font-size: 11px; color: var(--dim); text-align: center; margin-top: 20px;
+  padding: 12px; background: var(--bg3); border-radius: 10px;
+}
+
+/* PSP② — 마인드맵 아래 전체 구조 (STEP 시각 구분) */
+.psp-onepage-divider {
+  display: flex; align-items: center; gap: 12px; margin: 22px 0 6px;
+}
+.psp-onepage-divider .ln { flex: 1; height: 2px; background: linear-gradient(90deg, transparent, var(--border), transparent); }
+.psp-onepage-divider .lb {
+  font-size: 11px; font-weight: 700; color: var(--green); font-family: 'DM Mono', monospace;
+  white-space: nowrap; letter-spacing: 0.04em;
+}
+.psp-vstep {
+  border-radius: 14px; padding: 16px 16px 14px; margin-top: 14px;
+  border: 1px solid var(--border); border-left-width: 5px; background: var(--bg2);
+}
+.psp-vstep.s1 {
+  border-left-color: #2d8a5e;
+  background: linear-gradient(135deg, rgba(45,138,94,0.07) 0%, var(--bg2) 48%);
+}
+.psp-vstep.s2 {
+  border-left-color: #c87f0a;
+  background: linear-gradient(135deg, rgba(200,127,10,0.08) 0%, var(--bg2) 48%);
+}
+.psp-vstep.s3 {
+  border-left-color: #2a6fa8;
+  background: linear-gradient(135deg, rgba(42,111,168,0.08) 0%, var(--bg2) 48%);
+}
+.psp-vstep-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.psp-vstep-badge {
+  font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.06em; padding: 4px 11px; border-radius: 7px; color: #fff;
+}
+.psp-vstep.s1 .psp-vstep-badge { background: #2d8a5e; }
+.psp-vstep.s2 .psp-vstep-badge { background: #c2750d; }
+.psp-vstep.s3 .psp-vstep-badge { background: #2a6fa8; }
+.psp-vstep-label { font-size: 13px; font-weight: 700; color: var(--light); }
+.psp-vstep .psp-full-section { margin-bottom: 0; }
+.psp-vstep .psp-full-section:not(:last-child) { margin-bottom: 14px; }
+.psp-vstep .psp-full-section h3 { margin-top: 0; }
+.psp-vstep .psp-tree { margin-top: 16px; }
+
+/* PSP 전체 구조 + 트리 */
+.psp-full-section { margin-bottom: 20px; }
+.psp-full-section h3 {
+  font-size: 11px; font-family: 'DM Mono', monospace;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--green); margin-bottom: 10px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.psp-fm-row { display: flex; gap: 10px; margin-bottom: 8px; align-items: flex-start; flex-wrap: wrap; }
+.psp-fm-lab { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 700; min-width: 72px; color: var(--dim); padding-top: 5px; }
+.psp-fm-tags { display: flex; flex-wrap: wrap; gap: 6px; flex: 1; }
+.psp-fm-tag {
+  font-size: 10px; padding: 4px 9px; border-radius: 6px;
+  border: 1px solid var(--border); background: #fff; color: var(--light);
+}
+.psp-fm-tag.em { border-color: var(--green-border); background: var(--green-bg); color: var(--green); }
+.psp-fm-tag.bl { border-color: var(--blue-border); background: var(--blue-bg); color: var(--blue); }
+.psp-fm-tag.am { border-color: var(--amber-border); background: var(--amber-bg); color: var(--amber); }
+.psp-fm-tag.pu { border-color: #e0d4f5; background: #f7f2ff; color: #6b4eae; }
+.psp-fm-tag.re { border-color: var(--red-border); background: var(--red-bg); color: var(--red); }
+
+.psp-tree {
+  margin-top: 24px; padding: 20px 16px;
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 14px;
+  overflow-x: auto;
+}
+.psp-tree-title { font-size: 11px; font-weight: 700; color: var(--dim); margin-bottom: 14px; text-align: center; font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
+.psp-tree-inner { display: flex; flex-direction: column; align-items: center; min-width: 280px; }
+.psp-tree-root {
+  background: linear-gradient(135deg, var(--green-mid), var(--green));
+  color: #fff; font-size: 12px; font-weight: 700; padding: 10px 20px; border-radius: 10px;
+  box-shadow: var(--shadow-sm);
+}
+.psp-tree-bar { width: 2px; height: 14px; background: var(--border); }
+.psp-tree-bar-h { height: 2px; width: min(92%, 340px); background: var(--border); margin: 0 auto; }
+.psp-tree-branches { display: flex; justify-content: center; gap: 8px; width: 100%; max-width: 400px; margin-top: 0; }
+.psp-tree-leaf {
+  flex: 1; min-width: 0; text-align: center; font-size: 10px; font-weight: 600;
+  padding: 8px 6px; border-radius: 8px; border: 1px solid var(--border); background: #fff;
+}
+.psp-tree-leaf.ph { border-color: rgba(155, 111, 232, 0.35); color: #6b4eae; }
+.psp-tree-leaf.sc { border-color: rgba(26, 79, 168, 0.35); color: var(--blue); }
+.psp-tree-leaf.pc { border-color: rgba(176, 109, 26, 0.4); color: var(--amber); }
+.psp-tree-sub { font-size: 9px; font-weight: 400; color: var(--dim); margin-top: 4px; line-height: 1.4; }
+
+@media (max-width: 520px) {
+  .psp-mm-row { grid-template-columns: 1fr; gap: 14px; }
+  .psp-mm-col { align-items: stretch; }
+  .psp-mm-node { max-width: none; }
+  .psp-mm-children { max-width: none; }
+}
+
+/* ══════════════════════════════
+   QUESTION 공통
+══════════════════════════════ */
+.q-header { margin-bottom: 20px; }
+.q-step { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--green); background: var(--green-bg); border: 1px solid var(--green-border); padding: 3px 10px; border-radius: 4px; margin-bottom: 10px; display: inline-block; letter-spacing: .1em; text-transform: uppercase; }
+.q-step.wellness { color: var(--green-mid); }
+.q-title { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; font-size: 20px; font-weight: 700; line-height: 1.4; margin-bottom: 5px; }
+.q-sub { font-size: 13px; color: var(--dim); font-weight: 300; }
+
+.option-list { display: flex; flex-direction: column; gap: 9px; }
+.option { background: white; border: 1.5px solid var(--border); border-radius: 12px; padding: 14px 16px; cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow-sm); }
+.option:hover { border-color: var(--green); background: var(--green-bg); box-shadow: var(--shadow-md); }
+.opt-ico { font-size: 20px; flex-shrink: 0; width: 34px; text-align: center; }
+.opt-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+.opt-desc { font-size: 11px; color: var(--dim); line-height: 1.4; }
+.opt-arr { color: var(--border); margin-left: auto; font-size: 15px; flex-shrink: 0; }
+.option:hover .opt-arr { color: var(--green); }
+
+/* Q 화면: 설명/선택 구분 */
+.q-divider{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 2px 10px;
+}
+.q-divider::before,
+.q-divider::after{
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg,
+    rgba(227,231,239,0) 0%,
+    rgba(184,228,204,1) 35%,
+    rgba(227,231,239,1) 50%,
+    rgba(240,184,178,1) 65%,
+    rgba(227,231,239,0) 100%
+  );
+}
+
+/* ══════════════════════════════
+   부위 선택(사람 그림 + 리스트)
+══════════════════════════════ */
+
+
+/* ══════════════════════════════
+   치료 vs 웰니스 시각화
+══════════════════════════════ */
+.zone-visual {
+  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.90));
+  border: 1px solid rgba(227,231,239,0.95);
+  border-radius: 14px;
+  overflow: hidden; margin-bottom: 18px; box-shadow: var(--shadow-sm);
+  --well-bg: #eef9f8;
+  --well-title: #155e63;
+  --well-line: #2aa9b3;
+  --treat-bg: #f6f1fb;
+  --treat-title: #6d28d9;
+  --treat-line: #a78bfa;
+}
+.zone-wellness {
+  background: var(--well-bg); padding: 14px 18px;
+  display: flex; align-items: center; gap: 10px;
+  border-bottom: none;
+}
+.zone-line {
+  padding: 10px 18px; background: white; border-top: 2.5px solid var(--well-line);
+  border-bottom: 2.5px solid var(--treat-line); display: flex; align-items: center; gap: 8px;
+}
+.zone-treatment {
+  background: var(--treat-bg); padding: 14px 18px;
+  display: flex; align-items: center; gap: 10px;
+}
+.zone-icon { font-size: 22px; flex-shrink: 0; }
+.zone-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+.zone-desc { font-size: 11px; color: var(--dim); line-height: 1.4; }
+.zone-wellness .zone-title { color: var(--well-title); }
+.zone-treatment .zone-title { color: var(--treat-title); }
+.zone-line-label { font-size: 11px; color: var(--dim); font-weight: 500; }
+.zone-line-dash { flex: 1; border-top: 1px dashed var(--border); }
+
+/* ══════════════════════════════
+   VAS 슬라이더
+══════════════════════════════ */
+.vas-container {
+  background: white; border: 1px solid var(--border); border-radius: 14px;
+  padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow-sm);
+}
+.vas-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.vas-sub { font-size: 11px; color: var(--dim); margin-bottom: 16px; }
+
+.vas-scale {
+  position: relative; height: 48px; margin-bottom: 8px;
+  background: linear-gradient(90deg, var(--green-light), #a8d48a, #f0c040, #f08040, var(--red));
+  border-radius: 24px; cursor: pointer;
+  display: flex; align-items: center;
+}
+.vas-thumb {
+  position: absolute; width: 28px; height: 28px; background: white;
+  border: 3px solid var(--text); border-radius: 50%;
+  transform: translateX(-50%); transition: left .15s;
+  cursor: grab; box-shadow: var(--shadow-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+}
+.vas-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--dim); margin-bottom: 12px; font-family: 'DM Mono', monospace; }
+
+.vas-zones { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.vas-zone { border-radius: 8px; padding: 10px 12px; text-align: center; border: 1.5px solid transparent; cursor: pointer; transition: all .2s; }
+.vas-zone.low { background: rgba(52,199,138,0.08); border-color: var(--green-border); }
+.vas-zone.mid { background: rgba(240,192,64,0.08); border-color: #e8d090; }
+.vas-zone.high { background: var(--red-bg); border-color: var(--red-border); }
+.vas-zone.selected { transform: scale(1.03); box-shadow: var(--shadow-md); }
+.vas-zone.low.selected { border-color: var(--green); background: rgba(52,199,138,0.15); }
+.vas-zone.mid.selected { border-color: #d4a820; background: rgba(240,192,64,0.18); }
+.vas-zone.high.selected { border-color: var(--red); background: rgba(192,57,43,0.12); }
+.vz-range { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+.vas-zone.low .vz-range { color: var(--green); }
+.vas-zone.mid .vz-range { color: #b08020; }
+.vas-zone.high .vz-range { color: var(--red); }
+.vz-label { font-size: 11px; font-weight: 600; margin-bottom: 3px; }
+.vz-desc { font-size: 10px; color: var(--dim); line-height: 1.4; }
+
+.vas-confirm-btn {
+  width: 100%; padding: 13px; background: var(--green); color: white;
+  font-size: 13px; font-weight: 700; border: none; border-radius: 10px;
+  cursor: pointer; transition: background .2s; opacity: .4; pointer-events: none;
+}
+.vas-confirm-btn.ready { opacity: 1; pointer-events: all; }
+.vas-confirm-btn.ready:hover { background: var(--green-mid); }
+
+/* ══════════════════════════════
+   RESULT 공통
+══════════════════════════════ */
+.result-hero {
+  border-radius: 14px; padding: 20px 22px; margin-bottom: 16px; color: white;
+}
+.result-hero.treatment { background: linear-gradient(135deg, #1a5c3a, var(--green-mid)); }
+.result-hero.wellness { background: linear-gradient(135deg, #22706b, #2da068); }
+.result-tag { font-family: 'DM Mono', monospace; font-size: 10px; background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 4px; margin-bottom: 10px; display: inline-block; letter-spacing: .1em; }
+.result-title { font-family: 'Noto Serif KR', serif; font-size: 17px; font-weight: 700; margin-bottom: 5px; line-height: 1.4; }
+.result-sub { font-size: 12px; color: rgba(255,255,255,0.8); line-height: 1.6; }
+
+/* 통합 로드맵 */
+.roadmap-card { background: white; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
+.roadmap-title { padding: 12px 18px; background: var(--bg3); border-bottom: 1px solid var(--border); font-size: 11px; font-weight: 700; color: var(--dim); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .08em; }
+
+.roadmap-section { padding: 14px 18px; }
+.roadmap-section-label { font-size: 10px; font-weight: 700; font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.roadmap-section-label.medical { color: var(--red); }
+.roadmap-section-label.wellness-lbl { color: var(--green); }
+
+.rs { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.rs:last-child { border-bottom: none; }
+.rs-dot { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 10px; font-family: 'DM Mono', monospace; flex-shrink: 0; margin-top: 1px; color: var(--dim); background: white; }
+.rs.active .rs-dot { background: var(--green); border-color: var(--green); color: white; font-weight: 700; font-size: 12px; }
+.rs.done .rs-dot { background: var(--green-bg); border-color: var(--green-border); color: var(--green); }
+.rs.dim-step .rs-dot { background: var(--bg3); border-color: var(--border); color: var(--border); }
+.rs-info { min-width: 0; }
+.rs-label { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
+.rs.active .rs-label { color: var(--green); }
+.rs.dim-step .rs-label { color: var(--dim); }
+.rs-desc { font-size: 11px; color: var(--dim); line-height: 1.5; }
+.rs-badge { display: inline-block; font-size: 9px; background: var(--green); color: white; padding: 1px 7px; border-radius: 3px; margin-left: 6px; font-family: 'DM Mono', monospace; }
+.rs-badge.next-badge { background: var(--blue); }
+
+.divider-0 { display: flex; align-items: center; gap: 10px; padding: 10px 18px; background: var(--bg3); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.divider-0-line { flex: 1; height: 2px; background: var(--green); }
+.divider-0-label { font-size: 11px; font-weight: 700; color: var(--green); font-family: 'DM Mono', monospace; white-space: nowrap; }
+
+/* 권장·다음·대안 카드 */
+.info-card { border-radius: 11px; padding: 14px 16px; margin-bottom: 10px; }
+.info-card.rec { background: var(--green-bg); border: 1px solid var(--green-border); }
+.info-card.next { background: var(--blue-bg); border: 1px solid var(--blue-border); }
+.info-card.alt { background: var(--amber-bg); border: 1px solid var(--amber-border); }
+.info-card h4 { font-size: 12px; font-weight: 700; margin-bottom: 5px; }
+.info-card.rec h4 { color: var(--green); }
+.info-card.next h4 { color: var(--blue); }
+.info-card.alt h4 { color: var(--amber); }
+.info-card p { font-size: 12px; color: var(--light); line-height: 1.7; }
+
+.contact-bar { background: var(--green); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; margin-top: 4px; text-decoration: none; transition: background .2s; box-shadow: var(--shadow-md); }
+.contact-bar:hover { background: var(--green-mid); }
+.ct-text { font-size: 14px; font-weight: 700; color: white; }
+.ct-sub { font-size: 11px; color: rgba(255,255,255,.75); margin-top: 2px; }
+
+/* 전문가 */
+.edu-card { background: white; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 10px; box-shadow: var(--shadow-sm); }
+.edu-head { padding: 11px 16px; background: var(--bg3); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.edu-name { font-size: 13px; font-weight: 700; }
+.edu-lv { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--amber); background: var(--amber-bg); border: 1px solid var(--amber-border); padding: 2px 8px; border-radius: 4px; }
+.edu-body { padding: 13px 16px; }
+.edu-desc { font-size: 12px; color: var(--light); line-height: 1.7; margin-bottom: 10px; }
+.edu-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 11px; }
+.edu-tag { font-size: 11px; color: var(--light); background: var(--bg3); border: 1px solid var(--border); padding: 3px 8px; border-radius: 4px; }
+.edu-foot { padding-top: 10px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: var(--dim); font-family: 'DM Mono', monospace; }
+.edu-link { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--green); background: var(--green-bg); border: 1px solid var(--green-border); padding: 6px 12px; border-radius: 8px; text-decoration: none; transition: all .2s; }
+.edu-link:hover { background: var(--green-border); }
+.warn-box { background: var(--amber-bg); border: 1px solid var(--amber-border); border-radius: 11px; padding: 13px 16px; margin-bottom: 12px; }
+.warn-box h4 { font-size: 12px; font-weight: 700; color: var(--amber); margin-bottom: 4px; }
+.warn-box p { font-size: 12px; color: var(--light); line-height: 1.6; }
+
+.note-box { padding: 12px 14px; background: var(--bg3); border-radius: 9px; font-size: 11px; color: var(--dim); line-height: 1.6; margin-top: 12px; }
+
+/* — embed: full protocol (scoped) — */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap');
+
+  #s-psp3 .proto-doc {
     --bg: #0f1117;
     --bg2: #161a24;
     --bg3: #1e2333;
@@ -24,25 +800,25 @@
     --accent: #4acea8;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  #s-psp3 .proto-doc * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
+  #s-psp3 .proto-doc {
     font-family: 'Noto Sans KR', sans-serif;
     background: var(--bg);
     color: var(--text);
     line-height: 1.6;
-    min-height: 100vh;
+    min-height: 0;
   }
 
   /* Header */
-  .header {
+  #s-psp3 .proto-doc .header {
     padding: 56px 40px 40px;
     border-bottom: 1px solid var(--border);
     background: linear-gradient(135deg, #0f1117 0%, #161a24 100%);
     position: relative;
     overflow: hidden;
   }
-  .header::before {
+  #s-psp3 .proto-doc .header::before {
     content: '';
     position: absolute;
     top: -60px; right: -60px;
@@ -50,7 +826,7 @@
     background: radial-gradient(circle, rgba(74,206,168,0.08) 0%, transparent 70%);
     border-radius: 50%;
   }
-  .header-badge {
+  #s-psp3 .proto-doc .header-badge {
     display: inline-block;
     font-family: 'DM Mono', monospace;
     font-size: 11px;
@@ -62,39 +838,39 @@
     margin-bottom: 20px;
     text-transform: uppercase;
   }
-  .header h1 {
+  #s-psp3 .proto-doc .header h1 {
     font-size: clamp(22px, 4vw, 32px);
     font-weight: 700;
     letter-spacing: -0.02em;
     margin-bottom: 8px;
   }
-  .header h1 span { color: var(--accent); }
-  .header p {
+  #s-psp3 .proto-doc .header h1 span { color: var(--accent); }
+  #s-psp3 .proto-doc .header p {
     color: var(--text-dim);
     font-size: 14px;
     font-weight: 300;
   }
 
   /* Main layout */
-  .container {
+  #s-psp3 .proto-doc .container {
     max-width: 900px;
     margin: 0 auto;
     padding: 40px 24px 80px;
   }
 
   /* Section */
-  .section {
+  #s-psp3 .proto-doc .section {
     margin-bottom: 48px;
   }
 
   /* Step header */
-  .step-header {
+  #s-psp3 .proto-doc .step-header {
     display: flex;
     align-items: center;
     gap: 16px;
     margin-bottom: 20px;
   }
-  .step-num {
+  #s-psp3 .proto-doc .step-num {
     font-family: 'DM Mono', monospace;
     font-size: 11px;
     font-weight: 500;
@@ -106,19 +882,19 @@
     white-space: nowrap;
     flex-shrink: 0;
   }
-  .step-num.red { background: var(--red); }
-  .step-num.orange { background: var(--orange); }
-  .step-num.yellow { background: var(--yellow); color: #1a1600; }
-  .step-num.green { background: var(--green); }
-  .step-num.blue { background: var(--blue); }
-  .step-num.purple { background: var(--purple); }
+  #s-psp3 .proto-doc .step-num.red { background: var(--red); }
+  #s-psp3 .proto-doc .step-num.orange { background: var(--orange); }
+  #s-psp3 .proto-doc .step-num.yellow { background: var(--yellow); color: #1a1600; }
+  #s-psp3 .proto-doc .step-num.green { background: var(--green); }
+  #s-psp3 .proto-doc .step-num.blue { background: var(--blue); }
+  #s-psp3 .proto-doc .step-num.purple { background: var(--purple); }
 
-  .step-title {
+  #s-psp3 .proto-doc .step-title {
     font-size: 18px;
     font-weight: 700;
     color: var(--text);
   }
-  .step-sub {
+  #s-psp3 .proto-doc .step-sub {
     font-size: 12px;
     color: var(--text-dim);
     font-weight: 300;
@@ -126,14 +902,14 @@
   }
 
   /* Card */
-  .card {
+  #s-psp3 .proto-doc .card {
     background: var(--bg2);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 24px;
     margin-bottom: 16px;
   }
-  .card-title {
+  #s-psp3 .proto-doc .card-title {
     font-size: 13px;
     font-weight: 700;
     color: var(--text-dim);
@@ -144,14 +920,14 @@
   }
 
   /* Tissue table */
-  .tissue-grid {
+  #s-psp3 .proto-doc .tissue-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
   }
-  @media (max-width: 600px) { .tissue-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { #s-psp3 .proto-doc .tissue-grid { grid-template-columns: 1fr; } }
 
-  .tissue-item {
+  #s-psp3 .proto-doc .tissue-item {
     background: var(--bg3);
     border-radius: 8px;
     padding: 14px 16px;
@@ -160,52 +936,52 @@
     flex-direction: column;
     gap: 6px;
   }
-  .tissue-item.muscle { border-left-color: var(--orange); }
-  .tissue-item.fascia { border-left-color: var(--blue); }
-  .tissue-item.nerve { border-left-color: var(--red); }
-  .tissue-item.tendon { border-left-color: var(--yellow); }
-  .tissue-item.ligament { border-left-color: var(--purple); }
-  .tissue-item.joint { border-left-color: var(--teal); }
+  #s-psp3 .proto-doc .tissue-item.muscle { border-left-color: var(--orange); }
+  #s-psp3 .proto-doc .tissue-item.fascia { border-left-color: var(--blue); }
+  #s-psp3 .proto-doc .tissue-item.nerve { border-left-color: var(--red); }
+  #s-psp3 .proto-doc .tissue-item.tendon { border-left-color: var(--yellow); }
+  #s-psp3 .proto-doc .tissue-item.ligament { border-left-color: var(--purple); }
+  #s-psp3 .proto-doc .tissue-item.joint { border-left-color: var(--teal); }
 
-  .tissue-name {
+  #s-psp3 .proto-doc .tissue-name {
     font-size: 13px;
     font-weight: 700;
   }
-  .tissue-item.muscle .tissue-name { color: var(--orange); }
-  .tissue-item.fascia .tissue-name { color: var(--blue); }
-  .tissue-item.nerve .tissue-name { color: var(--red); }
-  .tissue-item.tendon .tissue-name { color: var(--yellow); }
-  .tissue-item.ligament .tissue-name { color: var(--purple); }
-  .tissue-item.joint .tissue-name { color: var(--teal); }
+  #s-psp3 .proto-doc .tissue-item.muscle .tissue-name { color: var(--orange); }
+  #s-psp3 .proto-doc .tissue-item.fascia .tissue-name { color: var(--blue); }
+  #s-psp3 .proto-doc .tissue-item.nerve .tissue-name { color: var(--red); }
+  #s-psp3 .proto-doc .tissue-item.tendon .tissue-name { color: var(--yellow); }
+  #s-psp3 .proto-doc .tissue-item.ligament .tissue-name { color: var(--purple); }
+  #s-psp3 .proto-doc .tissue-item.joint .tissue-name { color: var(--teal); }
 
-  .tissue-symptom {
+  #s-psp3 .proto-doc .tissue-symptom {
     font-size: 12px;
     color: var(--text);
     font-weight: 500;
   }
-  .tissue-detail {
+  #s-psp3 .proto-doc .tissue-detail {
     font-size: 11px;
     color: var(--text-dim);
     line-height: 1.5;
   }
 
   /* VAS blocks */
-  .vas-block {
+  #s-psp3 .proto-doc .vas-block {
     border-radius: 10px;
     padding: 20px 24px;
     margin-bottom: 12px;
     border: 1px solid;
   }
-  .vas-block.high {
+  #s-psp3 .proto-doc .vas-block.high {
     background: rgba(224,92,106,0.08);
     border-color: rgba(224,92,106,0.25);
   }
-  .vas-block.mid {
+  #s-psp3 .proto-doc .vas-block.mid {
     background: rgba(232,147,74,0.08);
     border-color: rgba(232,147,74,0.25);
   }
 
-  .vas-label {
+  #s-psp3 .proto-doc .vas-label {
     font-family: 'DM Mono', monospace;
     font-size: 12px;
     font-weight: 500;
@@ -214,30 +990,30 @@
     align-items: center;
     gap: 10px;
   }
-  .vas-badge {
+  #s-psp3 .proto-doc .vas-badge {
     padding: 3px 10px;
     border-radius: 20px;
     font-size: 11px;
   }
-  .vas-block.high .vas-badge { background: rgba(224,92,106,0.2); color: var(--red); }
-  .vas-block.mid .vas-badge { background: rgba(232,147,74,0.2); color: var(--orange); }
+  #s-psp3 .proto-doc .vas-block.high .vas-badge { background: rgba(224,92,106,0.2); color: var(--red); }
+  #s-psp3 .proto-doc .vas-block.mid .vas-badge { background: rgba(232,147,74,0.2); color: var(--orange); }
 
-  .vas-content { font-size: 13px; color: var(--text); }
-  .vas-arrow {
+  #s-psp3 .proto-doc .vas-content { font-size: 13px; color: var(--text); }
+  #s-psp3 .proto-doc .vas-arrow {
     color: var(--text-dim);
     margin: 0 6px;
     font-size: 12px;
   }
 
   /* Technique chain */
-  .tech-chain {
+  #s-psp3 .proto-doc .tech-chain {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 6px;
     margin-top: 10px;
   }
-  .tech-tag {
+  #s-psp3 .proto-doc .tech-tag {
     background: var(--bg3);
     border: 1px solid var(--border);
     border-radius: 6px;
@@ -246,13 +1022,13 @@
     color: var(--text);
     font-family: 'DM Mono', monospace;
   }
-  .tech-arrow {
+  #s-psp3 .proto-doc .tech-arrow {
     color: var(--text-dim);
     font-size: 12px;
   }
 
   /* Passive stretching decision tree */
-  .tree-root {
+  #s-psp3 .proto-doc .tree-root {
     background: var(--bg3);
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -264,16 +1040,16 @@
     color: var(--accent);
   }
 
-  .tree-branches {
+  #s-psp3 .proto-doc .tree-branches {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 12px;
     margin-top: 4px;
     position: relative;
   }
-  @media (max-width: 640px) { .tree-branches { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { #s-psp3 .proto-doc .tree-branches { grid-template-columns: 1fr; } }
 
-  .branch-connector {
+  #s-psp3 .proto-doc .branch-connector {
     text-align: center;
     color: var(--text-dim);
     font-size: 20px;
@@ -282,9 +1058,9 @@
     grid-template-columns: 1fr 1fr 1fr;
     gap: 12px;
   }
-  .branch-connector span { display: block; }
+  #s-psp3 .proto-doc .branch-connector span { display: block; }
 
-  .branch {
+  #s-psp3 .proto-doc .branch {
     border-radius: 10px;
     padding: 16px;
     border: 1px solid;
@@ -292,111 +1068,111 @@
     flex-direction: column;
     gap: 8px;
   }
-  .branch.pain {
+  #s-psp3 .proto-doc .branch.pain {
     background: rgba(224,92,106,0.07);
     border-color: rgba(224,92,106,0.25);
   }
-  .branch.flex {
+  #s-psp3 .proto-doc .branch.flex {
     background: rgba(232,196,74,0.07);
     border-color: rgba(232,196,74,0.25);
   }
-  .branch.ok {
+  #s-psp3 .proto-doc .branch.ok {
     background: rgba(74,206,168,0.07);
     border-color: rgba(74,206,168,0.25);
   }
 
-  .branch-condition {
+  #s-psp3 .proto-doc .branch-condition {
     font-size: 11px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     font-family: 'DM Mono', monospace;
   }
-  .branch.pain .branch-condition { color: var(--red); }
-  .branch.flex .branch-condition { color: var(--yellow); }
-  .branch.ok .branch-condition { color: var(--green); }
+  #s-psp3 .proto-doc .branch.pain .branch-condition { color: var(--red); }
+  #s-psp3 .proto-doc .branch.flex .branch-condition { color: var(--yellow); }
+  #s-psp3 .proto-doc .branch.ok .branch-condition { color: var(--green); }
 
-  .branch-action {
+  #s-psp3 .proto-doc .branch-action {
     font-size: 12px;
     color: var(--text);
     font-weight: 500;
   }
-  .branch-detail {
+  #s-psp3 .proto-doc .branch-detail {
     font-size: 11px;
     color: var(--text-dim);
     line-height: 1.5;
   }
 
   /* Position steps */
-  .position-steps {
+  #s-psp3 .proto-doc .position-steps {
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
 
-  .pos-card {
+  #s-psp3 .proto-doc .pos-card {
     border-radius: 10px;
     padding: 20px 22px;
     border: 1px solid;
   }
-  .pos-card.supine {
+  #s-psp3 .proto-doc .pos-card.supine {
     background: rgba(74,157,232,0.07);
     border-color: rgba(74,157,232,0.25);
   }
-  .pos-card.sitting {
+  #s-psp3 .proto-doc .pos-card.sitting {
     background: rgba(232,147,74,0.07);
     border-color: rgba(232,147,74,0.25);
   }
-  .pos-card.standing {
+  #s-psp3 .proto-doc .pos-card.standing {
     background: rgba(74,206,168,0.07);
     border-color: rgba(74,206,168,0.25);
   }
 
-  .pos-header {
+  #s-psp3 .proto-doc .pos-header {
     display: flex;
     align-items: center;
     gap: 12px;
     margin-bottom: 14px;
   }
-  .pos-icon {
+  #s-psp3 .proto-doc .pos-icon {
     width: 36px; height: 36px;
     border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
     font-size: 18px;
     flex-shrink: 0;
   }
-  .pos-card.supine .pos-icon { background: rgba(74,157,232,0.15); }
-  .pos-card.sitting .pos-icon { background: rgba(232,147,74,0.15); }
-  .pos-card.standing .pos-icon { background: rgba(74,206,168,0.15); }
+  #s-psp3 .proto-doc .pos-card.supine .pos-icon { background: rgba(74,157,232,0.15); }
+  #s-psp3 .proto-doc .pos-card.sitting .pos-icon { background: rgba(232,147,74,0.15); }
+  #s-psp3 .proto-doc .pos-card.standing .pos-icon { background: rgba(74,206,168,0.15); }
 
-  .pos-name {
+  #s-psp3 .proto-doc .pos-name {
     font-size: 15px;
     font-weight: 700;
   }
-  .pos-card.supine .pos-name { color: var(--blue); }
-  .pos-card.sitting .pos-name { color: var(--orange); }
-  .pos-card.standing .pos-name { color: var(--green); }
+  #s-psp3 .proto-doc .pos-card.supine .pos-name { color: var(--blue); }
+  #s-psp3 .proto-doc .pos-card.sitting .pos-name { color: var(--orange); }
+  #s-psp3 .proto-doc .pos-card.standing .pos-name { color: var(--green); }
 
-  .pos-gravity {
+  #s-psp3 .proto-doc .pos-gravity {
     font-size: 11px;
     color: var(--text-dim);
     font-family: 'DM Mono', monospace;
   }
 
-  .pos-flow {
+  #s-psp3 .proto-doc .pos-flow {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 8px;
   }
-  @media (max-width: 580px) { .pos-flow { grid-template-columns: 1fr; } }
+  @media (max-width: 580px) { #s-psp3 .proto-doc .pos-flow { grid-template-columns: 1fr; } }
 
-  .flow-step {
+  #s-psp3 .proto-doc .flow-step {
     background: var(--bg3);
     border-radius: 8px;
     padding: 12px 14px;
     font-size: 12px;
   }
-  .flow-label {
+  #s-psp3 .proto-doc .flow-label {
     font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
@@ -405,45 +1181,45 @@
     margin-bottom: 6px;
     font-family: 'DM Mono', monospace;
   }
-  .flow-content { color: var(--text); line-height: 1.5; }
-  .flow-content strong { font-weight: 600; }
+  #s-psp3 .proto-doc .flow-content { color: var(--text); line-height: 1.5; }
+  #s-psp3 .proto-doc .flow-content strong { font-weight: 600; }
 
   /* Wellness */
-  .wellness-grid {
+  #s-psp3 .proto-doc .wellness-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
   }
-  @media (max-width: 600px) { .wellness-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { #s-psp3 .proto-doc .wellness-grid { grid-template-columns: 1fr; } }
 
-  .wellness-item {
+  #s-psp3 .proto-doc .wellness-item {
     background: var(--bg3);
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 16px;
     text-align: center;
   }
-  .wellness-num {
+  #s-psp3 .proto-doc .wellness-num {
     font-family: 'DM Mono', monospace;
     font-size: 11px;
     color: var(--accent);
     margin-bottom: 6px;
   }
-  .wellness-name {
+  #s-psp3 .proto-doc .wellness-name {
     font-size: 13px;
     font-weight: 600;
     color: var(--text);
   }
 
   /* Divider */
-  .divider {
+  #s-psp3 .proto-doc .divider {
     border: none;
     border-top: 1px solid var(--border);
     margin: 40px 0;
   }
 
   /* Flow connector */
-  .flow-connector {
+  #s-psp3 .proto-doc .flow-connector {
     text-align: center;
     color: var(--text-dim);
     font-size: 22px;
@@ -451,7 +1227,7 @@
   }
 
   /* Palpation note */
-  .note-box {
+  #s-psp3 .proto-doc .note-box {
     background: rgba(74,206,168,0.06);
     border: 1px solid rgba(74,206,168,0.2);
     border-radius: 8px;
@@ -463,10 +1239,10 @@
     gap: 10px;
     align-items: flex-start;
   }
-  .note-icon { color: var(--accent); flex-shrink: 0; font-size: 14px; }
+  #s-psp3 .proto-doc .note-icon { color: var(--accent); flex-shrink: 0; font-size: 14px; }
 
   /* Advance condition */
-  .advance-box {
+  #s-psp3 .proto-doc .advance-box {
     margin-top: 16px;
     background: rgba(155,111,232,0.07);
     border: 1px solid rgba(155,111,232,0.2);
@@ -478,12 +1254,421 @@
     gap: 10px;
     align-items: flex-start;
   }
-  .advance-icon { color: var(--purple); flex-shrink: 0; }
-
+  #s-psp3 .proto-doc .advance-icon { color: var(--purple); flex-shrink: 0; }
 </style>
 </head>
 <body>
 
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()">
+    <div class="nav-logo-mark">🌿</div>
+    <div class="nav-logo-text">힐링트리</div>
+  </div>
+  <div class="nav-right">
+    <div class="nav-back hidden" id="backBtn" onclick="goBack()">← 이전</div>
+    <div class="nav-home hidden" id="homeBtn" onclick="goHome()">🏠</div>
+    <a href="http://pf.kakao.com/_nVSxdn/chat" target="_blank" class="nav-cta">문의</a>
+  </div>
+</nav>
+
+<!-- PROGRESS -->
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb hidden" id="bcBar"></div>
+
+<!-- ══════════════════════════════
+     SCREEN 0 — 메인
+══════════════════════════════ -->
+<div class="screen active" id="s-home">
+  <div class="hero">
+
+    <!-- 배경: 블러 처리된 사진 -->
+    <div class="hero-bg-wrap">
+      <img class="hero-bg-img" src="https://breezefeel.github.io/drpark/프로필-22(최종본).jpg" alt="">
+      <div class="hero-bg-spot" aria-hidden="true"></div>
+      <div class="hero-bg-overlay"></div>
+    </div>
+
+    <div class="hero-inner">
+      <div class="hero-panel">
+
+      <!-- 프로필 사진 원형 -->
+      <div class="profile-circle-wrap">
+        <img class="profile-circle-img"
+             src="https://breezefeel.github.io/drpark/프로필-22(최종본).jpg"
+             alt="박준규 원장">
+        <div class="profile-circle-border"></div>
+      </div>
+
+      <div class="hero-name">박준규 원장</div>
+      <div class="hero-cred">미카닥 &nbsp;|&nbsp; 미국 카이로프랙틱 닥터 · 물리치료사</div>
+      <div class="hero-desc">
+        문제 해결을 위한 <strong style="color:#1a3a34;font-weight:700;">치료</strong>도 중요하지만,<br>
+        예방을 위한 <strong style="color:#1a3a34;font-weight:700;">관리</strong>도 중요합니다.<br>        
+      </div>
+
+      <div class="hero-btn-stack">
+        <a href="https://blog.naver.com/allenjoy/120205433765" target="_blank" class="profile-link-btn">👤 프로필 상세 보기</a>
+        <button type="button" class="profile-link-btn psp-concept-btn" onclick="startPspConcept()">📘 PSP 컨셉 상세 보기</button>
+      </div>
+
+      <div class="hero-desc">        
+        건강을 위한 가이드: <strong style="color:#054f06;font-weight:700;">힐링트리</strong>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-num">20년+</div><div class="hero-stat-label">근골격계<br>임상 경력</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">3,400+</div><div class="hero-stat-label">전문<br>블로그 포스트</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">DC·PT</div><div class="hero-stat-label">미국 카이로<br>물리치료사</div></div>
+      </div>
+
+      <div class="hero-tags">
+        <span class="hero-tag green">근막·근육·관절 치료</span>
+        <span class="hero-tag green">척추 교정</span>
+        <span class="hero-tag blue">얼굴 교정</span>
+        <span class="hero-tag blue">자세·체형 교정</span>
+        <span class="hero-tag amber">P-스트레칭</span>
+        <span class="hero-tag amber">기능운동</span>
+      </div>
+
+      <div class="hero-intro">
+        <h3>치료와 관리, 무엇이 먼저일까요?</h3>
+        <p>
+          <span class="hero-intro-left">
+            1. 통증이 있을 땐 <strong style="color:#222;font-weight:600;">정확한 원인 평가와 치료</strong>,<br>
+            2. 통증이 없다면 <strong style="color:#222;font-weight:600;">자세·움직임·생활습관 관리</strong>.
+          </span>
+          <br>
+          <span class="hero-intro-center">
+            ※ 중요한 건 “무엇을 하느냐”가 아니라,<br><strong style="color:#222;font-weight:600;">"나에게 알맞는 것"</strong>을 찾는 것입니다.
+          </span>
+        </p>
+      </div>
+
+      <div class="hero-section-title">프로그램 찾기</div>
+      <div class="cta-group">
+        <div class="cta-card green" onclick="bc('환자·회원'); startPatient()">
+          <div class="cta-ico">🏥</div>
+          <div>
+            <div class="cta-label">환자·회원입니다</div>
+            <div class="cta-sub">메디컬 질문 기법으로 적합한 프로그램을 찾아드립니다</div>
+          </div>
+          <div class="cta-arr">›</div>
+        </div>
+        <div class="cta-card amber" onclick="bc('전문가'); startExpert()">
+          <div class="cta-ico">🎓</div>
+          <div>
+            <div class="cta-label">전문가입니다</div>
+            <div class="cta-sub">지금보다 더 성장 하고 싶다면?</div>
+          </div>
+          <div class="cta-arr">›</div>
+        </div>
+      </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PSP 컨셉 — ① 요약 (psp-simple 동기화)
+══════════════════════════════ -->
+<div class="screen" id="s-psp1">
+  <div class="wrap">
+    <div class="psp-screen-title">PSP clinical protocol</div>
+    <div class="psp-screen-sub">History Taking → Palpation → Manual → Movement<br>Philosophy · Science · Practice</div>
+
+    <div class="psp-core-box">
+      <p>눈에 보이는 <em>구조(물질)</em>와 그 위에서 돌아가는 <em>생체 에너지</em>가 함께 맞물릴 때 몸은 제 기능을 합니다.<br>치료의 출발은 <em>균형이 깨진 지점</em>을 찾고, <em>물질인지 에너지인지</em> 가늠하는 일입니다.</p>
+      <div class="psp-core-foot">이 안내는 원장 임상 프로토콜(PSP)을 요약한 것입니다 · 근골격계(물질 영역) 중심</div>
+    </div>
+
+    <div class="psp-step-list">
+      <div class="psp-step">
+        <div class="psp-step-num">01</div>
+        <div>
+          <div class="psp-step-label">초기 평가<span>STEP 01 · Science</span></div>
+          <div class="psp-step-desc">History Taking · Inspection · Movement Test(A-ROM·P-ROM·동작 패턴) · Palpation으로 원인을 좁힙니다. 해부·생체역학·근막경선 등 이론과 Special Test·영상 검사를 필요 시 병행합니다.</div>
+          <div class="psp-tags">
+            <span class="psp-tag g">문진</span><span class="psp-tag g">시각 관찰</span><span class="psp-tag g">동작 평가</span><span class="psp-tag g">촉진</span>
+          </div>
+        </div>
+      </div>
+      <div class="psp-step">
+        <div class="psp-step-num">02</div>
+        <div>
+          <div class="psp-step-label">중재 · VAS 기준<span>STEP 02 · Practice</span></div>
+          <div class="psp-step-desc"><strong style="color:#145c41;font-weight:700;">먼저 VAS로 방향을 정합니다.</strong> 경미(0~2)면 움직임·운동 중심, 중간(3~6)이면 Fascia→Muscle→Joint 비침습 Manual 후 다음 단계, 높으면(6 이상) 임상 판단 하에 침습적 단계를 고려합니다. 표층→심층 · 중심→말단 · Static→Motion과 PAR 운동으로 설계합니다.</div>
+          <div class="psp-tags">
+            <span class="psp-tag a">VAS 분기</span><span class="psp-tag a">Manual</span><span class="psp-tag a">F·M·J</span><span class="psp-tag a">PAR</span>
+          </div>
+        </div>
+      </div>
+      <div class="psp-step">
+        <div class="psp-step-num">03</div>
+        <div>
+          <div class="psp-step-label">움직임 평가 &amp; 회복<span>STEP 03</span></div>
+          <div class="psp-step-desc">Passive Stretching으로 안전한 움직임과 평가를 함께 진행합니다. 누운 자세→앉기→서기로 하중을 올리며 스트레칭·기능운동·교육을 이어 갑니다. 인대·힘줄 결합조직 손상 시에는 선 자세 단계에서 관리·재손상 방지 안내가 핵심입니다.</div>
+          <div class="psp-tags">
+            <span class="psp-tag">Passive Stretching</span><span class="psp-tag">Position 1→3</span><span class="psp-tag">기능운동</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="psp-scope">
+      <h3>다루는 범위</h3>
+      <p>인체 <strong>물질 영역</strong> 중 <strong>근골격계</strong>를 중심으로 합니다. 심리·자율신경·내장 밸런스 등 <strong>에너지 영역</strong>은 다른 체계적 접근이 필요할 수 있습니다.</p>
+    </div>
+
+    <div class="psp-goal">
+      <div class="gl">protocol direction</div>
+      <div class="gt">근골격계 문제를 과학으로 찾고,<br>임상으로 해결한다</div>
+      <div class="gs">궁극적 목표 — 먼저 구조를 해결하고, 기능을 회복한다 · 불필요한 긴장 없이 스스로 인지·조절할 수 있는 몸</div>
+    </div>
+
+    <button type="button" class="psp-next-btn" onclick="goPsp2()">다음 · 인터랙티브 마인드맵 보기 →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PSP ② 인터랙티브 마인드맵 (protocol 상세)
+══════════════════════════════ -->
+<div class="screen" id="s-psp2">
+  <div class="wrap">
+    <div class="q-header">
+      <div class="q-step">PSP · 2/3</div>
+      <div class="q-title">인터랙티브 마인드맵</div>
+      <div class="q-sub">마인드맵으로 흐름을 탐색한 뒤, 하단에서 STEP 01·02·03 전체 구조를 한눈에 봅니다</div>
+    </div>
+
+    <div class="psp-mm-wrap">
+      <div class="psp-mm-center">
+        <div class="l1">PSP Protocol</div>
+        <div class="l2">Philosophy · Science · Practice</div>
+      </div>
+      <div class="psp-mm-v"></div>
+      <div class="psp-mm-row">
+
+        <div class="psp-mm-col">
+          <div class="psp-mm-v"></div>
+          <div class="psp-mm-node p" onclick="pspToggleNode('psp-n-p')">
+            <div class="nl">Philosophy</div>
+            <div class="ns">배경 철학</div>
+          </div>
+          <div class="psp-mm-v"></div>
+          <div class="psp-mm-children" id="psp-n-p">
+            <div class="psp-mm-child" onclick="pspToggleDetail(this,'psp-d-p1')">
+              <div class="cl">물질 &amp; 생체 에너지</div>
+              <div class="cs">함께 작동할 때 기능</div>
+            </div>
+            <div class="psp-mm-detail" id="psp-d-p1">물질과 에너지가 <strong>함께 작동할 때 비로소 기능</strong>합니다. 세포(물질)와 영양소 기반 <strong>생체 에너지</strong>. 한쪽으로 치우치면 온전히 살아있다고 하기 어렵습니다.<br><br><strong>치료의 시작</strong> → 균형이 깨진 부분을 찾고 <strong>물질 vs 에너지</strong> 문제인지 판단합니다.</div>
+
+            <div class="psp-mm-child" onclick="pspToggleDetail(this,'psp-d-p2')">
+              <div class="cl">물질 영역 · 근골격계</div>
+              <div class="cs">이 프로토콜의 초점</div>
+            </div>
+            <div class="psp-mm-detail" id="psp-d-p2">물질 영역 — 근골격계 · 내장기관 · 구조적 문제 → <strong>메디컬적 접근</strong>. 이 프로토콜은 물질 영역 중 <strong>근골격계(系)</strong>에 집중합니다.</div>
+
+            <div class="psp-mm-child" onclick="pspToggleDetail(this,'psp-d-p3')">
+              <div class="cl">에너지 영역</div>
+              <div class="cs">별도 접근</div>
+            </div>
+            <div class="psp-mm-detail" id="psp-d-p3">심리 · 성향 · 자율신경 · 내장기 밸런스 · 한의학적 접근 등. 이 프로토콜 범위와는 구분해 생각합니다.</div>
+          </div>
+        </div>
+
+        <div class="psp-mm-col">
+          <div class="psp-mm-v"></div>
+          <div class="psp-mm-node s" onclick="pspToggleNode('psp-n-s')">
+            <div class="nl">Science</div>
+            <div class="ns">평가 체계</div>
+          </div>
+          <div class="psp-mm-v"></div>
+          <div class="psp-mm-children" id="psp-n-s">
+            <div class="psp-mm-child" onclick="pspToggleDetail(this,'psp-d-s1')">
+              <div class="cl">이론 근거</div>
+              <div class="cs">해부학 · 생체역학 …</div>
+            </div>
+            <div class="psp-mm-detail" id="psp-d-s1">해부학 · 신경생리학 · 생체역학 · 근막경선이론 · 통증과학 · 운동학</div>
+
+            <div class="psp-mm-child" onclick="pspToggleDetail(this,'psp-d-s2')">
+              <div class="cl">STEP 01 · 4가지 평가</div>
+              <div class="cs">History → Inspection → Movement → Palpation</div>
+            </div>
+            <div class="psp-mm-detail" id="psp-d-s2"><strong>History Taking</strong> — C/C · OPPQRST · 통증 종류로 원인 예상.<br><strong>Inspection</strong> — 자세·체형·불균형.<br><strong>Movement Test</strong> — A-ROM · P-ROM · 동작 패턴.<br><strong>Palpation</strong> — Fascia · Muscle · Joint 확인.</div>
+
+            <div class="psp-mm-child" onclick="pspToggleDetail(this,'psp-d-s3')">
+              <div class="cl">영상 · 기타 검사</div>
+              <div class="cs">Special Test · MRI …</div>
+            </div>
+            <div class="psp-mm-detail" id="psp-d-s3">Special Test · X-Ray · MRI · CT · 초음파 · EMG · 혈액 검사 등 — 임상 판단에 따라 선택합니다.</div>
+          </div>
+        </div>
+
+        <div class="psp-mm-col">
+          <div class="psp-mm-v"></div>
+          <div class="psp-mm-node pr" onclick="pspToggleNode('psp-n-pr')">
+            <div class="nl">Practice</div>
+            <div class="ns">Manual + Exercise</div>
+          </div>
+          <div class="psp-mm-v"></div>
+          <div class="psp-mm-children" id="psp-n-pr">
+            <div class="psp-mm-child" onclick="pspToggleDetail(this,'psp-d-pr1')">
+              <div class="cl">STEP 02 · VAS 먼저</div>
+              <div class="cs">중재 방향의 첫 단계</div>
+            </div>
+            <div class="psp-mm-detail" id="psp-d-pr1"><strong>VAS 기준 중재 선택</strong>이 STEP 02의 첫 설명입니다.<br><strong>0~2</strong> → STEP 03 운동·평가 중심.<br><strong>3~6</strong> → 비침습 Manual · Fascia→Muscle→Joint→STEP 03.<br><strong>6 이상</strong> → 약물→주사→시술→수술 등 침습 단계를 임상 판단 하에 고려.<br><br>이후 <strong>F/M/J 요약</strong>과 <strong>Manual Therapy 3가지 핵심 원칙</strong>(표층→심층 · 중심→말단 · Static→Motion)으로 테크닉을 설계합니다.</div>
+
+            <div class="psp-mm-child" onclick="pspToggleDetail(this,'psp-d-pr2')">
+              <div class="cl">STEP 03 · Passive Stretching</div>
+              <div class="cs">Position 1 → 2 → 3</div>
+            </div>
+            <div class="psp-mm-detail" id="psp-d-pr2">통증·가동범위에 따라 Passive · Assisted Active · 교육·기능운동으로 분기. <strong>Position 1</strong> Supine/Prone · <strong>2</strong> Sitting · <strong>3</strong> Standing — 상·하체 스트레칭과 기능운동을 단계적으로 진행합니다.</div>
+
+            <div class="psp-mm-child" onclick="pspToggleDetail(this,'psp-d-pr3')">
+              <div class="cl">결합조직 손상 · Position 3</div>
+              <div class="cs">관리가 치료보다 우선</div>
+            </div>
+            <div class="psp-mm-detail" id="psp-d-pr3">인대·힘줄 등 <strong>결합조직</strong>이 의심되면 주사·충격파·침 등을 단계적으로 고려할 수 있으나, <strong>치료보다 생활 관리·재손상 방지</strong>가 우선입니다. 족저근막염·테니스 엘보 등 통증을 유발하는 동작 회피, 연관 근 긴장 완화, 약 <strong>3주</strong> 통증 동작 자제·재평가 주의 등은 선 자세 단계 하단 프로토콜과 같이 안내합니다.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="psp-onepage-divider">
+      <div class="ln"></div>
+      <div class="lb">전체 구조 · STEP 01 — 02 — 03</div>
+      <div class="ln"></div>
+    </div>
+
+    <div class="psp-vstep s1">
+      <div class="psp-vstep-head">
+        <span class="psp-vstep-badge">STEP 01</span>
+        <span class="psp-vstep-label">Philosophy 요약 · 초기 평가 (Science)</span>
+      </div>
+      <div class="psp-full-section">
+        <h3>Philosophy — 요약</h3>
+        <p style="font-size:13px;color:var(--light);line-height:1.8;font-weight:300;">물질과 에너지의 균형 · 치료 시작점은 어디서 균형이 깨졌는지와 물질/에너지 구분 · 본 프로토콜은 근골격계(물질 영역의 한 계)에 집중합니다.</p>
+      </div>
+      <div class="psp-full-section">
+        <h3>STEP 01 — 초기 평가</h3>
+        <div class="psp-fm-row">
+          <span class="psp-fm-lab">4파트</span>
+          <div class="psp-fm-tags">
+            <span class="psp-fm-tag em">History Taking</span>
+            <span class="psp-fm-tag bl">Inspection</span>
+            <span class="psp-fm-tag am">Movement Test</span>
+            <span class="psp-fm-tag pu">Palpation</span>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--dim);line-height:1.7;margin-top:8px;">Movement: A-ROM · P-ROM · 동작 패턴 · Palpation에서 Fascia · Muscle · Joint 조직별 확인.</p>
+      </div>
+    </div>
+
+    <div class="psp-vstep s2">
+      <div class="psp-vstep-head">
+        <span class="psp-vstep-badge">STEP 02</span>
+        <span class="psp-vstep-label">중재 · VAS 첫 설명 (Practice)</span>
+      </div>
+      <div class="psp-full-section">
+        <h3>STEP 02 — 중재 (VAS 첫 설명)</h3>
+        <div class="psp-fm-row">
+          <span class="psp-fm-lab">VAS</span>
+          <div class="psp-fm-tags">
+            <span class="psp-fm-tag em">0~2 → 운동·STEP 03</span>
+            <span class="psp-fm-tag am">3~6 → F→M→J Manual</span>
+            <span class="psp-fm-tag re">6↑ → 침습 단계적</span>
+          </div>
+        </div>
+        <div class="psp-fm-row">
+          <span class="psp-fm-lab">원칙</span>
+          <div class="psp-fm-tags">
+            <span class="psp-fm-tag bl">표층→심층</span>
+            <span class="psp-fm-tag am">중심→말단</span>
+            <span class="psp-fm-tag">Static→Motion</span>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--dim);line-height:1.7;margin-top:8px;">Fascia / Muscle / Joint 요약 표를 Manual 3원칙 카드 위에 두고 설계 · 테크닉: Fascia(Heat…)·Muscle(Percussion…)·관절(Mob·Adj)·Cold.</p>
+      </div>
+    </div>
+
+    <div class="psp-vstep s3">
+      <div class="psp-vstep-head">
+        <span class="psp-vstep-badge">STEP 03</span>
+        <span class="psp-vstep-label">움직임 · PAR · 결합조직</span>
+      </div>
+      <div class="psp-full-section">
+        <h3>STEP 03 — 움직임 · PAR</h3>
+        <div class="psp-fm-row">
+          <span class="psp-fm-lab">흐름</span>
+          <div class="psp-fm-tags">
+            <span class="psp-fm-tag em">Passive Stretching</span>
+            <span class="psp-fm-tag">분기 → 교육·기능</span>
+            <span class="psp-fm-tag pu">Position 1·2·3</span>
+          </div>
+        </div>
+        <div class="psp-fm-row">
+          <span class="psp-fm-lab">PAR</span>
+          <div class="psp-fm-tags">
+            <span class="psp-fm-tag bl">P Passive</span>
+            <span class="psp-fm-tag am">A Active · 자세</span>
+            <span class="psp-fm-tag em">R 기능·근막경선</span>
+          </div>
+        </div>
+      </div>
+      <div class="psp-full-section">
+        <h3>결합조직 — Position 3 하단</h3>
+        <p style="font-size:12px;color:var(--light);line-height:1.75;">주사 · 충격파 · 침 등과 병행 가능하나 <strong style="color:#145c41;">관리·재손상 방지</strong>가 우선 · 약 3주 통증 동작 회피 · 나았는지 시험 동작 주의.</p>
+      </div>
+      <div class="psp-tree">
+        <div class="psp-tree-title">mindmap structure — PSP 분기</div>
+        <div class="psp-tree-inner">
+          <div class="psp-tree-root">PSP Protocol</div>
+          <div class="psp-tree-bar"></div>
+          <div class="psp-tree-bar-h"></div>
+          <div class="psp-tree-branches" style="margin-top:10px;">
+            <div class="psp-tree-leaf ph">
+              Philosophy
+              <div class="psp-tree-sub">물질·에너지 · 균형 · 근골격계 집중</div>
+            </div>
+            <div class="psp-tree-leaf sc">
+              Science
+              <div class="psp-tree-sub">이론 · 4평가 · 영상·검사</div>
+            </div>
+            <div class="psp-tree-leaf pc">
+              Practice
+              <div class="psp-tree-sub">VAS → Manual · PAR · Position</div>
+            </div>
+          </div>
+          <div style="width:2px;height:12px;background:var(--border);margin:10px auto 0;"></div>
+          <div style="font-size:10px;color:var(--dim);text-align:center;line-height:1.6;max-width:320px;">
+            STEP 02: VAS 0~2 / 3~6 / 6↑ → STEP 03: P1→P2→P3 → (필요 시) 결합조직 관리 프로토콜
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="psp-mm-hint">💡 같은 항목을 다시 누르면 상세가 접힙니다 · 아래는 전체 구조 요약입니다 · 상세 문서는 다음 화면에서 확인하세요</p>
+
+    <button type="button" class="psp-next-btn" style="margin-top:16px;" onclick="goPsp3()">다음 · 전체 구조 상세보기 →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PSP ③ 전체 구조 상세보기 (protocol.html 전체)
+══════════════════════════════ -->
+<div class="screen" id="s-psp3">
+  <div class="wrap" style="max-width:920px;padding-bottom:48px;">
+    <div class="q-header">
+      <div class="q-step">PSP · 3/3</div>
+      <div class="q-title">전체 구조 상세보기</div>
+      <div class="q-sub">Clinical Protocol 전문 — 원본 프로토콜 문서와 동일한 구성입니다</div>
+    </div>
+    <div class="proto-doc">
 <div class="header">
   <div class="header-badge">Clinical Protocol</div>
   <h1>평가 기반 <span>의료 웰니스</span> 로드맵</h1>
@@ -1221,14 +2406,14 @@
     <div class="step-header">
       <div class="step-num yellow">STEP 03</div>
       <div>
-        <div class="step-title">Passive Stretching</div>
-        <div class="step-sub">안전한 움직임의 시작이자 동시에 P-ROM 평가 · 3가지 결과에 따라 분기</div>
+        <div class="step-title">Movement</div>
+        <div class="step-sub">안전한 움직임의 시작인 Passive Stretching 부터 P-A-R 시퀀스</div>
       </div>
     </div>
 
     <div class="card" style="margin-bottom:20px;">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
-        <div class="card-title" style="margin-bottom:0;">Passive Stretching 분기 로직 (공통)</div>
+        <div class="card-title" style="margin-bottom:0;">Passive Stretching</div>
         <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--yellow);background:rgba(232,196,74,0.1);border:1px solid rgba(232,196,74,0.25);border-radius:4px;padding:2px 8px;">= P-ROM</div>
       </div>
       <div style="background:rgba(232,196,74,0.06);border:1px solid rgba(232,196,74,0.15);border-radius:7px;padding:10px 14px;margin-bottom:14px;font-size:11px;color:var(--text-dim);line-height:1.6;">
@@ -1669,5 +2854,663 @@
   </div>
 
 </div>
+
+    </div>
+    <button type="button" class="psp-next-btn secondary" style="margin-top:20px;" onclick="goHome()">홈으로 돌아가기</button>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     PATIENT Q1 — 치료 vs 웰니스
+══════════════════════════════ -->
+<div class="screen" id="s-p1">
+  <div class="wrap">
+    <div class="q-header">
+      <div class="q-step">1단계</div>
+      <div class="q-title">지금 몸 상태가 어떤가요?</div>
+      <div class="q-sub">해당하는 상태를 선택해주세요</div>
+    </div>
+
+    <!-- 치료/웰니스 시각화 -->
+    <div class="zone-visual">
+      <div class="zone-wellness">
+        <div class="zone-icon">⬆️</div>
+        <div>
+          <div class="zone-title">웰니스 영역: 통증 없음</div>
+          <div class="zone-desc">더 좋은 상태로 끌어올리는 과정<br>PAR 움직임 프로그램</div>
+        </div>
+      </div>
+      <div class="zone-line">
+        <div class="zone-line-dash"></div>
+        <div class="zone-line-label">편안한 상태 (기준선)</div>
+        <div class="zone-line-dash"></div>
+      </div>
+      <div class="zone-treatment">
+        <div class="zone-icon">⬇️</div>
+        <div>
+          <div class="zone-title">치료 영역: 통증 있음</div>
+          <div class="zone-desc">정상으로 되돌리는 과정<br>Manual Therapy + 약·시술·수술</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="q-divider" aria-hidden="true"></div>
+
+    <div class="option-list">
+      <div class="option" style="border-color:var(--red-border);background:var(--red-bg);" onclick="pSet('mode','treatment'); bc('치료 영역'); goS('s-p-vas')">
+        <div class="opt-ico">🔴</div>
+        <div>
+          <div class="opt-name" style="color:var(--red);">통증이나 불편함이 있어요</div>
+          <div class="opt-desc">아픈 곳이 있거나 움직임이 불편한 상태</div>
+        </div>
+        <div class="opt-arr">›</div>
+      </div>
+      <div class="option" style="border-color:var(--green-border);background:var(--green-bg);" onclick="pSet('mode','wellness'); bc('웰니스 영역'); goS('s-p-wellness')">
+        <div class="opt-ico">🟢</div>
+        <div>
+          <div class="opt-name" style="color:var(--green);">몸을 더 좋게 만들고 싶어요</div>
+          <div class="opt-desc">자세·체형·기능·예방 관리가 목표</div>
+        </div>
+        <div class="opt-arr">›</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PATIENT VAS
+══════════════════════════════ -->
+<div class="screen" id="s-p-vas">
+  <div class="wrap">
+    <div class="q-header">
+      <div class="q-step">2단계</div>
+      <div class="q-title">통증이 어느 정도인가요?</div>
+      <div class="q-sub">해당하는 구간을 선택해주세요</div>
+    </div>
+
+    <div class="vas-container">
+      <div class="vas-title">통증 강도 (VAS 0~10)</div>
+      <div class="vas-sub">0 = 전혀 불편하지 않음 &nbsp;·&nbsp; 10 = 살면서 가장 아팠을 때</div>
+      <div class="vas-scale" id="vasScale" onclick="handleVasClick(event)">
+        <div class="vas-thumb" id="vasThumb" style="left:0%;display:none;">0</div>
+      </div>
+      <div class="vas-labels"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span></div>
+
+      <div class="vas-zones">
+        <div class="vas-zone low" id="vz-low" onclick="selectVasZone('low')">
+          <div class="vz-range">1 ~ 3</div>
+          <div class="vz-label">경증</div>
+          <div class="vz-desc">통증은 있지만<br>일상생활 가능</div>
+        </div>
+        <div class="vas-zone mid" id="vz-mid" onclick="selectVasZone('mid')">
+          <div class="vz-range">4 ~ 6</div>
+          <div class="vz-label">중등도</div>
+          <div class="vz-desc">일상이 힘들지만<br>스스로 생활 가능</div>
+        </div>
+        <div class="vas-zone high" id="vz-high" onclick="selectVasZone('high')">
+          <div class="vz-range">7 ~ 10</div>
+          <div class="vz-label">중증</div>
+          <div class="vz-desc">다른 사람 도움이<br>필요한 수준</div>
+        </div>
+      </div>
+
+      <button class="vas-confirm-btn" id="vasConfirmBtn" onclick="confirmVas()" style="display:none;">
+        다음 단계로 →
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PATIENT Q — 부위
+══════════════════════════════ -->
+<div class="screen" id="s-p2">
+  <div class="wrap">
+    <div class="q-header">
+      <div class="q-step">3단계</div>
+      <div class="q-title">어디가 불편하세요?</div>
+      <div class="q-sub">가장 불편한 부위를 선택해주세요</div>
+    </div>
+    <div class="option-list">
+      <div class="option" onclick="pSet('area','neck'); bc('목·어깨'); goS('s-p3')"><div class="opt-ico">🔵</div><div><div class="opt-name">목·어깨</div><div class="opt-desc">목 통증, 어깨 뭉침, 두통 포함</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="pSet('area','back'); bc('허리·골반'); goS('s-p3')"><div class="opt-ico">🟠</div><div><div class="opt-name">허리·골반</div><div class="opt-desc">허리 통증, 골반 불균형, 좌골신경통 포함</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="pSet('area','leg'); bc('무릎·하지'); goS('s-p3')"><div class="opt-ico">🟡</div><div><div class="opt-name">무릎·하지</div><div class="opt-desc">무릎 통증, 발목, 종아리, 고관절 포함</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="pSet('area','full'); bc('전신'); goS('s-p3')"><div class="opt-ico">🔴</div><div><div class="opt-name">여러 곳이 불편해요</div><div class="opt-desc">특정 부위를 딱 짚기 어려운 경우</div></div><div class="opt-arr">›</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PATIENT Q — 통증 종류 -->
+<div class="screen" id="s-p3">
+  <div class="wrap">
+    <div class="q-header">
+      <div class="q-step">4단계</div>
+      <div class="q-title">어떻게 아프세요?</div>
+      <div class="q-sub">가장 가까운 느낌을 선택해주세요</div>
+    </div>
+    <div class="option-list">
+      <div class="option" onclick="pSet('quality','aching'); bc('뻐근·묵직'); showPatientResult()"><div class="opt-ico">😤</div><div><div class="opt-name">뻐근하고 묵직해요</div><div class="opt-desc">누르면 시원한 느낌 · 근육이 뭉친 느낌</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="pSet('quality','tight'); bc('당김·뻣뻣'); showPatientResult()"><div class="opt-ico">↔️</div><div><div class="opt-name">당기고 뻣뻣해요</div><div class="opt-desc">늘릴 때 당기는 느낌 · 아침에 특히 심함</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="pSet('quality','sharp'); bc('찌릿·저림'); showPatientResult()"><div class="opt-ico">⚡</div><div><div class="opt-name">찌릿하거나 저려요</div><div class="opt-desc">전기 오는 느낌 · 팔다리로 뻗는 통증</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="pSet('quality','sharp_local'); bc('날카로운'); showPatientResult()"><div class="opt-ico">📍</div><div><div class="opt-name">날카롭게 한 점이 아파요</div><div class="opt-desc">특정 동작에서 강하게 · 관절 느낌</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="pSet('quality','tear'); bc('찢어지는'); showPatientResult()"><div class="opt-ico">💥</div><div><div class="opt-name">찢어지는 느낌이에요</div><div class="opt-desc">갑자기 생긴 강한 통증 · 부종 동반</div></div><div class="opt-arr">›</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     WELLNESS Q — 프로그램 선택
+══════════════════════════════ -->
+<div class="screen" id="s-p-wellness">
+  <div class="wrap">
+    <div class="q-header">
+      <div class="q-step wellness">웰니스 · 2단계</div>
+      <div class="q-title">어떤 프로그램을 원하세요?</div>
+      <div class="q-sub">목표에 맞는 프로그램을 선택해주세요</div>
+    </div>
+    <div class="option-list">
+      <div class="option" style="border-color:var(--green-border);" onclick="pSet('goal','stretch'); bc('스트레칭'); showWellnessResult()">
+        <div class="opt-ico">🤸</div><div><div class="opt-name">스트레칭</div><div class="opt-desc">P-스트레칭 · 근막경선 스트레칭 · 유연성 향상</div></div><div class="opt-arr">›</div>
+      </div>
+      <div class="option" style="border-color:var(--green-border);" onclick="pSet('goal','posture'); bc('자세·체형 교정'); showWellnessResult()">
+        <div class="opt-ico">📐</div><div><div class="opt-name">자세·체형 교정</div><div class="opt-desc">거북목, 굽은 어깨, 골반 불균형 개선</div></div><div class="opt-arr">›</div>
+      </div>
+      <div class="option" style="border-color:var(--green-border);" onclick="pSet('goal','fitness'); bc('기능·체력 향상'); showWellnessResult()">
+        <div class="opt-ico">💪</div><div><div class="opt-name">기능·체력 향상</div><div class="opt-desc">기능운동, 근막경선 운동, 전신 밸런스</div></div><div class="opt-arr">›</div>
+      </div>
+      <div class="option" style="border-color:var(--green-border);" onclick="pSet('goal','face'); bc('얼굴 교정·관리'); showWellnessResult()">
+        <div class="opt-ico">✨</div><div><div class="opt-name">얼굴 교정·관리</div><div class="opt-desc">안면 비대칭, 얼굴 축소, 균형 회복</div></div><div class="opt-arr">›</div>
+      </div>
+      <div class="option" style="border-color:var(--green-border);" onclick="pSet('goal','prevention'); bc('예방·셀프 케어'); showWellnessResult()">
+        <div class="opt-ico">🌿</div><div><div class="opt-name">예방·유지 관리 (셀프 통증 케어)</div><div class="opt-desc">스스로 관리하는 법 습득 · 재발 방지</div></div><div class="opt-arr">›</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT 화면 -->
+<div class="screen" id="s-result">
+  <div class="wrap">
+    <div id="result-content"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     EXPERT Q1 — 원하는 것
+══════════════════════════════ -->
+<div class="screen" id="s-e1">
+  <div class="wrap">
+    <div class="q-header">
+      <div class="q-step" style="background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber);">전문가 · 1/3</div>
+      <div class="q-title">어떤 걸 배우고 싶으세요?</div>
+      <div class="q-sub">가장 관심 있는 분야를 선택해주세요</div>
+    </div>
+    <div class="option-list">
+      <div class="option" onclick="eSet('want','cmt'); bc('CMT 도수치료'); goS('s-e2')">
+        <div class="opt-ico">🦴</div><div><div class="opt-name">카이로프랙틱 · 도수치료 (CMT)</div><div class="opt-desc">근막·근육·관절 치료 · 척추 교정 · 의료인 대상</div></div><div class="opt-arr">›</div>
+      </div>
+      <div class="option" onclick="eSet('want','ifc'); bc('IFC 얼굴교정'); goS('s-e2')">
+        <div class="opt-ico">✨</div><div><div class="opt-name">얼굴 교정 · 관리 (IFC)</div><div class="opt-desc">안면 비대칭 · 얼굴 축소 · 누구나 가능</div></div><div class="opt-arr">›</div>
+      </div>
+      <div class="option" onclick="eSet('want','pstr'); bc('Re:Al 움직임'); goS('s-e2')">
+        <div class="opt-ico">🤸</div><div><div class="opt-name">P-스트레칭 · 움직임 (Re:Al)</div><div class="opt-desc">PAR 운동 시스템 · 자세 교정 · 누구나 가능</div></div><div class="opt-arr">›</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERT Q2 -->
+<div class="screen" id="s-e2">
+  <div class="wrap">
+    <div class="q-header">
+      <div class="q-step" style="background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber);">전문가 · 2/3</div>
+      <div class="q-title">어떤 분야에 계세요?</div>
+      <div class="q-sub">현재 직군을 선택해주세요</div>
+    </div>
+    <div class="option-list" id="e2-default">
+      <div class="option" onclick="eSet('type','medical'); bc('의료인'); goS('s-e3')"><div class="opt-ico">🏥</div><div><div class="opt-name">의사 · 물리치료사 · 카이로프랙터</div><div class="opt-desc">의료인 · 의료기사</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="eSet('type','wellness'); bc('웰니스 전문가'); goS('s-e3')"><div class="opt-ico">🧘</div><div><div class="opt-name">필라테스 · 트레이너 · 요가 강사</div><div class="opt-desc">웰니스 · 피트니스 분야</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="eSet('type','beginner'); bc('입문자'); goS('s-e3')"><div class="opt-ico">🌱</div><div><div class="opt-name">막 시작했거나 공부 중이에요</div><div class="opt-desc">경험이 많지 않지만 배우고 싶음</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="eSet('type','other'); bc('기타'); goS('s-e3')"><div class="opt-ico">💼</div><div><div class="opt-name">기타</div><div class="opt-desc">다른 분야 · 개인 관심</div></div><div class="opt-arr">›</div></div>
+    </div>
+
+    <div class="option-list" id="e2-cmt" style="display:none;">
+      <div class="option" onclick="eSet('type','doctor'); bc('의사·한의사'); goS('s-e3')"><div class="opt-ico">🩺</div><div><div class="opt-name">의사 · 한의사</div><div class="opt-desc">의료인</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="eSet('type','pt'); bc('물리치료사'); goS('s-e3')"><div class="opt-ico">🧑‍⚕️</div><div><div class="opt-name">물리치료사</div><div class="opt-desc">의료기사</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="eSet('type','pt_student'); bc('물리치료학과 학생'); goS('s-e3')"><div class="opt-ico">🎓</div><div><div class="opt-name">물리치료학과 학생</div><div class="opt-desc">재학/실습 중</div></div><div class="opt-arr">›</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERT Q3 -->
+<div class="screen" id="s-e3">
+  <div class="wrap">
+    <div class="q-header">
+      <div class="q-step" style="background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber);">전문가 · 3/3</div>
+      <div class="q-title">현재 경험이 어느 정도인가요?</div>
+      <div class="q-sub">비슷한 교육을 받아본 적 있나요?</div>
+    </div>
+    <div class="option-list">
+      <div class="option" onclick="eSet('level','none'); bc('처음'); showExpertResult()"><div class="opt-ico">🌱</div><div><div class="opt-name">처음입니다</div><div class="opt-desc">관련 교육을 거의 받아본 적 없어요</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="eSet('level','basic'); bc('기초 있음'); showExpertResult()"><div class="opt-ico">📚</div><div><div class="opt-name">기초 지식은 있어요</div><div class="opt-desc">이론은 알지만 실습이 부족해요</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="eSet('level','advanced'); bc('실무 중'); showExpertResult()"><div class="opt-ico">⚡</div><div><div class="opt-name">실무 중입니다</div><div class="opt-desc">현장에서 쓰고 있지만 더 배우고 싶어요</div></div><div class="opt-arr">›</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── STATE ──
+const H = ['s-home'];
+let P = {}, E = {};
+let selectedVasZone = null;
+let bcPath = [];
+
+function pSet(k,v){ P[k]=v; }
+function eSet(k,v){ E[k]=v; }
+
+function bc(label){
+  bcPath.push(label);
+  updateBc();
+}
+
+function updateBc(){
+  const bar = document.getElementById('bcBar');
+  if(bcPath.length === 0){ bar.classList.add('hidden'); return; }
+  bar.classList.remove('hidden');
+  bar.innerHTML = ['홈', ...bcPath].map((c,i,arr) => {
+    const isLast = i === arr.length - 1;
+    return `<span class="bc-item${isLast?' active':''}">${c}</span>${!isLast?'<span class="bc-sep">›</span>':''}`;
+  }).join('');
+}
+
+function goS(id){
+  document.querySelector('.screen.active').classList.remove('active');
+  document.getElementById(id).classList.add('active');
+  H.push(id);
+  if(id === 's-e2'){
+    const isCmt = E && E.want === 'cmt';
+    const elDefault = document.getElementById('e2-default');
+    const elCmt = document.getElementById('e2-cmt');
+    if(elDefault && elCmt){
+      elDefault.style.display = isCmt ? 'none' : '';
+      elCmt.style.display = isCmt ? '' : 'none';
+    }
+  }
+  updateProgress(id);
+  window.scrollTo(0,0);
+}
+
+function goBack(){
+  if(H.length<=1) return;
+  H.pop();
+  // 브레드크럼도 되돌리기
+  if(bcPath.length>0){ bcPath.pop(); updateBc(); }
+  const prev = H[H.length-1];
+  document.querySelector('.screen.active').classList.remove('active');
+  document.getElementById(prev).classList.add('active');
+  updateProgress(prev);
+  window.scrollTo(0,0);
+}
+
+function goHome(){
+  H.length=0; H.push('s-home');
+  P={}; E={}; bcPath=[]; selectedVasZone=null;
+  document.querySelector('.screen.active').classList.remove('active');
+  document.getElementById('s-home').classList.add('active');
+  document.getElementById('bcBar').classList.add('hidden');
+  document.getElementById('progressFill').style.width='0%';
+  document.getElementById('backBtn').classList.add('hidden');
+  document.getElementById('homeBtn').classList.add('hidden');
+  // VAS 초기화
+  document.getElementById('vasThumb').style.display='none';
+  ['vz-low','vz-mid','vz-high'].forEach(id=>document.getElementById(id).classList.remove('selected'));
+  document.getElementById('vasConfirmBtn').classList.remove('ready');
+  window.scrollTo(0,0);
+}
+
+function startPatient(){ goS('s-p1'); }
+function startExpert(){ goS('s-e1'); }
+
+function startPspConcept(){
+  bcPath = ['PSP 컨셉'];
+  updateBc();
+  goS('s-psp1');
+}
+
+function goPsp2(){
+  bcPath = ['PSP 컨셉','마인드맵'];
+  updateBc();
+  goS('s-psp2');
+}
+
+function goPsp3(){
+  bcPath = ['PSP 컨셉','마인드맵','전체 구조 상세보기'];
+  updateBc();
+  goS('s-psp3');
+}
+
+function pspToggleNode(id){
+  const el = document.getElementById(id);
+  if(el) el.classList.toggle('open');
+}
+
+function pspToggleDetail(btn, detailId){
+  const panel = document.getElementById(detailId);
+  if(!panel || !btn) return;
+  const parent = btn.parentElement;
+  const wasOpen = panel.classList.contains('open');
+  parent.querySelectorAll('.psp-mm-detail').forEach(d => d.classList.remove('open'));
+  parent.querySelectorAll('.psp-mm-child').forEach(c => c.classList.remove('on'));
+  if(!wasOpen){
+    panel.classList.add('open');
+    btn.classList.add('on');
+  }
+}
+
+const treatmentFlow = ['s-home','s-p1','s-p-vas','s-p2','s-p3','s-result'];
+const wellnessFlow  = ['s-home','s-p1','s-p-wellness','s-result'];
+const expertFlow    = ['s-home','s-e1','s-e2','s-e3','s-result'];
+
+function updateProgress(id){
+  const isHome = H.length <= 1;
+  document.getElementById('backBtn').classList.toggle('hidden', isHome);
+  document.getElementById('homeBtn').classList.toggle('hidden', isHome);
+  let pct = 0;
+  if(treatmentFlow.includes(id)){
+    const idx = treatmentFlow.indexOf(id);
+    pct = Math.min((idx/5)*100, 100);
+  } else if(wellnessFlow.includes(id)){
+    const idx = wellnessFlow.indexOf(id);
+    pct = Math.min((idx/3)*100, 100);
+  } else if(expertFlow.includes(id)){
+    const idx = expertFlow.indexOf(id);
+    pct = Math.min((idx/4)*100, 100);
+  } else if(id === 's-psp1') {
+    pct = 33;
+  } else if(id === 's-psp2') {
+    pct = 66;
+  } else if(id === 's-psp3') {
+    pct = 100;
+  }
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+// ── VAS ──
+function handleVasClick(e){
+  const scale = document.getElementById('vasScale');
+  const rect = scale.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const pct = Math.max(0, Math.min(1, x / rect.width));
+  const val = Math.round(pct * 10);
+  const thumb = document.getElementById('vasThumb');
+  thumb.style.display = 'flex';
+  thumb.style.left = (pct*100) + '%';
+  thumb.textContent = val;
+  // 자동 존 선택
+  if(val <= 3) selectVasZone('low');
+  else if(val <= 6) selectVasZone('mid');
+  else selectVasZone('high');
+}
+
+function selectVasZone(zone){
+  selectedVasZone = zone;
+  ['vz-low','vz-mid','vz-high'].forEach(id => document.getElementById(id).classList.remove('selected'));
+  document.getElementById('vz-'+zone).classList.add('selected');
+  P.severity = zone === 'low' ? 'mild' : zone === 'mid' ? 'moderate' : 'severe';
+  const thumb = document.getElementById('vasThumb');
+  thumb.style.display = 'flex';
+  if(zone==='low'){ thumb.style.left='15%'; thumb.textContent='2'; }
+  else if(zone==='mid'){ thumb.style.left='50%'; thumb.textContent='5'; }
+  else { thumb.style.left='85%'; thumb.textContent='8'; }
+  // bc 중복 방지 — VAS 관련 항목 제거 후 새로 추가
+  bcPath = bcPath.filter(x => !x.includes('경증') && !x.includes('중등도') && !x.includes('중증'));
+  const label = zone==='low'?'경증 (1~3)':zone==='mid'?'중등도 (4~6)':'중증 (7~10)';
+  bcPath.push(label);
+  updateBc();
+  // 바로 다음 단계로 이동
+  setTimeout(() => goS('s-p2'), 300);
+}
+
+function confirmVas(){
+  if(!selectedVasZone) return;
+  goS('s-p2');
+}
+
+// ── PATIENT RESULT ──
+function showPatientResult(){
+  document.getElementById('result-content').innerHTML = renderPatientResult();
+  goS('s-result');
+}
+
+function getTissueName(q){
+  return q==='aching'?'근육 (Muscle)':q==='tight'?'근막 (Fascia)':q==='sharp'?'신경':q==='sharp_local'?'관절 (Joint)':'결합조직 (힘줄·인대)';
+}
+
+function renderRoadmapSteps(steps, activeId){
+  const stepIdx = Math.max(0, steps.findIndex(x => x.id === activeId));
+  return steps.map((s, thisIdx) => {
+    const isActive = s.id === activeId;
+    const isNext   = thisIdx > stepIdx;
+    const isPrev   = thisIdx < stepIdx;
+    return `<div class="rs ${isActive?'active':isNext?'done':isPrev?'dim-step':''}">
+      <div class="rs-dot">${isActive?'★':isNext?'✓':''}</div>
+      <div class="rs-info">
+        <div class="rs-label">${s.label}${isActive?'<span class="rs-badge">현재</span>':isNext?'<span class="rs-badge next-badge">다음</span>':''}</div>
+        <div class="rs-desc">${s.desc}${s.vas?` <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--border);">${s.vas}</span>`:''}</div>
+      </div></div>`;
+  }).join('');
+}
+
+function renderPatientResult(){
+  const { severity, area, quality } = P;
+  const areaName = area==='neck'?'목·어깨':area==='back'?'허리·골반':area==='leg'?'무릎·하지':'전신';
+  const tissue = getTissueName(quality);
+
+  // 현재 단계 결정
+  let activeStep = 'manual';
+  if(severity==='severe') activeStep = 'invasive';
+  else if(severity==='mild' && quality==='tight') activeStep = 'pstr';
+  else if(severity==='mild') activeStep = 'pstr';
+
+  // 권장 문구
+  const recs = {
+    invasive: { name:'전문 의료 상담 권장', desc:'통증이 심한 상태입니다. 정확한 평가 후 약물·주사·시술 등 침습적 치료 방향을 결정하는 것이 좋습니다.', next:'통증이 줄어들면 도수치료(Manual Therapy)로 이어집니다.', alt:'영상 검사(X-Ray·MRI)로 구조적 원인을 먼저 확인하는 것을 권장합니다.' },
+    manual:   { name:'도수치료 + P-스트레칭', desc:`예상 원인: <strong>${tissue}</strong>. 손으로 직접 근막·근육·관절을 풀어내고 이후 단계적 운동으로 이어집니다.`, next:'P-스트레칭 → Assisted Active → Active 운동으로 진행합니다.', alt:'여러 세션 후 개선이 없다면 촉진(Palpation) 재평가 후 접근법을 변경합니다.' },
+    pstr:     { name:'P-스트레칭 + 자세 교정', desc:'통증은 경미하지만 근막·관절의 움직임을 회복하는 것이 핵심입니다.', next:'기능운동 → 자세 교정 → 일상 유지로 이어집니다.', alt:'운동 중 통증이 심해지면 도수치료로 돌아가 재평가합니다.' },
+  };
+  const rec = recs[activeStep] || recs['manual'];
+
+  // 단일 로드맵(순서대로 연결)
+  const steps = [
+    { id:'invasive',  label:'침습적 치료', desc:'약물 · 주사 · 시술 · 수술', vas:'VAS 7~10' },
+    { id:'manual',    label:'도수치료 (Manual Therapy)', desc:'Fascia · Muscle · 관절 수기 치료', vas:'VAS 3~6' },
+    { id:'pstr',      label:'Passive Stretching', desc:'안전한 움직임 평가 + 유연성 향상', vas:'VAS 0~3' },
+    { id:'aa',        label:'Assisted Active', desc:'ROM 회복 · CIE · Hold&Relax · Pull&Push', vas:'' },
+    { id:'active',    label:'Active — 자세·생활습관', desc:'불필요한 긴장 최소화 · 편안한 호흡', vas:'' },
+    { id:'resistive', label:'Resistive — 기능운동', desc:'근막경선 운동 · 림프 전신 운동', vas:'' },
+  ];
+  const roadmapHtml = renderRoadmapSteps(steps, activeStep);
+
+  return `
+    <div class="result-hero treatment">
+      <div class="result-tag">맞춤 분석 완료</div>
+      <div class="result-title">${rec.name}</div>
+      <div class="result-sub">${areaName} · 예상 원인: ${tissue}</div>
+    </div>
+
+    <div class="roadmap-card">
+      <div class="roadmap-title">전체 로드맵 — 현재 위치</div>
+
+      <div class="roadmap-section">
+        ${roadmapHtml}
+      </div>
+    </div>
+
+    <div class="info-card rec">
+      <h4>✅ 권장 프로그램</h4>
+      <p>${rec.desc}</p>
+    </div>
+    <div class="info-card next">
+      <h4>➡️ 개선되면 다음 단계</h4>
+      <p>${rec.next}</p>
+    </div>
+    <div class="info-card alt">
+      <h4>⚠️ 개선이 안 된다면</h4>
+      <p>${rec.alt}</p>
+    </div>
+
+    <a href="http://pf.kakao.com/_nVSxdn/chat" target="_blank" class="contact-bar">
+      <div><div class="ct-text">지금 바로 상담 시작하기</div><div class="ct-sub">결과를 바탕으로 정확한 안내를 드립니다</div></div>
+      <span style="font-size:22px;">💬</span>
+    </a>
+    <div class="note-box">※ 이 결과는 간단한 자가 가이드이며, 정확한 평가는 전문가 상담이 필요합니다.</div>
+  `;
+}
+
+// ── WELLNESS RESULT ──
+function showWellnessResult(){
+  document.getElementById('result-content').innerHTML = renderWellnessResult();
+  goS('s-result');
+}
+
+const wellnessProgs = {
+  stretch:    { name:'P-스트레칭 프로그램',   desc:'Passive Stretching부터 근막경선 Active 스트레칭까지. 유연성과 가동범위를 단계적으로 회복합니다.', next:'스트레칭이 익숙해지면 기능운동·체력 향상으로 연결됩니다.' },
+  posture:    { name:'자세·체형 교정 프로그램', desc:'불필요한 긴장을 없애고 편안한 호흡이 기준이 되는 바른 자세를 만들어갑니다. 누운 자세→앉기→서기 순으로 진행합니다.', next:'자세가 안정되면 기능운동·스포츠 활동으로 이어집니다.' },
+  fitness:    { name:'기능·체력 향상 프로그램', desc:'PAR 시스템(Passive·Active·Resistive)으로 단계적으로 기능과 체력을 끌어올립니다. 림프 전신 운동과 근막경선 운동이 포함됩니다.', next:'기능이 향상되면 스포츠·고강도 훈련으로 연결할 수 있습니다.' },
+  face:       { name:'IFC 얼굴 교정 프로그램',  desc:'두개골·안면 구조와 자세의 연결에서 접근합니다. 비수술 비침습으로 자연스러운 얼굴 균형을 회복합니다.', next:'얼굴 교정 후 자세·체형 관리와 병행하면 더욱 효과적입니다.' },
+  prevention: { name:'예방·셀프 케어 프로그램',  desc:'생활습관 코칭 중심으로 스스로 몸을 관리하는 법을 익힙니다. 재발 방지와 장기적인 건강 유지가 목표입니다.', next:'셀프 케어 습득 후 정기적인 체크업으로 유지합니다.' },
+};
+
+function renderWellnessResult(){
+  const prog = wellnessProgs[P.goal] || wellnessProgs['posture'];
+
+  // 목표별 시작 단계
+  // - 스트레칭/예방 셀프케어: Passive Stretching부터
+  // - 얼굴 교정: 도수치료 대신 '수기 관리'부터
+  let activeStep = 'active';
+  if(P.goal === 'stretch' || P.goal === 'prevention') activeStep = 'pstr';
+  if(P.goal === 'face') activeStep = 'hand';
+
+  const steps = [
+    { id:'invasive',  label:'침습적 치료', desc:'약물 · 주사 · 시술', vas:'VAS 7↑' },
+    { id:'hand',      label:'수기 관리', desc:'얼굴·두개·경추 라인 수기 케어', vas:'' },
+    { id:'manual',    label:'도수치료 (Manual Therapy)', desc:'Fascia · Muscle · 관절 수기 치료', vas:'VAS 3~6' },
+    { id:'pstr',      label:'Passive Stretching', desc:'유연성 향상', vas:'VAS 0~3' },
+    { id:'aa',        label:'Assisted Active', desc:'ROM 회복 테크닉', vas:'VAS 0~2' },
+    { id:'active',    label:'Active — 자세·생활습관', desc:'불필요한 긴장 최소화 · 편안한 호흡 · 자기 조절', vas:'' },
+    { id:'resistive', label:'Resistive — 기능운동', desc:'근막경선 운동 · 림프 전신 운동 · 밸런스 훈련', vas:'' },
+  ];
+
+  // 얼굴 교정의 경우 도수치료 단계를 로드맵에서 숨김(대신 수기 관리 사용)
+  const filteredSteps = (P.goal === 'face')
+    ? steps.filter(s => s.id !== 'manual')
+    : steps.filter(s => s.id !== 'hand');
+
+  const roadmapHtml = renderRoadmapSteps(filteredSteps, activeStep);
+
+  return `
+    <div class="result-hero wellness">
+      <div class="result-tag">맞춤 프로그램 추천</div>
+      <div class="result-title">${prog.name}</div>
+      <div class="result-sub">목표에 맞춰 순서대로 진행합니다</div>
+    </div>
+
+    <div class="roadmap-card">
+      <div class="roadmap-title">전체 로드맵 — 현재 위치</div>
+
+      <div class="roadmap-section">
+        ${roadmapHtml}
+      </div>
+    </div>
+
+    <div class="info-card rec">
+      <h4>✅ 프로그램 내용</h4>
+      <p>${prog.desc}</p>
+    </div>
+    <div class="info-card next">
+      <h4>➡️ 프로그램 이후</h4>
+      <p>${prog.next}</p>
+    </div>
+    <div class="info-card alt">
+      <h4>⚠️ 프로그램 중 통증이 생기면</h4>
+      <p>웰니스 운동 중 통증이 발생하면 먼저 치료 평가를 받는 것을 권장합니다. 치료 후 다시 웰니스로 이어집니다.</p>
+    </div>
+
+    <a href="http://pf.kakao.com/_nVSxdn/chat" target="_blank" class="contact-bar">
+      <div><div class="ct-text">프로그램 상담 시작하기</div><div class="ct-sub">목표에 맞는 일정을 함께 잡아드립니다</div></div>
+      <span style="font-size:22px;">💬</span>
+    </a>
+    <div class="note-box">※ 웰니스 프로그램 중 통증이 생기면 먼저 치료 평가를 받는 것을 권장합니다.</div>
+  `;
+}
+
+// ── EXPERT RESULT ──
+function showExpertResult(){
+  document.getElementById('result-content').innerHTML = renderExpertResult();
+  goS('s-result');
+}
+
+const eduData = {
+  cmt:  { name:'카이로프랙틱 · 도수치료 (CMT) 아카데미', sub:'평가부터 교정까지 임상 실전 과정', desc:'평가 체계부터 실전 테크닉까지. 어떤 케이스가 와도 스스로 판단할 수 있는 임상 사고를 배웁니다.', tags:['경추','흉/요추','골반','온라인+오프라인'], schedule:'3월·9월 개강 · 48시간', link:'https://cafe.naver.com/ksnim/1066', type:'medical', next:'IFC 또는 Re:Al 움직임과 연계해 전문 영역을 확장할 수 있습니다.' },
+  ifc:  { name:'IFC 국제얼굴교정학회', sub:'안면 비대칭 및 축소 · 얼굴 중심 통합 교정', desc:'비수술 얼굴 교정의 원리와 실전을 배웁니다. 의료인·비의료인 모두 수강 가능합니다.', tags:['얼굴 해부학','촉진법','축소법','스마일호흡'], schedule:'4월·10월 개강 · 24시간', link:'https://cafe.naver.com/ifc/54', type:'all', next:'CMT 또는 Re:Al 움직임과 연계하면 더욱 효과적입니다.' },
+  pstr: { name:'Re:Al 움직임 · P-스트레칭 과정', sub:'PAR 운동 시스템 — Passive · Active · Resistive', desc:'움직임 평가부터 기능운동까지. 트레이너·필라테스 강사에게도 최적화된 움직임 기반 과정입니다.', tags:['자세 교정','기능운동','생활습관 코칭'], schedule:'6월·12월 개강', link:'https://cafe.naver.com/ksnim/1167', type:'all', next:'IFC 또는 CMT와 연계하면 종합 전문가로 성장합니다.' },
+};
+const levelMsg = { none:'처음 시작하시는 분께 기초부터 체계적으로 안내해 드립니다.', basic:'이론 기반이 있으시니 실습 중심으로 빠르게 익히실 수 있습니다.', advanced:'현장 경험을 체계화하고 더 깊은 임상 사고를 쌓을 수 있습니다.' };
+
+function renderEduCard(edu, key){
+  return `<div class="edu-card">
+    <div class="edu-head">
+      <div class="edu-name">${edu.name}</div>
+      <div class="edu-lv">${edu.type==='all'?'누구나':key==='cmt'?'의료인':'전문가'}</div>
+    </div>
+    <div class="edu-body">
+      <div class="edu-desc">${edu.desc}</div>
+      <div class="edu-tags">${edu.tags.map(t=>`<span class="edu-tag">${t}</span>`).join('')}</div>
+      <div class="edu-foot"><span>${edu.schedule}</span><a href="${edu.link}" target="_blank" class="edu-link">자세히 →</a></div>
+    </div></div>`;
+}
+
+function renderExpertResult(){
+  const { want, type, level } = E;
+  const cmtAllowed = ['doctor','pt','pt_student','medical'];
+  const blocked = want==='cmt' && !cmtAllowed.includes(type);
+
+  if(blocked){
+    const ifc = eduData['ifc'], ps = eduData['pstr'];
+    return `
+      <div class="result-hero" style="background:linear-gradient(135deg,#7a4a10,var(--amber));">
+        <div class="result-tag">과정 안내</div>
+        <div class="result-title">카이로프랙틱 · 도수치료(CMT)는 의료인 대상 과정입니다</div>
+        <div class="result-sub">대신 아래 두 과정은 누구나 수강 가능합니다</div>
+      </div>
+      <div class="warn-box"><h4>왜 의료인만 가능한가요?</h4><p>척추·관절 도수치료는 의료행위에 해당하므로 의료인·의료기사만 수강 가능합니다. 얼굴 교정과 움직임 과정은 누구나 가능합니다.</p></div>
+      ${renderEduCard(ifc,'ifc')}
+      ${renderEduCard(ps,'pstr')}
+      <a href="http://pf.kakao.com/_nVSxdn/chat" target="_blank" class="contact-bar" style="background:var(--amber);">
+        <div><div class="ct-text">교육 상담 문의하기</div><div class="ct-sub">상황에 맞게 안내해 드립니다</div></div>
+        <span style="font-size:22px;">💬</span>
+      </a>`;
+  }
+
+  const edu = eduData[want];
+  return `
+    <div class="result-hero" style="background:linear-gradient(135deg,#7a4a10,var(--amber));">
+      <div class="result-tag">맞춤 과정 추천</div>
+      <div class="result-title">${edu.name}</div>
+      <div class="result-sub">${levelMsg[level]||''}</div>
+    </div>
+    ${renderEduCard(edu, want)}
+    <div class="info-card next"><h4>➡️ 이 과정 이후</h4><p>${edu.next}</p></div>
+    <a href="http://pf.kakao.com/_nVSxdn/chat" target="_blank" class="contact-bar" style="background:var(--amber);">
+      <div><div class="ct-text">교육 상담 문의하기</div><div class="ct-sub">일정·비용·내용을 자세히 안내해 드립니다</div></div>
+      <span style="font-size:22px;">💬</span>
+    </a>
+    <div class="note-box">※ 과정 일정은 변경될 수 있으니 문의로 최신 일정을 확인해 주세요.</div>
+  `;
+}
+
+updateProgress('s-home');
+</script>
 </body>
 </html>
