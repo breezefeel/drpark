@@ -814,6 +814,93 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .roadmap-card { background: white; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
 .roadmap-title { padding: 12px 18px; background: var(--bg3); border-bottom: 1px solid var(--border); font-size: 11px; font-weight: 700; color: var(--dim); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .08em; }
 
+/* 로드맵 시각 요약 (헤더 바로 아래) */
+.roadmap-visual {
+  position: relative;
+  padding: 18px 12px 20px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(52,199,138,0.09) 0%, rgba(255,255,255,0.92) 52%, #fff 100%);
+}
+.rmv-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2px;
+  position: relative;
+  max-width: 100%;
+}
+.rmv-inner::before {
+  content: '';
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 13px;
+  height: 5px;
+  border-radius: 4px;
+  z-index: 0;
+  background: linear-gradient(90deg,
+    #34c786 0%,
+    #34c786 var(--rmv-progress, 30%),
+    #dfe3ea var(--rmv-progress, 30%),
+    #dfe3ea 100%);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
+}
+.rmv-step {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.rmv-dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  border: 2px solid var(--border);
+  background: #fff;
+  box-sizing: border-box;
+  transition: transform .2s, box-shadow .2s;
+}
+.rmv-dot--past {
+  background: rgba(52,199,138,0.14);
+  border-color: #34c786;
+  color: #1e8a5c;
+}
+.rmv-dot--active {
+  background: linear-gradient(145deg, #2ea56e, #34c786);
+  border-color: #26965f;
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(52,199,138,0.28), 0 4px 12px rgba(52,199,138,0.22);
+  transform: scale(1.08);
+}
+.rmv-dot--future {
+  background: var(--bg3);
+  border-color: var(--border);
+  color: transparent;
+}
+.rmv-cap {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--dim);
+  text-align: center;
+  line-height: 1.25;
+  max-width: 100%;
+  padding: 0 1px;
+  word-break: keep-all;
+}
+.rmv-step.is-active .rmv-cap { color: var(--green); }
+@media (min-width: 480px) {
+  .rmv-cap { font-size: 10px; }
+}
+
 .roadmap-section { padding: 14px 18px; }
 .roadmap-section-label { font-size: 10px; font-weight: 700; font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
 .roadmap-section-label.medical { color: var(--red); }
@@ -848,8 +935,10 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .info-card.alt h4 { color: var(--amber); }
 .info-card p { font-size: 12px; color: var(--light); line-height: 1.7; }
 
-.contact-bar { background: var(--green); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; margin-top: 4px; text-decoration: none; transition: background .2s; box-shadow: var(--shadow-md); }
+.contact-bar { background: var(--green); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; margin-top: 4px; text-decoration: none; transition: background .2s; box-shadow: var(--shadow-md); border: none; width: 100%; cursor: pointer; font: inherit; text-align: left; color: inherit; }
 .contact-bar:hover { background: var(--green-mid); }
+.contact-bar--amber { background: var(--amber); }
+.contact-bar--amber:hover { filter: brightness(1.05); }
 .ct-text { font-size: 14px; font-weight: 700; color: white; }
 .ct-sub { font-size: 11px; color: rgba(255,255,255,.75); margin-top: 2px; }
 
@@ -870,6 +959,55 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .warn-box p { font-size: 12px; color: var(--light); line-height: 1.6; }
 
 .note-box { padding: 12px 14px; background: var(--bg3); border-radius: 9px; font-size: 11px; color: var(--dim); line-height: 1.6; margin-top: 12px; }
+
+/* 상담 신청 모달 */
+.consult-modal { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: flex-end; justify-content: center; padding: 0; box-sizing: border-box; }
+.consult-modal.hidden { display: none; }
+.consult-modal-backdrop { position: absolute; inset: 0; background: rgba(17,24,39,0.45); backdrop-filter: blur(3px); }
+.consult-modal-panel {
+  position: relative; z-index: 1; width: 100%; max-width: 420px; max-height: min(92vh, 640px); overflow: auto;
+  background: #fff; border-radius: 16px 16px 0 0; padding: 18px 18px 22px; box-shadow: 0 -8px 40px rgba(0,0,0,0.18);
+  margin-top: auto;
+}
+@media (min-width: 480px) {
+  .consult-modal { align-items: center; padding: 16px; }
+  .consult-modal-panel { border-radius: 16px; margin-top: 0; }
+}
+.consult-modal-close {
+  position: absolute; top: 10px; right: 12px; width: 36px; height: 36px; border: none; background: var(--bg3); border-radius: 10px;
+  font-size: 20px; line-height: 1; cursor: pointer; color: var(--dim);
+}
+.consult-modal-title { font-size: 17px; font-weight: 700; margin: 0 40px 14px 0; color: var(--light); }
+.consult-field { margin-bottom: 12px; }
+.consult-field label,
+.consult-field-label-block { display: block; font-size: 11px; font-weight: 700; color: var(--dim); margin-bottom: 5px; letter-spacing: .02em; }
+.consult-field input {
+  width: 100%; box-sizing: border-box; padding: 11px 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px;
+}
+.consult-field input:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(52,199,138,0.2); }
+.consult-phone-row { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; }
+.consult-phone-part {
+  min-width: 0; flex: 1; box-sizing: border-box; padding: 11px 10px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; text-align: center;
+}
+.consult-phone-part.consult-phone-prefix {
+  flex: 0 0 52px; background: var(--bg3); color: var(--dim); font-weight: 600; cursor: default;
+}
+.consult-phone-sep { color: var(--dim); font-weight: 600; flex-shrink: 0; user-select: none; }
+.consult-summary-label { font-size: 11px; font-weight: 700; color: var(--dim); margin: 16px 0 8px; }
+.consult-summary-box {
+  background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; font-size: 12px; color: var(--light); line-height: 1.65; max-height: 180px; overflow-y: auto;
+}
+.consult-summary-box dl { margin: 0; }
+.consult-summary-box dt { font-weight: 700; color: var(--dim); font-size: 10px; margin-top: 8px; text-transform: uppercase; letter-spacing: .06em; }
+.consult-summary-box dt:first-child { margin-top: 0; }
+.consult-summary-box dd { margin: 3px 0 0; padding: 0; }
+.consult-submit {
+  width: 100%; margin-top: 16px; padding: 14px; background: var(--green); color: #fff; border: none; border-radius: 11px; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: var(--shadow-md);
+}
+.consult-submit:hover { background: var(--green-mid); }
+.consult-submit:disabled { opacity: .5; cursor: not-allowed; }
+.consult-modal-foot { margin-top: 12px; text-align: center; font-size: 11px; color: var(--dim); line-height: 1.5; }
+.consult-modal-foot a { color: var(--green); font-weight: 600; }
 
 /* — embed: full protocol (scoped) — */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap');
@@ -3283,12 +3421,46 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   </div>
 </div>
 
+<iframe name="consultHiddenFrame" id="consultHiddenFrame" title="상담 접수 전송" style="display:none;width:0;height:0;border:0;visibility:hidden;"></iframe>
+
+<div id="consultModal" class="consult-modal hidden" aria-hidden="true" role="dialog" aria-labelledby="consultModalTitle">
+  <div class="consult-modal-backdrop" onclick="closeConsultModal()"></div>
+  <div class="consult-modal-panel">
+    <button type="button" class="consult-modal-close" onclick="closeConsultModal()" aria-label="닫기">×</button>
+    <h2 id="consultModalTitle" class="consult-modal-title">상담 신청</h2>
+    <div class="consult-field">
+      <label for="consultName">이름</label>
+      <input type="text" id="consultName" autocomplete="name" placeholder="홍길동" maxlength="40">
+    </div>
+    <div class="consult-field">
+      <span class="consult-field-label-block">연락처</span>
+      <div class="consult-phone-row" role="group" aria-label="휴대전화 번호">
+        <input type="text" class="consult-phone-part consult-phone-prefix" id="consultPhoneP1" value="010" readonly inputmode="numeric" tabindex="-1" aria-label="앞자리 010">
+        <span class="consult-phone-sep" aria-hidden="true">-</span>
+        <input type="tel" class="consult-phone-part" id="consultPhoneP2" maxlength="4" inputmode="numeric" autocomplete="tel-national" aria-label="중간 네 자리" placeholder="0000" oninput="onConsultPhoneMidInput()">
+        <span class="consult-phone-sep" aria-hidden="true">-</span>
+        <input type="tel" class="consult-phone-part" id="consultPhoneP3" maxlength="4" inputmode="numeric" autocomplete="tel-national" aria-label="끝 네 자리" placeholder="0000" oninput="onConsultPhoneLastInput()" onkeydown="onConsultPhoneLastKeydown(event)">
+      </div>
+    </div>
+    <div class="consult-summary-label">선택하신 내용</div>
+    <div id="consultSummaryBody" class="consult-summary-box"></div>
+    <button type="button" class="consult-submit" id="consultSubmitBtn" onclick="submitConsultForm()">보내기</button>
+    <p class="consult-modal-foot">채팅 상담도 가능합니다. 편하게 말씀해주시면 곧 답변드리겠습니다.<br>
+      <a href="http://pf.kakao.com/_nVSxdn/chat" target="_blank" rel="noopener noreferrer">카카오 상담 가기</a>
+    </p>
+  </div>
+</div>
+
 <script>
 // ── STATE ──
 const H = ['s-home'];
 let P = {}, E = {};
 let selectedVasZone = null;
 let bcPath = [];
+let consultFlowKind = 'treatment';
+
+/** 구글 Apps Script 웹앱 URL — `consult-apps-script.gs` 배포 후 여기에 붙여넣기 */
+const CONSULT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwVJSc6rY5tcBSB1VaRi4DBEXGyUBr1ADFfs6QEA9Z9bu0G-0mdMAv374-MdPVYMnSaeQ/exec';
 
 function pSet(k,v){ P[k]=v; }
 function eSet(k,v){ E[k]=v; }
@@ -3308,10 +3480,165 @@ function updateBc(){
   }).join('');
 }
 
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = String(str ?? '');
+  return d.innerHTML;
+}
+
+function buildConsultSelectionRows(){
+  const rows = [];
+  const sevKo = { mild:'경증 (VAS 1~3)', moderate:'중등도 (VAS 4~6)', severe:'중증 (VAS 7~10)' };
+  const areaKo = { neck:'목·어깨', back:'허리·골반', leg:'무릎·하지', full:'여러 부위 / 전신' };
+  const qualKo = { aching:'뻐근·묵직', tight:'당김·뻣뻣', sharp:'찌릿·저림', sharp_local:'날카로운(한 점)', tear:'찢어지는 느낌' };
+  const goalKo = { stretch:'스트레칭', posture:'자세·체형 교정', fitness:'기능·체력 향상', face:'얼굴 교정·관리', prevention:'예방·셀프 케어' };
+  const wantKo = { cmt:'CMT · 도수치료', ifc:'IFC 얼굴 교정', pstr:'Re:Al 움직임' };
+  const typeKo = { medical:'의료인', wellness:'웰니스 전문가', beginner:'입문/공부 중', other:'기타', doctor:'의사·한의사', pt:'물리치료사', pt_student:'물리치료 학생' };
+  const levelKo = { none:'처음', basic:'기초 있음', advanced:'실무 중' };
+
+  if(bcPath && bcPath.length){
+    rows.push({ dt: '선택 경로', dd: bcPath.join(' → ') });
+  }
+
+  if(consultFlowKind === 'expert'){
+    rows.push({ dt: '구분', dd: '전문가 교육 상담' });
+    if(E.want) rows.push({ dt: '관심 과정', dd: wantKo[E.want] || E.want });
+    if(E.type) rows.push({ dt: '직군', dd: typeKo[E.type] || E.type });
+    if(E.level) rows.push({ dt: '교육 경험', dd: levelKo[E.level] || E.level });
+    return rows;
+  }
+
+  if(consultFlowKind === 'wellness' || P.mode === 'wellness'){
+    rows.push({ dt: '구분', dd: '웰니스' });
+    if(P.goal) rows.push({ dt: '프로그램', dd: goalKo[P.goal] || P.goal });
+    return rows;
+  }
+
+  rows.push({ dt: '구분', dd: '치료 영역 (통증)' });
+  if(P.severity) rows.push({ dt: '통증 정도', dd: sevKo[P.severity] || P.severity });
+  if(P.area) rows.push({ dt: '부위', dd: areaKo[P.area] || P.area });
+  if(P.quality) rows.push({ dt: '통증 질', dd: qualKo[P.quality] || P.quality });
+  return rows;
+}
+
+function buildConsultSummaryText(){
+  return buildConsultSelectionRows().map(r => `${r.dt}: ${r.dd}`).join('\n');
+}
+
+function formatConsultSummaryHtml(){
+  const rows = buildConsultSelectionRows();
+  if(!rows.length){
+    return '<p style="margin:0;color:var(--dim);font-size:12px;">선택 항목이 없습니다.</p>';
+  }
+  return '<dl>' + rows.map(r => `<dt>${escapeHtml(r.dt)}</dt><dd>${escapeHtml(r.dd)}</dd>`).join('') + '</dl>';
+}
+
+function consultPhoneDigitsOnly(el, maxLen){
+  el.value = el.value.replace(/\D/g, '').slice(0, maxLen);
+}
+
+function onConsultPhoneMidInput(){
+  const p2 = document.getElementById('consultPhoneP2');
+  const p3 = document.getElementById('consultPhoneP3');
+  let d = p2.value.replace(/\D/g, '');
+  if(d.length > 4){
+    p2.value = d.slice(0, 4);
+    p3.value = d.slice(4, 8);
+    p3.focus();
+    return;
+  }
+  p2.value = d;
+  if(p2.value.length >= 4){
+    p3.focus();
+    p3.select();
+  }
+}
+
+function onConsultPhoneLastInput(){
+  consultPhoneDigitsOnly(document.getElementById('consultPhoneP3'), 4);
+}
+
+function onConsultPhoneLastKeydown(e){
+  const p3 = document.getElementById('consultPhoneP3');
+  const p2 = document.getElementById('consultPhoneP2');
+  if(e.key === 'Backspace' && !p3.value.length){ p2.focus(); }
+}
+
+function getConsultPhoneCombined(){
+  const a = '010';
+  const b = document.getElementById('consultPhoneP2').value.replace(/\D/g, '');
+  const c = document.getElementById('consultPhoneP3').value.replace(/\D/g, '');
+  return { digits: a + b + c, last4: c };
+}
+
+function openConsultModal(){
+  document.getElementById('consultSummaryBody').innerHTML = formatConsultSummaryHtml();
+  document.getElementById('consultPhoneP2').value = '';
+  document.getElementById('consultPhoneP3').value = '';
+  document.getElementById('consultModal').classList.remove('hidden');
+  document.getElementById('consultModal').setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  requestAnimationFrame(() => document.getElementById('consultPhoneP2').focus());
+}
+
+function closeConsultModal(){
+  document.getElementById('consultModal').classList.add('hidden');
+  document.getElementById('consultModal').setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+function submitConsultForm(){
+  const name = document.getElementById('consultName').value.trim();
+  const { digits: phone, last4 } = getConsultPhoneCombined();
+  if(!name){ alert('이름을 입력해 주세요.'); return; }
+  if(phone.length !== 11 || !/^010\d{8}$/.test(phone)){
+    alert('연락처를 확인해 주세요. (010 포함 11자리)');
+    return;
+  }
+  if(!CONSULT_WEBHOOK_URL){
+    alert('서버 URL이 아직 설정되지 않았습니다.\nindex 파일의 CONSULT_WEBHOOK_URL에 구글 Apps Script 웹앱 주소를 넣어 주세요.');
+    return;
+  }
+  const btn = document.getElementById('consultSubmitBtn');
+  const summaryText = buildConsultSummaryText();
+  const payload = {
+    name,
+    phone,
+    flow: consultFlowKind,
+    summaryText,
+    selections: buildConsultSelectionRows(),
+    bcPath: bcPath.slice(),
+    submittedAt: new Date().toISOString(),
+    userAgent: navigator.userAgent
+  };
+  btn.disabled = true;
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = CONSULT_WEBHOOK_URL;
+  form.target = 'consultHiddenFrame';
+  form.acceptCharset = 'UTF-8';
+  const inp = document.createElement('input');
+  inp.type = 'hidden';
+  inp.name = 'data';
+  inp.value = JSON.stringify(payload);
+  form.appendChild(inp);
+  document.body.appendChild(form);
+  form.submit();
+  document.body.removeChild(form);
+  setTimeout(() => { btn.disabled = false; }, 800);
+  closeConsultModal();
+  alert(
+    '접수되었습니다.\n\n' +
+    '뒷자리 ' + last4 + ' 번호로 곧 연락드리겠습니다.\n\n' +
+    '상단 「문의」를 통해 카카오 채널 상담도 이용하실 수 있습니다.'
+  );
+}
+
 function goS(id){
   document.querySelector('.screen.active').classList.remove('active');
   document.getElementById(id).classList.add('active');
   H.push(id);
+  history.pushState({ screen: id, H: JSON.stringify(H), bc: JSON.stringify(bcPath) }, '', '');
   if(id === 's-e2'){
     const isCmt = E && E.want === 'cmt';
     const elDefault = document.getElementById('e2-default');
@@ -3327,18 +3654,11 @@ function goS(id){
 
 function goBack(){
   if(H.length<=1) return;
-  H.pop();
-  // 브레드크럼도 되돌리기
-  if(bcPath.length>0){ bcPath.pop(); updateBc(); }
-  const prev = H[H.length-1];
-  document.querySelector('.screen.active').classList.remove('active');
-  document.getElementById(prev).classList.add('active');
-  updateProgress(prev);
-  window.scrollTo(0,0);
+  history.back();
 }
 
 function goHome(){
-  H.length=0; H.push('s-home');
+  const depth = H.length - 1;
   P={}; E={}; bcPath=[]; selectedVasZone=null;
   document.querySelector('.screen.active').classList.remove('active');
   document.getElementById('s-home').classList.add('active');
@@ -3350,8 +3670,44 @@ function goHome(){
   document.getElementById('vasThumb').style.display='none';
   ['vz-low','vz-mid','vz-high'].forEach(id=>document.getElementById(id).classList.remove('selected'));
   document.getElementById('vasConfirmBtn').classList.remove('ready');
+  H.length=0; H.push('s-home');
   window.scrollTo(0,0);
+  if(depth > 0){
+    history.go(-depth);
+  } else {
+    history.replaceState({ screen: 's-home', H: JSON.stringify(['s-home']), bc: JSON.stringify([]) }, '', '');
+  }
 }
+
+window.addEventListener('popstate', (e) => {
+  const st = e.state;
+  if(!st || !st.screen){
+    return;
+  }
+  try {
+    H = JSON.parse(st.H || '["s-home"]');
+    bcPath = JSON.parse(st.bc || '[]');
+  } catch(err){
+    H = ['s-home'];
+    bcPath = [];
+  }
+  const id = st.screen;
+  document.querySelector('.screen.active').classList.remove('active');
+  const el = document.getElementById(id);
+  if(el){ el.classList.add('active'); }
+  if(id === 's-e2'){
+    const isCmt = E && E.want === 'cmt';
+    const elDefault = document.getElementById('e2-default');
+    const elCmt = document.getElementById('e2-cmt');
+    if(elDefault && elCmt){
+      elDefault.style.display = isCmt ? 'none' : '';
+      elCmt.style.display = isCmt ? '' : 'none';
+    }
+  }
+  updateBc();
+  updateProgress(id);
+  window.scrollTo(0,0);
+});
 
 function startPatient(){ goS('s-p1'); }
 function startExpert(){ goS('s-e1'); }
@@ -3455,12 +3811,49 @@ function confirmVas(){
 
 // ── PATIENT RESULT ──
 function showPatientResult(){
+  consultFlowKind = 'treatment';
   document.getElementById('result-content').innerHTML = renderPatientResult();
   goS('s-result');
 }
 
 function getTissueName(q){
   return q==='aching'?'근육 (Muscle)':q==='tight'?'근막 (Fascia)':q==='sharp'?'신경':q==='sharp_local'?'관절 (Joint)':'결합조직 (힘줄·인대)';
+}
+
+function roadmapShortLabel(s){
+  if(s.label && (s.label.includes('충격파') || s.label.includes('충격'))) return '비침습';
+  const byId = {
+    invasive: '침습',
+    manual: '비침습',
+    pstr: 'P',
+    aa: 'AA',
+    active: 'A',
+    resistive: 'R',
+    hand: '비침습'
+  };
+  if(byId[s.id]) return byId[s.id];
+  const first = (s.label || '').split(/[·—]/)[0].trim();
+  return first.length > 7 ? first.slice(0, 6) + '…' : first || '·';
+}
+
+function renderRoadmapVisual(steps, activeId){
+  const n = steps.length;
+  const stepIdx = Math.max(0, steps.findIndex(x => x.id === activeId));
+  const pct = n <= 1 ? '100%' : `${(stepIdx / (n - 1)) * 100}%`;
+  const nodes = steps.map((s, i) => {
+    const isActive = i === stepIdx;
+    const isPast = i < stepIdx;
+    const dotCls = isActive ? 'rmv-dot--active' : isPast ? 'rmv-dot--past' : 'rmv-dot--future';
+    const sym = isActive ? '★' : isPast ? '✓' : '';
+    const rowCls = isActive ? 'rmv-step is-active' : 'rmv-step';
+    return `<div class="${rowCls}">
+      <div class="rmv-dot ${dotCls}">${sym}</div>
+      <div class="rmv-cap">${roadmapShortLabel(s)}</div>
+    </div>`;
+  }).join('');
+  return `<div class="roadmap-visual" style="--rmv-progress:${pct}" role="presentation">
+    <div class="rmv-inner">${nodes}</div>
+  </div>`;
 }
 
 function renderRoadmapSteps(steps, activeId){
@@ -3513,17 +3906,18 @@ function renderPatientResult(){
   // 단일 로드맵(순서대로 연결)
   const steps = [
     { id:'invasive',  label:'침습적 치료', desc:'약물 · 주사 · 시술 · 수술', vas:'VAS 7~10' },
-    { id:'manual',    label:'도수치료 (Manual Therapy)', desc:'Fascia · Muscle · 관절 수기 치료', vas:'VAS 3~6' },
-    { id:'pstr',      label:'Passive Stretching', desc:'안전한 움직임 평가 + 유연성 향상', vas:'VAS 0~3' },
+    { id:'manual',    label:'비침습 치료', desc:'도수치료(Manual Therapy), 충격파, 고주파', vas:'VAS 3~6' },
+    { id:'pstr',      label:'Passive — Stretching', desc:'안전한 움직임 평가 + 유연성 향상', vas:'VAS 0~3' },
     { id:'aa',        label:'Assisted Active', desc:'ROM 회복 · CIE · Hold&Relax · Pull&Push', vas:'' },
     { id:'active',    label:'Active — 자세·생활습관', desc:'불필요한 긴장 최소화 · 편안한 호흡', vas:'' },
     { id:'resistive', label:'Resistive — 기능운동', desc:'근막경선 운동 · 림프 전신 운동', vas:'' },
   ].map(s => {
     if(s.id === 'manual' && useShockManual){
-      return { id:s.id, label:'충격파 + 도수치료', desc:'ESWT · 이후 Fascia · Muscle · 관절 수기', vas:s.vas };
+      return { id:s.id, label:'충격파 · 비침습 치료', desc:'도수치료(Manual Therapy), 충격파, 고주파', vas:s.vas };
     }
     return s;
   });
+  const roadmapViz = renderRoadmapVisual(steps, activeStep);
   const roadmapHtml = renderRoadmapSteps(steps, activeStep);
 
   // 중등도·중증: 통증 질에 따라 치료 전 영상 검사 권장
@@ -3554,7 +3948,7 @@ function renderPatientResult(){
 
     <div class="roadmap-card">
       <div class="roadmap-title">전체 로드맵 — 현재 위치</div>
-
+      ${roadmapViz}
       <div class="roadmap-section">
         ${roadmapHtml}
       </div>
@@ -3573,16 +3967,17 @@ function renderPatientResult(){
       <p>${rec.alt}</p>
     </div>
 
-    <a href="http://pf.kakao.com/_nVSxdn/chat" target="_blank" class="contact-bar">
+    <button type="button" class="contact-bar" onclick="openConsultModal()">
       <div><div class="ct-text">지금 바로 상담 시작하기</div><div class="ct-sub">결과를 바탕으로 정확한 안내를 드립니다</div></div>
       <span style="font-size:22px;">💬</span>
-    </a>
+    </button>
     <div class="note-box">※ 이 결과는 간단한 자가 가이드이며, 정확한 평가는 전문가 상담이 필요합니다.</div>
   `;
 }
 
 // ── WELLNESS RESULT ──
 function showWellnessResult(){
+  consultFlowKind = 'wellness';
   document.getElementById('result-content').innerHTML = renderWellnessResult();
   goS('s-result');
 }
@@ -3608,8 +4003,8 @@ function renderWellnessResult(){
   const steps = [
     { id:'invasive',  label:'침습적 치료', desc:'약물 · 주사 · 시술', vas:'VAS 7↑' },
     { id:'hand',      label:'수기 관리', desc:'얼굴·두개·경추 라인 수기 케어', vas:'' },
-    { id:'manual',    label:'도수치료 (Manual Therapy)', desc:'Fascia · Muscle · 관절 수기 치료', vas:'VAS 3~6' },
-    { id:'pstr',      label:'Passive Stretching', desc:'유연성 향상', vas:'VAS 0~3' },
+    { id:'manual',    label:'비침습 치료', desc:'도수치료(Manual Therapy), 충격파, 고주파', vas:'VAS 3~6' },
+    { id:'pstr',      label:'Passive — Stretching', desc:'유연성 향상', vas:'VAS 0~3' },
     { id:'aa',        label:'Assisted Active', desc:'ROM 회복 테크닉', vas:'VAS 0~2' },
     { id:'active',    label:'Active — 자세·생활습관', desc:'불필요한 긴장 최소화 · 편안한 호흡 · 자기 조절', vas:'' },
     { id:'resistive', label:'Resistive — 기능운동', desc:'근막경선 운동 · 림프 전신 운동 · 밸런스 훈련', vas:'' },
@@ -3620,6 +4015,7 @@ function renderWellnessResult(){
     ? steps.filter(s => s.id !== 'manual')
     : steps.filter(s => s.id !== 'hand');
 
+  const roadmapViz = renderRoadmapVisual(filteredSteps, activeStep);
   const roadmapHtml = renderRoadmapSteps(filteredSteps, activeStep);
 
   return `
@@ -3631,7 +4027,7 @@ function renderWellnessResult(){
 
     <div class="roadmap-card">
       <div class="roadmap-title">전체 로드맵 — 현재 위치</div>
-
+      ${roadmapViz}
       <div class="roadmap-section">
         ${roadmapHtml}
       </div>
@@ -3650,16 +4046,17 @@ function renderWellnessResult(){
       <p>웰니스 운동 중 통증이 발생하면 먼저 치료 평가를 받는 것을 권장합니다. 치료 후 다시 웰니스로 이어집니다.</p>
     </div>
 
-    <a href="http://pf.kakao.com/_nVSxdn/chat" target="_blank" class="contact-bar">
+    <button type="button" class="contact-bar" onclick="openConsultModal()">
       <div><div class="ct-text">프로그램 상담 시작하기</div><div class="ct-sub">목표에 맞는 일정을 함께 잡아드립니다</div></div>
       <span style="font-size:22px;">💬</span>
-    </a>
+    </button>
     <div class="note-box">※ 웰니스 프로그램 중 통증이 생기면 먼저 치료 평가를 받는 것을 권장합니다.</div>
   `;
 }
 
 // ── EXPERT RESULT ──
 function showExpertResult(){
+  consultFlowKind = 'expert';
   document.getElementById('result-content').innerHTML = renderExpertResult();
   goS('s-result');
 }
@@ -3700,10 +4097,10 @@ function renderExpertResult(){
       <div class="warn-box"><h4>왜 의료인만 가능한가요?</h4><p>척추·관절 도수치료는 의료행위에 해당하므로 의료인·의료기사만 수강 가능합니다. 얼굴 교정과 움직임 과정은 누구나 가능합니다.</p></div>
       ${renderEduCard(ifc,'ifc')}
       ${renderEduCard(ps,'pstr')}
-      <a href="http://pf.kakao.com/_nVSxdn/chat" target="_blank" class="contact-bar" style="background:var(--amber);">
+      <button type="button" class="contact-bar contact-bar--amber" onclick="openConsultModal()">
         <div><div class="ct-text">교육 상담 문의하기</div><div class="ct-sub">상황에 맞게 안내해 드립니다</div></div>
         <span style="font-size:22px;">💬</span>
-      </a>`;
+      </button>`;
   }
 
   const edu = eduData[want];
@@ -3715,14 +4112,15 @@ function renderExpertResult(){
     </div>
     ${renderEduCard(edu, want)}
     <div class="info-card next"><h4>➡️ 이 과정 이후</h4><p>${edu.next}</p></div>
-    <a href="http://pf.kakao.com/_nVSxdn/chat" target="_blank" class="contact-bar" style="background:var(--amber);">
+    <button type="button" class="contact-bar contact-bar--amber" onclick="openConsultModal()">
       <div><div class="ct-text">교육 상담 문의하기</div><div class="ct-sub">일정·비용·내용을 자세히 안내해 드립니다</div></div>
       <span style="font-size:22px;">💬</span>
-    </a>
+    </button>
     <div class="note-box">※ 과정 일정은 변경될 수 있으니 문의로 최신 일정을 확인해 주세요.</div>
   `;
 }
 
+history.replaceState({ screen: 's-home', H: JSON.stringify(['s-home']), bc: JSON.stringify([]) }, '', '');
 updateProgress('s-home');
 </script>
 </body>
