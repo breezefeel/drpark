@@ -934,6 +934,15 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .info-card.next h4 { color: var(--blue); }
 .info-card.alt h4 { color: var(--amber); }
 .info-card p { font-size: 12px; color: var(--light); line-height: 1.7; }
+.edu-apply-btns { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.edu-apply-btn {
+  display: block; text-align: center; padding: 12px 16px; border-radius: 10px;
+  font-size: 13px; font-weight: 700; text-decoration: none; color: white;
+  background: var(--blue); transition: filter .2s, box-shadow .2s;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, .2);
+}
+.edu-apply-btn:hover { filter: brightness(1.08); }
+.edu-apply-btn.is-primary { background: #1d4ed8; box-shadow: 0 3px 12px rgba(29, 78, 216, .35); }
 
 .contact-bar { background: var(--green); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; margin-top: 4px; text-decoration: none; transition: background .2s; box-shadow: var(--shadow-md); border: none; width: 100%; cursor: pointer; font: inherit; text-align: left; color: inherit; }
 .contact-bar:hover { background: var(--green-mid); }
@@ -3385,13 +3394,13 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
     </div>
     <div class="option-list">
       <div class="option" onclick="eSet('want','cmt'); bc('CMT 도수치료'); goS('s-e2')">
-        <div class="opt-ico">🦴</div><div><div class="opt-name">카이로프랙틱 · 도수치료 (CMT)</div><div class="opt-desc">근막·근육·관절 치료 · 척추 교정 · 의료인 대상</div></div><div class="opt-arr">›</div>
+        <div class="opt-ico">🦴</div><div><div class="opt-name">CMT 카이로프랙틱 · 도수치료</div><div class="opt-desc">근막·근육·관절 치료 · 척추 교정 · 의료인 대상</div></div><div class="opt-arr">›</div>
       </div>
       <div class="option" onclick="eSet('want','ifc'); bc('IFC 얼굴교정'); goS('s-e2')">
-        <div class="opt-ico">✨</div><div><div class="opt-name">얼굴 교정 · 관리 (IFC)</div><div class="opt-desc">안면 비대칭 · 얼굴 축소 · 누구나 가능</div></div><div class="opt-arr">›</div>
+        <div class="opt-ico">✨</div><div><div class="opt-name">IFC 얼굴 교정 · 축소</div><div class="opt-desc">안면 비대칭 · 얼굴 축소 · 누구나 가능</div></div><div class="opt-arr">›</div>
       </div>
       <div class="option" onclick="eSet('want','pstr'); bc('Re:Al 움직임'); goS('s-e2')">
-        <div class="opt-ico">🤸</div><div><div class="opt-name">P-스트레칭 · 움직임 (Re:Al)</div><div class="opt-desc">PAR 운동 시스템 · 자세 교정 · 누구나 가능</div></div><div class="opt-arr">›</div>
+        <div class="opt-ico">🤸</div><div><div class="opt-name">Re:Al 움직임</div><div class="opt-desc">PAR 운동 시스템 · 자세 교정 · 누구나 가능</div></div><div class="opt-arr">›</div>
       </div>
     </div>
   </div>
@@ -4108,10 +4117,15 @@ function showExpertResult(){
   goS('s-result');
 }
 
+const eduApplyForms = {
+  ifc: 'https://docs.google.com/forms/d/e/1FAIpQLSeSoLkIaYW164A3i7P16tONYXkqD_ZrCu0oX1_sSSrduLOtrw/viewform?usp=header',
+  cmt: 'https://docs.google.com/forms/d/e/1FAIpQLSdUImgsGnltmIkbVmV5D8sfzfet6228XipgHHD4laqOyn5uiw/viewform?usp=header',
+  pstr: 'https://docs.google.com/forms/d/e/1FAIpQLScK2830yJn9zxh6VGgnWNYh_IZfJ7NI2qKsAxbIgLGhgKqnCg/viewform?usp=header',
+};
 const eduData = {
-  cmt:  { name:'카이로프랙틱 · 도수치료 (CMT) 아카데미', sub:'평가부터 교정까지 임상 실전 과정', desc:'평가 체계부터 실전 테크닉까지. 어떤 케이스가 와도 스스로 판단할 수 있는 임상 사고를 배웁니다.', tags:['경추','흉/요추','골반','온라인+오프라인'], schedule:'3월·9월 개강 · 48시간', link:'https://cafe.naver.com/ksnim/1066', type:'medical', next:'IFC 또는 Re:Al 움직임과 연계해 전문 영역을 확장할 수 있습니다.' },
-  ifc:  { name:'IFC 국제얼굴교정학회', sub:'안면 비대칭 및 축소 · 얼굴 중심 통합 교정', desc:'비수술 얼굴 교정의 원리와 실전을 배웁니다. 의료인·비의료인 모두 수강 가능합니다.', tags:['얼굴 해부학','촉진법','축소법','스마일호흡'], schedule:'4월·10월 개강 · 24시간', link:'https://cafe.naver.com/ifc/54', type:'all', next:'CMT 또는 Re:Al 움직임과 연계하면 더욱 효과적입니다.' },
-  pstr: { name:'Re:Al 움직임 · P-스트레칭 과정', sub:'PAR 운동 시스템 — Passive · Active · Resistive', desc:'움직임 평가부터 기능운동까지. 트레이너·필라테스 강사에게도 최적화된 움직임 기반 과정입니다.', tags:['자세 교정','기능운동','생활습관 코칭'], schedule:'6월·12월 개강', link:'https://cafe.naver.com/koreaposture/358', type:'all', next:'IFC 또는 CMT와 연계하면 종합 전문가로 성장합니다.' },
+  cmt:  { name:'카이로프랙틱 · 도수치료 (CMT) 아카데미', sub:'평가부터 교정까지 임상 실전 과정', desc:'평가 체계부터 실전 테크닉까지. 어떤 케이스가 와도 스스로 판단할 수 있는 임상 사고를 배웁니다.', tags:['경추','흉/요추','골반','온라인+오프라인'], schedule:'3월·9월 개강 · 48시간', link:'https://cafe.naver.com/ksnim/1066', type:'medical' },
+  ifc:  { name:'IFC 국제얼굴교정학회', sub:'안면 비대칭 및 축소 · 얼굴 중심 통합 교정', desc:'비수술 얼굴 교정의 원리와 실전을 배웁니다. 의료인·비의료인 모두 수강 가능합니다.', tags:['얼굴 해부학','촉진법','축소법','스마일호흡'], schedule:'4월·10월 개강 · 24시간', link:'https://cafe.naver.com/ifc/54', type:'all' },
+  pstr: { name:'Re:Al 움직임 · P-스트레칭 과정', sub:'PAR 운동 시스템 — Passive · Active · Resistive', desc:'움직임 평가부터 기능운동까지. 트레이너·필라테스 강사에게도 최적화된 움직임 기반 과정입니다.', tags:['자세 교정','기능운동','생활습관 코칭'], schedule:'6월·12월 개강', link:'https://cafe.naver.com/koreaposture/358', type:'all' },
 };
 const levelMsg = { none:'처음 시작하시는 분께 기초부터 체계적으로 안내해 드립니다.', basic:'이론 기반이 있으시니 실습 중심으로 빠르게 익히실 수 있습니다.', advanced:'현장 경험을 체계화하고 더 깊은 임상 사고를 쌓을 수 있습니다.' };
 
@@ -4130,10 +4144,25 @@ const eduCurriculum = {
 </ul></div>`,
   pstr: `<div class="edu-curriculum"><h4>커리큘럼 · Re:Al 움직임</h4><div class="cur-meta">6시간 × 3회 진행</div><ul>
 <li><strong>(1)</strong> Supine / Prone position</li>
-<li><strong>(2)</strong> 앉거나 네발 기지 자세</li>
-<li><strong>(3)</strong> 서서 하는 자세</li>
+<li><strong>(2)</strong> Sitting position</li>
+<li><strong>(3)</strong> Standing position</li>
 </ul><p>각 포지션별로 <strong>P-Stretching → AA-ROM 증진 → A(생활습관·자세교정) → R(기능 운동)</strong> 순으로 진행합니다.</p></div>`,
 };
+
+const eduApplyLabels = {
+  ifc: 'IFC 교육 신청하기',
+  cmt: 'CMT 교육 신청하기',
+  pstr: 'Re:Al 움직임 교육 신청하기',
+};
+function renderEduApplyButtons(key){
+  if(!key || !eduApplyForms[key]) return '';
+  return `<div class="info-card next edu-apply">
+    <h4>📝 교육 신청</h4>
+    <div class="edu-apply-btns">
+      <a href="${eduApplyForms[key]}" target="_blank" rel="noopener noreferrer" class="edu-apply-btn">${eduApplyLabels[key]}</a>
+    </div>
+  </div>`;
+}
 
 function renderEduCard(edu, key){
   const cur = eduCurriculum[key] || '';
@@ -4164,7 +4193,9 @@ function renderExpertResult(){
       </div>
       <div class="warn-box"><h4>왜 의료인만 가능한가요?</h4><p>척추·관절 도수치료는 의료행위에 해당하므로 의료인·의료기사만 수강 가능합니다. 얼굴 교정과 움직임 과정은 누구나 가능합니다.</p></div>
       ${renderEduCard(ifc,'ifc')}
+      ${renderEduApplyButtons('ifc')}
       ${renderEduCard(ps,'pstr')}
+      ${renderEduApplyButtons('pstr')}
       <button type="button" class="contact-bar contact-bar--amber" onclick="openConsultModal()">
         <div><div class="ct-text">교육 상담 문의하기</div><div class="ct-sub">상황에 맞게 안내해 드립니다</div></div>
         <span style="font-size:22px;">💬</span>
@@ -4179,7 +4210,7 @@ function renderExpertResult(){
       <div class="result-sub">${levelMsg[level]||''}</div>
     </div>
     ${renderEduCard(edu, want)}
-    <div class="info-card next"><h4>➡️ 이 과정 이후</h4><p>${edu.next}</p></div>
+    ${renderEduApplyButtons(want)}
     <button type="button" class="contact-bar contact-bar--amber" onclick="openConsultModal()">
       <div><div class="ct-text">교육 상담 문의하기</div><div class="ct-sub">일정·비용·내용을 자세히 안내해 드립니다</div></div>
       <span style="font-size:22px;">💬</span>
