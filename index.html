@@ -732,16 +732,49 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .zone-line-dash { flex: 1; border-top: 1px dashed var(--border); }
 
 #s-psp3 .proto-doc .header .header-inner { position: relative; z-index: 1; }
-#s-psp3 .proto-doc .header .psp-zone-intro {
-  font-size: 13px; color: var(--dim); line-height: 1.65;
-  margin: 20px auto 14px; text-align: center; max-width: 640px;
+#s-psp3 .proto-doc .header .header-roadmap {
+  margin: 10px 0 22px; text-align: center; font-size: 12px;
+  color: var(--dim); line-height: 1.5; letter-spacing: 0.02em;
 }
-#s-psp3 .proto-doc .header .psp-zone-intro strong { color: #1a3a34; font-weight: 600; }
 #s-psp3 .proto-doc .header .psp-zone-visual {
   max-width: 640px; margin: 0 auto; position: relative; z-index: 1;
+  box-shadow: 0 2px 14px rgba(21, 94, 99, 0.07);
 }
-#s-psp3 .proto-doc .header .header-roadmap {
-  margin-bottom: 0;
+#s-psp3 .proto-doc .header .psp-zone-visual .zone-wellness,
+#s-psp3 .proto-doc .header .psp-zone-visual .zone-treatment {
+  padding: 16px 20px; gap: 12px;
+}
+#s-psp3 .proto-doc .header .psp-zone-visual .zone-title {
+  font-size: 14px; margin-bottom: 4px; letter-spacing: -0.02em;
+}
+#s-psp3 .proto-doc .header .psp-zone-visual .zone-desc {
+  font-size: 12px; line-height: 1.5; color: #4b5563;
+}
+#s-psp3 .proto-doc .header .psp-zone-visual .zone-line {
+  padding: 12px 20px;
+}
+#s-psp3 .proto-doc .header .psp-zone-visual .zone-line-label {
+  font-size: 11px; white-space: nowrap;
+}
+#s-psp3 .proto-doc .header .psp-zone-intro {
+  font-size: 13.5px; color: #4b5563; line-height: 1.72;
+  margin: 20px auto 8px; padding: 0 14px;
+  text-align: center; max-width: 640px; letter-spacing: -0.01em;
+}
+#s-psp3 .proto-doc .header .psp-zone-intro strong { color: #1a3a34; font-weight: 600; }
+#s-psp3 .proto-doc .header .psp-intro-rest {
+  white-space: nowrap;
+}
+#s-psp3 .proto-doc .header .psp-intro-last {
+  white-space: nowrap;
+}
+@media (max-width: 520px) {
+  #s-psp3 .proto-doc .header .psp-intro-rest {
+    white-space: normal;
+  }
+  #s-psp3 .proto-doc .header .psp-zone-intro {
+    font-size: 13px; line-height: 1.68; margin-top: 18px;
+  }
 }
 
 /* ══════════════════════════════
@@ -1016,11 +1049,21 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .consult-field.hidden { display: none; }
 .consult-phone-row { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; }
 .consult-phone-part {
-  min-width: 0; flex: 1; box-sizing: border-box; padding: 11px 10px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; text-align: center;
+  min-width: 0; flex: 1; box-sizing: border-box; padding: 11px 10px; border: 1px solid var(--border); border-radius: 10px;
+  font-size: 14px; line-height: 1.25; text-align: center;
 }
 .consult-phone-part[inputmode="numeric"] { font-variant-numeric: tabular-nums; letter-spacing: .04em; }
 .consult-phone-part.consult-phone-prefix {
-  flex: 0 0 52px; background: var(--bg3); color: var(--dim); font-weight: 600; cursor: default;
+  flex: 0 0 3.5rem; min-width: 3.5rem; max-width: 3.5rem;
+  padding: 11px 6px; letter-spacing: 0;
+  background: var(--bg3); color: var(--dim); font-weight: 600; cursor: default;
+  overflow: visible;
+}
+@media (max-width: 520px) {
+  .consult-phone-part.consult-phone-prefix {
+    flex: 0 0 3.65rem; min-width: 3.65rem; max-width: 3.65rem;
+    padding: 12px 4px; font-size: 15px; line-height: 1.2;
+  }
 }
 .consult-phone-sep { color: var(--dim); font-weight: 600; flex-shrink: 0; user-select: none; }
 .consult-summary-label { font-size: 11px; font-weight: 700; color: var(--dim); margin: 16px 0 8px; }
@@ -1909,30 +1952,51 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .hero-intro .pl-branch-chip {
   background: rgba(255, 255, 255, 0.95);
 }
+.pl-hero-copy {
+  display: flex; flex-direction: column; gap: 8px;
+  margin: 0 0 20px; min-height: 4.75rem;
+  transition: opacity .22s ease;
+}
+.pl-hero-copy.is-fading { opacity: 0; }
 .pl-hero-title {
   font-size: 17px; font-weight: 700; color: #1a3a34; line-height: 1.45;
-  margin: 0 0 8px; transition: opacity .22s ease;
+  margin: 0;
 }
 .pl-hero-sub {
   font-size: 13px; color: var(--dim); line-height: 1.55;
-  margin: 0 0 20px; transition: opacity .22s ease;
+  margin: 0;
 }
-.pl-hero-title.is-fading, .pl-hero-sub.is-fading { opacity: 0; }
+@media (max-width: 520px) {
+  .pl-hero-copy { min-height: 5.5rem; }
+}
 .pl-branch-grid {
-  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
-  margin-bottom: 18px;
+  display: flex; flex-wrap: nowrap; justify-content: center; align-items: center;
+  gap: 6px; margin-bottom: 18px; width: 100%; max-width: 100%;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; padding: 2px 0;
 }
+.pl-branch-grid::-webkit-scrollbar { display: none; }
 .pl-branch-chip {
+  flex-shrink: 0; white-space: nowrap;
   font-size: 12px; font-weight: 600; font-family: inherit;
-  padding: 9px 14px; border-radius: 999px;
+  padding: 8px 11px; border-radius: 999px;
   border: 1.5px solid #e5e7eb; background: #fff;
   color: #374151; cursor: pointer; transition: all .2s;
+}
+@media (max-width: 400px) {
+  .pl-branch-grid { gap: 5px; justify-content: flex-start; padding-left: 2px; padding-right: 2px; }
+  .pl-branch-chip { font-size: 11px; padding: 7px 9px; }
 }
 .pl-branch-chip:hover { border-color: var(--green-border); background: var(--green-bg); }
 .pl-branch-chip.active {
   border-color: var(--green); background: #fff; color: #145c41;
   box-shadow: 0 0 0 1px rgba(26, 122, 82, 0.12);
 }
+a.pl-branch-chip {
+  text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+  box-sizing: border-box;
+}
+a.pl-branch-chip:hover { border-color: var(--green-border); background: var(--green-bg); color: #145c41; }
 .pl-branch-cta {
   display: none;
   width: 100%; max-width: 340px; margin: 0 auto;
@@ -1965,18 +2029,10 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   background: var(--green-bg); border-color: var(--green-mid);
   box-shadow: 0 2px 8px rgba(26, 122, 82, 0.12);
 }
-.pl-hero-btn--profile {
-  flex: 1 1 0;
-  font-size: 12px; font-weight: 600;
-  color: #4b5563; background: #f3f4f6; border: 1.5px solid #d1d5db;
-}
-.pl-hero-btn--profile:hover {
-  border-color: #9ca3af; background: #e5e7eb; color: #1f2937;
-}
+.pl-hero-actions--solo .pl-hero-btn--consult { flex: 1 1 auto; width: 100%; max-width: 340px; margin: 0 auto; }
 @media (max-width: 380px) {
   .pl-hero-actions { flex-direction: column; gap: 10px; }
-  .pl-hero-btn--consult,
-  .pl-hero-btn--profile { flex: none; width: 100%; font-size: 13px; }
+  .pl-hero-btn--consult { flex: none; width: 100%; font-size: 13px; }
 }
 
 #s-home.screen { min-height: 0; }
@@ -2051,12 +2107,13 @@ body.profile-home-sticky .hero-panel { padding-bottom: 16px; }
           </div>
         </div>
 
-        <h2 class="pl-hero-title" id="profileHeroTitle">더 좋은 몸 상태를 위한 관리</h2>
-        <p class="pl-hero-sub" id="profileHeroSub">유연성·자세·기능 — PAR 움직임 프로그램</p>
+        <div class="pl-hero-copy" id="profileHeroCopy">
+          <h2 class="pl-hero-title" id="profileHeroTitle">더 좋은 몸 상태를 위한 관리</h2>
+          <p class="pl-hero-sub" id="profileHeroSub">유연성·자세·기능 — PAR 움직임 프로그램</p>
+        </div>
         <button type="button" class="pl-branch-cta visible" id="profileBranchAction" onclick="runProfileBranchAction()">몸을 더 좋게 만들고 싶어요 →</button>
-        <div class="pl-hero-actions">
+        <div class="pl-hero-actions pl-hero-actions--solo">
           <button type="button" class="pl-hero-btn pl-hero-btn--consult" onclick="openProfileQuickConsult()">빠른 상담 받기</button>
-          <a href="https://blog.naver.com/allenjoy/120205433765" target="_blank" rel="noopener noreferrer" class="pl-hero-btn pl-hero-btn--profile">네이버 프로필</a>
         </div>
       </div>
 
@@ -2167,14 +2224,13 @@ body.profile-home-sticky .hero-panel { padding-bottom: 16px; }
   <div class="header-inner">
     <div class="header-badge">Clinical Protocol</div>
     <h1>평가 기반 <span>의료 웰니스</span> 로드맵</h1>
-    <p class="header-roadmap">Philosophy → Assessment → Manual Therapy → Movement → Wellness</p>
-    <p class="psp-zone-intro">편안한 상태를 <strong>기준선</strong>으로 두고, 통증·불편이 있으면 <strong>치료 영역</strong>으로, 통증이 없으면 <strong>웰니스 영역</strong>으로 안내합니다.</p>
+    <p class="header-roadmap">Philosophy → Assessment → Manual Therapy → Movement</p>
     <div class="zone-visual psp-zone-visual">
       <div class="zone-wellness">
         <div class="zone-icon">⬆️</div>
         <div>
-          <div class="zone-title">웰니스 영역: 통증 없음</div>
-          <div class="zone-desc">더 좋은 상태로 끌어올리는 과정<br>PAR 움직임 프로그램</div>
+          <div class="zone-title">웰니스 영역</div>
+          <div class="zone-desc">통증 없음: 더 좋은 상태로 끌어올리는 과정</div>
         </div>
       </div>
       <div class="zone-line">
@@ -2185,11 +2241,15 @@ body.profile-home-sticky .hero-panel { padding-bottom: 16px; }
       <div class="zone-treatment">
         <div class="zone-icon">⬇️</div>
         <div>
-          <div class="zone-title">치료 영역: 통증 있음</div>
-          <div class="zone-desc">정상으로 되돌리는 과정<br>Manual Therapy + 약·시술·수술</div>
+          <div class="zone-title">치료 영역</div>
+          <div class="zone-desc">통증 있음: 정상으로 되돌리는 과정</div>
         </div>
       </div>
     </div>
+    <p class="psp-zone-intro">
+      <span class="psp-intro-lead">편안한 상태를 <strong>기준선</strong>으로 두고,</span>
+      <span class="psp-intro-rest"> 통증·불편이 있으면 <strong>치료 영역</strong>으로, <span class="psp-intro-last">통증이 없으면 <strong>웰니스 영역</strong>으로 안내합니다.</span></span>
+    </p>
   </div>
 </div>
 
@@ -3348,8 +3408,8 @@ body.profile-home-sticky .hero-panel { padding-bottom: 16px; }
       <div class="zone-wellness">
         <div class="zone-icon">⬆️</div>
         <div>
-          <div class="zone-title">웰니스 영역: 통증 없음</div>
-          <div class="zone-desc">더 좋은 상태로 끌어올리는 과정<br>PAR 움직임 프로그램</div>
+          <div class="zone-title">웰니스 영역</div>
+          <div class="zone-desc">통증 없음: 더 좋은 상태로 끌어올리는 과정</div>
         </div>
       </div>
       <div class="zone-line">
@@ -3360,8 +3420,8 @@ body.profile-home-sticky .hero-panel { padding-bottom: 16px; }
       <div class="zone-treatment">
         <div class="zone-icon">⬇️</div>
         <div>
-          <div class="zone-title">치료 영역: 통증 있음</div>
-          <div class="zone-desc">정상으로 되돌리는 과정<br>Manual Therapy + 약·시술·수술</div>
+          <div class="zone-title">치료 영역</div>
+          <div class="zone-desc">통증 있음: 정상으로 되돌리는 과정</div>
         </div>
       </div>
     </div>
@@ -3483,8 +3543,8 @@ body.profile-home-sticky .hero-panel { padding-bottom: 16px; }
       <div class="q-sub">목표에 맞는 프로그램을 선택해주세요</div>
     </div>
     <div class="option-list">
-      <div class="option" style="border-color:var(--green-border);" onclick="pSet('goal','stretch'); bc('스트레칭'); showWellnessResult()">
-        <div class="opt-ico">🤸</div><div><div class="opt-name">스트레칭</div><div class="opt-desc">P-스트레칭 · 근막경선 스트레칭 · 유연성 향상</div></div><div class="opt-arr">›</div>
+      <div class="option" style="border-color:var(--green-border);" onclick="pSet('goal','stretch'); bc('유연성 향상'); showWellnessResult()">
+        <div class="opt-ico">🤸</div><div><div class="opt-name">유연성 향상</div><div class="opt-desc">P-스트레칭 · 근막경선 스트레칭 · 뻐근함/뻣뻣함 개선</div></div><div class="opt-arr">›</div>
       </div>
       <div class="option" style="border-color:var(--green-border);" onclick="pSet('goal','posture'); bc('자세·체형 교정'); showWellnessResult()">
         <div class="opt-ico">📐</div><div><div class="opt-name">자세·체형 교정</div><div class="opt-desc">거북목, 굽은 어깨, 골반 불균형 개선</div></div><div class="opt-arr">›</div>
@@ -3609,8 +3669,6 @@ body.profile-home-sticky .hero-panel { padding-bottom: 16px; }
       <button type="button" class="consult-submit" id="consultSubmitBtn" onclick="submitConsultForm()">보내기</button>
       <a href="http://pf.kakao.com/_nVSxdn/chat" target="_blank" rel="noopener noreferrer" class="consult-chat-btn hidden" id="consultChatBtn">채팅 상담</a>
     </div>
-    <p id="consultModalFootDefault" class="consult-modal-foot">접수되면 입력하신 연락처로 순차 연락드립니다.</p>
-    <p id="consultModalFootExpert" class="consult-modal-foot hidden">접수되면 입력하신 연락처로 순차 연락드립니다. 문의 내용은 시트에 함께 저장됩니다.</p>
   </div>
 </div>
 
@@ -3622,6 +3680,41 @@ let selectedVasZone = null;
 let bcPath = [];
 let consultFlowKind = 'treatment';
 let profileBranch = 'wellness';
+let profileHeroFadeTimer = null;
+const PROFILE_HERO_FADE_MS = 230;
+/** 빠른 상담 알림톡용 — 탭·화면 열람 기록 */
+let profileViewLog = [];
+
+const PROFILE_BRANCH_CHIP_LABEL = {
+  treatment: '통증·치료',
+  wellness: '움직임·웰니스',
+  expert: '전문가 교육',
+  psp: 'PSP 컨셉',
+};
+
+const PROFILE_SCREEN_LABELS = {
+  's-home': '프로필 홈',
+  's-psp1': 'PSP 컨셉 요약',
+  's-psp3': 'PSP 전체 구조',
+  's-p1': '몸 상태 선택',
+  's-p-vas': '통증 평가',
+  's-p2': '통증 부위',
+  's-p3': '통증 양상',
+  's-p-wellness': '웰니스 목표',
+  's-result': '안내 결과',
+  's-e1': '전문가 교육 1',
+  's-e2': '전문가 교육 2',
+  's-e3': '전문가 교육 3',
+};
+
+function pushProfileViewLog_(label) {
+  const text = String(label || '').trim();
+  if (!text) return;
+  const last = profileViewLog[profileViewLog.length - 1];
+  if (last && last.label === text) return;
+  profileViewLog.push({ at: new Date().toISOString(), label: text });
+  if (profileViewLog.length > 48) profileViewLog.shift();
+}
 
 /** 구글 Apps Script 웹앱 URL — `consult-apps-script.gs` 배포 후 여기에 붙여넣기 */
 const CONSULT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwVJSc6rY5tcBSB1VaRi4DBEXGyUBr1ADFfs6QEA9Z9bu0G-0mdMAv374-MdPVYMnSaeQ/exec';
@@ -3652,6 +3745,7 @@ const PROFILE_BRANCH_COPY = {
 function setProfileHeroCopy(branch, animate){
   const copy = PROFILE_BRANCH_COPY[branch];
   if(!copy) return;
+  const wrapEl = document.getElementById('profileHeroCopy');
   const titleEl = document.getElementById('profileHeroTitle');
   const subEl = document.getElementById('profileHeroSub');
   const btn = document.getElementById('profileBranchAction');
@@ -3664,15 +3758,21 @@ function setProfileHeroCopy(branch, animate){
       btn.classList.add('visible');
     }
   };
-  if(animate){
-    titleEl.classList.add('is-fading');
-    subEl.classList.add('is-fading');
-    setTimeout(() => {
+  if(profileHeroFadeTimer){
+    clearTimeout(profileHeroFadeTimer);
+    profileHeroFadeTimer = null;
+  }
+  const useFade = animate && wrapEl &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(useFade){
+    wrapEl.classList.add('is-fading');
+    profileHeroFadeTimer = setTimeout(() => {
       apply();
-      titleEl.classList.remove('is-fading');
-      subEl.classList.remove('is-fading');
-    }, 160);
+      wrapEl.classList.remove('is-fading');
+      profileHeroFadeTimer = null;
+    }, PROFILE_HERO_FADE_MS);
   } else {
+    if(wrapEl) wrapEl.classList.remove('is-fading');
     apply();
   }
 }
@@ -3682,6 +3782,7 @@ function selectProfileBranch(branch){
   document.querySelectorAll('.pl-branch-chip').forEach(chip => {
     chip.classList.toggle('active', chip.getAttribute('data-branch') === branch);
   });
+  pushProfileViewLog_('탭: ' + (PROFILE_BRANCH_CHIP_LABEL[branch] || branch));
   setProfileHeroCopy(branch, true);
 }
 
@@ -3732,30 +3833,51 @@ function escapeHtml(str){
   return d.innerHTML;
 }
 
-function buildConsultSelectionRows(){
+function getProfileInterestTitle_(){
+  return (PROFILE_BRANCH_COPY[profileBranch] || {}).title || '';
+}
+
+function buildConsultSelectionRows(opts){
+  opts = opts || {};
   const rows = [];
   const sevKo = { mild:'경증 (VAS 0~3)', moderate:'중등도 (VAS 4~6)', severe:'중증 (VAS 7~10)' };
   const areaKo = { neck:'목·어깨', back:'허리·골반', leg:'무릎·하지', full:'여러 부위 / 전신' };
   const qualKo = { aching:'뻐근·묵직', tight:'당김·뻣뻣', sharp:'찌릿·저림', sharp_local:'날카로운(한 점)', tear:'찢어지는 느낌' };
-  const goalKo = { stretch:'스트레칭', posture:'자세·체형 교정', fitness:'기능·체력 향상', face:'얼굴 교정·관리', prevention:'예방·셀프 케어' };
+  const goalKo = { stretch:'유연성 향상', posture:'자세·체형 교정', fitness:'기능·체력 향상', face:'얼굴 교정·관리', prevention:'예방·셀프 케어' };
   const wantKo = { cmt:'CMT · 도수치료', ifc:'IFC 얼굴 교정', pstr:'Re:Al 움직임' };
   const typeKo = { medical:'의료인', wellness:'웰니스 전문가', beginner:'입문/공부 중', other:'기타', doctor:'의사·한의사', pt:'물리치료사', pt_student:'물리치료 학생' };
   const levelKo = { none:'처음', basic:'기초 있음', advanced:'실무 중' };
 
-  if(bcPath && bcPath.length){
-    rows.push({ dt: '선택 경로', dd: bcPath.join(' → ') });
-  }
-
   if(consultFlowKind === 'profile_quick'){
-    rows.push({ dt: '구분', dd: '프로필 · 빠른 상담' });
+    const interest = getProfileInterestTitle_();
     const ta = document.getElementById('consultSummaryText');
     const edited = (ta && ta.value || '').trim();
-    if(edited) rows.push({ dt: '상담 내용', dd: edited });
-    else {
-      const interest = (PROFILE_BRANCH_COPY[profileBranch] || {}).title;
-      if(interest) rows.push({ dt: '관심 분야', dd: interest });
+    if(!opts.forAdmin){
+      if(edited){
+        const m = edited.match(/관심\s*분야\s*[:：]\s*(.+)/);
+        rows.push({ dt: '관심 분야', dd: m ? m[1].trim() : edited });
+      } else if(interest){
+        rows.push({ dt: '관심 분야', dd: interest });
+      }
+      return rows;
+    }
+    rows.push({ dt: '구분', dd: '프로필 · 빠른 상담' });
+    if(interest) rows.push({ dt: '관심 분야', dd: interest });
+    if(edited) rows.push({ dt: '회원 입력', dd: edited });
+    if(profileViewLog.length){
+      rows.push({
+        dt: '열람·메뉴',
+        dd: profileViewLog.map(function (e, i) { return (i + 1) + '. ' + e.label; }).join('\n'),
+      });
+    }
+    if(bcPath && bcPath.length){
+      rows.push({ dt: '선택 경로', dd: ['홈'].concat(bcPath).join(' → ') });
     }
     return rows;
+  }
+
+  if(bcPath && bcPath.length){
+    rows.push({ dt: '선택 경로', dd: bcPath.join(' → ') });
   }
 
   if(consultFlowKind === 'expert'){
@@ -3782,13 +3904,18 @@ function buildConsultSelectionRows(){
 
 function buildConsultSummaryPlainText(){
   if(consultFlowKind === 'profile_quick'){
-    const seed = [];
-    seed.push({ dt: '구분', dd: '프로필 · 빠른 상담' });
-    const interest = (PROFILE_BRANCH_COPY[profileBranch] || {}).title;
-    if(interest) seed.push({ dt: '관심 분야', dd: interest });
-    return seed.map(r => `${r.dt}: ${r.dd}`).join('\n');
+    const interest = getProfileInterestTitle_();
+    return interest ? '관심 분야: ' + interest : '';
   }
   return buildConsultSelectionRows().map(r => `${r.dt}: ${r.dd}`).join('\n');
+}
+
+/** 관리자 알림톡·시트용 — 열람 기록·경로 포함 */
+function buildConsultAdminSummaryText(){
+  if(consultFlowKind === 'profile_quick'){
+    return buildConsultSelectionRows({ forAdmin: true }).map(r => `${r.dt}: ${r.dd}`).join('\n');
+  }
+  return buildConsultSummaryPlainText();
 }
 
 function buildConsultSummaryText(){
@@ -3860,6 +3987,7 @@ function updateProfileSticky(){
 }
 
 function openProfileQuickConsult(){
+  pushProfileViewLog_('빠른 상담 신청');
   consultFlowKind = 'profile_quick';
   openConsultModal();
 }
@@ -3867,7 +3995,7 @@ function openProfileQuickConsult(){
 function openConsultModal(){
   const isExpert = consultFlowKind === 'expert';
   const isQuick = consultFlowKind === 'profile_quick';
-  document.getElementById('consultModalTitle').textContent = isExpert ? '교육 상담 신청' : (isQuick ? '빠른 상담' : '상담 신청');
+  document.getElementById('consultModalTitle').textContent = isExpert ? '교육 상담 신청' : (isQuick ? '휴대폰 번호 알려~' : '상담 신청');
   const subEl = document.getElementById('consultModalSub');
   if(subEl) subEl.classList.toggle('hidden', !isQuick);
   const nameLabel = document.getElementById('consultNameLabel');
@@ -3882,8 +4010,6 @@ function openConsultModal(){
     }
   }
   document.getElementById('consultExpertFields').classList.toggle('hidden', !isExpert);
-  document.getElementById('consultModalFootDefault').classList.toggle('hidden', isExpert || isQuick);
-  document.getElementById('consultModalFootExpert').classList.toggle('hidden', !isExpert);
   const chatBtn = document.getElementById('consultChatBtn');
   if(chatBtn) chatBtn.classList.toggle('hidden', !isQuick);
   if(isExpert){
@@ -3951,8 +4077,11 @@ function submitConsultForm(){
     phone,
     flow: consultFlowKind,
     summaryText,
+    adminSummaryText: buildConsultAdminSummaryText(),
     inquiry: inquiryExpert || undefined,
-    selections: buildConsultSelectionRows(),
+    selections: buildConsultSelectionRows({ forAdmin: consultFlowKind === 'profile_quick' }),
+    profileViewLog: profileViewLog.slice(),
+    profileBranch: profileBranch,
     bcPath: bcPath.slice(),
     submittedAt: new Date().toISOString(),
     userAgent: navigator.userAgent
@@ -3985,6 +4114,7 @@ function submitConsultForm(){
 function goS(id){
   document.querySelector('.screen.active').classList.remove('active');
   document.getElementById(id).classList.add('active');
+  pushProfileViewLog_('화면: ' + (PROFILE_SCREEN_LABELS[id] || id));
   H.push(id);
   history.pushState({ screen: id, H: JSON.stringify(H), bc: JSON.stringify(bcPath) }, '', '');
   if(id === 's-e2'){
@@ -4175,6 +4305,23 @@ function syncVasSelectionUI(v){
   if(confirmBtn) confirmBtn.classList.add('ready');
 }
 
+/** VAS 확정 후 — 0이면 웰니스(움직임) 선택, 그 외는 통증 부위 질문 */
+function goAfterVas_(v){
+  if(v === 0){
+    pSet('mode', 'wellness');
+    bcPath = bcPath.filter(function (x) {
+      return x.indexOf('치료') === -1 && x.indexOf('경증') === -1 &&
+        x.indexOf('중등도') === -1 && x.indexOf('중증') === -1;
+    });
+    if(bcPath.indexOf('웰니스 영역') === -1) bcPath.push('웰니스 영역');
+    bcPath.push('VAS 0');
+    updateBc();
+    goS('s-p-wellness');
+    return;
+  }
+  goS('s-p2');
+}
+
 function setVasValue(val, autoAdvance){
   const v = Math.max(0, Math.min(10, Math.round(Number(val))));
   const zone = vasZoneFromValue(v);
@@ -4186,11 +4333,11 @@ function setVasValue(val, autoAdvance){
     !x.includes('경증') && !x.includes('중등도') && !x.includes('중증') && !/^VAS\s/.test(x)
   );
   bcPath.push('VAS ' + v);
-  bcPath.push(vasZoneLabel(zone));
+  if(v !== 0) bcPath.push(vasZoneLabel(zone));
   updateBc();
 
   if(autoAdvance){
-    setTimeout(() => goS('s-p2'), 300);
+    setTimeout(function () { goAfterVas_(v); }, 300);
   }
 }
 
@@ -4217,7 +4364,7 @@ function selectVasZone(zone){
 
 function confirmVas(){
   if(selectedVasZone == null || selectedVasValue == null) return;
-  goS('s-p2');
+  goAfterVas_(selectedVasValue);
 }
 
 // ── PATIENT RESULT ──
@@ -4397,7 +4544,7 @@ function showWellnessResult(){
 }
 
 const wellnessProgs = {
-  stretch:    { name:'P-스트레칭 프로그램',   desc:'Passive Stretching부터 근막경선 Active 스트레칭까지. 유연성과 가동범위를 단계적으로 회복합니다.', next:'스트레칭이 익숙해지면 기능운동·체력 향상으로 연결됩니다.' },
+  stretch:    { name:'유연성 향상 프로그램',   desc:'P-스트레칭·근막경선 스트레칭으로 뻐근함/뻣뻣함을 개선하고 유연성과 가동범위를 회복합니다.', next:'유연성이 회복되면 기능운동·체력 향상으로 연결됩니다.' },
   posture:    { name:'자세·체형 교정 프로그램', desc:'불필요한 긴장을 없애고 편안한 호흡이 기준이 되는 바른 자세를 만들어갑니다. 누운 자세→앉기→서기 순으로 진행합니다.', next:'자세가 안정되면 기능운동·스포츠 활동으로 이어집니다.' },
   fitness:    { name:'기능·체력 향상 프로그램', desc:'PAR 시스템(Passive·Active·Resistive)으로 단계적으로 기능과 체력을 끌어올립니다. 림프 전신 운동과 근막경선 운동이 포함됩니다.', next:'기능이 향상되면 스포츠·고강도 훈련으로 연결할 수 있습니다.' },
   face:       { name:'IFC 얼굴 교정 프로그램',  desc:'두개골·안면 구조와 자세의 연결에서 접근합니다. 비수술 비침습으로 자연스러운 얼굴 균형을 회복합니다.', next:'얼굴 교정 후 자세·체형 관리와 병행하면 더욱 효과적입니다.' },
@@ -4582,6 +4729,7 @@ function renderExpertResult(){
 history.replaceState({ screen: 's-home', H: JSON.stringify(['s-home']), bc: JSON.stringify([]) }, '', '');
 updateProgress('s-home');
 updateProfileSticky();
+pushProfileViewLog_('프로필 홈');
 selectProfileBranch('wellness');
 </script>
 </body>
