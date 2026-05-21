@@ -1383,6 +1383,358 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
     font-size: 12px;
   }
 
+  /* Movement — 공통 흐름 / Passive 소개 */
+  #s-psp3 .proto-doc .mv-common-flow-outside {
+    margin-bottom: 10px;
+  }
+  #s-psp3 .proto-doc .mv-common-flow-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--blue);
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  #s-psp3 .proto-doc .mv-common-flow-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin: 0 0 10px;
+  }
+  #s-psp3 .proto-doc .mv-common-flow-box {
+    border-radius: 7px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+  }
+  /* 공통 판단 흐름 — Passive·Position 1 (파란 톤) */
+  #s-psp3 .proto-doc .mv-common-flow-box--judgment,
+  #s-psp3 .proto-doc .mv-common-flow-box--part {
+    background: rgba(74, 157, 232, 0.05);
+    border: 1px solid rgba(74, 157, 232, 0.14);
+  }
+  /* Passive Stretching 시행 — 판단 흐름보다 한 톤 진하게 */
+  #s-psp3 .proto-doc .mv-common-flow-box--passive-action {
+    text-align: center;
+    padding: 14px 18px;
+    margin-bottom: 4px;
+    background: rgba(74, 157, 232, 0.1);
+    border: 1px solid rgba(74, 157, 232, 0.26);
+  }
+  #s-psp3 .proto-doc .mv-passive-action-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2a6fa8;
+    margin-bottom: 4px;
+  }
+  #s-psp3 .proto-doc .mv-passive-action-sub {
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(42, 111, 168, 0.75);
+  }
+  /* Active Stretching 시행 */
+  #s-psp3 .proto-doc .mv-common-flow-box--active-action {
+    text-align: center;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    background: rgba(232, 147, 74, 0.1);
+    border: 1px solid rgba(232, 147, 74, 0.28);
+  }
+  #s-psp3 .proto-doc .mv-common-flow-box--active-action-green {
+    background: rgba(74, 206, 168, 0.1);
+    border: 1px solid rgba(74, 206, 168, 0.28);
+  }
+  #s-psp3 .proto-doc .mv-active-action-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  #s-psp3 .proto-doc .mv-common-flow-box--active-action .mv-active-action-title { color: #b86a14; }
+  #s-psp3 .proto-doc .mv-common-flow-box--active-action-green .mv-active-action-title { color: #1a8a5e; }
+  #s-psp3 .proto-doc .mv-active-action-sub {
+    font-size: 11px;
+    font-weight: 400;
+  }
+  #s-psp3 .proto-doc .mv-common-flow-box--active-action .mv-active-action-sub { color: rgba(184, 106, 20, 0.8); }
+  #s-psp3 .proto-doc .mv-common-flow-box--active-action-green .mv-active-action-sub { color: rgba(26, 138, 94, 0.8); }
+  #s-psp3 .proto-doc .mv-common-flow-outside--passive .mv-common-flow-title { color: #2a6fa8; }
+  #s-psp3 .proto-doc .mv-common-flow-outside--active .mv-common-flow-title { color: var(--orange); }
+  #s-psp3 .proto-doc .mv-common-flow-outside--active-green .mv-common-flow-title { color: var(--green); }
+  #s-psp3 .proto-doc .mv-common-flow-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 11px;
+  }
+  #s-psp3 .proto-doc .mv-common-flow-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  #s-psp3 .proto-doc .mv-flow-badge {
+    border-radius: 4px;
+    padding: 3px 8px;
+    font-weight: 600;
+    font-size: 11px;
+  }
+  #s-psp3 .proto-doc .mv-flow-badge--passive {
+    background: rgba(224, 92, 106, 0.15);
+    color: var(--red);
+  }
+  #s-psp3 .proto-doc .mv-flow-badge--aa {
+    background: rgba(232, 196, 74, 0.15);
+    color: var(--yellow);
+  }
+  #s-psp3 .proto-doc .mv-flow-badge--rom {
+    background: rgba(74, 206, 168, 0.15);
+    color: var(--green);
+  }
+  #s-psp3 .proto-doc .mv-flow-badge--label {
+    background: rgba(74, 157, 232, 0.15);
+    color: var(--blue);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  #s-psp3 .proto-doc .mv-passive-intro {
+    background: rgba(74, 157, 232, 0.06);
+    border: 1px solid rgba(74, 157, 232, 0.15);
+    border-radius: 7px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+  }
+  #s-psp3 .proto-doc .mv-passive-intro-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  #s-psp3 .proto-doc .mv-passive-intro-head .card-title {
+    margin-bottom: 0;
+    color: var(--blue);
+  }
+  #s-psp3 .proto-doc .mv-prom-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--blue);
+    background: rgba(74, 157, 232, 0.1);
+    border: 1px solid rgba(74, 157, 232, 0.25);
+    border-radius: 4px;
+    padding: 2px 8px;
+  }
+  #s-psp3 .proto-doc .mv-passive-intro-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin: 0;
+  }
+  #s-psp3 .proto-doc .mv-passive-intro-desc strong {
+    color: var(--blue);
+  }
+  #s-psp3 .proto-doc .tree-root.mv-passive-root {
+    background: rgba(74, 157, 232, 0.06);
+    border-color: rgba(74, 157, 232, 0.2);
+    color: var(--blue);
+    margin-bottom: 12px;
+  }
+  #s-psp3 .proto-doc .tree-root.mv-passive-root span {
+    color: rgba(74, 157, 232, 0.75);
+  }
+  #s-psp3 .proto-doc .mv-stretch-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  #s-psp3 .proto-doc .mv-rom-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-weight: 500;
+  }
+  #s-psp3 .proto-doc .mv-rom-tag--p {
+    color: var(--blue);
+    background: rgba(74, 157, 232, 0.1);
+    border: 1px solid rgba(74, 157, 232, 0.25);
+  }
+  #s-psp3 .proto-doc .mv-rom-tag--a {
+    color: var(--orange);
+    background: rgba(232, 147, 74, 0.1);
+    border: 1px solid rgba(232, 147, 74, 0.25);
+  }
+  #s-psp3 .proto-doc .mv-rom-tag--a-green {
+    color: var(--green);
+    background: rgba(74, 206, 168, 0.1);
+    border: 1px solid rgba(74, 206, 168, 0.25);
+  }
+  #s-psp3 .proto-doc .tree-root.mv-active-root {
+    background: rgba(232, 147, 74, 0.06);
+    border-color: rgba(232, 147, 74, 0.2);
+    color: var(--orange);
+    margin-bottom: 12px;
+  }
+  #s-psp3 .proto-doc .tree-root.mv-active-root span {
+    color: rgba(232, 147, 74, 0.8);
+  }
+  #s-psp3 .proto-doc .tree-root.mv-active-root--standing {
+    background: rgba(74, 206, 168, 0.06);
+    border-color: rgba(74, 206, 168, 0.2);
+    color: var(--green);
+  }
+  #s-psp3 .proto-doc .tree-root.mv-active-root--standing span {
+    color: rgba(74, 206, 168, 0.85);
+  }
+
+  /* Stretching 구성 패널 (4분할 그리드) */
+  #s-psp3 .proto-doc .mv-stretch-panel {
+    border-radius: 7px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  #s-psp3 .proto-doc .mv-stretch-panel--passive {
+    background: rgba(74, 157, 232, 0.05);
+    border: 1px solid rgba(74, 157, 232, 0.12);
+  }
+  #s-psp3 .proto-doc .mv-stretch-panel--active {
+    background: rgba(232, 147, 74, 0.05);
+    border: 1px solid rgba(232, 147, 74, 0.12);
+  }
+  #s-psp3 .proto-doc .mv-stretch-panel--active-green {
+    background: rgba(74, 206, 168, 0.05);
+    border: 1px solid rgba(74, 206, 168, 0.12);
+  }
+  #s-psp3 .proto-doc .mv-stretch-panel-title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 10px;
+  }
+  #s-psp3 .proto-doc .mv-stretch-panel--passive .mv-stretch-panel-title { color: var(--blue); }
+  #s-psp3 .proto-doc .mv-stretch-panel--active .mv-stretch-panel-title { color: var(--orange); }
+  #s-psp3 .proto-doc .mv-stretch-panel--active-green .mv-stretch-panel-title { color: var(--green); }
+  #s-psp3 .proto-doc .mv-stretch-panel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  @media (max-width: 520px) {
+    #s-psp3 .proto-doc .mv-stretch-panel-grid { grid-template-columns: 1fr; }
+  }
+  #s-psp3 .proto-doc .mv-stretch-panel-cell {
+    background: var(--bg3);
+    border-radius: 6px;
+    padding: 10px 12px;
+  }
+  #s-psp3 .proto-doc .mv-stretch-cell-title {
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    font-family: 'DM Mono', monospace;
+  }
+  #s-psp3 .proto-doc .mv-stretch-cell-list {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.8;
+  }
+
+  /* 생활습관 · 자세 교육 */
+  #s-psp3 .proto-doc .mv-edu-block {
+    border-radius: 7px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  #s-psp3 .proto-doc .mv-edu-block--lifestyle {
+    background: rgba(74, 206, 168, 0.06);
+    border: 1px solid rgba(74, 206, 168, 0.15);
+  }
+  #s-psp3 .proto-doc .mv-edu-block--posture {
+    background: rgba(74, 157, 232, 0.06);
+    border: 1px solid rgba(74, 157, 232, 0.15);
+  }
+  #s-psp3 .proto-doc .mv-edu-label {
+    font-size: 10px;
+    font-weight: 700;
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  #s-psp3 .proto-doc .mv-edu-block--lifestyle .mv-edu-label { color: var(--accent); }
+  #s-psp3 .proto-doc .mv-edu-block--posture .mv-edu-label { color: var(--blue); }
+  #s-psp3 .proto-doc .mv-edu-lead {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.55;
+    margin-bottom: 6px;
+  }
+  #s-psp3 .proto-doc .mv-edu-goal {
+    font-size: 11px;
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  #s-psp3 .proto-doc .mv-edu-body {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+  #s-psp3 .proto-doc .mv-edu-trio {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  @media (max-width: 520px) {
+    #s-psp3 .proto-doc .mv-edu-trio { grid-template-columns: 1fr; }
+  }
+  #s-psp3 .proto-doc .mv-edu-trio-item {
+    background: var(--bg3);
+    border-radius: 6px;
+    padding: 8px;
+    text-align: center;
+  }
+  #s-psp3 .proto-doc .mv-edu-trio-icon { font-size: 14px; margin-bottom: 3px; }
+  #s-psp3 .proto-doc .mv-edu-trio-title {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  #s-psp3 .proto-doc .mv-edu-trio-sub { font-size: 9px; color: var(--text-dim); }
+  #s-psp3 .proto-doc .mv-edu-foot {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 4px;
+    font-style: italic;
+  }
+  #s-psp3 .proto-doc .mv-align-chain {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  #s-psp3 .proto-doc .mv-align-step {
+    background: var(--bg3);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  #s-psp3 .proto-doc .mv-align-arrow {
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+
   /* Passive stretching decision tree */
   #s-psp3 .proto-doc .tree-root {
     background: var(--bg3);
@@ -1941,19 +2293,19 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   width: 100%;
 }
 .pl-hero-top .hero-intro--top {
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   text-align: left;
   width: 100%;
 }
 .hero-intro .pl-branch-grid {
-  margin: 12px 0 0;
+  margin: 8px 0 0;
   justify-content: center;
 }
 .hero-intro .pl-branch-chip {
   background: rgba(255, 255, 255, 0.95);
 }
 .pl-hero-copy {
-  margin: 0 0 20px;
+  margin: 0 0 12px;
   min-height: 5rem;
   overflow: hidden;
   box-sizing: border-box;
@@ -1961,7 +2313,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .pl-hero-copy-panel {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   opacity: 1;
   transition: opacity 0.2s ease;
 }
@@ -1992,7 +2344,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 }
 .pl-branch-grid {
   display: flex; flex-wrap: nowrap; justify-content: center; align-items: center;
-  gap: 6px; margin-bottom: 18px; width: 100%; max-width: 100%;
+  gap: 6px; margin-bottom: 12px; width: 100%; max-width: 100%;
   overflow-x: auto; -webkit-overflow-scrolling: touch;
   scrollbar-width: none; padding: 2px 0;
 }
@@ -2028,7 +2380,7 @@ a.pl-branch-chip:hover { border-color: var(--green-border); background: var(--gr
 .pl-branch-cta.visible { display: block; margin-bottom: 0; }
 .pl-branch-cta:hover { background: var(--green-mid); transform: translateY(-1px); }
 .pl-hero-actions {
-  display: flex; gap: 12px; margin-top: 16px; padding-top: 14px;
+  display: flex; gap: 12px; margin-top: 12px; padding-top: 10px;
   width: 100%; align-items: stretch;
   border-top: 1px solid rgba(20, 92, 65, 0.1);
 }
@@ -2943,14 +3295,40 @@ body.profile-home-sticky .hero-panel { padding-bottom: 16px; }
     </div>
 
     <div class="card" style="margin-bottom:20px;">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
-        <div class="card-title" style="margin-bottom:0;">Passive Stretching</div>
-        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--yellow);background:rgba(232,196,74,0.1);border:1px solid rgba(232,196,74,0.25);border-radius:4px;padding:2px 8px;">= P-ROM</div>
+      <div class="mv-common-flow-outside mv-common-flow-outside--passive">
+        <div class="mv-stretch-head">
+          <div class="mv-common-flow-title">Passive Stretching</div>
+          <span class="mv-rom-tag mv-rom-tag--p">= P-ROM</span>
+        </div>
+        <p class="mv-common-flow-desc"><strong style="color:#2a6fa8">P-ROM</strong> — Passive Stretching 시행 자체가 관절 가동범위와 질을 평가하는 과정.</p>
       </div>
-      <div style="background:rgba(232,196,74,0.06);border:1px solid rgba(232,196,74,0.15);border-radius:7px;padding:10px 14px;margin-bottom:14px;font-size:11px;color:var(--text-dim);line-height:1.6;">
-        <strong style="color:var(--yellow)">P-ROM</strong> — Passive Stretching 시행 자체가 관절 가동범위와 질을 평가하는 과정.
+
+      <div class="mv-common-flow-outside">
+        <div class="mv-common-flow-title">각 파트 공통 진행 흐름</div>
+        <p class="mv-common-flow-desc">Supine·Prone 등 각 파트마다 <strong style="color:var(--text)">통증·ROM</strong>을 보고 같은 순서로 진행합니다. 아래 박스는 공통 판단 흐름이며, 이후 분기에서 세부 중재로 이어집니다.</p>
       </div>
-      <div class="tree-root">Passive Stretching 시행<br><span style="font-size:11px;font-weight:400;color:rgba(74,206,168,0.7)">안전한 움직임 + P-ROM 평가</span></div>
+      <div class="mv-common-flow-box mv-common-flow-box--judgment">
+        <div class="mv-common-flow-rows">
+          <div class="mv-common-flow-row">
+            <span class="mv-flow-badge mv-flow-badge--passive">Passive</span>
+            <span style="color:var(--text-dim);">통증 있음 → Pin&amp;Stretching · 소도구 자극</span>
+          </div>
+          <div class="mv-common-flow-row">
+            <span style="color:var(--text-dim);">통증 없음 + ROM↓</span>
+            <span style="color:var(--text-dim);">→</span>
+            <span class="mv-flow-badge mv-flow-badge--aa">AA</span>
+            <span style="color:var(--text-dim);">CIE · Hold&amp;Relax · Pull&amp;Push</span>
+          </div>
+          <div class="mv-common-flow-row">
+            <span class="mv-flow-badge mv-flow-badge--rom">ROM 정상</span>
+            <span style="color:var(--text-dim);">→ 생활습관·자세 교육 → 기능운동</span>
+          </div>
+        </div>
+      </div>
+      <div class="mv-common-flow-box mv-common-flow-box--passive-action">
+        <div class="mv-passive-action-title">Passive Stretching 시행</div>
+        <div class="mv-passive-action-sub">안전한 움직임 + P-ROM 평가</div>
+      </div>
       <div class="flow-connector">↓</div>
       <div class="branch-connector">
         <span>↙</span><span>↓</span><span>↘</span>
@@ -3002,104 +3380,106 @@ body.profile-home-sticky .hero-panel { padding-bottom: 16px; }
           </div>
         </div>
 
-        <!-- 공통 흐름 -->
-        <div style="background:rgba(74,157,232,0.06);border:1px solid rgba(74,157,232,0.15);border-radius:7px;padding:10px 14px;margin-bottom:12px;">
-          <div style="font-size:10px;font-weight:700;color:var(--blue);font-family:'DM Mono',monospace;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em;">각 파트 공통 진행 흐름</div>
-          <div style="display:flex;flex-direction:column;gap:8px;font-size:11px;">
-            <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-              <span style="background:rgba(224,92,106,0.15);color:var(--red);border-radius:4px;padding:3px 8px;font-weight:600;">Passive</span>
-              <span style="color:var(--text-dim);">통증 있음 → Pin&Stretching · 소도구 자극</span>
+        <!-- Passive Stretching -->
+        <div class="mv-common-flow-outside mv-common-flow-outside--passive">
+          <div class="mv-stretch-head">
+            <div class="mv-common-flow-title">Passive Stretching</div>
+            <span class="mv-rom-tag mv-rom-tag--p">= P-ROM</span>
+          </div>
+          <p class="mv-common-flow-desc"><strong style="color:#2a6fa8">P-ROM</strong> — Passive Stretching 시행 자체가 관절 가동범위와 질을 평가하는 과정.</p>
+        </div>
+        <div class="mv-common-flow-box mv-common-flow-box--passive-action">
+          <div class="mv-passive-action-title">Passive Stretching 시행</div>
+          <div class="mv-passive-action-sub">안전한 움직임 + P-ROM 평가</div>
+        </div>
+
+        <!-- Passive Stretching — Supine · Prone 4파트 -->
+        <div class="mv-stretch-panel mv-stretch-panel--passive">
+          <div class="mv-stretch-panel-title">Supine · Prone 4파트</div>
+          <div class="mv-stretch-panel-grid">
+            <div class="mv-stretch-panel-cell">
+              <div class="mv-stretch-cell-title" style="color:var(--blue);">SUPINE — Lower</div>
+              <div class="mv-stretch-cell-list">
+                ① SLR (하지직거상)<br>
+                ② Hip Flexion 패시브<br>
+                ③ 고관절 내·외회전<br>
+                ④ Knee-to-chest<br>
+                ⑤ Knee drop (흉요추 회전)
+              </div>
             </div>
-            <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-              <span style="color:var(--text-dim);">통증 없음 + ROM↓</span>
-              <span style="color:var(--text-dim);">→</span>
-              <span style="background:rgba(232,196,74,0.15);color:var(--yellow);border-radius:4px;padding:3px 8px;font-weight:600;">AA</span>
-              <span style="color:var(--text-dim);">CIE · Hold&Relax · Pull&Push</span>
+            <div class="mv-stretch-panel-cell">
+              <div class="mv-stretch-cell-title" style="color:var(--blue);">SUPINE — Upper</div>
+              <div class="mv-stretch-cell-list">
+                ① 경추 굴곡·측굴·회전 패시브<br>
+                ② 어깨 굴곡·외전 패시브<br>
+                ③ 어깨 외·내회전<br>
+                ④ 흉추 신전 (foam roller)<br>
+                ⑤ Chin tuck
+              </div>
             </div>
-            <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-              <span style="background:rgba(74,206,168,0.15);color:var(--green);border-radius:4px;padding:3px 8px;font-weight:600;">ROM 정상</span>
-              <span style="color:var(--text-dim);">→ 생활습관·자세 교육 → 기능운동</span>
+            <div class="mv-stretch-panel-cell">
+              <div class="mv-stretch-cell-title" style="color:rgba(74,157,232,0.85);">PRONE — Lower</div>
+              <div class="mv-stretch-cell-list">
+                ① 고관절 Extension 패시브<br>
+                ② Prone knee bend (슬굴곡)<br>
+                ③ 고관절 내·외회전<br>
+                ④ 발목 배굴 패시브
+              </div>
+            </div>
+            <div class="mv-stretch-panel-cell">
+              <div class="mv-stretch-cell-title" style="color:rgba(74,157,232,0.85);">PRONE — Upper</div>
+              <div class="mv-stretch-cell-list">
+                ① 흉추 Extension 패시브 (Cobra)<br>
+                ② 경추 Extension·회전<br>
+                ③ 어깨 외회전·신전 패시브<br>
+                ④ 견갑 내전 패시브
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- 4파트 그리드 -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
-
-          <!-- Supine Lower -->
-          <div style="background:var(--bg3);border-radius:8px;padding:14px;border-top:2px solid var(--blue);">
-            <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:8px;font-family:'DM Mono',monospace;">SUPINE — Lower</div>
-            <div style="font-size:11px;color:var(--text-dim);line-height:1.9;">
-              · SLR (하지직거상)<br>
-              · Hip Flexion 패시브<br>
-              · 고관절 내·외회전<br>
-              · Knee-to-chest<br>
-              · Knee drop (흉요추 회전)
+        <!-- 생활습관 -->
+        <div class="mv-edu-block mv-edu-block--lifestyle">
+          <div class="mv-edu-label">ROM 정상 후 → 생활습관</div>
+          <p class="mv-edu-lead">편하게 호흡하는 법 · 누운 자세에서 긴장 부위 인식</p>
+          <p class="mv-edu-goal">목표 — 불필요한 긴장의 최소화</p>
+          <p class="mv-edu-body">바른 자세의 궁극적인 목표는 올바른 형태가 아니라 <strong style="color:var(--text)">긴장 없는 상태</strong>다.</p>
+          <div class="mv-edu-trio">
+            <div class="mv-edu-trio-item">
+              <div class="mv-edu-trio-icon" aria-hidden="true">🌬</div>
+              <div class="mv-edu-trio-title">편안한 호흡</div>
+              <div class="mv-edu-trio-sub">자연스럽게 흐름</div>
+            </div>
+            <div class="mv-edu-trio-item">
+              <div class="mv-edu-trio-icon" aria-hidden="true">🧠</div>
+              <div class="mv-edu-trio-title">긴장 자각</div>
+              <div class="mv-edu-trio-sub">스스로 판단</div>
+            </div>
+            <div class="mv-edu-trio-item">
+              <div class="mv-edu-trio-icon" aria-hidden="true">🔄</div>
+              <div class="mv-edu-trio-title">자기 조절</div>
+              <div class="mv-edu-trio-sub">스스로 해소</div>
             </div>
           </div>
-
-          <!-- Supine Upper -->
-          <div style="background:var(--bg3);border-radius:8px;padding:14px;border-top:2px solid var(--blue);">
-            <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:8px;font-family:'DM Mono',monospace;">SUPINE — Upper</div>
-            <div style="font-size:11px;color:var(--text-dim);line-height:1.9;">
-              · 경추 굴곡·측굴·회전 패시브<br>
-              · 어깨 굴곡·외전 패시브<br>
-              · 어깨 외·내회전<br>
-              · 흉추 신전 (foam roller)<br>
-              · Chin tuck
-            </div>
-          </div>
-
-          <!-- Prone Lower -->
-          <div style="background:var(--bg3);border-radius:8px;padding:14px;border-top:2px solid rgba(74,157,232,0.5);">
-            <div style="font-size:11px;font-weight:700;color:rgba(74,157,232,0.8);margin-bottom:8px;font-family:'DM Mono',monospace;">PRONE — Lower</div>
-            <div style="font-size:11px;color:var(--text-dim);line-height:1.9;">
-              · 고관절 Extension 패시브<br>
-              · Prone knee bend (슬굴곡)<br>
-              · 고관절 내·외회전<br>
-              · 발목 배굴 패시브
-            </div>
-          </div>
-
-          <!-- Prone Upper -->
-          <div style="background:var(--bg3);border-radius:8px;padding:14px;border-top:2px solid rgba(74,157,232,0.5);">
-            <div style="font-size:11px;font-weight:700;color:rgba(74,157,232,0.8);margin-bottom:8px;font-family:'DM Mono',monospace;">PRONE — Upper</div>
-            <div style="font-size:11px;color:var(--text-dim);line-height:1.9;">
-              · 흉추 Extension 패시브 (Cobra)<br>
-              · 경추 Extension·회전<br>
-              · 어깨 외회전·신전 패시브<br>
-              · 견갑 내전 패시브
-            </div>
-          </div>
-
+          <p class="mv-edu-foot">코치의 역할 — 이 세 가지를 스스로 할 수 있도록 안내하는 것</p>
         </div>
 
-        <!-- 생활습관 교육 -->
-        <div style="background:rgba(74,206,168,0.06);border:1px solid rgba(74,206,168,0.15);border-radius:7px;padding:12px 14px;margin-bottom:10px;">
-          <div style="font-size:10px;font-weight:700;color:var(--accent);font-family:'DM Mono',monospace;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">ROM 정상 후 → 자세·생활습관 교육</div>
-          <div style="font-size:11px;color:var(--text-dim);">편하게 호흡하는 법 · 누운 자세에서 긴장 부위 인식</div>
-          <div style="font-size:11px;color:var(--text);font-weight:600;margin-bottom:6px;">목표 — 불필요한 긴장의 최소화</div>          
-          <div style="font-size:11px;color:var(--text-dim);line-height:1.7;margin-bottom:10px;">
-            바른 자세의 궁극적인 목표는 올바른 형태가 아니라 <strong style="color:var(--text)">긴장 없는 상태</strong>다.
+        <!-- 자세 교육 -->
+        <div class="mv-edu-block mv-edu-block--posture">
+          <div class="mv-edu-label">자세 교육</div>
+          <p class="mv-edu-lead"><strong style="color:var(--text)">누워서 호흡 운동</strong></p>
+          <p class="mv-edu-body" style="margin-bottom:0;">호흡 운동과 함께 발, 엉덩이, 어깨, 손끝, 목까지 정렬시키고 있어.</p>
+          <div class="mv-align-chain" aria-label="호흡과 함께 정렬하는 순서">
+            <span class="mv-align-step">발</span>
+            <span class="mv-align-arrow" aria-hidden="true">→</span>
+            <span class="mv-align-step">엉덩이</span>
+            <span class="mv-align-arrow" aria-hidden="true">→</span>
+            <span class="mv-align-step">어깨</span>
+            <span class="mv-align-arrow" aria-hidden="true">→</span>
+            <span class="mv-align-step">손끝</span>
+            <span class="mv-align-arrow" aria-hidden="true">→</span>
+            <span class="mv-align-step">목</span>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px;">
-            <div style="background:var(--bg3);border-radius:6px;padding:8px;text-align:center;">
-              <div style="font-size:14px;margin-bottom:3px;">🌬</div>
-              <div style="font-size:10px;font-weight:600;color:var(--text);margin-bottom:2px;">편안한 호흡</div>
-              <div style="font-size:9px;color:var(--text-dim);">자연스럽게 흐름</div>
-            </div>
-            <div style="background:var(--bg3);border-radius:6px;padding:8px;text-align:center;">
-              <div style="font-size:14px;margin-bottom:3px;">🧠</div>
-              <div style="font-size:10px;font-weight:600;color:var(--text);margin-bottom:2px;">긴장 자각</div>
-              <div style="font-size:9px;color:var(--text-dim);">스스로 판단</div>
-            </div>
-            <div style="background:var(--bg3);border-radius:6px;padding:8px;text-align:center;">
-              <div style="font-size:14px;margin-bottom:3px;">🔄</div>
-              <div style="font-size:10px;font-weight:600;color:var(--text);margin-bottom:2px;">자기 조절</div>
-              <div style="font-size:9px;color:var(--text-dim);">스스로 해소</div>
-            </div>
-          </div>          
-          <div style="font-size:10px;color:var(--text-dim);margin-top:4px;font-style:italic;">코치의 역할 — 이 세 가지를 스스로 할 수 있도록 안내하는 것</div>
         </div>
 
         <!-- 기능운동 -->
@@ -3148,67 +3528,73 @@ body.profile-home-sticky .hero-panel { padding-bottom: 16px; }
           </div>
         </div>
 
-        <!-- 전제 설명 -->
-        <div style="background:rgba(232,147,74,0.06);border:1px solid rgba(232,147,74,0.15);border-radius:7px;padding:10px 14px;margin-bottom:10px;font-size:11px;color:var(--text-dim);line-height:1.6;">
-          <strong style="color:var(--text)">Active Stretching</strong>으로 진행.
+        <!-- Active Stretching -->
+        <div class="mv-common-flow-outside mv-common-flow-outside--active">
+          <div class="mv-stretch-head">
+            <div class="mv-common-flow-title">Active Stretching</div>
+            <span class="mv-rom-tag mv-rom-tag--a">= A-ROM</span>
+          </div>
+          <p class="mv-common-flow-desc"><strong style="color:#b86a14">A-ROM</strong> — Active Stretching 시행 자체가 능동 가동범위와 움직임 질을 평가하는 과정.</p>
+        </div>
+        <div class="mv-common-flow-box mv-common-flow-box--active-action">
+          <div class="mv-active-action-title">Active Stretching 시행</div>
+          <div class="mv-active-action-sub">부분 하중 · A-ROM 평가</div>
         </div>
 
         <!-- Active Stretching — 경선별 4동작 -->
-        <div style="background:rgba(232,147,74,0.05);border:1px solid rgba(232,147,74,0.12);border-radius:7px;padding:12px 14px;margin-bottom:10px;">
-          <div style="font-size:10px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:0.1em;font-family:'DM Mono',monospace;margin-bottom:10px;">Active Stretching — 근막경선별 4동작</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-
-            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
-              <div style="font-size:10px;font-weight:700;color:var(--blue);margin-bottom:5px;">전방 경선 (Superficial Front Line)</div>
-              <div style="font-size:11px;color:var(--text-dim);line-height:1.8;">
+        <div class="mv-stretch-panel mv-stretch-panel--active">
+          <div class="mv-stretch-panel-title">근막경선별 4동작</div>
+          <div class="mv-stretch-panel-grid">
+            <div class="mv-stretch-panel-cell">
+              <div class="mv-stretch-cell-title" style="color:var(--blue);">전방 경선 (Superficial Front Line)</div>
+              <div class="mv-stretch-cell-list">
                 ① 앉아서 경추 굴곡<br>
                 ② 흉추 굴곡 (라운드백)<br>
                 ③ 고관절 굴곡 (무릎 당기기)<br>
                 ④ 발목 배굴
               </div>
             </div>
-
-            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
-              <div style="font-size:10px;font-weight:700;color:var(--orange);margin-bottom:5px;">후방 경선 (Superficial Back Line)</div>
-              <div style="font-size:11px;color:var(--text-dim);line-height:1.8;">
+            <div class="mv-stretch-panel-cell">
+              <div class="mv-stretch-cell-title" style="color:var(--orange);">후방 경선 (Superficial Back Line)</div>
+              <div class="mv-stretch-cell-list">
                 ① 앉아서 경추 신전<br>
                 ② 흉추 신전 (가슴 열기)<br>
                 ③ 햄스트링 신장 (다리 뻗기)<br>
                 ④ 발목 저굴
               </div>
             </div>
-
-            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
-              <div style="font-size:10px;font-weight:700;color:var(--purple);margin-bottom:5px;">측방 경선 (Lateral Line)</div>
-              <div style="font-size:11px;color:var(--text-dim);line-height:1.8;">
+            <div class="mv-stretch-panel-cell">
+              <div class="mv-stretch-cell-title" style="color:var(--purple);">측방 경선 (Lateral Line)</div>
+              <div class="mv-stretch-cell-list">
                 ① 경추 측굴<br>
                 ② 흉추 측굴<br>
                 ③ 고관절 외전 신장<br>
                 ④ 발목 내·외번
               </div>
             </div>
-
-            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
-              <div style="font-size:10px;font-weight:700;color:var(--teal);margin-bottom:5px;">나선·회전 경선 (Spiral / Arm Line)</div>
-              <div style="font-size:11px;color:var(--text-dim);line-height:1.8;">
+            <div class="mv-stretch-panel-cell">
+              <div class="mv-stretch-cell-title" style="color:var(--teal);">나선·회전 경선 (Spiral / Arm Line)</div>
+              <div class="mv-stretch-cell-list">
                 ① 경추 회전<br>
                 ② 흉추 회전 (한팔 열기)<br>
                 ③ 견갑 상방·하방 회전<br>
                 ④ GH Joint 내·외회전
               </div>
             </div>
-
           </div>
         </div>
 
         <!-- 생활습관 -->
-        <div style="background:rgba(74,206,168,0.06);border:1px solid rgba(74,206,168,0.15);border-radius:7px;padding:12px 14px;margin-bottom:10px;">
-          <div style="font-size:10px;font-weight:700;color:var(--accent);font-family:'DM Mono',monospace;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">자세·생활습관 교육</div>
-          <div style="font-size:11px;color:var(--text);font-weight:600;margin-bottom:4px;">목표 — 불필요한 긴장의 최소화</div>
-          <div style="font-size:11px;color:var(--text-dim);line-height:1.7;">
-            바르게 앉는 법 · 앉은 자세에서 척추 중립 + 긴장 부위 인식<br>
-            <span style="font-size:10px;">→ 편안한 호흡과 함께 불필요한 긴장 여부를 스스로 판단할 수 있도록 안내</span>
-          </div>
+        <div class="mv-edu-block mv-edu-block--lifestyle">
+          <div class="mv-edu-label">생활습관</div>
+          <p class="mv-edu-lead" style="margin-bottom:0;"><strong style="color:var(--text)">바르게 앉는 법</strong></p>
+        </div>
+
+        <!-- 자세 교육 -->
+        <div class="mv-edu-block mv-edu-block--posture">
+          <div class="mv-edu-label">자세 교육</div>
+          <p class="mv-edu-lead"><strong style="color:var(--text)">바르게 앉은 상태에서의 호흡 운동</strong></p>
+          <p class="mv-edu-body" style="margin-bottom:0;">중력에 대항해서 상체 정렬을 바로 잡는 훈련을 해.</p>
         </div>
 
         <!-- 기능운동 -->
@@ -3265,49 +3651,58 @@ body.profile-home-sticky .hero-panel { padding-bottom: 16px; }
           </div>
         </div>
 
-        <!-- 전제 설명 -->
-        <div style="background:rgba(74,206,168,0.06);border:1px solid rgba(74,206,168,0.15);border-radius:7px;padding:10px 14px;margin-bottom:10px;font-size:11px;color:var(--text-dim);line-height:1.6;">
-          Position 1·2에서 조직 문제 해결 완료 후 진행 → <strong style="color:var(--text)">Active Stretching</strong> 중심. 상체 4가지·하체 4가지 동작으로 구성.
+        <!-- Active Stretching -->
+        <div class="mv-common-flow-outside mv-common-flow-outside--active-green">
+          <div class="mv-stretch-head">
+            <div class="mv-common-flow-title">Active Stretching</div>
+            <span class="mv-rom-tag mv-rom-tag--a-green">= A-ROM</span>
+          </div>
+          <p class="mv-common-flow-desc">Position 1·2에서 조직 문제 해결 후 진행. <strong style="color:#1a8a5e">A-ROM</strong> — Active Stretching 시행 자체가 능동 가동범위와 움직임 질을 평가하는 과정.</p>
+        </div>
+        <div class="mv-common-flow-box mv-common-flow-box--active-action mv-common-flow-box--active-action-green">
+          <div class="mv-active-action-title">Active Stretching 시행</div>
+          <div class="mv-active-action-sub">완전 하중 · A-ROM 평가</div>
         </div>
 
         <!-- Active Stretching — 상체·하체 4동작 -->
-        <div style="background:rgba(74,206,168,0.05);border:1px solid rgba(74,206,168,0.12);border-radius:7px;padding:12px 14px;margin-bottom:10px;">
-          <div style="font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.1em;font-family:'DM Mono',monospace;margin-bottom:10px;">Active Stretching — 상체 4 · 하체 4</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-
-            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
-              <div style="font-size:10px;font-weight:700;color:var(--blue);margin-bottom:6px;">상체 (Upper) × 4</div>
-              <div style="font-size:11px;color:var(--text-dim);line-height:1.9;">
+        <div class="mv-stretch-panel mv-stretch-panel--active-green">
+          <div class="mv-stretch-panel-title">상체 4 · 하체 4</div>
+          <div class="mv-stretch-panel-grid">
+            <div class="mv-stretch-panel-cell">
+              <div class="mv-stretch-cell-title" style="color:var(--blue);">상체 (Upper) × 4</div>
+              <div class="mv-stretch-cell-list">
                 ① 경추 굴신·측굴·회전<br>
                 ② 흉추 신전 (팔 교차 뒤로)<br>
                 ③ 흉추 회전 (서서 한팔 열기)<br>
                 ④ 어깨 굴곡·수평 내전<br>
-                <span style="font-size:10px;color:var(--text-dim);">↓ Roll down — 경추→흉추→요추 순</span>
+                <span style="font-size:10px;">↓ Roll down — 경추→흉추→요추 순</span>
               </div>
             </div>
-
-            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
-              <div style="font-size:10px;font-weight:700;color:var(--orange);margin-bottom:6px;">하체 (Lower) × 4</div>
-              <div style="font-size:11px;color:var(--text-dim);line-height:1.9;">
+            <div class="mv-stretch-panel-cell">
+              <div class="mv-stretch-cell-title" style="color:var(--orange);">하체 (Lower) × 4</div>
+              <div class="mv-stretch-cell-list">
                 ① 서서 햄스트링 스트레칭<br>
                 ② 서서 고관절 굴곡근 스트레칭<br>
                 ③ 종아리·발목 스트레칭<br>
                 ④ 측굴 — IT band·외측 경선<br>
-                <span style="font-size:10px;color:var(--text-dim);">↓ Roll up — 요추→흉추→경추 순</span>
+                <span style="font-size:10px;">↓ Roll up — 요추→흉추→경추 순</span>
               </div>
             </div>
-
           </div>
         </div>
 
         <!-- 생활습관 -->
-        <div style="background:rgba(74,206,168,0.06);border:1px solid rgba(74,206,168,0.15);border-radius:7px;padding:12px 14px;margin-bottom:10px;">
-          <div style="font-size:10px;font-weight:700;color:var(--accent);font-family:'DM Mono',monospace;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">자세·생활습관 교육</div>
-          <div style="font-size:11px;color:var(--text);font-weight:600;margin-bottom:4px;">목표 — 불필요한 긴장의 최소화</div>
-          <div style="font-size:11px;color:var(--text-dim);line-height:1.7;">
-            바르게 서는 법 · 바르게 걷는 법<br>
-            <span style="font-size:10px;">→ 이상적인 자세의 최종 목표: 편안한 호흡과 함께 스스로 불필요한 긴장을 인지하고 해소할 수 있는 상태</span>
-          </div>
+        <div class="mv-edu-block mv-edu-block--lifestyle">
+          <div class="mv-edu-label">생활습관</div>
+          <p class="mv-edu-lead" style="margin-bottom:6px;"><strong style="color:var(--text)">바르게 서는 법</strong></p>
+          <p class="mv-edu-lead" style="margin-bottom:6px;"><strong style="color:var(--text)">바르게 걷는 법</strong></p>
+          <p class="mv-edu-lead" style="margin-bottom:0;"><strong style="color:var(--text)">바르게 뛰는 법</strong></p>
+        </div>
+
+        <!-- 자세 교육 -->
+        <div class="mv-edu-block mv-edu-block--posture">
+          <div class="mv-edu-label">자세 교육</div>
+          <p class="mv-edu-body" style="margin-bottom:0;">바르게 선 상태에서 호흡 운동을 하며 전신 정렬을 잡는 훈련을 해.</p>
         </div>
 
         <!-- 기능운동 -->
@@ -3825,13 +4220,37 @@ function setProfileHeroCopy(branch, animate){
   }, PROFILE_HERO_FADE_MS);
 }
 
-function selectProfileBranch(branch){
+/** 분기 탭 클릭 후 안내 문구·CTA(하단)가 보이도록 스크롤 */
+function scrollToProfileHomeBottom_(){
+  const onHome = document.getElementById('s-home') &&
+    document.getElementById('s-home').classList.contains('active');
+  if(!onHome) return;
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () {
+      const target =
+        document.querySelector('.pl-hero-actions') ||
+        document.getElementById('profileBranchAction') ||
+        document.getElementById('profileHeroCopy');
+      if(target){
+        target.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      } else {
+        window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+      }
+    });
+  });
+}
+
+function selectProfileBranch(branch, options){
+  options = options || {};
   profileBranch = branch;
   document.querySelectorAll('.pl-branch-chip').forEach(chip => {
     chip.classList.toggle('active', chip.getAttribute('data-branch') === branch);
   });
   pushProfileViewLog_('탭: ' + (PROFILE_BRANCH_CHIP_LABEL[branch] || branch));
   setProfileHeroCopy(branch, true);
+  if(options.scroll !== false){
+    setTimeout(scrollToProfileHomeBottom_, PROFILE_HERO_FADE_MS + 40);
+  }
 }
 
 function runProfileBranchAction(){
@@ -4198,7 +4617,7 @@ function goHome(){
   ['vz-low','vz-mid','vz-high'].forEach(id=>document.getElementById(id).classList.remove('selected'));
   document.getElementById('vasConfirmBtn').classList.remove('ready');
   H.length=0; H.push('s-home');
-  selectProfileBranch('wellness');
+  selectProfileBranch('wellness', { scroll: false });
   updateProfileSticky();
   window.scrollTo(0,0);
   if(depth > 0){
@@ -4778,7 +5197,7 @@ history.replaceState({ screen: 's-home', H: JSON.stringify(['s-home']), bc: JSON
 updateProgress('s-home');
 updateProfileSticky();
 pushProfileViewLog_('프로필 홈');
-selectProfileBranch('wellness');
+selectProfileBranch('wellness', { scroll: false });
 </script>
 </body>
 </html>
