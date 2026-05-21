@@ -762,16 +762,16 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   text-align: center; max-width: 640px; letter-spacing: -0.01em;
 }
 #s-psp3 .proto-doc .header .psp-zone-intro strong { color: #1a3a34; font-weight: 600; }
-#s-psp3 .proto-doc .header .psp-intro-rest {
-  white-space: nowrap;
+/* 줄바꿈 단위: 기준선 문장 / 치료 안내 / 웰니스 안내 — 문장 중간에서 끊기지 않음 */
+#s-psp3 .proto-doc .header .psp-intro-line {
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: top;
 }
-#s-psp3 .proto-doc .header .psp-intro-last {
+#s-psp3 .proto-doc .header .psp-intro-nowrap {
   white-space: nowrap;
 }
 @media (max-width: 520px) {
-  #s-psp3 .proto-doc .header .psp-intro-rest {
-    white-space: normal;
-  }
   #s-psp3 .proto-doc .header .psp-zone-intro {
     font-size: 13px; line-height: 1.68; margin-top: 18px;
   }
@@ -1953,21 +1953,42 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   background: rgba(255, 255, 255, 0.95);
 }
 .pl-hero-copy {
-  display: flex; flex-direction: column; gap: 8px;
-  margin: 0 0 20px; min-height: 4.75rem;
-  transition: opacity .22s ease;
+  margin: 0 0 20px;
+  min-height: 5rem;
+  overflow: hidden;
+  box-sizing: border-box;
 }
-.pl-hero-copy.is-fading { opacity: 0; }
+.pl-hero-copy-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+.pl-hero-copy-panel.is-fading {
+  opacity: 0;
+  pointer-events: none;
+}
 .pl-hero-title {
-  font-size: 17px; font-weight: 700; color: #1a3a34; line-height: 1.45;
+  display: block;
+  width: 100%;
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a3a34;
+  line-height: 1.45;
   margin: 0;
 }
 .pl-hero-sub {
-  font-size: 13px; color: var(--dim); line-height: 1.55;
+  display: block;
+  width: 100%;
+  font-size: 13px;
+  color: var(--dim);
+  line-height: 1.55;
   margin: 0;
 }
 @media (max-width: 520px) {
-  .pl-hero-copy { min-height: 5.5rem; }
+  .pl-hero-copy { min-height: 5.75rem; }
+  .pl-hero-title { font-size: 16px; line-height: 1.4; }
 }
 .pl-branch-grid {
   display: flex; flex-wrap: nowrap; justify-content: center; align-items: center;
@@ -2108,8 +2129,10 @@ body.profile-home-sticky .hero-panel { padding-bottom: 16px; }
         </div>
 
         <div class="pl-hero-copy" id="profileHeroCopy">
-          <h2 class="pl-hero-title" id="profileHeroTitle">더 좋은 몸 상태를 위한 관리</h2>
-          <p class="pl-hero-sub" id="profileHeroSub">유연성·자세·기능 — PAR 움직임 프로그램</p>
+          <div class="pl-hero-copy-panel" id="profileHeroCopyPanel">
+            <h2 class="pl-hero-title" id="profileHeroTitle">더 좋은 몸 상태를 위한 관리</h2>
+            <p class="pl-hero-sub" id="profileHeroSub">유연성·자세·기능 — PAR 움직임 프로그램</p>
+          </div>
         </div>
         <button type="button" class="pl-branch-cta visible" id="profileBranchAction" onclick="runProfileBranchAction()">몸을 더 좋게 만들고 싶어요 →</button>
         <div class="pl-hero-actions pl-hero-actions--solo">
@@ -2247,8 +2270,9 @@ body.profile-home-sticky .hero-panel { padding-bottom: 16px; }
       </div>
     </div>
     <p class="psp-zone-intro">
-      <span class="psp-intro-lead">편안한 상태를 <strong>기준선</strong>으로 두고,</span>
-      <span class="psp-intro-rest"> 통증·불편이 있으면 <strong>치료 영역</strong>으로, <span class="psp-intro-last">통증이 없으면 <strong>웰니스 영역</strong>으로 안내합니다.</span></span>
+      <span class="psp-intro-line">편안한 상태를 <strong>기준선</strong>으로 두고,</span>
+      <span class="psp-intro-line psp-intro-nowrap">통증·불편이 있으면 <strong>치료 영역</strong>으로,</span>
+      <span class="psp-intro-line psp-intro-nowrap">통증이 없으면 <strong>웰니스 영역</strong>으로 안내합니다.</span>
     </p>
   </div>
 </div>
@@ -3681,7 +3705,7 @@ let bcPath = [];
 let consultFlowKind = 'treatment';
 let profileBranch = 'wellness';
 let profileHeroFadeTimer = null;
-const PROFILE_HERO_FADE_MS = 230;
+const PROFILE_HERO_FADE_MS = 200;
 /** 빠른 상담 알림톡용 — 탭·화면 열람 기록 */
 let profileViewLog = [];
 
@@ -3727,7 +3751,7 @@ const PROFILE_BRANCH_COPY = {
   },
   wellness: {
     title: '더 좋은 몸 상태를 위한 관리',
-    sub: '자세·움직임·예방 — PAR 움직임 프로그램',
+    sub: '자세·움직임·페이스 — PAR 움직임 프로그램',
     cta: '몸을 더 좋게 만들고 싶어요 →'
   },
   expert: {
@@ -3742,14 +3766,27 @@ const PROFILE_BRANCH_COPY = {
   }
 };
 
+function cancelProfileHeroFade_(){
+  if(profileHeroFadeTimer){
+    clearTimeout(profileHeroFadeTimer);
+    profileHeroFadeTimer = null;
+  }
+  const panelEl = document.getElementById('profileHeroCopyPanel');
+  const wrapEl = document.getElementById('profileHeroCopy');
+  if(panelEl) panelEl.classList.remove('is-fading');
+  if(wrapEl) wrapEl.style.height = '';
+}
+
 function setProfileHeroCopy(branch, animate){
   const copy = PROFILE_BRANCH_COPY[branch];
   if(!copy) return;
   const wrapEl = document.getElementById('profileHeroCopy');
+  const panelEl = document.getElementById('profileHeroCopyPanel');
   const titleEl = document.getElementById('profileHeroTitle');
   const subEl = document.getElementById('profileHeroSub');
   const btn = document.getElementById('profileBranchAction');
   if(!titleEl || !subEl) return;
+
   const apply = () => {
     titleEl.textContent = copy.title;
     subEl.textContent = copy.sub;
@@ -3758,23 +3795,34 @@ function setProfileHeroCopy(branch, animate){
       btn.classList.add('visible');
     }
   };
-  if(profileHeroFadeTimer){
-    clearTimeout(profileHeroFadeTimer);
-    profileHeroFadeTimer = null;
-  }
-  const useFade = animate && wrapEl &&
+
+  const useFade = animate && wrapEl && panelEl &&
     !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(useFade){
-    wrapEl.classList.add('is-fading');
-    profileHeroFadeTimer = setTimeout(() => {
-      apply();
-      wrapEl.classList.remove('is-fading');
-      profileHeroFadeTimer = null;
-    }, PROFILE_HERO_FADE_MS);
-  } else {
-    if(wrapEl) wrapEl.classList.remove('is-fading');
+
+  if(panelEl && panelEl.classList.contains('is-fading')){
     apply();
+    return;
   }
+
+  cancelProfileHeroFade_();
+
+  if(!useFade){
+    apply();
+    return;
+  }
+
+  wrapEl.style.height = wrapEl.offsetHeight + 'px';
+  panelEl.classList.add('is-fading');
+
+  profileHeroFadeTimer = setTimeout(function () {
+    apply();
+    void panelEl.offsetHeight;
+    wrapEl.style.height = panelEl.offsetHeight + 'px';
+    panelEl.classList.remove('is-fading');
+    profileHeroFadeTimer = setTimeout(function () {
+      cancelProfileHeroFade_();
+    }, PROFILE_HERO_FADE_MS + 30);
+  }, PROFILE_HERO_FADE_MS);
 }
 
 function selectProfileBranch(branch){
