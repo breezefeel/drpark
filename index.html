@@ -142,14 +142,26 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   padding: 0 16px 48px;
   text-align: center;
 }
-.hero-panel{
-  background: rgba(255,255,255,0.78);
-  border: 1px solid rgba(255,255,255,0.8);
+.pl-home-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+.hero-panel,
+.profile-blog-feed,
+.pl-hero-actions.pl-hero-actions--solo {
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.09);
-  padding: 18px 16px 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.09);
+  padding: 16px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  box-sizing: border-box;
+}
+.hero-panel {
+  padding: 18px 16px 16px;
 }
 
 /* 프로필 사진 — 원형 마스크 */
@@ -2451,27 +2463,48 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   width: 100%;
 }
 .pl-hero-top .hero-intro--top {
-  margin-bottom: 14px;
+  margin-bottom: 10px;
+  padding: 0;
   text-align: left;
   width: 100%;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
-.hero-intro .pl-branch-grid {
-  margin: 8px 0 0;
-  justify-content: center;
+.hero-intro .pl-branch-label {
+  margin-bottom: 4px;
 }
-.hero-intro .pl-branch-chip {
-  background: rgba(255, 255, 255, 0.95);
+.hero-intro .pl-branch-hint {
+  font-size: 13px;
+  color: #444;
+  line-height: 1.45;
+  font-weight: 400;
+  margin: 0 0 8px;
+  text-align: center;
+}
+.hero-intro .pl-branch-picker {
+  margin-top: 0;
+}
+.pl-hero-outcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin: 0;
 }
 .pl-hero-copy {
-  margin: 0 0 12px;
-  min-height: 5rem;
+  margin: 0;
+  width: 100%;
   overflow: hidden;
   box-sizing: border-box;
 }
 .pl-hero-copy-panel {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
   opacity: 1;
   transition: opacity 0.2s ease;
 }
@@ -2497,50 +2530,253 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   margin: 0;
 }
 @media (max-width: 520px) {
-  .pl-hero-copy { min-height: 5.75rem; }
   .pl-hero-title { font-size: 16px; line-height: 1.4; }
+}
+.pl-branch-label {
+  display: block;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--green);
+  font-family: 'DM Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 8px;
+}
+.pl-branch-picker {
+  padding: 5px;
+  background: #e8efeb;
+  border: 1px solid #d0ddd6;
+  border-radius: 999px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+  margin-bottom: 0;
 }
 .pl-branch-grid {
   display: flex; flex-wrap: nowrap; justify-content: center; align-items: center;
-  gap: 6px; margin-bottom: 12px; width: 100%; max-width: 100%;
+  gap: 4px; margin-bottom: 0; width: 100%; max-width: 100%;
   overflow-x: auto; -webkit-overflow-scrolling: touch;
-  scrollbar-width: none; padding: 2px 0;
+  scrollbar-width: none; padding: 0;
 }
 .pl-branch-grid::-webkit-scrollbar { display: none; }
 .pl-branch-chip {
   flex-shrink: 0; white-space: nowrap;
   font-size: 12px; font-weight: 600; font-family: inherit;
-  padding: 8px 11px; border-radius: 999px;
-  border: 1.5px solid #e5e7eb; background: #fff;
-  color: #374151; cursor: pointer; transition: all .2s;
+  padding: 9px 13px; border-radius: 999px;
+  border: 1.5px solid transparent; background: transparent;
+  color: #5c6b66; cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s, box-shadow .2s, transform .15s;
 }
 @media (max-width: 400px) {
-  .pl-branch-grid { gap: 5px; justify-content: flex-start; padding-left: 2px; padding-right: 2px; }
-  .pl-branch-chip { font-size: 11px; padding: 7px 9px; }
+  .pl-branch-picker { padding: 4px; }
+  .pl-branch-grid { gap: 3px; justify-content: flex-start; }
+  .pl-branch-chip { font-size: 11px; padding: 8px 10px; }
 }
-.pl-branch-chip:hover { border-color: var(--green-border); background: var(--green-bg); }
+.pl-branch-chip:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.65);
+  color: #2d4038;
+}
+.pl-branch-chip:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
 .pl-branch-chip.active {
-  border-color: var(--green); background: #fff; color: #145c41;
-  box-shadow: 0 0 0 1px rgba(26, 122, 82, 0.12);
+  border-color: var(--green);
+  background: var(--green);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(26, 122, 82, 0.32);
+  transform: translateY(-1px);
+}
+.pl-branch-chip.active:hover {
+  background: var(--green-mid);
+  border-color: var(--green-mid);
 }
 a.pl-branch-chip {
   text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
   box-sizing: border-box;
 }
-a.pl-branch-chip:hover { border-color: var(--green-border); background: var(--green-bg); color: #145c41; }
+a.pl-branch-chip:hover:not(.active) { background: rgba(255, 255, 255, 0.65); color: #2d4038; }
+a.pl-branch-chip.active { color: #fff; }
 .pl-branch-cta {
   display: none;
-  width: 100%; max-width: 340px; margin: 0 auto;
-  padding: 15px 20px; font-size: 14px; font-weight: 700; font-family: inherit;
+  width: 100%;
+  margin: 0;
+  padding: 15px 16px; font-size: 14px; font-weight: 700; font-family: inherit;
   color: #fff; background: var(--green); border: none; border-radius: 12px;
   cursor: pointer; transition: background .2s, transform .15s;
+  box-sizing: border-box;
 }
-.pl-branch-cta.visible { display: block; margin-bottom: 0; }
+.pl-branch-cta.visible { display: block; }
 .pl-branch-cta:hover { background: var(--green-mid); transform: translateY(-1px); }
-.pl-hero-actions {
-  display: flex; gap: 12px; margin-top: 12px; padding-top: 10px;
-  width: 100%; align-items: stretch;
+.pl-manual-reviews {
+  width: 100%;
+  margin-top: 12px;
+  padding-top: 12px;
   border-top: 1px solid rgba(20, 92, 65, 0.1);
+  text-align: left;
+}
+.pl-manual-reviews-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--green);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+  text-align: center;
+}
+.pl-manual-reviews-viewport {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  min-height: 5.5rem;
+  transition: opacity 0.35s ease;
+}
+.pl-manual-reviews-viewport.is-fading { opacity: 0; }
+.pl-review-card {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(20, 92, 65, 0.12);
+  border-radius: 10px;
+  padding: 10px 10px 9px;
+  min-height: 5.5rem;
+  box-sizing: border-box;
+}
+.pl-review-stars {
+  font-size: 11px;
+  line-height: 1;
+  margin: 0 0 6px;
+  letter-spacing: 0.02em;
+}
+.pl-review-reviewer {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--green);
+  margin: 0 0 5px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.02em;
+}
+.pl-review-text {
+  font-size: 12px;
+  color: #374151;
+  line-height: 1.5;
+  margin: 0 0 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.pl-manual-reviews-empty {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  color: var(--dim);
+  text-align: center;
+  padding: 8px 4px;
+  margin: 0;
+}
+.pl-beauty-reviews { margin-top: 10px; }
+.pl-beauty-reviews-viewport {
+  display: block;
+  min-height: 7rem;
+  transition: opacity 0.35s ease;
+}
+.pl-beauty-reviews-viewport.is-fading { opacity: 0; }
+.pl-review-card--beauty {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.pl-review-card--beauty:hover,
+.pl-review-card--beauty:focus-visible {
+  border-color: rgba(20, 92, 65, 0.35);
+  box-shadow: 0 2px 8px rgba(20, 92, 65, 0.08);
+  outline: none;
+}
+.pl-review-card--beauty .pl-review-text {
+  -webkit-line-clamp: 6;
+  margin-bottom: 4px;
+}
+.pl-review-more-hint {
+  font-size: 10px;
+  color: var(--dim);
+  margin: 0;
+  font-weight: 600;
+}
+.pl-review-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 12000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+.pl-review-modal[hidden] { display: none !important; }
+.pl-review-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+}
+.pl-review-modal-panel {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 420px);
+  max-height: min(82vh, 560px);
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid rgba(20, 92, 65, 0.15);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+  padding: 16px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+.pl-review-modal-close {
+  align-self: flex-end;
+  margin: 0 0 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: inherit;
+  color: #fff;
+  background: var(--green);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.pl-review-modal-close:hover { background: var(--green-mid); }
+.pl-review-modal-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--green);
+  margin: 0 0 8px;
+  font-family: 'DM Mono', monospace;
+}
+.pl-review-modal-stars {
+  font-size: 12px;
+  margin: 0 0 10px;
+}
+.pl-review-modal-body {
+  flex: 1;
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1.65;
+  color: #374151;
+  white-space: pre-wrap;
+  margin: 0;
+  padding-right: 4px;
+}
+@media (max-width: 380px) {
+  .pl-manual-reviews-viewport { grid-template-columns: 1fr; min-height: 0; }
+  .pl-review-card { min-height: 0; }
+}
+.pl-hero-actions.pl-hero-actions--solo {
+  display: flex;
+  gap: 0;
+  margin: 0;
+  width: 100%;
+  align-items: stretch;
 }
 .pl-hero-btn {
   flex: 1 1 0; min-width: 0;
@@ -2560,7 +2796,7 @@ a.pl-branch-chip:hover { border-color: var(--green-border); background: var(--gr
   background: var(--green-bg); border-color: var(--green-mid);
   box-shadow: 0 2px 8px rgba(26, 122, 82, 0.12);
 }
-.pl-hero-actions--solo .pl-hero-btn--consult { flex: 1 1 auto; width: 100%; max-width: 340px; margin: 0 auto; }
+.pl-hero-actions--solo .pl-hero-btn--consult { flex: 1 1 auto; width: 100%; max-width: none; margin: 0; }
 @media (max-width: 380px) {
   .pl-hero-actions { flex-direction: column; gap: 10px; }
   .pl-hero-btn--consult { flex: none; width: 100%; font-size: 13px; }
@@ -2569,8 +2805,176 @@ a.pl-branch-chip:hover { border-color: var(--green-border); background: var(--gr
 #s-home.screen { min-height: 0; }
 #s-home .hero { min-height: 0; }
 body.profile-home-sticky .hero { padding-top: 12px; }
-body.profile-home-sticky .hero-inner { padding-bottom: 20px; }
-body.profile-home-sticky .hero-panel { padding-bottom: 16px; }
+body.profile-home-sticky #s-home .hero-inner {
+  padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px));
+}
+body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 0;
+  z-index: 90;
+  width: auto;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 14px 16px calc(14px + env(safe-area-inset-bottom, 0px));
+  border-radius: 18px 18px 0 0;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.09);
+}
+
+/* 프로필 홈 — 블로그 목록 + 상단 프로필·PSP */
+.profile-blog-feed {
+  width: 100%;
+  margin: 0;
+  text-align: left;
+}
+.profile-blog-head {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--green);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+  text-align: center;
+  margin: 0 0 10px;
+  line-height: 1.4;
+}
+.profile-blog-feed .pl-home-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  margin: 0 0 12px;
+  padding: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+.profile-blog-list { list-style: none; margin: 0; padding: 0; }
+.profile-blog-item + .profile-blog-item {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(20, 92, 65, 0.1);
+}
+.profile-blog-item a {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  text-decoration: none;
+  color: inherit;
+}
+.profile-blog-thumb {
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #eef2f0;
+  position: relative;
+}
+.profile-blog-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.profile-blog-thumb.is-video::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.28) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E") center/22px no-repeat;
+}
+.profile-blog-thumb--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: #b8c4be;
+}
+.profile-blog-body { flex: 1; min-width: 0; }
+.profile-blog-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a3a34;
+  line-height: 1.4;
+  margin: 0 0 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.profile-blog-excerpt {
+  font-size: 13px;
+  color: var(--dim);
+  line-height: 1.55;
+  margin: 0 0 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.profile-blog-date {
+  font-size: 11px;
+  color: var(--dim);
+  margin: 0;
+  opacity: 0.85;
+}
+.profile-blog-loading,
+.profile-blog-empty {
+  font-size: 13px;
+  color: var(--dim);
+  text-align: center;
+  padding: 4px 0 8px;
+  margin: 0;
+  line-height: 1.55;
+}
+.profile-blog-empty a { color: var(--green); font-weight: 600; }
+.pl-home-link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+  width: auto;
+  min-height: 0;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  line-height: 1.15;
+  text-align: center;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s, transform .15s, box-shadow .2s;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+.pl-home-link-btn--profile {
+  color: #145c41;
+  background: #fff;
+  border: 1.5px solid var(--green);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+.pl-home-link-btn--profile:hover {
+  background: var(--green-bg);
+  border-color: var(--green-mid);
+}
+.pl-home-link-btn--psp {
+  border: 1.5px solid rgba(26, 122, 82, 0.35);
+  background: linear-gradient(180deg, rgba(240, 250, 245, 0.98), rgba(255, 255, 255, 0.92));
+  color: #145c41;
+}
+.pl-home-link-btn--psp:hover {
+  background: #1a3a34;
+  color: #fff;
+  border-color: #1a3a34;
+}
+@media (max-width: 400px) {
+  .pl-home-link-btn { font-size: 11px; padding: 4px 12px; }
+}
 </style>
 </head>
 <body>
@@ -2602,7 +3006,7 @@ body.profile-home-sticky .hero-panel { padding-bottom: 16px; }
       <div class="hero-bg-overlay"></div>
     </div>
 
-    <div class="hero-inner">
+    <div class="hero-inner pl-home-stack">
       <div class="hero-panel">
 
       <!-- 프로필 사진 원형 -->
@@ -2625,31 +3029,51 @@ body.profile-home-sticky .hero-panel { padding-bottom: 16px; }
         </div>
 
         <div class="hero-intro hero-intro--top">
-          <p>
-            <span class="hero-intro-center">
-              아래에서 지금 상황에 가까운 것을 골라 주세요.
-            </span>
-          </p>
-          <div class="pl-branch-grid" role="group" aria-label="관심 분야">
-            <button type="button" class="pl-branch-chip" data-branch="treatment" onclick="selectProfileBranch('treatment')">통증·치료</button>
-            <button type="button" class="pl-branch-chip active" data-branch="wellness" onclick="selectProfileBranch('wellness')">움직임·웰니스</button>
-            <button type="button" class="pl-branch-chip" data-branch="expert" onclick="selectProfileBranch('expert')">전문가 교육</button>
-            <button type="button" class="pl-branch-chip" data-branch="psp" onclick="selectProfileBranch('psp')">PSP 컨셉</button>
+          <h3 class="pl-branch-label">관심 분야 선택</h3>
+          <p class="pl-branch-hint">지금 상황에 가장 가까운 항목을 눌러 주세요.</p>
+          <div class="pl-branch-picker">
+            <div class="pl-branch-grid" role="radiogroup" aria-label="관심 분야">
+              <button type="button" class="pl-branch-chip" role="radio" aria-checked="false" data-branch="treatment" onclick="selectProfileBranch('treatment')">통증·치료</button>
+              <button type="button" class="pl-branch-chip active" role="radio" aria-checked="true" data-branch="wellness" onclick="selectProfileBranch('wellness')">움직임·뷰티</button>
+              <button type="button" class="pl-branch-chip" role="radio" aria-checked="false" data-branch="expert" onclick="selectProfileBranch('expert')">전문가 교육</button>
+            </div>
           </div>
         </div>
 
-        <div class="pl-hero-copy" id="profileHeroCopy">
-          <div class="pl-hero-copy-panel" id="profileHeroCopyPanel">
-            <h2 class="pl-hero-title" id="profileHeroTitle">더 좋은 몸 상태를 위한 관리</h2>
-            <p class="pl-hero-sub" id="profileHeroSub">유연성·자세·기능 — PAR 움직임 프로그램</p>
+        <div class="pl-hero-outcome">
+          <div class="pl-hero-copy" id="profileHeroCopy">
+            <div class="pl-hero-copy-panel" id="profileHeroCopyPanel">
+              <h2 class="pl-hero-title" id="profileHeroTitle">움직임·작은 얼굴을 위한 관리</h2>
+              <p class="pl-hero-sub" id="profileHeroSub">자세·움직임·페이스 — PAR 프로그램</p>
+            </div>
           </div>
-        </div>
-        <button type="button" class="pl-branch-cta visible" id="profileBranchAction" onclick="runProfileBranchAction()">몸을 더 좋게 만들고 싶어요 →</button>
-        <div class="pl-hero-actions pl-hero-actions--solo">
-          <button type="button" class="pl-hero-btn pl-hero-btn--consult" onclick="openProfileQuickConsult()">빠른 상담 받기</button>
+          <button type="button" class="pl-branch-cta visible" id="profileBranchAction" onclick="runProfileBranchAction()">몸을 더 좋게 만들고 싶어요 →</button>
+          <section class="pl-manual-reviews" id="profileManualReviews" aria-label="도수치료 리뷰" hidden>
+            <h3 class="pl-manual-reviews-label">도수치료 리뷰</h3>
+            <div class="pl-manual-reviews-viewport" id="profileManualReviewsViewport"></div>
+          </section>
+          <section class="pl-beauty-reviews pl-manual-reviews" id="profileBeautyReviews" aria-label="움직임·뷰티 리뷰" hidden>
+            <h3 class="pl-manual-reviews-label">움직임 · 뷰티 리뷰</h3>
+            <div class="pl-beauty-reviews-viewport" id="profileBeautyReviewsViewport"></div>
+          </section>
         </div>
       </div>
 
+      </div>
+
+      <section class="profile-blog-feed" id="profileBlogFeed" aria-label="힐링트리 블로그">
+        <h3 class="profile-blog-head">— 박준규 원장 —</h3>
+        <div class="pl-home-links" id="profileHomeLinks" aria-label="약력·PSP">
+          <a class="pl-home-link-btn pl-home-link-btn--profile" id="profileNaverBlogLink" href="https://blog.naver.com/allenjoy/120205433765" target="_blank" rel="noopener noreferrer" onclick="openProfileNaverBlog_()">약력</a>
+          <button type="button" class="pl-home-link-btn pl-home-link-btn--psp" onclick="startPspConcept()">PSP 컨셉</button>
+        </div>
+        <div id="profileBlogFeedInner">
+          <p class="profile-blog-loading">블로그 글 불러오는 중…</p>
+        </div>
+      </section>
+
+      <div class="pl-hero-actions pl-hero-actions--solo" id="profileHomeStickyBar">
+        <button type="button" class="pl-hero-btn pl-hero-btn--consult" onclick="openProfileQuickConsult()">빠른 상담 받기</button>
       </div>
     </div>
   </div>
@@ -4295,6 +4719,18 @@ body.profile-home-sticky .hero-panel { padding-bottom: 16px; }
   </div>
 </div>
 
+<div class="pl-review-modal" id="profileBeautyReviewModal" role="dialog" aria-modal="true" aria-labelledby="profileBeautyReviewModalTitle" hidden>
+  <div class="pl-review-modal-backdrop" id="profileBeautyReviewModalBackdrop" aria-hidden="true"></div>
+  <div class="pl-review-modal-panel">
+    <button type="button" class="pl-review-modal-close" id="profileBeautyReviewModalClose">닫기</button>
+    <h4 class="pl-review-modal-title" id="profileBeautyReviewModalTitle"></h4>
+    <div class="pl-review-modal-stars" id="profileBeautyReviewModalStars"></div>
+    <p class="pl-review-modal-body" id="profileBeautyReviewModalBody"></p>
+  </div>
+</div>
+
+<script src="profile-reviews-db.js"></script>
+<script src="profile-beauty-reviews-db.js"></script>
 <script>
 // ── STATE ──
 let H = ['s-home'];
@@ -4310,7 +4746,7 @@ let profileViewLog = [];
 
 const PROFILE_BRANCH_CHIP_LABEL = {
   treatment: '통증·치료',
-  wellness: '움직임·웰니스',
+  wellness: '움직임·뷰티',
   expert: '전문가 교육',
   psp: 'PSP 컨셉',
 };
@@ -4342,6 +4778,45 @@ function pushProfileViewLog_(label) {
 /** 구글 Apps Script 웹앱 URL — `consult-apps-script.gs` 배포 후 여기에 붙여넣기 */
 const CONSULT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwVJSc6rY5tcBSB1VaRi4DBEXGyUBr1ADFfs6QEA9Z9bu0G-0mdMAv374-MdPVYMnSaeQ/exec';
 
+/** 네이버 블로그 — 원장 프로필 글 */
+const PROFILE_NAVER_PROFILE_URL = 'https://blog.naver.com/allenjoy/120205433765';
+/** 도수치료 리뷰 DB — profile-reviews-db.js 에서 로드 */
+const PROFILE_MANUAL_REVIEWS_FALLBACK =
+  (typeof PROFILE_MANUAL_REVIEWS_DB !== 'undefined' && PROFILE_MANUAL_REVIEWS_DB.length)
+    ? PROFILE_MANUAL_REVIEWS_DB
+    : [];
+const PROFILE_REVIEW_ROTATE_MS = 5000;
+const PROFILE_REVIEW_CACHE_KEY = 'profileManualReviews_v1';
+const PROFILE_REVIEW_CACHE_TTL_MS = 1800000;
+let profileReviewPool_ = [];
+let profileReviewRotateTimer_ = null;
+let profileReviewFadeTimer_ = null;
+let profileReviewLastPairKey_ = '';
+/** 움직임·뷰티 리뷰 — profile-beauty-reviews-db.js + 후기데이터 시트 */
+const PROFILE_BEAUTY_REVIEWS_FALLBACK =
+  (typeof PROFILE_BEAUTY_REVIEWS_DB !== 'undefined' && PROFILE_BEAUTY_REVIEWS_DB.length)
+    ? PROFILE_BEAUTY_REVIEWS_DB
+    : [];
+const PROFILE_BEAUTY_ROTATE_MS = 10000;
+const PROFILE_BEAUTY_CACHE_KEY = 'profileBeautyReviews_v1';
+let profileBeautyPool_ = [];
+let profileBeautyIndex_ = 0;
+let profileBeautyRotateTimer_ = null;
+let profileBeautyFadeTimer_ = null;
+let profileBeautyModalOpen_ = false;
+const PROFILE_NAVER_BLOG_RSS = 'https://rss.blog.naver.com/allenjoy.xml';
+const PROFILE_NAVER_BLOG_URL = 'https://blog.naver.com/allenjoy';
+const PROFILE_BLOG_FETCH_MAX = 24;
+const PROFILE_BLOG_SHOW_COUNT = 3;
+const PROFILE_BRANCH_BLOG_KEYWORDS = {
+  treatment: ['통증', '치료', '도수', '디스크', '관절', '허리', '목', '어깨', '무릎', '척추', '림프', '염증', '불편'],
+  wellness: ['움직임', '뷰티', 'Re:Al', 'PAR', '스트레칭', '운동', '자세', 'ROM', '페이스', '프로그램'],
+  expert: ['교육', 'CMT', 'IFC', '세미나', '강사', '전문가', '커리큘럼', '수료', '얼굴 교정'],
+  psp: ['PSP', 'Philosophy', 'Science', 'Practice', '프로토콜', '임상']
+};
+let profileBlogCache_ = null;
+let profileBlogCacheAt_ = 0;
+
 const PROFILE_BRANCH_COPY = {
   treatment: {
     title: '통증·불편함부터 차근히 안내드립니다',
@@ -4349,8 +4824,8 @@ const PROFILE_BRANCH_COPY = {
     cta: '통증이나 불편함이 있어요 →'
   },
   wellness: {
-    title: '더 좋은 몸 상태를 위한 관리',
-    sub: '자세·움직임·페이스 — PAR 움직임 프로그램',
+    title: '움직임·작은 얼굴을 위한 관리',
+    sub: '자세·움직임·페이스 — PAR 프로그램',
     cta: '몸을 더 좋게 만들고 싶어요 →'
   },
   expert: {
@@ -4432,6 +4907,7 @@ function scrollToProfileHomeBottom_(){
   requestAnimationFrame(function () {
     requestAnimationFrame(function () {
       const target =
+        document.getElementById('profileBlogFeed') ||
         document.querySelector('.pl-hero-actions') ||
         document.getElementById('profileBranchAction') ||
         document.getElementById('profileHeroCopy');
@@ -4444,14 +4920,543 @@ function scrollToProfileHomeBottom_(){
   });
 }
 
+function openProfileNaverBlog_(){
+  pushProfileViewLog_('블로그 약력');
+  const a = document.getElementById('profileNaverBlogLink');
+  if(a && !a.href) a.href = PROFILE_NAVER_PROFILE_URL;
+}
+
+function shuffleProfileArray_(arr){
+  const a = arr.slice();
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    const t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+function normalizeProfileReviews_(raw){
+  if(!Array.isArray(raw)) return [];
+  return raw.map((r, i) => {
+    const text = String((r && r.text) || '').replace(/\s+/g, ' ').trim();
+    if(text.length < 8) return null;
+    return {
+      id: String((r && r.id) || ('f' + i)),
+      text: text,
+      reviewerId: String((r && (r.reviewerId || r.name)) || '').trim(),
+      rating: String((r && r.rating) || '').trim()
+    };
+  }).filter(Boolean);
+}
+
+function profileReviewPairKey_(pair){
+  return pair.map(r => r.id).sort().join('|');
+}
+
+function pickProfileReviewPair_(pool){
+  if(pool.length <= 2) return pool.slice();
+  let tries = 0;
+  while(tries < 12){
+    const shuffled = shuffleProfileArray_(pool);
+    const pair = shuffled.slice(0, 2);
+    const key = profileReviewPairKey_(pair);
+    if(key !== profileReviewLastPairKey_) return pair;
+    tries++;
+  }
+  return shuffleProfileArray_(pool).slice(0, 2);
+}
+
+function escapeProfileReviewHtml_(s){
+  return String(s || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+/** 이미 **** 가 있으면 그대로, 없으면 끝 3글자를 *** 로 */
+function maskProfileReviewerId_(raw){
+  const s = String(raw || '').trim();
+  if(!s) return '익명';
+  if(/\*{2,}/.test(s)) return s;
+  const chars = Array.from(s);
+  if(chars.length <= 3) return '***';
+  return chars.slice(0, -3).join('') + '***';
+}
+
+function renderProfileReviewCard_(r){
+  const stars = r.rating || '⭐⭐⭐⭐⭐';
+  const reviewer = maskProfileReviewerId_(r.reviewerId);
+  return '<article class="pl-review-card">' +
+    '<div class="pl-review-stars">' + escapeProfileReviewHtml_(stars) + '</div>' +
+    '<p class="pl-review-reviewer">' + escapeProfileReviewHtml_(reviewer) + '</p>' +
+    '<p class="pl-review-text">' + escapeProfileReviewHtml_(r.text) + '</p>' +
+    '</article>';
+}
+
+function renderProfileReviewPair_(pair, animate){
+  const wrap = document.getElementById('profileManualReviews');
+  const viewport = document.getElementById('profileManualReviewsViewport');
+  if(!wrap || !viewport) return;
+  if(!pair.length){
+    wrap.hidden = true;
+    return;
+  }
+  wrap.hidden = false;
+  const html = pair.map(renderProfileReviewCard_).join('');
+  const apply = () => {
+    viewport.innerHTML = html;
+    viewport.classList.remove('is-fading');
+  };
+  if(!animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    apply();
+    return;
+  }
+  viewport.classList.add('is-fading');
+  if(profileReviewFadeTimer_) clearTimeout(profileReviewFadeTimer_);
+  profileReviewFadeTimer_ = setTimeout(() => {
+    apply();
+    profileReviewFadeTimer_ = null;
+  }, 280);
+}
+
+function stopProfileReviewRotation_(){
+  if(profileReviewRotateTimer_){
+    clearInterval(profileReviewRotateTimer_);
+    profileReviewRotateTimer_ = null;
+  }
+}
+
+function startProfileReviewRotation_(){
+  stopProfileReviewRotation_();
+  if(profileReviewPool_.length < 1) return;
+  const tick = () => {
+    const pair = pickProfileReviewPair_(profileReviewPool_);
+    profileReviewLastPairKey_ = profileReviewPairKey_(pair);
+    renderProfileReviewPair_(pair, true);
+  };
+  tick();
+  if(profileReviewPool_.length >= 2){
+    profileReviewRotateTimer_ = setInterval(tick, PROFILE_REVIEW_ROTATE_MS);
+  }
+}
+
+function applyProfileReviewPool_(reviews){
+  profileReviewPool_ = normalizeProfileReviews_(reviews);
+  if(profileReviewPool_.length){
+    startProfileReviewRotation_();
+    return;
+  }
+  const wrap = document.getElementById('profileManualReviews');
+  if(wrap) wrap.hidden = true;
+  stopProfileReviewRotation_();
+}
+
+function readProfileReviewCache_(){
+  try {
+    const raw = sessionStorage.getItem(PROFILE_REVIEW_CACHE_KEY);
+    if(!raw) return null;
+    const parsed = JSON.parse(raw);
+    if(!parsed || !parsed.at || !Array.isArray(parsed.reviews)) return null;
+    if(Date.now() - parsed.at > PROFILE_REVIEW_CACHE_TTL_MS) return null;
+    return parsed.reviews;
+  } catch (e) { return null; }
+}
+
+function writeProfileReviewCache_(reviews){
+  try {
+    sessionStorage.setItem(PROFILE_REVIEW_CACHE_KEY, JSON.stringify({
+      at: Date.now(),
+      reviews: reviews
+    }));
+  } catch (e) { /* ignore */ }
+}
+
+async function loadProfileManualReviews_(){
+  if(PROFILE_MANUAL_REVIEWS_FALLBACK.length){
+    applyProfileReviewPool_(PROFILE_MANUAL_REVIEWS_FALLBACK);
+    return;
+  }
+  const cached = readProfileReviewCache_();
+  if(cached && cached.length){
+    applyProfileReviewPool_(cached);
+    return;
+  }
+  if(!CONSULT_WEBHOOK_URL) return;
+  try {
+    const url = CONSULT_WEBHOOK_URL + '?action=profileManualReviews';
+    const res = await fetch(url, { cache: 'no-store' });
+    if(!res.ok) throw new Error('reviews fetch');
+    const json = await res.json();
+    const list = (json && json.reviews) ? json.reviews : [];
+    if(list.length){
+      writeProfileReviewCache_(list);
+      applyProfileReviewPool_(list);
+    }
+  } catch (err) { /* no embedded data */ }
+}
+
+function maskProfileMemberName_(name){
+  const n = String(name || '').trim();
+  if(!n) return '회원님';
+  const chars = Array.from(n);
+  if(chars.length <= 1) return n + '○';
+  return chars[0] + '○'.repeat(Math.min(chars.length - 1, 2));
+}
+
+function normalizeProfileBeautyReviews_(raw){
+  if(!Array.isArray(raw)) return [];
+  return raw.map((r, i) => {
+    const text = String((r && r.text) || '').replace(/\s+/g, ' ').trim();
+    if(text.length < 20) return null;
+    const name = String((r && (r.name || r.reviewerId)) || '').trim();
+    return {
+      id: String((r && r.id) || ('b' + i)),
+      name: name,
+      text: text,
+      rating: String((r && r.rating) || '⭐⭐⭐⭐⭐').trim() || '⭐⭐⭐⭐⭐'
+    };
+  }).filter(Boolean);
+}
+
+function profileBeautyReviewKey_(r){
+  return (r.name || '') + '|' + (r.text || '').slice(0, 80);
+}
+
+function mergeProfileBeautyReviews_(embedded, extra){
+  const seen = new Set();
+  const out = [];
+  function add(list){
+    (list || []).forEach(r => {
+      const item = normalizeProfileBeautyReviews_([r])[0];
+      if(!item) return;
+      const k = profileBeautyReviewKey_(item);
+      if(seen.has(k)) return;
+      seen.add(k);
+      out.push(item);
+    });
+  }
+  add(embedded);
+  add(extra);
+  return out;
+}
+
+function renderProfileBeautyCardHtml_(r){
+  const stars = r.rating || '⭐⭐⭐⭐⭐';
+  const reviewer = maskProfileMemberName_(r.name);
+  return '<button type="button" class="pl-review-card pl-review-card--beauty" data-beauty-id="' +
+    escapeProfileReviewHtml_(r.id) + '" aria-label="' + escapeProfileReviewHtml_(reviewer) + ' 후기 전체 보기">' +
+    '<div class="pl-review-stars">' + escapeProfileReviewHtml_(stars) + '</div>' +
+    '<p class="pl-review-reviewer">' + escapeProfileReviewHtml_(reviewer) + '</p>' +
+    '<p class="pl-review-text">' + escapeProfileReviewHtml_(r.text) + '</p>' +
+    '<p class="pl-review-more-hint">탭하면 전체 후기 보기</p>' +
+    '</button>';
+}
+
+function renderProfileBeautyCurrent_(animate){
+  const wrap = document.getElementById('profileBeautyReviews');
+  const viewport = document.getElementById('profileBeautyReviewsViewport');
+  if(!wrap || !viewport) return;
+  if(!profileBeautyPool_.length){
+    wrap.hidden = true;
+    return;
+  }
+  wrap.hidden = false;
+  const r = profileBeautyPool_[profileBeautyIndex_ % profileBeautyPool_.length];
+  const html = renderProfileBeautyCardHtml_(r);
+  const apply = () => {
+    viewport.innerHTML = html;
+    viewport.classList.remove('is-fading');
+    const btn = viewport.querySelector('[data-beauty-id]');
+    if(btn){
+      btn.onclick = () => openProfileBeautyReviewModal_(r);
+    }
+  };
+  if(!animate || profileBeautyModalOpen_ ||
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    apply();
+    return;
+  }
+  viewport.classList.add('is-fading');
+  if(profileBeautyFadeTimer_) clearTimeout(profileBeautyFadeTimer_);
+  profileBeautyFadeTimer_ = setTimeout(() => {
+    apply();
+    profileBeautyFadeTimer_ = null;
+  }, 280);
+}
+
+function stopProfileBeautyRotation_(){
+  if(profileBeautyRotateTimer_){
+    clearInterval(profileBeautyRotateTimer_);
+    profileBeautyRotateTimer_ = null;
+  }
+}
+
+function advanceProfileBeautyReview_(){
+  if(profileBeautyModalOpen_ || profileBeautyPool_.length < 2) return;
+  profileBeautyIndex_ = (profileBeautyIndex_ + 1) % profileBeautyPool_.length;
+  renderProfileBeautyCurrent_(true);
+}
+
+function startProfileBeautyRotation_(resetIndex){
+  stopProfileBeautyRotation_();
+  if(!profileBeautyPool_.length) return;
+  if(resetIndex !== false) profileBeautyIndex_ = 0;
+  renderProfileBeautyCurrent_(false);
+  if(profileBeautyPool_.length >= 2 && !profileBeautyModalOpen_){
+    profileBeautyRotateTimer_ = setInterval(
+      advanceProfileBeautyReview_,
+      PROFILE_BEAUTY_ROTATE_MS
+    );
+  }
+}
+
+function applyProfileBeautyPool_(reviews){
+  profileBeautyPool_ = mergeProfileBeautyReviews_(reviews, []);
+  if(profileBeautyPool_.length){
+    startProfileBeautyRotation_();
+    return;
+  }
+  const wrap = document.getElementById('profileBeautyReviews');
+  if(wrap) wrap.hidden = true;
+  stopProfileBeautyRotation_();
+}
+
+function readProfileBeautyCache_(){
+  try {
+    const raw = sessionStorage.getItem(PROFILE_BEAUTY_CACHE_KEY);
+    if(!raw) return null;
+    const parsed = JSON.parse(raw);
+    if(!parsed || !parsed.at || !Array.isArray(parsed.reviews)) return null;
+    if(Date.now() - parsed.at > PROFILE_REVIEW_CACHE_TTL_MS) return null;
+    return parsed.reviews;
+  } catch (e) { return null; }
+}
+
+function writeProfileBeautyCache_(reviews){
+  try {
+    sessionStorage.setItem(PROFILE_BEAUTY_CACHE_KEY, JSON.stringify({
+      at: Date.now(),
+      reviews: reviews
+    }));
+  } catch (e) { /* ignore */ }
+}
+
+function openProfileBeautyReviewModal_(review){
+  const modal = document.getElementById('profileBeautyReviewModal');
+  const titleEl = document.getElementById('profileBeautyReviewModalTitle');
+  const starsEl = document.getElementById('profileBeautyReviewModalStars');
+  const bodyEl = document.getElementById('profileBeautyReviewModalBody');
+  if(!modal || !titleEl || !bodyEl) return;
+  profileBeautyModalOpen_ = true;
+  stopProfileBeautyRotation_();
+  titleEl.textContent = maskProfileMemberName_(review.name);
+  if(starsEl) starsEl.textContent = review.rating || '⭐⭐⭐⭐⭐';
+  bodyEl.textContent = review.text;
+  modal.hidden = false;
+  document.body.style.overflow = 'hidden';
+  const closeBtn = document.getElementById('profileBeautyReviewModalClose');
+  if(closeBtn) closeBtn.focus();
+}
+
+function closeProfileBeautyReviewModal_(){
+  const modal = document.getElementById('profileBeautyReviewModal');
+  if(!modal || modal.hidden) return;
+  modal.hidden = true;
+  document.body.style.overflow = '';
+  profileBeautyModalOpen_ = false;
+  startProfileBeautyRotation_(false);
+}
+
+function initProfileBeautyReviewModal_(){
+  const closeBtn = document.getElementById('profileBeautyReviewModalClose');
+  const backdrop = document.getElementById('profileBeautyReviewModalBackdrop');
+  if(closeBtn) closeBtn.addEventListener('click', closeProfileBeautyReviewModal_);
+  if(backdrop) backdrop.addEventListener('click', closeProfileBeautyReviewModal_);
+  document.addEventListener('keydown', function (e) {
+    if(e.key === 'Escape' && profileBeautyModalOpen_) closeProfileBeautyReviewModal_();
+  });
+}
+
+async function loadProfileBeautyReviews_(){
+  let pool = PROFILE_BEAUTY_REVIEWS_FALLBACK.slice();
+  const cached = readProfileBeautyCache_();
+  if(cached && cached.length){
+    pool = mergeProfileBeautyReviews_(pool, cached);
+  }
+  if(pool.length){
+    applyProfileBeautyPool_(pool);
+  }
+  if(!CONSULT_WEBHOOK_URL) return;
+  try {
+    const url = CONSULT_WEBHOOK_URL + '?action=profileBeautyReviews';
+    const res = await fetch(url, { cache: 'no-store' });
+    if(!res.ok) throw new Error('beauty reviews fetch');
+    const json = await res.json();
+    const apiList = (json && json.reviews) ? json.reviews : [];
+    if(apiList.length){
+      writeProfileBeautyCache_(apiList);
+    }
+    const merged = mergeProfileBeautyReviews_(
+      PROFILE_BEAUTY_REVIEWS_FALLBACK,
+      apiList.length ? apiList : (cached || [])
+    );
+    if(merged.length){
+      const wasModal = profileBeautyModalOpen_;
+      const prevId = profileBeautyPool_[profileBeautyIndex_] &&
+        profileBeautyPool_[profileBeautyIndex_].id;
+      profileBeautyPool_ = merged;
+      if(prevId){
+        const idx = merged.findIndex(r => r.id === prevId);
+        if(idx >= 0) profileBeautyIndex_ = idx;
+      }
+      if(!wasModal) startProfileBeautyRotation_(false);
+    }
+  } catch (err) { /* embedded only */ }
+}
+
+function escapeProfileHtml_(s){
+  return String(s || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function stripProfileHtml_(html){
+  const el = document.createElement('div');
+  el.innerHTML = html || '';
+  return (el.textContent || '').replace(/\s+/g, ' ').trim();
+}
+
+function formatProfileBlogDate_(pubDate){
+  const d = new Date(pubDate);
+  if(isNaN(d.getTime())) return '';
+  return d.getFullYear() + '. ' + (d.getMonth() + 1) + '. ' + d.getDate() + '.';
+}
+
+function firstProfileBlogImg_(html){
+  const m = String(html || '').match(/<img[^>]+src=["']([^"']+)["']/i);
+  return m ? m[1] : '';
+}
+
+function isProfileBlogVideo_(html, title){
+  const h = String(html || '') + String(title || '');
+  return /<(video|iframe)\b/i.test(h) || /동영상|video|movie/i.test(h);
+}
+
+function parseProfileNaverRssItems_(xmlText){
+  const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
+  if(doc.querySelector('parsererror')) return [];
+  return Array.from(doc.querySelectorAll('item')).slice(0, PROFILE_BLOG_FETCH_MAX).map(item => {
+    const category = (item.querySelector('category') && item.querySelector('category').textContent) || '';
+    const title = (item.querySelector('title') && item.querySelector('title').textContent) || '';
+    let link = (item.querySelector('link') && item.querySelector('link').textContent) || '';
+    link = link.replace(/\?fromRss=true.*$/i, '').trim();
+    const descHtml = (item.querySelector('description') && item.querySelector('description').textContent) || '';
+    const pubDate = (item.querySelector('pubDate') && item.querySelector('pubDate').textContent) || '';
+    return {
+      category: category.trim(),
+      title: title.trim(),
+      link: link.trim(),
+      excerpt: stripProfileHtml_(descHtml).slice(0, 120),
+      thumb: firstProfileBlogImg_(descHtml),
+      date: formatProfileBlogDate_(pubDate),
+      isVideo: isProfileBlogVideo_(descHtml, title),
+      haystack: (category + ' ' + title + ' ' + stripProfileHtml_(descHtml)).toLowerCase()
+    };
+  }).filter(p => p.title && p.link);
+}
+
+function pickProfileBlogPosts_(branch, allPosts){
+  const keys = (PROFILE_BRANCH_BLOG_KEYWORDS[branch] || []).map(k => String(k).toLowerCase());
+  const scored = allPosts.map((p, i) => {
+    let score = 0;
+    keys.forEach(k => { if(p.haystack.indexOf(k) !== -1) score++; });
+    return { p, score, i };
+  });
+  scored.sort((a, b) => b.score - a.score || a.i - b.i);
+  const picked = [];
+  const seen = new Set();
+  scored.forEach(row => {
+    if(picked.length >= PROFILE_BLOG_SHOW_COUNT || seen.has(row.p.link) || row.score < 1) return;
+    picked.push(row.p);
+    seen.add(row.p.link);
+  });
+  scored.forEach(row => {
+    if(picked.length >= PROFILE_BLOG_SHOW_COUNT || seen.has(row.p.link)) return;
+    picked.push(row.p);
+    seen.add(row.p.link);
+  });
+  return picked.slice(0, PROFILE_BLOG_SHOW_COUNT);
+}
+
+function renderProfileBlogFeed_(posts){
+  const inner = document.getElementById('profileBlogFeedInner');
+  if(!inner) return;
+  if(!posts.length){
+    inner.innerHTML = '<p class="profile-blog-empty">최근 글을 불러오지 못했습니다. <a href="' + PROFILE_NAVER_BLOG_URL + '" target="_blank" rel="noopener">블로그에서 보기</a></p>';
+    return;
+  }
+  let html = '<ul class="profile-blog-list">';
+  posts.forEach(p => {
+    const thumb = p.thumb
+      ? '<div class="profile-blog-thumb' + (p.isVideo ? ' is-video' : '') + '"><img src="' + escapeProfileHtml_(p.thumb) + '" alt="" loading="lazy" decoding="async"></div>'
+      : '<div class="profile-blog-thumb profile-blog-thumb--empty" aria-hidden="true">📄</div>';
+    html += '<li class="profile-blog-item"><a href="' + escapeProfileHtml_(p.link) + '" target="_blank" rel="noopener noreferrer">' +
+      thumb +
+      '<div class="profile-blog-body">' +
+      '<p class="profile-blog-title">' + escapeProfileHtml_(p.title) + '</p>' +
+      (p.excerpt ? '<p class="profile-blog-excerpt">' + escapeProfileHtml_(p.excerpt) + '</p>' : '') +
+      (p.date ? '<p class="profile-blog-date">' + escapeProfileHtml_(p.date) + '</p>' : '') +
+      '</div></a></li>';
+  });
+  html += '</ul>';
+  inner.innerHTML = html;
+}
+
+async function loadProfileBlogFeed_(force){
+  const inner = document.getElementById('profileBlogFeedInner');
+  if(!inner) return;
+  const now = Date.now();
+  if(!force && profileBlogCache_ && now - profileBlogCacheAt_ < 600000){
+    renderProfileBlogFeed_(pickProfileBlogPosts_(profileBranch, profileBlogCache_));
+    return;
+  }
+  inner.innerHTML = '<p class="profile-blog-loading">블로그 글 불러오는 중…</p>';
+  try {
+    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(PROFILE_NAVER_BLOG_RSS);
+    const res = await fetch(proxyUrl, { cache: 'no-store' });
+    if(!res.ok) throw new Error('rss fetch');
+    const xml = await res.text();
+    profileBlogCache_ = parseProfileNaverRssItems_(xml);
+    profileBlogCacheAt_ = now;
+    renderProfileBlogFeed_(pickProfileBlogPosts_(profileBranch, profileBlogCache_));
+  } catch (err) {
+    inner.innerHTML = '<p class="profile-blog-empty">글 목록을 가져오지 못했습니다. <a href="' + PROFILE_NAVER_BLOG_URL + '" target="_blank" rel="noopener">네이버 블로그에서 보기</a></p>';
+  }
+}
+
+function refreshProfileBlogFeed(){
+  if(!document.getElementById('s-home') || !document.getElementById('s-home').classList.contains('active')) return;
+  if(profileBlogCache_){
+    renderProfileBlogFeed_(pickProfileBlogPosts_(profileBranch, profileBlogCache_));
+  } else {
+    loadProfileBlogFeed_(false);
+  }
+}
+
 function selectProfileBranch(branch, options){
   options = options || {};
   profileBranch = branch;
   document.querySelectorAll('.pl-branch-chip').forEach(chip => {
-    chip.classList.toggle('active', chip.getAttribute('data-branch') === branch);
+    const on = chip.getAttribute('data-branch') === branch;
+    chip.classList.toggle('active', on);
+    chip.setAttribute('aria-checked', on ? 'true' : 'false');
   });
   pushProfileViewLog_('탭: ' + (PROFILE_BRANCH_CHIP_LABEL[branch] || branch));
   setProfileHeroCopy(branch, true);
+  refreshProfileBlogFeed();
   if(options.scroll !== false){
     setTimeout(scrollToProfileHomeBottom_, PROFILE_HERO_FADE_MS + 40);
   }
@@ -4465,7 +5470,7 @@ function runProfileBranchAction(){
     return;
   }
   if(b === 'wellness'){
-    bc('관리·웰니스');
+    bc('움직임·뷰티');
     pSet('mode', 'wellness');
     goS('s-p-wellness');
     return;
@@ -4651,9 +5656,11 @@ function getConsultPhoneCombined(){
 function updateProfileSticky(){
   const nav = document.getElementById('profileNav');
   const progress = document.querySelector('.progress-bar');
+  const blogFeed = document.getElementById('profileBlogFeed');
   const onHome = document.getElementById('s-home') && document.getElementById('s-home').classList.contains('active');
   if(nav) nav.classList.toggle('hidden', onHome);
   if(progress) progress.classList.toggle('hidden', onHome);
+  if(blogFeed) blogFeed.hidden = !onHome;
   document.body.classList.toggle('profile-home-sticky', onHome);
 }
 
@@ -4869,6 +5876,7 @@ function startPatient(){
 function startExpert(){ goS('s-e1'); }
 
 function startPspConcept(){
+  pushProfileViewLog_('PSP 컨셉');
   bcPath = ['PSP 컨셉'];
   updateBc();
   goS('s-psp1');
@@ -5402,6 +6410,10 @@ updateProgress('s-home');
 updateProfileSticky();
 pushProfileViewLog_('프로필 홈');
 selectProfileBranch('wellness', { scroll: false });
+loadProfileBlogFeed_(false);
+initProfileBeautyReviewModal_();
+loadProfileManualReviews_();
+loadProfileBeautyReviews_();
 </script>
 </body>
 </html>
