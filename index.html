@@ -4901,7 +4901,13 @@ function setProfileHeroCopy(branch, animate){
   }, PROFILE_HERO_FADE_MS);
 }
 
-/** 분기 탭 클릭 후 안내 문구·CTA(하단)가 보이도록 스크롤 */
+function getVisibleProfileHomeTarget_(id){
+  const el = document.getElementById(id);
+  if(!el || el.hidden) return null;
+  return el;
+}
+
+/** 분기 탭 클릭 후 움직임·뷰티 리뷰 하단까지만 보이도록 스크롤 */
 function scrollToProfileHomeBottom_(){
   const onHome = document.getElementById('s-home') &&
     document.getElementById('s-home').classList.contains('active');
@@ -4909,14 +4915,11 @@ function scrollToProfileHomeBottom_(){
   requestAnimationFrame(function () {
     requestAnimationFrame(function () {
       const target =
-        document.getElementById('profileBlogFeed') ||
-        document.querySelector('.pl-hero-actions') ||
+        getVisibleProfileHomeTarget_('profileBeautyReviews') ||
         document.getElementById('profileBranchAction') ||
         document.getElementById('profileHeroCopy');
       if(target){
         target.scrollIntoView({ behavior: 'smooth', block: 'end' });
-      } else {
-        window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
       }
     });
   });
