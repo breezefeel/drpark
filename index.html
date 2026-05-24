@@ -2552,14 +2552,16 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   margin-bottom: 0;
 }
 .pl-branch-grid {
-  display: flex; flex-wrap: nowrap; justify-content: center; align-items: center;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
   gap: 4px; margin-bottom: 0; width: 100%; max-width: 100%;
-  overflow-x: auto; -webkit-overflow-scrolling: touch;
-  scrollbar-width: none; padding: 0;
+  padding: 0;
 }
 .pl-branch-grid::-webkit-scrollbar { display: none; }
 .pl-branch-chip {
-  flex-shrink: 0; white-space: nowrap;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 0; width: 100%; white-space: nowrap; text-align: center; line-height: 1.2;
   font-size: 12px; font-weight: 600; font-family: inherit;
   padding: 9px 13px; border-radius: 999px;
   border: 1.5px solid transparent; background: transparent;
@@ -2568,7 +2570,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 }
 @media (max-width: 400px) {
   .pl-branch-picker { padding: 4px; }
-  .pl-branch-grid { gap: 3px; justify-content: flex-start; }
+  .pl-branch-grid { gap: 3px; }
   .pl-branch-chip { font-size: 11px; padding: 8px 10px; }
 }
 .pl-branch-chip:hover:not(.active) {
