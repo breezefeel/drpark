@@ -2482,9 +2482,92 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   margin-bottom: 12px !important;
   line-height: 1.5;
 }
-.pl-hero-top .pl-hero-stats {
-  margin-bottom: 16px;
+.pl-hero-top .pl-hero-stats,
+.pl-hero-top .pl-trust-strip {
+  margin-bottom: 14px;
   width: 100%;
+}
+.pl-trust-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  padding: 14px 6px 12px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(220, 228, 240, 0.95);
+  border-radius: 14px;
+  box-shadow: 0 2px 10px rgba(30, 58, 110, 0.06);
+}
+.pl-trust-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 0 6px;
+  text-align: center;
+  min-width: 0;
+}
+.pl-trust-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  right: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, #dce4f0 20%, #dce4f0 80%, transparent);
+}
+.pl-trust-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-bottom: 2px;
+  border-radius: 10px;
+  background: #eff6ff;
+  color: #2563eb;
+}
+.pl-trust-num {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #1e3a6e;
+  line-height: 1.15;
+}
+.pl-trust-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: #6b7484;
+  line-height: 1.45;
+  word-break: keep-all;
+}
+@media (max-width: 360px) {
+  .pl-trust-num { font-size: 16px; }
+  .pl-trust-label { font-size: 9px; }
+  .pl-trust-icon { width: 28px; height: 28px; }
+  .pl-trust-icon svg { width: 16px; height: 16px; }
+}
+.pl-branch-section {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 16px 14px 14px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(220, 228, 240, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(30, 58, 110, 0.05);
+  box-sizing: border-box;
+}
+.pl-branch-head {
+  text-align: center;
+  margin-bottom: 14px;
+}
+.pl-branch-eyebrow {
+  margin: 0 0 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #94a3b8;
 }
 .pl-hero-top .hero-intro--top {
   margin-bottom: 10px;
@@ -2505,7 +2588,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   color: #444;
   line-height: 1.45;
   font-weight: 400;
-  margin: 0 0 8px;
+  margin: 0 0 14px;
   text-align: center;
 }
 .hero-intro .pl-branch-picker {
@@ -2570,69 +2653,130 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .pl-branch-label {
   display: block;
   text-align: center;
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--green);
-  font-family: 'DM Mono', monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e3a6e;
+  font-family: inherit;
+  letter-spacing: -0.03em;
+  margin: 0 0 6px;
+}
+.pl-branch-hint {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 400;
+  color: #6b7484;
+  line-height: 1.5;
+  text-align: center;
 }
 .pl-branch-picker {
-  padding: 5px;
-  background: #e8edf7;
-  border: 1px solid #dce4f0;
-  border-radius: 999px;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
   margin-bottom: 0;
 }
 .pl-branch-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: center;
-  gap: 4px; margin-bottom: 0; width: 100%; max-width: 100%;
+  align-items: stretch;
+  gap: 8px;
+  margin-bottom: 0;
+  width: 100%;
+  max-width: 100%;
   padding: 0;
 }
 .pl-branch-grid::-webkit-scrollbar { display: none; }
 .pl-branch-chip {
-  display: inline-flex; align-items: center; justify-content: center;
-  min-width: 0; width: 100%; white-space: nowrap; text-align: center; line-height: 1.2;
-  font-size: 12px; font-weight: 600; font-family: inherit;
-  padding: 9px 13px; border-radius: 999px;
-  border: 1.5px solid transparent; background: transparent;
-  color: #64748b; cursor: pointer;
-  transition: background .2s, color .2s, border-color .2s, box-shadow .2s, transform .15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-width: 0;
+  width: 100%;
+  min-height: 56px;
+  text-align: center;
+  font-family: inherit;
+  padding: 10px 6px;
+  border-radius: 12px;
+  border: 1.5px solid #dce4f0;
+  background: #f8fafc;
+  color: #4b5563;
+  cursor: pointer;
+  box-shadow: none;
+  transition: border-color .2s, background .2s, color .2s, box-shadow .2s;
+}
+.pl-branch-chip-title {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: inherit;
+}
+.pl-branch-chip-sub {
+  display: block;
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: #94a3b8;
+  transition: color .2s;
 }
 @media (max-width: 400px) {
-  .pl-branch-picker { padding: 4px; }
-  .pl-branch-grid { gap: 3px; }
-  .pl-branch-chip { font-size: 11px; padding: 8px 10px; }
+  .pl-branch-grid { gap: 6px; }
+  .pl-branch-chip { min-height: 52px; padding: 8px 4px; }
+  .pl-branch-chip-title { font-size: 11px; }
+  .pl-branch-chip-sub { font-size: 8px; }
 }
 .pl-branch-chip:hover:not(.active) {
-  background: rgba(255, 255, 255, 0.65);
+  border-color: #bfdbfe;
+  background: #fff;
   color: #1e3a6e;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+  transform: none;
+}
+.pl-branch-chip:hover:not(.active) .pl-branch-chip-sub {
+  color: #6b7484;
 }
 .pl-branch-chip:focus-visible {
   outline: 2px solid var(--green);
   outline-offset: 2px;
 }
 .pl-branch-chip.active {
-  border-color: var(--green);
-  background: var(--green);
-  color: #fff;
-  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.32);
-  transform: translateY(-1px);
+  border-color: #2563eb;
+  background: #fff;
+  color: #1e3a6e;
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.15), 0 4px 14px rgba(37, 99, 235, 0.12);
+  transform: none;
+}
+.pl-branch-chip.active .pl-branch-chip-sub {
+  color: #2563eb;
+  opacity: 0.85;
 }
 .pl-branch-chip.active:hover {
-  background: var(--green-mid);
   border-color: var(--green-mid);
+  color: #1e3a6e;
 }
 a.pl-branch-chip {
-  text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
 }
-a.pl-branch-chip:hover:not(.active) { background: rgba(255, 255, 255, 0.65); color: #1e3a6e; }
-a.pl-branch-chip.active { color: #fff; }
+a.pl-branch-chip:hover:not(.active) {
+  border-color: #bfdbfe;
+  background: #fff;
+  color: #1e3a6e;
+}
+a.pl-branch-chip.active {
+  color: #1e3a6e;
+  background: #fff;
+  border-color: #2563eb;
+}
 .pl-branch-cta {
   display: none;
   width: 100%;
@@ -2646,20 +2790,21 @@ a.pl-branch-chip.active { color: #fff; }
 .pl-branch-cta:hover { background: var(--green-mid); transform: translateY(-1px); }
 .pl-manual-reviews {
   width: 100%;
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(30, 64, 175, 0.1);
+  margin: 0;
+  padding: 0;
+  border: none;
   text-align: left;
 }
 .pl-manual-reviews-label {
-  font-size: 11px;
-  font-weight: 800;
+  font-size: 12px;
+  font-weight: 600;
   color: var(--green);
-  font-family: 'DM Mono', monospace;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-family: inherit;
+  letter-spacing: -0.02em;
   margin: 0 0 8px;
   text-align: center;
+  display: block;
+  line-height: 1.4;
 }
 .pl-manual-reviews-viewport {
   display: grid;
@@ -2670,32 +2815,32 @@ a.pl-branch-chip.active { color: #fff; }
 }
 .pl-manual-reviews-viewport.is-fading { opacity: 0; }
 .pl-review-card {
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(30, 64, 175, 0.12);
-  border-radius: 10px;
-  padding: 10px 10px 9px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 11px;
   min-height: 5.5rem;
   box-sizing: border-box;
 }
 .pl-review-stars {
-  font-size: 11px;
+  font-size: 10px;
   line-height: 1;
-  margin: 0 0 6px;
+  margin: 0 0 5px;
   letter-spacing: 0.02em;
 }
 .pl-review-reviewer {
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--green);
-  margin: 0 0 5px;
-  font-family: 'DM Mono', monospace;
-  letter-spacing: 0.02em;
+  margin: 0 0 4px;
+  font-family: inherit;
+  letter-spacing: -0.01em;
 }
 .pl-review-text {
   font-size: 12px;
-  color: #374151;
-  line-height: 1.5;
-  margin: 0 0 6px;
+  color: #4b5563;
+  line-height: 1.55;
+  margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
@@ -2709,10 +2854,10 @@ a.pl-branch-chip.active { color: #fff; }
   padding: 8px 4px;
   margin: 0;
 }
-.pl-beauty-reviews { margin-top: 10px; }
+.pl-beauty-reviews { margin: 0; }
 .pl-beauty-reviews-viewport {
   display: block;
-  min-height: 7rem;
+  min-height: 6.5rem;
   transition: opacity 0.35s ease;
 }
 .pl-beauty-reviews-viewport.is-fading { opacity: 0; }
@@ -2730,14 +2875,15 @@ a.pl-branch-chip.active { color: #fff; }
   outline: none;
 }
 .pl-review-card--beauty .pl-review-text {
-  -webkit-line-clamp: 6;
-  margin-bottom: 4px;
+  -webkit-line-clamp: 5;
+  margin-bottom: 0;
 }
 .pl-review-more-hint {
   font-size: 10px;
-  color: var(--dim);
-  margin: 0;
-  font-weight: 600;
+  color: #9ca3af;
+  margin: 6px 0 0;
+  font-weight: 500;
+  text-align: center;
 }
 .pl-review-modal {
   position: fixed;
@@ -2865,36 +3011,121 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   width: 100%;
   margin: 0;
   text-align: left;
-}
-.profile-blog-head {
-  font-size: 12px;
-  font-weight: 800;
-  color: var(--green);
-  font-family: 'DM Mono', monospace;
-  letter-spacing: 0.08em;
-  text-align: center;
-  margin: 0 0 10px;
-  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .profile-blog-feed .pl-home-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
+  display: block;
   width: 100%;
-  margin: 0 0 12px;
+  margin: 0;
   padding: 0;
   background: none;
   border: none;
   box-shadow: none;
   backdrop-filter: none;
 }
+.pl-home-links-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 10px;
+  width: 100%;
+}
+.pl-home-link-item {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  min-width: 0;
+}
+.pl-home-link-cap {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #6b7484;
+  text-align: center;
+  letter-spacing: -0.01em;
+}
+.pl-home-link-item .pl-home-link-btn {
+  width: 100%;
+  white-space: normal;
+  min-height: 36px;
+  padding: 8px 10px;
+}
+@media (max-width: 380px) {
+  .pl-home-links-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+.profile-home-reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  margin: 0;
+  padding: 14px 12px 12px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-sizing: border-box;
+}
+.profile-home-reviews .pl-manual-reviews {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+.profile-home-reviews .pl-manual-reviews + .pl-manual-reviews {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.profile-home-reviews .pl-manual-reviews-label {
+  margin-bottom: 10px;
+  color: #5b6b82;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.profile-home-reviews .pl-review-card {
+  background: #fff;
+  border-color: #e5eaf2;
+  box-shadow: none;
+}
+.profile-home-blog {
+  width: 100%;
+  margin: 0;
+  padding: 14px 12px 12px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-sizing: border-box;
+}
+.profile-home-blog-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #5b6b82;
+  font-family: inherit;
+  letter-spacing: 0.02em;
+  margin: 0 0 10px;
+  text-align: center;
+  display: block;
+  line-height: 1.4;
+}
+.profile-home-blog .profile-blog-loading,
+.profile-home-blog .profile-blog-empty,
+.profile-home-blog .profile-blog-error {
+  margin: 0;
+  text-align: center;
+  font-size: 12px;
+  color: var(--dim);
+}
 .profile-blog-list { list-style: none; margin: 0; padding: 0; }
 .profile-blog-item + .profile-blog-item {
   margin-top: 12px;
   padding-top: 12px;
-  border-top: 1px solid rgba(30, 64, 175, 0.1);
+  border-top: 1px solid var(--border);
 }
 .profile-blog-item a {
   display: flex;
@@ -3059,23 +3290,53 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
         <div class="hero-name">미카닥 박준규</div>
         <div class="hero-cred pl-hero-cred">근골격계 · 미국 카이로프랙틱 닥터 · 물리치료사</div>
 
-        <div class="hero-stats pl-hero-stats">
-          <div class="hero-stat"><div class="hero-stat-num">20년+</div><div class="hero-stat-label">근골격계<br>임상 경력</div></div>
-          <div class="hero-stat"><div class="hero-stat-num">3,400+</div><div class="hero-stat-label">전문<br>블로그 포스트</div></div>
-          <div class="hero-stat"><div class="hero-stat-num">DC·PT</div><div class="hero-stat-label">미국 카이로<br>물리치료사</div></div>
-        </div>
-
-        <div class="hero-intro hero-intro--top">
-          <h3 class="pl-branch-label">관심 분야 선택</h3>
-          <p class="pl-branch-hint">지금 상황에 가장 가까운 항목을 눌러 주세요.</p>
-          <div class="pl-branch-picker">
-            <div class="pl-branch-grid" role="radiogroup" aria-label="관심 분야">
-              <button type="button" class="pl-branch-chip" role="radio" aria-checked="false" data-branch="treatment" onclick="selectProfileBranch('treatment')">통증·치료</button>
-              <button type="button" class="pl-branch-chip" role="radio" aria-checked="false" data-branch="wellness" onclick="selectProfileBranch('wellness')">움직임·자세</button>
-              <button type="button" class="pl-branch-chip" role="radio" aria-checked="false" data-branch="expert" onclick="selectProfileBranch('expert')">전문가 교육</button>
-            </div>
+        <div class="pl-trust-strip pl-hero-stats" aria-label="경력·전문성">
+          <div class="pl-trust-item">
+            <span class="pl-trust-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </span>
+            <div class="pl-trust-num">20년+</div>
+            <div class="pl-trust-label">근골격계 임상 경력</div>
+          </div>
+          <div class="pl-trust-item">
+            <span class="pl-trust-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M6 4h12a1 1 0 0 1 1 1v14l-4-2.5L11 19V5a1 1 0 0 1 1-1z"/></svg>
+            </span>
+            <div class="pl-trust-num">3,400+</div>
+            <div class="pl-trust-label">전문 블로그 포스트</div>
+          </div>
+          <div class="pl-trust-item">
+            <span class="pl-trust-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M12 3l7 4v6c0 4.2-3 7.8-7 9-4-1.2-7-4.8-7-9V7l7-4z"/><path d="M9 12l2 2 4-4"/></svg>
+            </span>
+            <div class="pl-trust-num">DC·PT</div>
+            <div class="pl-trust-label">미국 카이로 물리치료사</div>
           </div>
         </div>
+
+        <section class="pl-branch-section" id="profileBranchPickerAnchor" aria-labelledby="profileBranchLabel">
+          <header class="pl-branch-head">
+            <p class="pl-branch-eyebrow">맞춤 안내</p>
+            <h3 class="pl-branch-label" id="profileBranchLabel">관심 분야 선택</h3>
+            <p class="pl-branch-hint">지금 상황에 가장 가까운 항목을 눌러 주세요.</p>
+          </header>
+          <div class="pl-branch-picker">
+            <div class="pl-branch-grid" role="radiogroup" aria-label="관심 분야">
+              <button type="button" class="pl-branch-chip" role="radio" aria-checked="false" data-branch="treatment" onclick="selectProfileBranch('treatment')">
+                <span class="pl-branch-chip-title">통증·치료</span>
+                <span class="pl-branch-chip-sub">증상 평가·치료</span>
+              </button>
+              <button type="button" class="pl-branch-chip" role="radio" aria-checked="false" data-branch="wellness" onclick="selectProfileBranch('wellness')">
+                <span class="pl-branch-chip-title">움직임·자세</span>
+                <span class="pl-branch-chip-sub">예방·교정·운동</span>
+              </button>
+              <button type="button" class="pl-branch-chip" role="radio" aria-checked="false" data-branch="expert" onclick="selectProfileBranch('expert')">
+                <span class="pl-branch-chip-title">전문가 교육</span>
+                <span class="pl-branch-chip-sub">임상·교육 콘텐츠</span>
+              </button>
+            </div>
+          </div>
+        </section>
 
         <div class="pl-hero-outcome" id="profileHeroOutcome" aria-live="polite">
           <div class="pl-hero-copy" id="profileHeroCopy">
@@ -3085,27 +3346,39 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
             </div>
           </div>
           <button type="button" class="pl-branch-cta" id="profileBranchAction" onclick="runProfileBranchAction()"></button>
+        </div>
+      </div>
+
+      </div>
+
+      <section class="profile-blog-feed" id="profileBlogFeed" aria-label="미카닥 블로그">
+        <div class="pl-home-links" id="profileHomeLinks" aria-label="약력·PSP">
+          <div class="pl-home-links-grid">
+            <div class="pl-home-link-item">
+              <a class="pl-home-link-btn pl-home-link-btn--profile" id="profileNaverBlogLink" href="https://blog.naver.com/allenjoy/120205433765" target="_blank" rel="noopener noreferrer" onclick="openProfileNaverBlog_()" aria-describedby="profileLinkCapBio">박준규 원장 약력</a>
+              <p class="pl-home-link-cap" id="profileLinkCapBio">미국 DC·PT, 20년 원장이 직접 쓴 이야기를 담았습니다다.</p>
+            </div>
+            <div class="pl-home-link-item">
+              <button type="button" class="pl-home-link-btn pl-home-link-btn--psp" onclick="startPspConcept()" aria-describedby="profileLinkCapPsp">PSP 건강 가이드</button>
+              <p class="pl-home-link-cap" id="profileLinkCapPsp">평가부터 치료·운동까지 이어지는 임상 가이드입니다.</p>
+            </div>
+          </div>
+        </div>
+        <div class="profile-home-reviews" id="profileHomeReviews">
           <section class="pl-manual-reviews" id="profileManualReviews" aria-label="도수치료 리뷰" hidden>
             <h3 class="pl-manual-reviews-label">도수치료 리뷰</h3>
             <div class="pl-manual-reviews-viewport" id="profileManualReviewsViewport"></div>
           </section>
-          <section class="pl-beauty-reviews pl-manual-reviews" id="profileBeautyReviews" aria-label="얼굴·페이스 후기" hidden>
-            <h3 class="pl-manual-reviews-label">얼굴 · 페이스 후기</h3>
+          <section class="pl-beauty-reviews pl-manual-reviews" id="profileBeautyReviews" aria-label="움직임·자세 리뷰" hidden>
+            <h3 class="pl-manual-reviews-label">움직임 · 자세 리뷰</h3>
             <div class="pl-beauty-reviews-viewport" id="profileBeautyReviewsViewport"></div>
           </section>
         </div>
-      </div>
-
-      </div>
-
-      <section class="profile-blog-feed" id="profileBlogFeed" aria-label="힐링트리 블로그">
-        <h3 class="profile-blog-head">— 박준규 원장 —</h3>
-        <div class="pl-home-links" id="profileHomeLinks" aria-label="약력·PSP">
-          <a class="pl-home-link-btn pl-home-link-btn--profile" id="profileNaverBlogLink" href="https://blog.naver.com/allenjoy/120205433765" target="_blank" rel="noopener noreferrer" onclick="openProfileNaverBlog_()">약력</a>
-          <button type="button" class="pl-home-link-btn pl-home-link-btn--psp" onclick="startPspConcept()">PSP 컨셉</button>
-        </div>
-        <div id="profileBlogFeedInner">
-          <p class="profile-blog-loading">블로그 글 불러오는 중…</p>
+        <div class="profile-home-blog" id="profileHomeBlog">
+          <h3 class="profile-home-blog-label">미카닥 블로그</h3>
+          <div id="profileBlogFeedInner">
+            <p class="profile-blog-loading">블로그 글 불러오는 중…</p>
+          </div>
         </div>
       </section>
 
@@ -4868,12 +5141,12 @@ const PROFILE_BRANCH_COPY = {
   },
   wellness: {
     title: '자세와 움직임, 몸을 더 편하게',
-    sub: 'PAR · P-스트레칭 · 기능 운동 · 체형 밸런스',
+    sub: 'PAR · P-스트레칭 · 체형 밸런스 · 기능 운동',
     cta: '움직임·자세부터 살펴볼게요 →'
   },
   expert: {
     title: '전문가 성장을 위한 교육 과정',
-    sub: 'CMT · IFC 얼굴 교정 · Re:Al 움직임',
+    sub: 'CMT 도수치료 · IFC 얼굴교정 · Re:Al 움직임',
     cta: '지금보다 더 성장하고 싶다면?'
   },
   psp: {
@@ -4894,18 +5167,11 @@ function cancelProfileHeroFade_(){
   if(wrapEl) wrapEl.style.height = '';
 }
 
-function syncProfileBranchReviews_(){
+function syncProfileHomeReviews_(){
   const manual = document.getElementById('profileManualReviews');
   const beauty = document.getElementById('profileBeautyReviews');
-  if(!profileBranch){
-    if(manual) manual.hidden = true;
-    if(beauty) beauty.hidden = true;
-    stopProfileReviewRotation_();
-    stopProfileBeautyRotation_();
-    return;
-  }
-  const showManual = profileBranch === 'treatment' && profileReviewPool_.length > 0;
-  const showBeauty = false;
+  const showManual = profileReviewPool_.length > 0;
+  const showBeauty = profileBeautyPool_.length > 0;
   if(manual) manual.hidden = !showManual;
   if(beauty) beauty.hidden = !showBeauty;
   if(showManual){
@@ -4939,7 +5205,7 @@ function resetProfileBranchPicker_(){
   const subEl = document.getElementById('profileHeroSub');
   if(titleEl) titleEl.textContent = '';
   if(subEl) subEl.textContent = '';
-  syncProfileBranchReviews_();
+  syncProfileHomeReviews_();
 }
 
 function revealProfileBranchOutcome_(branch, animate){
@@ -4948,7 +5214,7 @@ function revealProfileBranchOutcome_(branch, animate){
     outcome.classList.add('is-visible');
   }
   setProfileHeroCopy(branch, animate);
-  syncProfileBranchReviews_();
+  syncProfileHomeReviews_();
 }
 
 function setProfileHeroCopy(branch, animate){
@@ -5005,7 +5271,24 @@ function getVisibleProfileHomeTarget_(id){
   return el;
 }
 
-/** 분기 탭 클릭 후 하단(후기·CTA)까지 보이도록 스크롤 */
+/** 분기 탭 클릭 후 「관심 분야 선택」이 화면 상단에 오도록 스크롤 */
+function scrollToProfileBranchPicker_(){
+  const onHome = document.getElementById('s-home') &&
+    document.getElementById('s-home').classList.contains('active');
+  if(!onHome) return;
+  const anchor = document.getElementById('profileBranchPickerAnchor');
+  if(!anchor) return;
+  const run = function () {
+    const pad = 12;
+    const top = anchor.getBoundingClientRect().top + window.pageYOffset - pad;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+  };
+  requestAnimationFrame(function () {
+    requestAnimationFrame(run);
+  });
+}
+
+/** @deprecated 하단 후기·CTA용 — 분기 탭에서는 scrollToProfileBranchPicker_ 사용 */
 function scrollToProfileHomeBottom_(){
   const onHome = document.getElementById('s-home') &&
     document.getElementById('s-home').classList.contains('active');
@@ -5101,7 +5384,7 @@ function renderProfileReviewPair_(pair, animate){
   const wrap = document.getElementById('profileManualReviews');
   const viewport = document.getElementById('profileManualReviewsViewport');
   if(!wrap || !viewport) return;
-  if(!pair.length || profileBranch !== 'treatment'){
+  if(!pair.length){
     wrap.hidden = true;
     return;
   }
@@ -5144,10 +5427,26 @@ function startProfileReviewRotation_(){
   }
 }
 
+function mergeProfileManualReviewPools_(primary, extra){
+  const seen = new Set();
+  const out = [];
+  function add(list){
+    normalizeProfileReviews_(list || []).forEach(r => {
+      const k = (r.reviewerId || '') + '|' + r.text.slice(0, 80);
+      if(seen.has(k)) return;
+      seen.add(k);
+      out.push(r);
+    });
+  }
+  add(primary);
+  add(extra);
+  return out;
+}
+
 function applyProfileReviewPool_(reviews){
   profileReviewPool_ = normalizeProfileReviews_(reviews);
   if(profileReviewPool_.length){
-    syncProfileBranchReviews_();
+    syncProfileHomeReviews_();
     return;
   }
   const wrap = document.getElementById('profileManualReviews');
@@ -5176,14 +5475,13 @@ function writeProfileReviewCache_(reviews){
 }
 
 async function loadProfileManualReviews_(){
-  if(PROFILE_MANUAL_REVIEWS_FALLBACK.length){
-    applyProfileReviewPool_(PROFILE_MANUAL_REVIEWS_FALLBACK);
-    return;
+  const embedded = PROFILE_MANUAL_REVIEWS_FALLBACK.slice();
+  if(embedded.length){
+    applyProfileReviewPool_(embedded);
   }
   const cached = readProfileReviewCache_();
-  if(cached && cached.length){
+  if(cached && cached.length && !embedded.length){
     applyProfileReviewPool_(cached);
-    return;
   }
   if(!CONSULT_WEBHOOK_URL) return;
   try {
@@ -5194,9 +5492,10 @@ async function loadProfileManualReviews_(){
     const list = (json && json.reviews) ? json.reviews : [];
     if(list.length){
       writeProfileReviewCache_(list);
-      applyProfileReviewPool_(list);
+      const merged = mergeProfileManualReviewPools_(embedded.length ? embedded : [], list);
+      applyProfileReviewPool_(merged);
     }
-  } catch (err) { /* no embedded data */ }
+  } catch (err) { /* embedded DB 사용 */ }
 }
 
 function maskProfileMemberName_(name){
@@ -5260,7 +5559,7 @@ function renderProfileBeautyCurrent_(animate){
   const wrap = document.getElementById('profileBeautyReviews');
   const viewport = document.getElementById('profileBeautyReviewsViewport');
   if(!wrap || !viewport) return;
-  if(!profileBeautyPool_.length || profileBranch !== 'wellness'){
+  if(!profileBeautyPool_.length){
     wrap.hidden = true;
     return;
   }
@@ -5317,7 +5616,7 @@ function startProfileBeautyRotation_(resetIndex){
 function applyProfileBeautyPool_(reviews){
   profileBeautyPool_ = mergeProfileBeautyReviews_(reviews, []);
   if(profileBeautyPool_.length){
-    syncProfileBranchReviews_();
+    syncProfileHomeReviews_();
     return;
   }
   const wrap = document.getElementById('profileBeautyReviews');
@@ -5413,7 +5712,7 @@ async function loadProfileBeautyReviews_(){
         const idx = merged.findIndex(r => r.id === prevId);
         if(idx >= 0) profileBeautyIndex_ = idx;
       }
-      if(!wasModal) syncProfileBranchReviews_();
+      if(!wasModal) syncProfileHomeReviews_();
     }
   } catch (err) { /* embedded only */ }
 }
@@ -5649,7 +5948,7 @@ function selectProfileBranch(branch, options){
   revealProfileBranchOutcome_(branch, hadBranch);
   refreshProfileBlogFeed();
   if(options.scroll !== false){
-    setTimeout(scrollToProfileHomeBottom_, PROFILE_HERO_FADE_MS + 40);
+    setTimeout(scrollToProfileBranchPicker_, 80);
   }
 }
 
@@ -5770,7 +6069,7 @@ function applyNavCheckpoint_(cp){
   if(cp.screen === 's-home') applyHomeBranchUi_();
 
   refreshResultScreenContent_();
-  syncProfileBranchReviews_();
+  syncProfileHomeReviews_();
   updateBc();
   updateProgress(cp.screen);
   updateProfileSticky();
@@ -6247,7 +6546,7 @@ window.addEventListener('popstate', (e) => {
   if(id === 's-e2') syncE2VariantPanels_();
   if(id === 's-home') applyHomeBranchUi_();
   refreshResultScreenContent_();
-  syncProfileBranchReviews_();
+  syncProfileHomeReviews_();
   updateBc();
   updateProgress(id);
   updateProfileSticky();
