@@ -8,19 +8,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f7f8fa;
+  --bg: #f4f7fc;
   --bg2: #ffffff;
-  --bg3: #f1f3f7;
-  --border: #e3e7ef;
+  --bg3: #eef2f9;
+  --border: #dce4f0;
   --text: #111827;
   --dim: #6b7484;
   --light: #4b5563;
   --profile-img: url("https://breezefeel.github.io/drpark/프로필-22(최종본).jpg");
-  --green: #1a7a52;
-  --green-mid: #22a06b;
-  --green-light: #34c78a;
-  --green-bg: #f0faf5;
-  --green-border: #b8e4cc;
+  --green: #2563eb;
+  --green-mid: #3b82f6;
+  --green-light: #60a5fa;
+  --green-bg: #eff6ff;
+  --green-border: #bfdbfe;
   --amber: #b06d1a;
   --amber-bg: #fef8f0;
   --amber-border: #eecf9a;
@@ -47,7 +47,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   height: 56px; padding: 0 20px;
   display: flex; align-items: center; justify-content: flex-end;
-  background: rgba(247,248,250,0.97); backdrop-filter: blur(12px);
+  background: rgba(244,247,252,0.97); backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
 .nav.hidden { display: none; }
@@ -67,13 +67,37 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 /* ── BREADCRUMB (선택 경로) ── */
 .breadcrumb {
   position: fixed; top: 59px; left: 0; right: 0; z-index: 98;
-  padding: 7px 20px; background: white; border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; gap: 5px; flex-wrap: wrap;
-  min-height: 34px; overflow-x: auto;
+  padding: 8px 20px; background: white; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  min-height: 36px; overflow-x: auto;
+  font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  letter-spacing: -0.01em;
 }
-.bc-item { font-size: 10px; color: var(--dim); font-family: 'DM Mono', monospace; white-space: nowrap; }
-.bc-item.active { color: var(--green); font-weight: 600; }
-.bc-sep { color: var(--border); font-size: 10px; }
+.bc-item { font-size: 12px; color: var(--dim); font-weight: 500; white-space: nowrap; }
+.bc-item.active { color: var(--green); font-weight: 700; }
+.bc-item--link {
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--dim);
+  text-align: left;
+}
+.bc-item--link:hover:not(.active) {
+  color: var(--green);
+  text-decoration: underline;
+}
+.bc-item--link:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.bc-sep { color: #c5cdd9; font-size: 11px; font-weight: 400; user-select: none; }
 .breadcrumb.hidden { display: none; }
 
 /* ── WRAP ── */
@@ -85,7 +109,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 ══════════════════════════════ */
 .hero {
   position: relative;
-  background: #f0ede8;
+  background: #e8edf7;
   padding-top: 56px;
   overflow: hidden;
 }
@@ -200,14 +224,14 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   font-size: 24px;
   font-weight: 800;
-  color: #0f2f2a;
+  color: #0f172a;
   margin-bottom: 6px;
   letter-spacing: -0.02em;
 }
 .hero-cred {
   font-size: 13px;
   font-weight: 700;
-  color: #145c41;
+  color: #2563eb;
   margin-bottom: 10px;
   font-family: 'Pretendard', monospace; letter-spacing: .05em;
 }
@@ -237,7 +261,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .hero-stat-num {
   font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   font-size: 19px; font-weight: 700;
-  color: #1a3a34; margin-bottom: 3px;
+  color: #1e3a6e; margin-bottom: 3px;
 }
 .hero-stat-label { font-size: 10px; color: var(--dim); line-height: 1.4; }
 
@@ -291,14 +315,14 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 }
 .cta-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.11); }
 .cta-card.green { border-color: var(--green-border); }
-.cta-card.green:hover { background: rgba(240,250,245,0.95); border-color: var(--green); }
+.cta-card.green:hover { background: rgba(239,246,255,0.95); border-color: var(--green); }
 .cta-card.amber { border-color: var(--amber-border); }
 .cta-card.amber:hover { background: rgba(254,248,240,0.95); border-color: var(--amber); }
 .cta-ico { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
 .cta-card.green .cta-ico { background: var(--green-bg); }
 .cta-card.amber .cta-ico { background: var(--amber-bg); }
 .cta-label { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
-.cta-card.green .cta-label { color: #1a3a34; }
+.cta-card.green .cta-label { color: #1e3a6e; }
 .cta-card.amber .cta-label { color: var(--amber); }
 .cta-sub { font-size: 12px; color: var(--dim); line-height: 1.5; }
 .cta-arr { color: var(--border); font-size: 18px; margin-left: auto; flex-shrink: 0; transition: transform .2s; }
@@ -310,7 +334,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   padding: 10px 18px;
   font-size: 12px;
   font-weight: 600;
-  color: #1a3a34; text-decoration: none;
+  color: #1e3a6e; text-decoration: none;
   background: rgba(255,255,255,0.92);
   border: 1px solid rgba(227,231,239,0.95);
   border-radius: 25px; margin-bottom: 20px;
@@ -323,17 +347,17 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   .hero-name{ font-size: 22px; }
   .hero-desc{ font-size: 14px; }
 }
-.profile-link-btn:hover { background: #1a3a34; color: white; transform: translateY(-1px); }
+.profile-link-btn:hover { background: #1e3a6e; color: white; transform: translateY(-1px); }
 .hero-btn-stack { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 20px; }
 .hero-btn-stack .profile-link-btn { margin-bottom: 0; }
 .psp-concept-btn {
   cursor: pointer;
   font-family: inherit;
-  border: 1px solid rgba(26, 122, 82, 0.35);
-  background: linear-gradient(180deg, rgba(240, 250, 245, 0.98), rgba(255, 255, 255, 0.92));
-  color: #145c41;
+  border: 1px solid rgba(37, 99, 235, 0.35);
+  background: linear-gradient(180deg, rgba(239, 246, 255, 0.98), rgba(255, 255, 255, 0.92));
+  color: #2563eb;
 }
-.psp-concept-btn:hover { background: #1a3a34; color: #fff; border-color: #1a3a34; }
+.psp-concept-btn:hover { background: #1e3a6e; color: #fff; border-color: #1e3a6e; }
 
 /* ══════════════════════════════
    PSP 컨셉 뷰 (protocol 동기화)
@@ -342,7 +366,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   font-family: 'Noto Serif KR', serif;
   font-size: 20px;
   font-weight: 700;
-  color: #0f2f2a;
+  color: #0f172a;
   margin-bottom: 8px;
   text-align: center;
 }
@@ -354,7 +378,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   line-height: 1.6;
 }
 .psp-core-box {
-  background: linear-gradient(145deg, #1a3a34 0%, #145c41 100%);
+  background: linear-gradient(145deg, #1e3a6e 0%, #3b82f6 100%);
   color: #fff;
   border-radius: 16px;
   padding: 22px 20px;
@@ -368,7 +392,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   line-height: 1.85;
   text-align: center;
 }
-.psp-core-box p em { font-style: normal; color: #7ec8a4; }
+.psp-core-box p em { font-style: normal; color: #93c5fd; }
 .psp-core-box .psp-core-foot {
   font-size: 11px;
   opacity: 0.72;
@@ -402,7 +426,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   overflow: hidden;
   box-shadow: 0 2px 10px rgba(15, 47, 42, 0.05);
 }
-#s-psp1 .psp-step-card.n01 { border-left: 4px solid #2d8a5e; }
+#s-psp1 .psp-step-card.n01 { border-left: 4px solid #3b82f6; }
 #s-psp1 .psp-step-card.n02 { border-left: 4px solid #c2750d; }
 #s-psp1 .psp-step-card.n03 { border-left: 4px solid #2a6fa8; }
 #s-psp1 .psp-step-card-head {
@@ -410,7 +434,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   align-items: flex-start;
   gap: 14px;
   padding: 14px 16px;
-  background: linear-gradient(180deg, rgba(248,250,249,0.96) 0%, #fff 52%);
+  background: linear-gradient(180deg, rgba(248,250,252,0.96) 0%, #fff 52%);
   border-bottom: 1px solid var(--border);
 }
 #s-psp1 .psp-step-num-lg {
@@ -445,7 +469,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 #s-psp1 .psp-step-card-title {
   font-size: 16px;
   font-weight: 800;
-  color: #1a3a34;
+  color: #1e3a6e;
   line-height: 1.35;
 }
 #s-psp1 .psp-step-card-sub {
@@ -500,7 +524,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   padding: 18px 18px;
   margin-bottom: 18px;
 }
-.psp-scope h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; color: #1a3a34; }
+.psp-scope h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; color: #1e3a6e; }
 .psp-scope p { font-size: 13px; color: var(--light); line-height: 1.85; font-weight: 300; }
 .psp-goal {
   text-align: center;
@@ -511,7 +535,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   margin-bottom: 20px;
 }
 .psp-goal .gl { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: var(--green); margin-bottom: 10px; text-transform: uppercase; }
-.psp-goal .gt { font-family: 'Noto Serif KR', serif; font-size: 16px; font-weight: 700; color: #0f2f2a; line-height: 1.65; margin-bottom: 8px; }
+.psp-goal .gt { font-family: 'Noto Serif KR', serif; font-size: 16px; font-weight: 700; color: #0f172a; line-height: 1.65; margin-bottom: 8px; }
 .psp-goal .gs { font-size: 12px; color: var(--dim); font-weight: 300; line-height: 1.65; }
 .psp-next-btn {
   display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -530,7 +554,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   background: linear-gradient(135deg, var(--green-mid), var(--green));
   border-radius: 14px; padding: 14px 22px; text-align: center;
   color: #fff; margin-bottom: 4px;
-  box-shadow: 0 8px 24px rgba(26, 122, 82, 0.25);
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.25);
 }
 .psp-mm-center .l1 { font-size: 16px; font-weight: 800; }
 .psp-mm-center .l2 { font-size: 11px; opacity: 0.9; margin-top: 4px; }
@@ -546,7 +570,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .psp-mm-node.p { border-color: rgba(155, 111, 232, 0.45); background: rgba(155, 111, 232, 0.06); }
 .psp-mm-node.s { border-color: rgba(26, 79, 168, 0.35); background: var(--blue-bg); }
 .psp-mm-node.pr { border-color: rgba(176, 109, 26, 0.4); background: var(--amber-bg); }
-.psp-mm-node .nl { font-size: 12px; font-weight: 700; color: #1a3a34; }
+.psp-mm-node .nl { font-size: 12px; font-weight: 700; color: #1e3a6e; }
 .psp-mm-node.p .nl { color: #6b4eae; }
 .psp-mm-node.s .nl { color: var(--blue); }
 .psp-mm-node.pr .nl { color: var(--amber); }
@@ -586,8 +610,8 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   border: 1px solid var(--border); border-left-width: 5px; background: var(--bg2);
 }
 .psp-vstep.s1 {
-  border-left-color: #2d8a5e;
-  background: linear-gradient(135deg, rgba(45,138,94,0.07) 0%, var(--bg2) 48%);
+  border-left-color: #3b82f6;
+  background: linear-gradient(135deg, rgba(59,130,246,0.07) 0%, var(--bg2) 48%);
 }
 .psp-vstep.s2 {
   border-left-color: #c87f0a;
@@ -602,7 +626,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 700;
   letter-spacing: 0.06em; padding: 4px 11px; border-radius: 7px; color: #fff;
 }
-.psp-vstep.s1 .psp-vstep-badge { background: #2d8a5e; }
+.psp-vstep.s1 .psp-vstep-badge { background: #3b82f6; }
 .psp-vstep.s2 .psp-vstep-badge { background: #c2750d; }
 .psp-vstep.s3 .psp-vstep-badge { background: #2a6fa8; }
 .psp-vstep-label { font-size: 13px; font-weight: 700; color: var(--light); }
@@ -695,7 +719,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   height: 1px;
   background: linear-gradient(90deg,
     rgba(227,231,239,0) 0%,
-    rgba(184,228,204,1) 35%,
+    rgba(191,219,254,1) 35%,
     rgba(227,231,239,1) 50%,
     rgba(240,184,178,1) 65%,
     rgba(227,231,239,0) 100%
@@ -715,9 +739,9 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   border: 1px solid rgba(227,231,239,0.95);
   border-radius: 14px;
   overflow: hidden; margin-bottom: 18px; box-shadow: var(--shadow-sm);
-  --well-bg: #eef9f8;
-  --well-title: #155e63;
-  --well-line: #2aa9b3;
+  --well-bg: #eef4ff;
+  --well-title: #1e40af;
+  --well-line: #3b82f6;
   --treat-bg: #f6f1fb;
   --treat-title: #6d28d9;
   --treat-line: #a78bfa;
@@ -750,7 +774,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 }
 #s-psp3 .proto-doc .header .psp-zone-visual {
   max-width: 640px; margin: 0 auto; position: relative; z-index: 1;
-  box-shadow: 0 2px 14px rgba(21, 94, 99, 0.07);
+  box-shadow: 0 2px 14px rgba(30, 64, 175, 0.07);
 }
 #s-psp3 .proto-doc .header .psp-zone-visual .zone-wellness,
 #s-psp3 .proto-doc .header .psp-zone-visual .zone-treatment {
@@ -773,7 +797,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   margin: 20px auto 8px; padding: 0 14px;
   text-align: center; max-width: 640px; letter-spacing: -0.01em;
 }
-#s-psp3 .proto-doc .header .psp-zone-intro strong { color: #1a3a34; font-weight: 600; }
+#s-psp3 .proto-doc .header .psp-zone-intro strong { color: #1e3a6e; font-weight: 600; }
 /* 줄바꿈 단위: 기준선 문장 / 치료 안내 / 웰니스 안내 — 문장 중간에서 끊기지 않음 */
 #s-psp3 .proto-doc .header .psp-intro-line {
   display: inline-block;
@@ -801,7 +825,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 
 .vas-scale {
   position: relative; height: 48px; margin-bottom: 8px;
-  background: linear-gradient(90deg, var(--green-light), #a8d48a, #f0c040, #f08040, var(--red));
+  background: linear-gradient(90deg, var(--green-light), #93c5fd, #f0c040, #f08040, var(--red));
   border-radius: 24px; cursor: pointer;
   display: flex; align-items: center;
 }
@@ -816,15 +840,15 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .vas-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--dim); margin-bottom: 12px; font-family: 'DM Mono', monospace; }
 .vas-label-num { cursor: pointer; padding: 4px 2px; min-width: 1.2em; text-align: center; border-radius: 4px; transition: all .15s; }
 .vas-label-num:hover { color: var(--green); background: var(--green-bg); }
-.vas-label-num.active { color: #145c41; font-weight: 700; background: var(--green-bg); }
+.vas-label-num.active { color: #2563eb; font-weight: 700; background: var(--green-bg); }
 
 .vas-zones { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
 .vas-zone { border-radius: 8px; padding: 10px 12px; text-align: center; border: 1.5px solid transparent; cursor: pointer; transition: all .2s; }
-.vas-zone.low { background: rgba(52,199,138,0.08); border-color: var(--green-border); }
+.vas-zone.low { background: rgba(96,165,250,0.08); border-color: var(--green-border); }
 .vas-zone.mid { background: rgba(240,192,64,0.08); border-color: #e8d090; }
 .vas-zone.high { background: var(--red-bg); border-color: var(--red-border); }
 .vas-zone.selected { transform: scale(1.03); box-shadow: var(--shadow-md); }
-.vas-zone.low.selected { border-color: var(--green); background: rgba(52,199,138,0.15); }
+.vas-zone.low.selected { border-color: var(--green); background: rgba(96,165,250,0.15); }
 .vas-zone.mid.selected { border-color: #d4a820; background: rgba(240,192,64,0.18); }
 .vas-zone.high.selected { border-color: var(--red); background: rgba(192,57,43,0.12); }
 .vz-range { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 700; margin-bottom: 4px; }
@@ -848,8 +872,8 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .result-hero {
   border-radius: 14px; padding: 20px 22px; margin-bottom: 16px; color: white;
 }
-.result-hero.treatment { background: linear-gradient(135deg, #1a5c3a, var(--green-mid)); }
-.result-hero.wellness { background: linear-gradient(135deg, #22706b, #2da068); }
+.result-hero.treatment { background: linear-gradient(135deg, #1e40af, var(--green-mid)); }
+.result-hero.wellness { background: linear-gradient(135deg, #1d4ed8, #3b82f6); }
 .result-tag { font-family: 'DM Mono', monospace; font-size: 10px; background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 4px; margin-bottom: 10px; display: inline-block; letter-spacing: .1em; }
 .result-title { font-family: 'Noto Serif KR', serif; font-size: 17px; font-weight: 700; margin-bottom: 5px; line-height: 1.4; }
 .result-sub { font-size: 12px; color: rgba(255,255,255,0.8); line-height: 1.6; }
@@ -863,7 +887,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   position: relative;
   padding: 18px 12px 20px;
   border-bottom: 1px solid var(--border);
-  background: linear-gradient(180deg, rgba(52,199,138,0.09) 0%, rgba(255,255,255,0.92) 52%, #fff 100%);
+  background: linear-gradient(180deg, rgba(96,165,250,0.09) 0%, rgba(255,255,255,0.92) 52%, #fff 100%);
 }
 .rmv-inner {
   display: flex;
@@ -883,8 +907,8 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   border-radius: 4px;
   z-index: 0;
   background: linear-gradient(90deg,
-    #34c786 0%,
-    #34c786 var(--rmv-progress, 30%),
+    #60a5fa 0%,
+    #60a5fa var(--rmv-progress, 30%),
     #dfe3ea var(--rmv-progress, 30%),
     #dfe3ea 100%);
   box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
@@ -914,15 +938,15 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   transition: transform .2s, box-shadow .2s;
 }
 .rmv-dot--past {
-  background: rgba(52,199,138,0.14);
-  border-color: #34c786;
-  color: #1e8a5c;
+  background: rgba(96,165,250,0.14);
+  border-color: #60a5fa;
+  color: #2563eb;
 }
 .rmv-dot--active {
-  background: linear-gradient(145deg, #2ea56e, #34c786);
-  border-color: #26965f;
+  background: linear-gradient(145deg, #3b82f6, #60a5fa);
+  border-color: #2563eb;
   color: #fff;
-  box-shadow: 0 0 0 4px rgba(52,199,138,0.28), 0 4px 12px rgba(52,199,138,0.22);
+  box-shadow: 0 0 0 4px rgba(96,165,250,0.28), 0 4px 12px rgba(96,165,250,0.22);
   transform: scale(1.08);
 }
 .rmv-dot--future {
@@ -1052,12 +1076,12 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .consult-field input {
   width: 100%; box-sizing: border-box; padding: 11px 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px;
 }
-.consult-field input:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(52,199,138,0.2); }
+.consult-field input:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(96,165,250,0.2); }
 .consult-field textarea {
   width: 100%; box-sizing: border-box; min-height: 100px; padding: 11px 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 13px;
   font-family: inherit; line-height: 1.55; resize: vertical;
 }
-.consult-field textarea:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(52,199,138,0.2); }
+.consult-field textarea:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(96,165,250,0.2); }
 .consult-field.hidden { display: none; }
 .consult-phone-row { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; }
 .consult-phone-part {
@@ -1086,7 +1110,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   font-family: inherit; line-height: 1.65; resize: vertical; color: var(--text);
   background: #fff;
 }
-.consult-summary-edit:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(52,199,138,0.2); }
+.consult-summary-edit:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(96,165,250,0.2); }
 .consult-summary-box {
   background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; font-size: 12px; color: var(--light); line-height: 1.65; max-height: 180px; overflow-y: auto;
 }
@@ -1113,7 +1137,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   color: #374151; background: #fff; border: 1.5px solid #e5e7eb; border-radius: 12px;
   text-decoration: none; white-space: nowrap; transition: all .2s;
 }
-.consult-chat-btn:hover { border-color: var(--green-border); background: var(--green-bg); color: #145c41; }
+.consult-chat-btn:hover { border-color: var(--green-border); background: var(--green-bg); color: #2563eb; }
 .consult-chat-btn.hidden { display: none; }
 .consult-modal-foot { margin-top: 12px; text-align: center; font-size: 11px; color: var(--dim); line-height: 1.5; }
 .consult-modal-foot a { color: var(--green); font-weight: 600; }
@@ -1132,11 +1156,11 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
     --red: #c0392b;
     --orange: #b06d1a;
     --yellow: #b08a15;
-    --green: #1a7a52;
+    --green: #2563eb;
     --blue: #1a4fa8;
     --purple: #6b4eae;
-    --teal: #22706b;
-    --accent: #1a7a52;
+    --teal: #3b82f6;
+    --accent: #2563eb;
   }
 
   #s-psp3 .proto-doc * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1155,7 +1179,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
     margin-bottom: 24px;
     border: 1px solid var(--border);
     border-radius: 14px;
-    background: linear-gradient(135deg, rgba(240,250,245,0.95) 0%, #ffffff 55%, rgba(240,245,255,0.75) 100%);
+    background: linear-gradient(135deg, rgba(239,246,255,0.95) 0%, #ffffff 55%, rgba(240,245,255,0.75) 100%);
     position: relative;
     overflow: hidden;
   }
@@ -1164,7 +1188,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
     position: absolute;
     top: -60px; right: -60px;
     width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(26,122,82,0.10) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(37,99,235,0.10) 0%, transparent 70%);
     border-radius: 50%;
   }
   #s-psp3 .proto-doc .header-badge {
@@ -1173,7 +1197,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
     font-size: 11px;
     letter-spacing: 0.15em;
     color: var(--accent);
-    border: 1px solid rgba(26,122,82,0.25);
+    border: 1px solid rgba(37,99,235,0.25);
     padding: 4px 12px;
     border-radius: 20px;
     margin-bottom: 20px;
@@ -1462,13 +1486,13 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
     margin-bottom: 4px;
   }
   #s-psp3 .proto-doc .mv-common-flow-box--active-action .mv-active-action-title { color: #b86a14; }
-  #s-psp3 .proto-doc .mv-common-flow-box--active-action-green .mv-active-action-title { color: #1a8a5e; }
+  #s-psp3 .proto-doc .mv-common-flow-box--active-action-green .mv-active-action-title { color: #2563eb; }
   #s-psp3 .proto-doc .mv-active-action-sub {
     font-size: 11px;
     font-weight: 400;
   }
   #s-psp3 .proto-doc .mv-common-flow-box--active-action .mv-active-action-sub { color: rgba(184, 106, 20, 0.8); }
-  #s-psp3 .proto-doc .mv-common-flow-box--active-action-green .mv-active-action-sub { color: rgba(26, 138, 94, 0.8); }
+  #s-psp3 .proto-doc .mv-common-flow-box--active-action-green .mv-active-action-sub { color: rgba(37, 99, 235, 0.8); }
   #s-psp3 .proto-doc .mv-common-flow-outside--passive .mv-common-flow-title { color: #2a6fa8; }
   #s-psp3 .proto-doc .mv-common-flow-outside--active .mv-common-flow-title { color: var(--orange); }
   #s-psp3 .proto-doc .mv-common-flow-outside--active-green .mv-common-flow-title { color: var(--green); }
@@ -1691,7 +1715,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   #s-psp3 .proto-doc .mv-edu-subsection {
     margin-top: 14px;
     padding-top: 14px;
-    border-top: 1px solid rgba(20, 92, 65, 0.1);
+    border-top: 1px solid rgba(30, 64, 175, 0.1);
   }
   #s-psp3 .proto-doc .mv-edu-subsection:first-of-type {
     margin-top: 0;
@@ -1842,8 +1866,8 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
     border-color: rgba(232,196,74,0.25);
   }
   #s-psp3 .proto-doc .branch.ok {
-    background: rgba(74,206,168,0.07);
-    border-color: rgba(74,206,168,0.25);
+    background: rgba(96,165,250,0.07);
+    border-color: rgba(96,165,250,0.25);
   }
 
   #s-psp3 .proto-doc .branch-condition {
@@ -1889,8 +1913,8 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
     border-color: rgba(232,147,74,0.25);
   }
   #s-psp3 .proto-doc .pos-card.standing {
-    background: rgba(74,206,168,0.07);
-    border-color: rgba(74,206,168,0.25);
+    background: rgba(96,165,250,0.07);
+    border-color: rgba(96,165,250,0.25);
   }
 
   #s-psp3 .proto-doc .pos-header {
@@ -1931,7 +1955,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   }
   #s-psp3 .proto-doc .pos-card.supine .pos-icon { background: rgba(74,157,232,0.15); }
   #s-psp3 .proto-doc .pos-card.sitting .pos-icon { background: rgba(232,147,74,0.15); }
-  #s-psp3 .proto-doc .pos-card.standing .pos-icon { background: rgba(74,206,168,0.15); }
+  #s-psp3 .proto-doc .pos-card.standing .pos-icon { background: rgba(96,165,250,0.15); }
   #s-psp3 .proto-doc .pos-card.supine .pos-icon::before { background: var(--blue); }
   #s-psp3 .proto-doc .pos-card.sitting .pos-icon::before { background: var(--yellow); }
   #s-psp3 .proto-doc .pos-card.standing .pos-icon::before { background: var(--green); }
@@ -2012,8 +2036,8 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 
   /* Palpation note */
   #s-psp3 .proto-doc .note-box {
-    background: rgba(74,206,168,0.06);
-    border: 1px solid rgba(74,206,168,0.2);
+    background: rgba(96,165,250,0.06);
+    border: 1px solid rgba(96,165,250,0.2);
     border-radius: 8px;
     padding: 14px 18px;
     font-size: 12px;
@@ -2064,14 +2088,14 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
     font-family: 'DM Mono', monospace;
     font-size: 10px;
     color: var(--accent);
-    background: rgba(26,122,82,0.08);
-    border: 1px solid rgba(26,122,82,0.20);
+    background: rgba(37,99,235,0.08);
+    border: 1px solid rgba(37,99,235,0.20);
     padding: 3px 8px;
     border-radius: 999px;
     flex-shrink: 0;
   }
   /* Colorize meta badges for PART/STEP */
-  #s-psp3 .proto-doc details.proto-acc.part-a > summary .meta { background: rgba(26,122,82,0.10); border-color: rgba(26,122,82,0.25); color: var(--accent); }
+  #s-psp3 .proto-doc details.proto-acc.part-a > summary .meta { background: rgba(37,99,235,0.10); border-color: rgba(37,99,235,0.25); color: var(--accent); }
   #s-psp3 .proto-doc details.proto-acc.part-b > summary .meta { background: rgba(26,79,168,0.10); border-color: rgba(26,79,168,0.25); color: var(--blue); }
   #s-psp3 .proto-doc details.proto-acc.part-c > summary .meta { background: rgba(176,138,21,0.12); border-color: rgba(176,138,21,0.30); color: var(--yellow); }
   #s-psp3 .proto-doc details.proto-acc.part-d > summary .meta { background: rgba(176,109,26,0.12); border-color: rgba(176,109,26,0.30); color: var(--orange); }
@@ -2126,7 +2150,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
     margin: 0 0 14px;
     padding: 12px 14px;
     border-left: 3px solid var(--accent);
-    background: rgba(74,206,168,0.06);
+    background: rgba(96,165,250,0.06);
     border-radius: 0 8px 8px 0;
   }
   #s-psp3 .proto-doc .phi-tags {
@@ -2142,8 +2166,8 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
     font-weight: 600;
   }
   #s-psp3 .proto-doc .phi-tags .tag-pill.accent {
-    border: 1px solid rgba(74,206,168,0.35);
-    background: rgba(74,206,168,0.08);
+    border: 1px solid rgba(96,165,250,0.35);
+    background: rgba(96,165,250,0.08);
     color: var(--accent);
   }
   #s-psp3 .proto-doc .phi-tags .tag-pill.neutral {
@@ -2162,7 +2186,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   #s-psp3 .proto-doc .phi-scope-title {
     font-size: 14px;
     font-weight: 700;
-    color: #1a3a34;
+    color: #1e3a6e;
     margin: 0 0 10px;
   }
   #s-psp3 .proto-doc .phi-scope-body {
@@ -2175,7 +2199,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
     color: var(--text);
     font-weight: 600;
   }
-  #s-psp3 .proto-doc details.proto-acc.step-1 > summary .meta { background: rgba(26,122,82,0.10); border-color: rgba(26,122,82,0.25); color: var(--accent); }
+  #s-psp3 .proto-doc details.proto-acc.step-1 > summary .meta { background: rgba(37,99,235,0.10); border-color: rgba(37,99,235,0.25); color: var(--accent); }
   #s-psp3 .proto-doc details.proto-acc.step-2 > summary .meta { background: rgba(192,57,43,0.10); border-color: rgba(192,57,43,0.25); color: var(--red); }
   #s-psp3 .proto-doc details.proto-acc.step-3 > summary .meta { background: rgba(176,138,21,0.12); border-color: rgba(176,138,21,0.30); color: var(--yellow); }
 
@@ -2423,8 +2447,8 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 
   #s-psp3 .proto-doc .proto-callout {
     margin-top: 12px;
-    background: rgba(26,122,82,0.06);
-    border: 1px solid rgba(26,122,82,0.20);
+    background: rgba(37,99,235,0.06);
+    border: 1px solid rgba(37,99,235,0.20);
     border-radius: 10px;
     padding: 16px 20px;
     text-align: center;
@@ -2488,12 +2512,23 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   margin-top: 0;
 }
 .pl-hero-outcome {
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   width: 100%;
   margin: 0;
+}
+.pl-hero-outcome.is-visible {
+  display: flex;
+  animation: plBranchOutcomeIn 0.32s ease;
+}
+@keyframes plBranchOutcomeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pl-hero-outcome.is-visible { animation: none; }
 }
 .pl-hero-copy {
   margin: 0;
@@ -2517,7 +2552,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   width: 100%;
   font-size: 17px;
   font-weight: 700;
-  color: #1a3a34;
+  color: #1e3a6e;
   line-height: 1.45;
   margin: 0;
 }
@@ -2545,8 +2580,8 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 }
 .pl-branch-picker {
   padding: 5px;
-  background: #e8efeb;
-  border: 1px solid #d0ddd6;
+  background: #e8edf7;
+  border: 1px solid #dce4f0;
   border-radius: 999px;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
   margin-bottom: 0;
@@ -2565,7 +2600,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   font-size: 12px; font-weight: 600; font-family: inherit;
   padding: 9px 13px; border-radius: 999px;
   border: 1.5px solid transparent; background: transparent;
-  color: #5c6b66; cursor: pointer;
+  color: #64748b; cursor: pointer;
   transition: background .2s, color .2s, border-color .2s, box-shadow .2s, transform .15s;
 }
 @media (max-width: 400px) {
@@ -2575,7 +2610,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 }
 .pl-branch-chip:hover:not(.active) {
   background: rgba(255, 255, 255, 0.65);
-  color: #2d4038;
+  color: #1e3a6e;
 }
 .pl-branch-chip:focus-visible {
   outline: 2px solid var(--green);
@@ -2585,7 +2620,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   border-color: var(--green);
   background: var(--green);
   color: #fff;
-  box-shadow: 0 2px 10px rgba(26, 122, 82, 0.32);
+  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.32);
   transform: translateY(-1px);
 }
 .pl-branch-chip.active:hover {
@@ -2596,7 +2631,7 @@ a.pl-branch-chip {
   text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
   box-sizing: border-box;
 }
-a.pl-branch-chip:hover:not(.active) { background: rgba(255, 255, 255, 0.65); color: #2d4038; }
+a.pl-branch-chip:hover:not(.active) { background: rgba(255, 255, 255, 0.65); color: #1e3a6e; }
 a.pl-branch-chip.active { color: #fff; }
 .pl-branch-cta {
   display: none;
@@ -2613,7 +2648,7 @@ a.pl-branch-chip.active { color: #fff; }
   width: 100%;
   margin-top: 12px;
   padding-top: 12px;
-  border-top: 1px solid rgba(20, 92, 65, 0.1);
+  border-top: 1px solid rgba(30, 64, 175, 0.1);
   text-align: left;
 }
 .pl-manual-reviews-label {
@@ -2636,7 +2671,7 @@ a.pl-branch-chip.active { color: #fff; }
 .pl-manual-reviews-viewport.is-fading { opacity: 0; }
 .pl-review-card {
   background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(20, 92, 65, 0.12);
+  border: 1px solid rgba(30, 64, 175, 0.12);
   border-radius: 10px;
   padding: 10px 10px 9px;
   min-height: 5.5rem;
@@ -2690,8 +2725,8 @@ a.pl-branch-chip.active { color: #fff; }
 }
 .pl-review-card--beauty:hover,
 .pl-review-card--beauty:focus-visible {
-  border-color: rgba(20, 92, 65, 0.35);
-  box-shadow: 0 2px 8px rgba(20, 92, 65, 0.08);
+  border-color: rgba(30, 64, 175, 0.35);
+  box-shadow: 0 2px 8px rgba(30, 64, 175, 0.08);
   outline: none;
 }
 .pl-review-card--beauty .pl-review-text {
@@ -2727,7 +2762,7 @@ a.pl-branch-chip.active { color: #fff; }
   max-height: min(82vh, 560px);
   background: #fff;
   border-radius: 14px;
-  border: 1px solid rgba(20, 92, 65, 0.15);
+  border: 1px solid rgba(30, 64, 175, 0.15);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
   padding: 16px 16px 14px;
   display: flex;
@@ -2791,12 +2826,12 @@ a.pl-branch-chip.active { color: #fff; }
 }
 .pl-hero-btn--consult {
   flex: 1.35 1 0;
-  color: #145c41; background: #fff; border: 2px solid var(--green);
+  color: #2563eb; background: #fff; border: 2px solid var(--green);
   cursor: pointer; font-weight: 700;
 }
 .pl-hero-btn--consult:hover {
   background: var(--green-bg); border-color: var(--green-mid);
-  box-shadow: 0 2px 8px rgba(26, 122, 82, 0.12);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.12);
 }
 .pl-hero-actions--solo .pl-hero-btn--consult { flex: 1 1 auto; width: 100%; max-width: none; margin: 0; }
 @media (max-width: 380px) {
@@ -2859,7 +2894,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
 .profile-blog-item + .profile-blog-item {
   margin-top: 12px;
   padding-top: 12px;
-  border-top: 1px solid rgba(20, 92, 65, 0.1);
+  border-top: 1px solid rgba(30, 64, 175, 0.1);
 }
 .profile-blog-item a {
   display: flex;
@@ -2874,7 +2909,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   height: 72px;
   border-radius: 10px;
   overflow: hidden;
-  background: #eef2f0;
+  background: #eef2f9;
   position: relative;
 }
 .profile-blog-thumb img {
@@ -2894,13 +2929,13 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   align-items: center;
   justify-content: center;
   font-size: 22px;
-  color: #b8c4be;
+  color: #b8c4d8;
 }
 .profile-blog-body { flex: 1; min-width: 0; }
 .profile-blog-title {
   font-size: 15px;
   font-weight: 700;
-  color: #1a3a34;
+  color: #1e3a6e;
   line-height: 1.4;
   margin: 0 0 6px;
   display: -webkit-box;
@@ -2955,7 +2990,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   text-decoration: none;
 }
 .pl-home-link-btn--profile {
-  color: #145c41;
+  color: #2563eb;
   background: #fff;
   border: 1.5px solid var(--green);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
@@ -2965,14 +3000,14 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   border-color: var(--green-mid);
 }
 .pl-home-link-btn--psp {
-  border: 1.5px solid rgba(26, 122, 82, 0.35);
-  background: linear-gradient(180deg, rgba(240, 250, 245, 0.98), rgba(255, 255, 255, 0.92));
-  color: #145c41;
+  border: 1.5px solid rgba(37, 99, 235, 0.35);
+  background: linear-gradient(180deg, rgba(239, 246, 255, 0.98), rgba(255, 255, 255, 0.92));
+  color: #2563eb;
 }
 .pl-home-link-btn--psp:hover {
-  background: #1a3a34;
+  background: #1e3a6e;
   color: #fff;
-  border-color: #1a3a34;
+  border-color: #1e3a6e;
 }
 @media (max-width: 400px) {
   .pl-home-link-btn { font-size: 11px; padding: 4px 12px; }
@@ -3036,26 +3071,26 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
           <div class="pl-branch-picker">
             <div class="pl-branch-grid" role="radiogroup" aria-label="관심 분야">
               <button type="button" class="pl-branch-chip" role="radio" aria-checked="false" data-branch="treatment" onclick="selectProfileBranch('treatment')">통증·치료</button>
-              <button type="button" class="pl-branch-chip active" role="radio" aria-checked="true" data-branch="wellness" onclick="selectProfileBranch('wellness')">움직임·뷰티</button>
+              <button type="button" class="pl-branch-chip" role="radio" aria-checked="false" data-branch="wellness" onclick="selectProfileBranch('wellness')">움직임·자세</button>
               <button type="button" class="pl-branch-chip" role="radio" aria-checked="false" data-branch="expert" onclick="selectProfileBranch('expert')">전문가 교육</button>
             </div>
           </div>
         </div>
 
-        <div class="pl-hero-outcome">
+        <div class="pl-hero-outcome" id="profileHeroOutcome" aria-live="polite">
           <div class="pl-hero-copy" id="profileHeroCopy">
             <div class="pl-hero-copy-panel" id="profileHeroCopyPanel">
-              <h2 class="pl-hero-title" id="profileHeroTitle">움직임·작은 얼굴을 위한 관리</h2>
-              <p class="pl-hero-sub" id="profileHeroSub">자세·움직임·페이스 — PAR 프로그램</p>
+              <h2 class="pl-hero-title" id="profileHeroTitle"></h2>
+              <p class="pl-hero-sub" id="profileHeroSub"></p>
             </div>
           </div>
-          <button type="button" class="pl-branch-cta visible" id="profileBranchAction" onclick="runProfileBranchAction()">몸을 더 좋게 만들고 싶어요 →</button>
+          <button type="button" class="pl-branch-cta" id="profileBranchAction" onclick="runProfileBranchAction()"></button>
           <section class="pl-manual-reviews" id="profileManualReviews" aria-label="도수치료 리뷰" hidden>
             <h3 class="pl-manual-reviews-label">도수치료 리뷰</h3>
             <div class="pl-manual-reviews-viewport" id="profileManualReviewsViewport"></div>
           </section>
-          <section class="pl-beauty-reviews pl-manual-reviews" id="profileBeautyReviews" aria-label="움직임·뷰티 리뷰" hidden>
-            <h3 class="pl-manual-reviews-label">움직임 · 뷰티 리뷰</h3>
+          <section class="pl-beauty-reviews pl-manual-reviews" id="profileBeautyReviews" aria-label="얼굴·페이스 후기" hidden>
+            <h3 class="pl-manual-reviews-label">얼굴 · 페이스 후기</h3>
             <div class="pl-beauty-reviews-viewport" id="profileBeautyReviewsViewport"></div>
           </section>
         </div>
@@ -3105,7 +3140,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
           </div>
         </div>
         <div class="psp-step-card-body">
-          <p class="psp-step-card-lead"><strong style="color:#1a3a34;">Science</strong>는 문제의 원인을 이론으로 설명하고, 체계적인 평가로 특정하는 단계입니다.<br><strong style="color:#1a3a34;">초기 평가</strong>에서는 History Taking · Inspection · Movement Test · Palpation 네 가지를 시점에 따라 유기적으로 적용해 증상을 일반 화면(general screen)하고 부위·조직을 좁혀 갑니다.<br>이 과정을 뒷받침하는 이론으로 해부학·생리학·신경생리학·생체역학·통증과학을 두고, 필요 시 근막경선·관절 생체역학 등 세부 모형과 Special Test·영상 검사를 병행합니다.</p>
+          <p class="psp-step-card-lead"><strong style="color:#1e3a6e;">Science</strong>는 문제의 원인을 이론으로 설명하고, 체계적인 평가로 특정하는 단계입니다.<br><strong style="color:#1e3a6e;">초기 평가</strong>에서는 History Taking · Inspection · Movement Test · Palpation 네 가지를 시점에 따라 유기적으로 적용해 증상을 일반 화면(general screen)하고 부위·조직을 좁혀 갑니다.<br>이 과정을 뒷받침하는 이론으로 해부학·생리학·신경생리학·생체역학·통증과학을 두고, 필요 시 근막경선·관절 생체역학 등 세부 모형과 Special Test·영상 검사를 병행합니다.</p>
           <div class="psp-merge-chips">
             <div class="row">
               <span class="lbl">THEORY</span>
@@ -3135,7 +3170,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
           </div>
         </div>
         <div class="psp-step-card-body">
-          <p class="psp-step-card-lead">비침습 Manual Therapy로 <strong style="color:#145c41;font-weight:700;">연부조직</strong>과 <strong style="color:#145c41;font-weight:700;">관절</strong>을 다룹니다.<br>연부조직에서는 근막(Fascia)·근육(Muscle)의 긴장·유착·트리거 등을 풀어 조직 활주와 순환을 회복하고, 관절에서는 관절낭 긴장·저가동성·부동에 대한 수동 기술로 가동성과 정렬을 보조합니다. 조직에 맞게 Fascia → Muscle → Joint 순으로 접근하며, 이후 단계의 움직임·운동으로 연결합니다.</p>
+          <p class="psp-step-card-lead">비침습 Manual Therapy로 <strong style="color:#2563eb;font-weight:700;">연부조직</strong>과 <strong style="color:#2563eb;font-weight:700;">관절</strong>을 다룹니다.<br>연부조직에서는 근막(Fascia)·근육(Muscle)의 긴장·유착·트리거 등을 풀어 조직 활주와 순환을 회복하고, 관절에서는 관절낭 긴장·저가동성·부동에 대한 수동 기술로 가동성과 정렬을 보조합니다. 조직에 맞게 Fascia → Muscle → Joint 순으로 접근하며, 이후 단계의 움직임·운동으로 연결합니다.</p>
           <div class="psp-tags">
             <span class="psp-tag a">연부조직</span><span class="psp-tag a">근막·근육</span><span class="psp-tag g">관절</span><span class="psp-tag g">가동술</span>
           </div>
@@ -3151,7 +3186,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
           </div>
         </div>
         <div class="psp-step-card-body">
-          <p class="psp-step-card-lead">Passive Stretching 부터 시작하는 P·A·R 운동으로 안전한 가동범위와 동작 패턴을 쌓습니다.<br>자세는 누운 자세→앉기→서기로 하중을 올리며 일상에 가깝게 진행합니다. <strong style="color:#145c41;font-weight:700;">생활습관</strong>에서는 장시간 자세·반복 동작·수면·업무 환경 등 통증을 재생산하는 요인을 짚고, 환자가 스스로 조절할 수 있는 습관·관리법을 배웁니다. <strong style="color:#145c41;font-weight:700;">기능 운동</strong>에서는 실제로 필요한 동작(보행·계단·들어올리기·도구 사용 등)을 단계적으로 반복해 통증 없는 범위에서 역량을 회복합니다.</p>
+          <p class="psp-step-card-lead">Passive Stretching 부터 시작하는 P·A·R 운동으로 안전한 가동범위와 동작 패턴을 쌓습니다.<br>자세는 누운 자세→앉기→서기로 하중을 올리며 일상에 가깝게 진행합니다. <strong style="color:#2563eb;font-weight:700;">생활습관</strong>에서는 장시간 자세·반복 동작·수면·업무 환경 등 통증을 재생산하는 요인을 짚고, 환자가 스스로 조절할 수 있는 습관·관리법을 배웁니다. <strong style="color:#2563eb;font-weight:700;">기능 운동</strong>에서는 실제로 필요한 동작(보행·계단·들어올리기·도구 사용 등)을 단계적으로 반복해 통증 없는 범위에서 역량을 회복합니다.</p>
           <div class="psp-tags">
             <span class="psp-tag">Passive Stretching</span><span class="psp-tag">PAR</span><span class="psp-tag g">생활습관 교정</span><span class="psp-tag g">작업·자세</span><span class="psp-tag">기능적 패턴</span><span class="psp-tag">일상 동작 훈련</span>
           </div>
@@ -3307,7 +3342,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
       </div>
 
       <!-- C/C + 손 짚기 -->
-      <div style="background:rgba(74,206,168,0.07);border:1px solid rgba(74,206,168,0.2);border-radius:8px;padding:14px 16px;margin-bottom:16px;">
+      <div style="background:rgba(96,165,250,0.07);border:1px solid rgba(96,165,250,0.2);border-radius:8px;padding:14px 16px;margin-bottom:16px;">
         <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:700;color:var(--accent);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.1em;">시작 — Chief Complaint (C/C)</div>
         <div style="font-size:12px;color:var(--text);font-weight:600;margin-bottom:8px;">① 내원 목적 확인 — "어제 오늘, 가장 불편한 게 뭔가요?"</div>
         <div style="font-size:12px;color:var(--text);font-weight:600;margin-bottom:6px;">② 가장 아픈 부위를 손으로 짚어달라고 요청</div>
@@ -3355,7 +3390,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
           <div style="font-size:11px;color:var(--text-dim);line-height:1.6;">쉬면 좋아지나 · 움직이면 좋아지나 · 열/냉에 반응하는가</div>
         </div>
 
-        <div style="background:rgba(74,206,168,0.07);border:2px solid rgba(74,206,168,0.35);border-radius:10px;padding:14px 16px;position:relative;">
+        <div style="background:rgba(96,165,250,0.07);border:2px solid rgba(96,165,250,0.35);border-radius:10px;padding:14px 16px;position:relative;">
 
           <!-- 핵심 뱃지 -->
           <div style="position:absolute;top:-10px;left:16px;background:var(--accent);color:var(--bg);font-size:10px;font-weight:700;font-family:'DM Mono',monospace;padding:2px 10px;border-radius:10px;letter-spacing:0.08em;">평가의 핵심</div>
@@ -3400,7 +3435,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
           </div>
 
           <!-- 평가 방향 노트 -->
-          <div style="margin-top:10px;padding:10px 12px;background:rgba(74,206,168,0.08);border-radius:6px;font-size:11px;color:var(--text-dim);line-height:1.7;">
+          <div style="margin-top:10px;padding:10px 12px;background:rgba(96,165,250,0.08);border-radius:6px;font-size:11px;color:var(--text-dim);line-height:1.7;">
             <span style="color:var(--accent);font-weight:700">예상 → 확인</span> — 문제가 되는 구조를 예상하고, Part Assessment에서 확인한다.<br>
             -근육이 의심되면 Muscle Test, 신경이 의심되면 Nerve Test 등 각 예상 문제를 확인하는 평가를 시행.
           </div>
@@ -3469,19 +3504,19 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
             <div style="font-size:11px;color:var(--text-dim);">지속적 vs 간헐적 · 시간대·활동별 변화</div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-            <div style="background:rgba(74,206,168,0.08);border-radius:6px;padding:9px 11px;">
+            <div style="background:rgba(96,165,250,0.08);border-radius:6px;padding:9px 11px;">
               <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:3px;">쉬면 나아짐</div>
               <div style="font-size:10px;color:var(--text-dim);">과사용·염증성 문제 가능성<br>활동량 조절 필요</div>
             </div>
-            <div style="background:rgba(74,206,168,0.08);border-radius:6px;padding:9px 11px;">
+            <div style="background:rgba(96,165,250,0.08);border-radius:6px;padding:9px 11px;">
               <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:3px;">특정 자세·시간대에 악화</div>
               <div style="font-size:10px;color:var(--text-dim);">자세 불량·생활습관 문제<br>→ 반복 행동 패턴 파악</div>
             </div>
-            <div style="background:rgba(74,206,168,0.08);border-radius:6px;padding:9px 11px;">
+            <div style="background:rgba(96,165,250,0.08);border-radius:6px;padding:9px 11px;">
               <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:3px;">아침에 심함</div>
               <div style="font-size:10px;color:var(--text-dim);">Fascia 경직 · 염증성 관절 질환</div>
             </div>
-            <div style="background:rgba(74,206,168,0.08);border-radius:6px;padding:9px 11px;">
+            <div style="background:rgba(96,165,250,0.08);border-radius:6px;padding:9px 11px;">
               <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:3px;">안정 시에도 지속</div>
               <div style="font-size:10px;color:var(--text-dim);">급성 염증 · 신경성 통증<br>침습적 치료 고려</div>
             </div>
@@ -3713,9 +3748,9 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
 
     <div class="acc-label"><span class="acc-dot red"></span> VAS 안내</div>
     <!-- VAS 0~2 -->
-    <div style="background:rgba(74,206,168,0.07);border:1px solid rgba(74,206,168,0.25);border-radius:10px;padding:16px 18px;">
+    <div style="background:rgba(96,165,250,0.07);border:1px solid rgba(96,165,250,0.25);border-radius:10px;padding:16px 18px;">
       <div class="vas-label" style="margin-bottom:8px;">
-        <span style="background:rgba(74,206,168,0.2);color:var(--green);border-radius:4px;padding:3px 10px;font-size:11px;font-weight:700;font-family:'DM Mono',monospace;">VAS 0~2</span>
+        <span style="background:rgba(96,165,250,0.2);color:var(--green);border-radius:4px;padding:3px 10px;font-size:11px;font-weight:700;font-family:'DM Mono',monospace;">VAS 0~2</span>
         Movement
       </div>
       <div style="font-size:11px;color:var(--text-dim);line-height:1.6;">통증이 거의 없거나 경미한 수준 → 원칙적으로 <strong style="color:var(--text)">움직임 평가 & Passive Stretching</strong> 진행.<br>
@@ -4209,7 +4244,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
               <div style="font-size:11px;font-weight:700;color:var(--text-dim);margin-bottom:6px;">스쿼트 5단계</div>
               <div style="font-size:11px;color:var(--text);line-height:1.9;">
                 ① 의자에서 일어나는 법<br>
-                <div style="background:rgba(74,206,168,0.08);border:1px solid rgba(74,206,168,0.2);border-radius:5px;padding:6px 9px;margin:4px 0;">
+                <div style="background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.2);border-radius:5px;padding:6px 9px;margin:4px 0;">
                   <span style="color:var(--accent);font-weight:700;">② 골반 중립 + 허리 이완 기립</span><br>
                   <span style="font-size:10px;color:var(--text-dim);">천천히 일어나면서 골반 중립 위치 유지<br>허리 긴장 빼고 그 상태 인지하면서 기립<br>서는 과정의 몸 인식에 초점</span>
                 </div>
@@ -4259,7 +4294,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
             <div class="mv-common-flow-title">Active Stretching</div>
             <span class="mv-rom-tag mv-rom-tag--a-green">= A-ROM</span>
           </div>
-          <p class="mv-common-flow-desc">Position 1·2에서 조직 문제 해결 후 진행. <strong style="color:#1a8a5e">A-ROM</strong> — Active Stretching 시행 자체가 능동 가동범위와 움직임 질을 평가하는 과정.</p>
+          <p class="mv-common-flow-desc">Position 1·2에서 조직 문제 해결 후 진행. <strong style="color:#2563eb">A-ROM</strong> — Active Stretching 시행 자체가 능동 가동범위와 움직임 질을 평가하는 과정.</p>
         </div>
         <div class="mv-common-flow-box mv-common-flow-box--active-action mv-common-flow-box--active-action-green">
           <div class="mv-active-action-title">Active Stretching 시행</div>
@@ -4336,7 +4371,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
         </div>
 
         <!-- 기능운동 -->
-        <div style="background:rgba(74,206,168,0.04);border:1px solid rgba(74,206,168,0.2);border-radius:8px;padding:16px 18px;">
+        <div style="background:rgba(96,165,250,0.04);border:1px solid rgba(96,165,250,0.2);border-radius:8px;padding:16px 18px;">
           <div style="font-size:11px;font-weight:700;color:var(--green);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">기능운동 — 전신 통합</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
 
@@ -4739,8 +4774,10 @@ let H = ['s-home'];
 let P = {}, E = {};
 let selectedVasZone = null;
 let bcPath = [];
+/** bcPath 길이별 화면 스냅샷 — 브레드크럼 클릭 복원용 */
+let bcCheckpointsByLen_ = {};
 let consultFlowKind = 'treatment';
-let profileBranch = 'wellness';
+let profileBranch = null;
 let profileHeroFadeTimer = null;
 const PROFILE_HERO_FADE_MS = 200;
 /** 빠른 상담 알림톡용 — 탭·화면 열람 기록 */
@@ -4748,7 +4785,7 @@ let profileViewLog = [];
 
 const PROFILE_BRANCH_CHIP_LABEL = {
   treatment: '통증·치료',
-  wellness: '움직임·뷰티',
+  wellness: '움직임·자세',
   expert: '전문가 교육',
   psp: 'PSP 컨셉',
 };
@@ -4810,9 +4847,13 @@ const PROFILE_NAVER_BLOG_RSS = 'https://rss.blog.naver.com/allenjoy.xml';
 const PROFILE_NAVER_BLOG_URL = 'https://blog.naver.com/allenjoy';
 const PROFILE_BLOG_FETCH_MAX = 24;
 const PROFILE_BLOG_SHOW_COUNT = 3;
+const PROFILE_BLOG_CACHE_KEY = 'profileNaverBlogPosts_v2';
+const PROFILE_BLOG_CACHE_TTL_MS = 86400000;
+const PROFILE_BLOG_MEM_TTL_MS = 600000;
+const PROFILE_BLOG_FETCH_TIMEOUT_MS = 12000;
 const PROFILE_BRANCH_BLOG_KEYWORDS = {
   treatment: ['통증', '치료', '도수', '디스크', '관절', '허리', '목', '어깨', '무릎', '척추', '림프', '염증', '불편'],
-  wellness: ['움직임', '뷰티', 'Re:Al', 'PAR', '스트레칭', '운동', '자세', 'ROM', '페이스', '프로그램'],
+  wellness: ['움직임', 'Re:Al', 'PAR', '스트레칭', '운동', '자세', 'ROM', '체형', '프로그램', '페이스', '얼굴'],
   expert: ['교육', 'CMT', 'IFC', '세미나', '강사', '전문가', '커리큘럼', '수료', '얼굴 교정'],
   psp: ['PSP', 'Philosophy', 'Science', 'Practice', '프로토콜', '임상']
 };
@@ -4826,9 +4867,9 @@ const PROFILE_BRANCH_COPY = {
     cta: '통증이나 불편함이 있어요 →'
   },
   wellness: {
-    title: '움직임·작은 얼굴을 위한 관리',
-    sub: '자세·움직임·페이스 — PAR 프로그램',
-    cta: '몸을 더 좋게 만들고 싶어요 →'
+    title: '자세와 움직임, 몸을 더 편하게',
+    sub: 'PAR · P-스트레칭 · 기능 운동 · 체형 밸런스',
+    cta: '움직임·자세부터 살펴볼게요 →'
   },
   expert: {
     title: '전문가 성장을 위한 교육 과정',
@@ -4851,6 +4892,63 @@ function cancelProfileHeroFade_(){
   const wrapEl = document.getElementById('profileHeroCopy');
   if(panelEl) panelEl.classList.remove('is-fading');
   if(wrapEl) wrapEl.style.height = '';
+}
+
+function syncProfileBranchReviews_(){
+  const manual = document.getElementById('profileManualReviews');
+  const beauty = document.getElementById('profileBeautyReviews');
+  if(!profileBranch){
+    if(manual) manual.hidden = true;
+    if(beauty) beauty.hidden = true;
+    stopProfileReviewRotation_();
+    stopProfileBeautyRotation_();
+    return;
+  }
+  const showManual = profileBranch === 'treatment' && profileReviewPool_.length > 0;
+  const showBeauty = false;
+  if(manual) manual.hidden = !showManual;
+  if(beauty) beauty.hidden = !showBeauty;
+  if(showManual){
+    const pair = pickProfileReviewPair_(profileReviewPool_);
+    profileReviewLastPairKey_ = profileReviewPairKey_(pair);
+    renderProfileReviewPair_(pair, false);
+    startProfileReviewRotation_();
+  } else {
+    stopProfileReviewRotation_();
+  }
+  if(showBeauty){
+    renderProfileBeautyCurrent_(false);
+    startProfileBeautyRotation_();
+  } else {
+    stopProfileBeautyRotation_();
+  }
+}
+
+function resetProfileBranchPicker_(){
+  profileBranch = null;
+  cancelProfileHeroFade_();
+  document.querySelectorAll('.pl-branch-chip').forEach(chip => {
+    chip.classList.remove('active');
+    chip.setAttribute('aria-checked', 'false');
+  });
+  const outcome = document.getElementById('profileHeroOutcome');
+  if(outcome) outcome.classList.remove('is-visible');
+  const btn = document.getElementById('profileBranchAction');
+  if(btn) btn.classList.remove('visible');
+  const titleEl = document.getElementById('profileHeroTitle');
+  const subEl = document.getElementById('profileHeroSub');
+  if(titleEl) titleEl.textContent = '';
+  if(subEl) subEl.textContent = '';
+  syncProfileBranchReviews_();
+}
+
+function revealProfileBranchOutcome_(branch, animate){
+  const outcome = document.getElementById('profileHeroOutcome');
+  if(outcome && !outcome.classList.contains('is-visible')){
+    outcome.classList.add('is-visible');
+  }
+  setProfileHeroCopy(branch, animate);
+  syncProfileBranchReviews_();
 }
 
 function setProfileHeroCopy(branch, animate){
@@ -4907,11 +5005,11 @@ function getVisibleProfileHomeTarget_(id){
   return el;
 }
 
-/** 분기 탭 클릭 후 움직임·뷰티 리뷰 하단까지만 보이도록 스크롤 */
+/** 분기 탭 클릭 후 하단(후기·CTA)까지 보이도록 스크롤 */
 function scrollToProfileHomeBottom_(){
   const onHome = document.getElementById('s-home') &&
     document.getElementById('s-home').classList.contains('active');
-  if(!onHome) return;
+  if(!onHome || !profileBranch) return;
   requestAnimationFrame(function () {
     requestAnimationFrame(function () {
       const target =
@@ -5003,7 +5101,7 @@ function renderProfileReviewPair_(pair, animate){
   const wrap = document.getElementById('profileManualReviews');
   const viewport = document.getElementById('profileManualReviewsViewport');
   if(!wrap || !viewport) return;
-  if(!pair.length){
+  if(!pair.length || profileBranch !== 'treatment'){
     wrap.hidden = true;
     return;
   }
@@ -5049,7 +5147,7 @@ function startProfileReviewRotation_(){
 function applyProfileReviewPool_(reviews){
   profileReviewPool_ = normalizeProfileReviews_(reviews);
   if(profileReviewPool_.length){
-    startProfileReviewRotation_();
+    syncProfileBranchReviews_();
     return;
   }
   const wrap = document.getElementById('profileManualReviews');
@@ -5162,7 +5260,7 @@ function renderProfileBeautyCurrent_(animate){
   const wrap = document.getElementById('profileBeautyReviews');
   const viewport = document.getElementById('profileBeautyReviewsViewport');
   if(!wrap || !viewport) return;
-  if(!profileBeautyPool_.length){
+  if(!profileBeautyPool_.length || profileBranch !== 'wellness'){
     wrap.hidden = true;
     return;
   }
@@ -5219,7 +5317,7 @@ function startProfileBeautyRotation_(resetIndex){
 function applyProfileBeautyPool_(reviews){
   profileBeautyPool_ = mergeProfileBeautyReviews_(reviews, []);
   if(profileBeautyPool_.length){
-    startProfileBeautyRotation_();
+    syncProfileBranchReviews_();
     return;
   }
   const wrap = document.getElementById('profileBeautyReviews');
@@ -5315,7 +5413,7 @@ async function loadProfileBeautyReviews_(){
         const idx = merged.findIndex(r => r.id === prevId);
         if(idx >= 0) profileBeautyIndex_ = idx;
       }
-      if(!wasModal) startProfileBeautyRotation_(false);
+      if(!wasModal) syncProfileBranchReviews_();
     }
   } catch (err) { /* embedded only */ }
 }
@@ -5420,30 +5518,117 @@ function renderProfileBlogFeed_(posts){
   inner.innerHTML = html;
 }
 
+function readProfileBlogStorageCache_(){
+  try {
+    const raw = localStorage.getItem(PROFILE_BLOG_CACHE_KEY);
+    if(!raw) return null;
+    const data = JSON.parse(raw);
+    if(!data || !Array.isArray(data.posts) || !data.posts.length) return null;
+    if(Date.now() - (data.at || 0) > PROFILE_BLOG_CACHE_TTL_MS) return null;
+    return data.posts;
+  } catch (e) { return null; }
+}
+
+function writeProfileBlogStorageCache_(posts){
+  try {
+    localStorage.setItem(PROFILE_BLOG_CACHE_KEY, JSON.stringify({ at: Date.now(), posts: posts }));
+  } catch (e) { /* quota */ }
+}
+
+function applyProfileBlogCache_(posts){
+  profileBlogCache_ = posts;
+  profileBlogCacheAt_ = Date.now();
+  writeProfileBlogStorageCache_(posts);
+}
+
+function fetchWithTimeout_(url, options, ms){
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), ms || PROFILE_BLOG_FETCH_TIMEOUT_MS);
+  return fetch(url, Object.assign({}, options || {}, { signal: ctrl.signal }))
+    .finally(() => clearTimeout(timer));
+}
+
+async function fetchProfileBlogRssXml_(){
+  const errors = [];
+
+  if(CONSULT_WEBHOOK_URL){
+    try {
+      const res = await fetchWithTimeout_(
+        CONSULT_WEBHOOK_URL + '?action=profileBlogRss',
+        { cache: 'no-store' }
+      );
+      if(!res.ok) throw new Error('gas http ' + res.status);
+      const json = await res.json();
+      if(json && json.result === 'success' && Array.isArray(json.posts) && json.posts.length){
+        return { posts: json.posts, source: 'gas' };
+      }
+      throw new Error((json && json.message) || 'gas empty');
+    } catch (err) {
+      errors.push('gas: ' + (err && err.message ? err.message : err));
+    }
+  }
+
+  const proxyUrls = [
+    'https://api.allorigins.win/raw?url=' + encodeURIComponent(PROFILE_NAVER_BLOG_RSS),
+    'https://corsproxy.io/?' + encodeURIComponent(PROFILE_NAVER_BLOG_RSS),
+    'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(PROFILE_NAVER_BLOG_RSS)
+  ];
+  for(let i = 0; i < proxyUrls.length; i++){
+    try {
+      const res = await fetchWithTimeout_(proxyUrls[i], { cache: 'no-store' });
+      if(!res.ok) throw new Error('proxy http ' + res.status);
+      const xml = await res.text();
+      const posts = parseProfileNaverRssItems_(xml);
+      if(!posts.length) throw new Error('parse empty');
+      return { posts: posts, source: 'proxy' + (i + 1) };
+    } catch (err) {
+      errors.push('proxy' + (i + 1) + ': ' + (err && err.message ? err.message : err));
+    }
+  }
+
+  const err = new Error(errors.join(' | ') || 'rss fetch failed');
+  err.errors = errors;
+  throw err;
+}
+
+function showProfileBlogFetchError_(inner){
+  inner.innerHTML = '<p class="profile-blog-empty">글 목록을 가져오지 못했습니다. <a href="' + PROFILE_NAVER_BLOG_URL + '" target="_blank" rel="noopener">네이버 블로그에서 보기</a></p>';
+}
+
 async function loadProfileBlogFeed_(force){
   const inner = document.getElementById('profileBlogFeedInner');
   if(!inner) return;
   const now = Date.now();
-  if(!force && profileBlogCache_ && now - profileBlogCacheAt_ < 600000){
+  if(!force && profileBlogCache_ && now - profileBlogCacheAt_ < PROFILE_BLOG_MEM_TTL_MS){
     renderProfileBlogFeed_(pickProfileBlogPosts_(profileBranch, profileBlogCache_));
     return;
   }
-  inner.innerHTML = '<p class="profile-blog-loading">블로그 글 불러오는 중…</p>';
-  try {
-    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(PROFILE_NAVER_BLOG_RSS);
-    const res = await fetch(proxyUrl, { cache: 'no-store' });
-    if(!res.ok) throw new Error('rss fetch');
-    const xml = await res.text();
-    profileBlogCache_ = parseProfileNaverRssItems_(xml);
+
+  const stored = readProfileBlogStorageCache_();
+  if(stored && stored.length){
+    profileBlogCache_ = stored;
     profileBlogCacheAt_ = now;
-    renderProfileBlogFeed_(pickProfileBlogPosts_(profileBranch, profileBlogCache_));
+    renderProfileBlogFeed_(pickProfileBlogPosts_(profileBranch, stored));
+  } else {
+    inner.innerHTML = '<p class="profile-blog-loading">블로그 글 불러오는 중…</p>';
+  }
+
+  try {
+    const out = await fetchProfileBlogRssXml_();
+    applyProfileBlogCache_(out.posts);
+    renderProfileBlogFeed_(pickProfileBlogPosts_(profileBranch, out.posts));
   } catch (err) {
-    inner.innerHTML = '<p class="profile-blog-empty">글 목록을 가져오지 못했습니다. <a href="' + PROFILE_NAVER_BLOG_URL + '" target="_blank" rel="noopener">네이버 블로그에서 보기</a></p>';
+    if(profileBlogCache_ && profileBlogCache_.length){
+      renderProfileBlogFeed_(pickProfileBlogPosts_(profileBranch, profileBlogCache_));
+    } else {
+      showProfileBlogFetchError_(inner);
+    }
   }
 }
 
 function refreshProfileBlogFeed(){
   if(!document.getElementById('s-home') || !document.getElementById('s-home').classList.contains('active')) return;
+  if(!profileBranch) return;
   if(profileBlogCache_){
     renderProfileBlogFeed_(pickProfileBlogPosts_(profileBranch, profileBlogCache_));
   } else {
@@ -5453,6 +5638,7 @@ function refreshProfileBlogFeed(){
 
 function selectProfileBranch(branch, options){
   options = options || {};
+  const hadBranch = !!profileBranch;
   profileBranch = branch;
   document.querySelectorAll('.pl-branch-chip').forEach(chip => {
     const on = chip.getAttribute('data-branch') === branch;
@@ -5460,7 +5646,7 @@ function selectProfileBranch(branch, options){
     chip.setAttribute('aria-checked', on ? 'true' : 'false');
   });
   pushProfileViewLog_('탭: ' + (PROFILE_BRANCH_CHIP_LABEL[branch] || branch));
-  setProfileHeroCopy(branch, true);
+  revealProfileBranchOutcome_(branch, hadBranch);
   refreshProfileBlogFeed();
   if(options.scroll !== false){
     setTimeout(scrollToProfileHomeBottom_, PROFILE_HERO_FADE_MS + 40);
@@ -5469,13 +5655,14 @@ function selectProfileBranch(branch, options){
 
 function runProfileBranchAction(){
   const b = profileBranch;
+  if(!b) return;
   if(b === 'treatment'){
     bc('통증·치료');
     startPatient();
     return;
   }
   if(b === 'wellness'){
-    bc('움직임·뷰티');
+    bc('움직임·자세');
     pSet('mode', 'wellness');
     goS('s-p-wellness');
     return;
@@ -5498,13 +5685,217 @@ function bc(label){
   updateBc();
 }
 
+function bcPathsEqual_(a, b){
+  if(!a || !b || a.length !== b.length) return false;
+  for(let i = 0; i < a.length; i++){
+    if(a[i] !== b[i]) return false;
+  }
+  return true;
+}
+
+function trimBcCheckpointsAfter_(maxLen){
+  Object.keys(bcCheckpointsByLen_).forEach(function (k) {
+    if(Number(k) > maxLen) delete bcCheckpointsByLen_[Number(k)];
+  });
+}
+
+function recordNavCheckpoint_(){
+  const len = bcPath.length;
+  if(len < 1) return;
+  const active = document.querySelector('.screen.active');
+  bcCheckpointsByLen_[len] = {
+    screen: (active && active.id) || 's-home',
+    H: H.slice(),
+    bc: bcPath.slice(),
+    P: JSON.parse(JSON.stringify(P || {})),
+    E: JSON.parse(JSON.stringify(E || {})),
+    profileBranch: profileBranch
+  };
+}
+
+function syncE2VariantPanels_(){
+  const isCmt = E && E.want === 'cmt';
+  const elDefault = document.getElementById('e2-default');
+  const elCmt = document.getElementById('e2-cmt');
+  if(elDefault && elCmt){
+    elDefault.style.display = isCmt ? 'none' : '';
+    elCmt.style.display = isCmt ? '' : 'none';
+  }
+}
+
+function refreshResultScreenContent_(){
+  const id = document.querySelector('.screen.active')?.id;
+  if(id !== 's-result') return;
+  const box = document.getElementById('result-content');
+  if(!box) return;
+  if(P.mode === 'wellness' || consultFlowKind === 'wellness'){
+    consultFlowKind = 'wellness';
+    box.innerHTML = renderWellnessResult();
+    return;
+  }
+  if(consultFlowKind === 'expert'){
+    box.innerHTML = renderExpertResult();
+    return;
+  }
+  consultFlowKind = 'treatment';
+  box.innerHTML = renderPatientResult();
+}
+
+function applyHomeBranchUi_(){
+  if(!profileBranch){
+    resetProfileBranchPicker_();
+    return;
+  }
+  document.querySelectorAll('.pl-branch-chip').forEach(function (chip) {
+    const on = chip.getAttribute('data-branch') === profileBranch;
+    chip.classList.toggle('active', on);
+    chip.setAttribute('aria-checked', on ? 'true' : 'false');
+  });
+  revealProfileBranchOutcome_(profileBranch, false);
+}
+
+function applyNavCheckpoint_(cp){
+  if(!cp) return;
+  P = JSON.parse(JSON.stringify(cp.P || {}));
+  E = JSON.parse(JSON.stringify(cp.E || {}));
+  H = cp.H.slice();
+  bcPath = cp.bc.slice();
+  profileBranch = cp.profileBranch || null;
+
+  document.querySelector('.screen.active')?.classList.remove('active');
+  const el = document.getElementById(cp.screen);
+  if(el) el.classList.add('active');
+
+  if(cp.screen === 's-e2') syncE2VariantPanels_();
+  if(cp.screen === 's-home') applyHomeBranchUi_();
+
+  refreshResultScreenContent_();
+  syncProfileBranchReviews_();
+  updateBc();
+  updateProgress(cp.screen);
+  updateProfileSticky();
+
+  const onHome = cp.screen === 's-home';
+  document.getElementById('backBtn').classList.toggle('hidden', onHome || H.length <= 1);
+  document.getElementById('homeBtn').classList.toggle('hidden', onHome || H.length <= 1);
+  document.getElementById('bcBar').classList.toggle('hidden', bcPath.length === 0);
+
+  history.replaceState({
+    screen: cp.screen,
+    H: JSON.stringify(H),
+    bc: JSON.stringify(bcPath)
+  }, '', '');
+  window.scrollTo(0, 0);
+}
+
+function resolveScreenForBcPrefix_(prefix){
+  if(!prefix.length) return { screen: 's-home' };
+  const last = prefix[prefix.length - 1];
+
+  if(last === 'PSP 컨셉') return { screen: 's-psp1' };
+  if(last === '전체 구조 상세보기') return { screen: 's-psp3' };
+
+  if(prefix[0] === '전문가 교육' || prefix.includes('CMT 도수치료') || prefix.includes('IFC 얼굴교정') || prefix.includes('Re:Al 움직임')){
+    if(['처음', '기초 있음', '실무 중'].indexOf(last) >= 0) return { screen: 's-result', flow: 'expert' };
+    if(['의료인', '웰니스 전문가', '입문자', '기타', '의사·한의사', '물리치료사', '물리치료학과 학생'].indexOf(last) >= 0){
+      return { screen: 's-e3' };
+    }
+    if(['CMT 도수치료', 'IFC 얼굴교정', 'Re:Al 움직임'].indexOf(last) >= 0) return { screen: 's-e2' };
+    return { screen: 's-e1' };
+  }
+
+  if(prefix[0] === '통증·치료' || prefix.indexOf('치료 영역') >= 0){
+    if(last === 'VAS 0') return { screen: 's-p-wellness' };
+    if(/^VAS\s/.test(last)) return { screen: 's-p2' };
+    if(['목·어깨', '허리·골반', '무릎·하지', '전신'].indexOf(last) >= 0) return { screen: 's-p3' };
+    if(['뻐근·묵직', '당김·뻣뻣', '찌릿·저림', '날카로운', '찢어지는'].indexOf(last) >= 0){
+      return { screen: 's-result', flow: 'treatment' };
+    }
+    return { screen: 's-p-vas' };
+  }
+
+  if(prefix[0] === '움직임·자세' || prefix.indexOf('웰니스 영역') >= 0){
+    const wellnessGoals = {
+      '유연성 향상': 'stretch',
+      '자세·체형 교정': 'posture',
+      '기능·체력 향상': 'fitness',
+      '얼굴 교정·관리': 'face',
+      '예방·셀프 케어': 'prevention'
+    };
+    if(wellnessGoals[last]) return { screen: 's-result', flow: 'wellness', goal: wellnessGoals[last] };
+    return { screen: 's-p-wellness' };
+  }
+
+  return { screen: 's-home' };
+}
+
+function applyBcPrefixNavigate_(prefix, index){
+  const resolved = resolveScreenForBcPrefix_(prefix);
+  bcPath = prefix.slice();
+  trimBcCheckpointsAfter_(index);
+
+  if(prefix[0] === '움직임·자세' || prefix.indexOf('웰니스 영역') >= 0){
+    profileBranch = 'wellness';
+    pSet('mode', 'wellness');
+    if(resolved.goal) pSet('goal', resolved.goal);
+  } else if(prefix[0] === '통증·치료' || prefix.indexOf('치료 영역') >= 0){
+    profileBranch = 'treatment';
+    pSet('mode', 'treatment');
+  } else if(prefix[0] === '전문가 교육'){
+    profileBranch = 'expert';
+  }
+
+  H = ['s-home'];
+  if(resolved.screen !== 's-home') H.push(resolved.screen);
+
+  if(resolved.flow === 'wellness') consultFlowKind = 'wellness';
+  else if(resolved.flow === 'expert') consultFlowKind = 'expert';
+  else if(resolved.flow === 'treatment') consultFlowKind = 'treatment';
+
+  applyNavCheckpoint_({
+    screen: resolved.screen,
+    H: H,
+    bc: bcPath.slice(),
+    P: JSON.parse(JSON.stringify(P)),
+    E: JSON.parse(JSON.stringify(E)),
+    profileBranch: profileBranch
+  });
+  recordNavCheckpoint_();
+}
+
+function navigateToBcIndex(index){
+  const idx = Number(index);
+  if(isNaN(idx) || idx < 0) return;
+  if(idx === 0){
+    goHome();
+    return;
+  }
+  if(idx > bcPath.length) return;
+
+  const targetBc = bcPath.slice(0, idx);
+  const cp = bcCheckpointsByLen_[idx];
+  trimBcCheckpointsAfter_(idx);
+
+  if(cp && bcPathsEqual_(cp.bc, targetBc)){
+    applyNavCheckpoint_(cp);
+    return;
+  }
+  applyBcPrefixNavigate_(targetBc, idx);
+}
+
 function updateBc(){
   const bar = document.getElementById('bcBar');
   if(bcPath.length === 0){ bar.classList.add('hidden'); return; }
   bar.classList.remove('hidden');
-  bar.innerHTML = ['홈', ...bcPath].map((c,i,arr) => {
-    const isLast = i === arr.length - 1;
-    return `<span class="bc-item${isLast?' active':''}">${c}</span>${!isLast?'<span class="bc-sep">›</span>':''}`;
+  const items = ['홈'].concat(bcPath);
+  bar.innerHTML = items.map(function (label, i) {
+    const isLast = i === items.length - 1;
+    const cls = 'bc-item' + (isLast ? ' active' : ' bc-item--link');
+    if(isLast){
+      return '<span class="' + cls + '">' + escapeHtml(label) + '</span>';
+    }
+    return '<button type="button" class="' + cls + '" onclick="navigateToBcIndex(' + i + ')">' +
+      escapeHtml(label) + '</button><span class="bc-sep">›</span>';
   }).join('');
 }
 
@@ -5800,15 +6191,8 @@ function goS(id){
   pushProfileViewLog_('화면: ' + (PROFILE_SCREEN_LABELS[id] || id));
   H.push(id);
   history.pushState({ screen: id, H: JSON.stringify(H), bc: JSON.stringify(bcPath) }, '', '');
-  if(id === 's-e2'){
-    const isCmt = E && E.want === 'cmt';
-    const elDefault = document.getElementById('e2-default');
-    const elCmt = document.getElementById('e2-cmt');
-    if(elDefault && elCmt){
-      elDefault.style.display = isCmt ? 'none' : '';
-      elCmt.style.display = isCmt ? '' : 'none';
-    }
-  }
+  if(id === 's-e2') syncE2VariantPanels_();
+  recordNavCheckpoint_();
   updateProgress(id);
   updateProfileSticky();
   window.scrollTo(0,0);
@@ -5821,7 +6205,8 @@ function goBack(){
 
 function goHome(){
   const depth = H.length - 1;
-  P={}; E={}; bcPath=[]; selectedVasZone=null; selectedVasValue=null;
+  P={}; E={}; bcPath=[]; bcCheckpointsByLen_={};
+  selectedVasZone=null; selectedVasValue=null;
   document.querySelector('.screen.active').classList.remove('active');
   document.getElementById('s-home').classList.add('active');
   document.getElementById('bcBar').classList.add('hidden');
@@ -5833,7 +6218,7 @@ function goHome(){
   ['vz-low','vz-mid','vz-high'].forEach(id=>document.getElementById(id).classList.remove('selected'));
   document.getElementById('vasConfirmBtn').classList.remove('ready');
   H.length=0; H.push('s-home');
-  selectProfileBranch('wellness', { scroll: false });
+  resetProfileBranchPicker_();
   updateProfileSticky();
   window.scrollTo(0,0);
   if(depth > 0){
@@ -5859,15 +6244,10 @@ window.addEventListener('popstate', (e) => {
   document.querySelector('.screen.active').classList.remove('active');
   const el = document.getElementById(id);
   if(el){ el.classList.add('active'); }
-  if(id === 's-e2'){
-    const isCmt = E && E.want === 'cmt';
-    const elDefault = document.getElementById('e2-default');
-    const elCmt = document.getElementById('e2-cmt');
-    if(elDefault && elCmt){
-      elDefault.style.display = isCmt ? 'none' : '';
-      elCmt.style.display = isCmt ? '' : 'none';
-    }
-  }
+  if(id === 's-e2') syncE2VariantPanels_();
+  if(id === 's-home') applyHomeBranchUi_();
+  refreshResultScreenContent_();
+  syncProfileBranchReviews_();
   updateBc();
   updateProgress(id);
   updateProfileSticky();
@@ -6414,7 +6794,7 @@ history.replaceState({ screen: 's-home', H: JSON.stringify(['s-home']), bc: JSON
 updateProgress('s-home');
 updateProfileSticky();
 pushProfileViewLog_('프로필 홈');
-selectProfileBranch('wellness', { scroll: false });
+resetProfileBranchPicker_();
 loadProfileBlogFeed_(false);
 initProfileBeautyReviewModal_();
 loadProfileManualReviews_();
