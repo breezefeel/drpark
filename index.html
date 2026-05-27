@@ -3159,8 +3159,20 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
-  color: #b8c4d8;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #8da0bd;
+}
+.profile-blog-thumb-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(141, 160, 189, 0.45);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.58);
 }
 .profile-blog-body { flex: 1; min-width: 0; }
 .profile-blog-title {
@@ -5731,15 +5743,137 @@ function stripProfileHtml_(html){
   return (el.textContent || '').replace(/\s+/g, ' ').trim();
 }
 
+function decodeProfileHtmlEntities_(s){
+  const el = document.createElement('textarea');
+  el.innerHTML = String(s || '');
+  return el.value;
+}
+
 function formatProfileBlogDate_(pubDate){
   const d = new Date(pubDate);
   if(isNaN(d.getTime())) return '';
   return d.getFullYear() + '. ' + (d.getMonth() + 1) + '. ' + d.getDate() + '.';
 }
 
-function firstProfileBlogImg_(html){
-  const m = String(html || '').match(/<img[^>]+src=["']([^"']+)["']/i);
-  return m ? m[1] : '';
+function normalizeProfileBlogImgUrl_(raw){
+  let url = decodeProfileHtmlEntities_(raw).trim();
+  if(!url || /^data:/i.test(url) || /^javascript:/i.test(url)) return '';
+  if(url.indexOf('//') === 0) url = 'https:' + url;
+  if(/^http:\/\//i.test(url)) url = 'https://' + url.slice(7);
+  if(!/^https:\/\//i.test(url)) return '';
+  try {
+    return new URL(url, window.location.href).href;
+  } catch (e) {
+    return '';
+  }
+}
+
+function pushUniqueProfileBlogImg_(out, url){
+  const normalized = normalizeProfileBlogImgUrl_(url);
+  if(normalized && out.indexOf(normalized) === -1) out.push(normalized);
+}
+
+function addProfileBlogSrcsetImgs_(out, srcset){
+  String(srcset || '').split(',').forEach(part => {
+    const url = part.trim().split(/\s+/)[0];
+    pushUniqueProfileBlogImg_(out, url);
+  });
+}
+
+function profileBlogImgSourcesFromHtml_(html){
+  const out = [];
+  const attrs = ['src', 'data-src', 'data-lazy-src', 'data-original', 'data-url'];
+  try {
+    const el = document.createElement('div');
+    el.innerHTML = html || '';
+    Array.from(el.querySelectorAll('img, source')).forEach(node => {
+      attrs.forEach(attr => pushUniqueProfileBlogImg_(out, node.getAttribute(attr)));
+      addProfileBlogSrcsetImgs_(out, node.getAttribute('srcset'));
+      addProfileBlogSrcsetImgs_(out, node.getAttribute('data-srcset'));
+    });
+  } catch (e) { /* regex fallback below */ }
+  if(!out.length){
+    const re = /\b(?:src|data-src|data-lazy-src|data-original|data-url)=["']([^"']+)["']/gi;
+    let m;
+    while((m = re.exec(String(html || ''))) !== null){
+      pushUniqueProfileBlogImg_(out, m[1]);
+    }
+  }
+  return out;
+}
+
+function profileBlogImageProxyUrl_(url){
+  try {
+    const u = new URL(url);
+    const source = u.href.replace(/^https?:\/\//i, '');
+    return 'https://images.weserv.nl/?url=' + encodeURIComponent(source) + '&w=160&h=160&fit=cover&output=webp';
+  } catch (e) {
+    return '';
+  }
+}
+
+function profileBlogImgCandidates_(raw){
+  const seeds = Array.isArray(raw) ? raw : [raw];
+  const out = [];
+  seeds.forEach(seed => pushUniqueProfileBlogImg_(out, seed));
+
+  out.slice().forEach(url => {
+    try {
+      const u = new URL(url);
+      if(!/(^|\.)pstatic\.net$/i.test(u.hostname)) return;
+      if(u.search){
+        const withoutQuery = new URL(u.href);
+        withoutQuery.search = '';
+        pushUniqueProfileBlogImg_(out, withoutQuery.href);
+      }
+      if(u.hostname.toLowerCase() === 'blogthumb.pstatic.net'){
+        ['s3', 'w2', 'f240x240'].forEach(type => {
+          const resized = new URL(u.href);
+          resized.searchParams.set('type', type);
+          pushUniqueProfileBlogImg_(out, resized.href);
+        });
+      }
+    } catch (e) { /* keep original candidates */ }
+  });
+
+  out.slice().forEach(url => pushUniqueProfileBlogImg_(out, profileBlogImageProxyUrl_(url)));
+  return out.slice(0, 6);
+}
+
+function renderProfileBlogEmptyThumb_(){
+  return '<div class="profile-blog-thumb profile-blog-thumb--empty" aria-hidden="true"><span class="profile-blog-thumb-label">BLOG</span></div>';
+}
+
+function handleProfileBlogThumbError_(img){
+  if(!img) return;
+  const fallbacks = String(img.getAttribute('data-fallback-srcs') || '')
+    .split('\n')
+    .map(s => s.trim())
+    .filter(Boolean);
+  const next = fallbacks.shift();
+  if(next){
+    img.setAttribute('data-fallback-srcs', fallbacks.join('\n'));
+    img.src = next;
+    return;
+  }
+  const thumb = img.closest ? img.closest('.profile-blog-thumb') : img.parentNode;
+  if(thumb){
+    thumb.className = 'profile-blog-thumb profile-blog-thumb--empty';
+    thumb.innerHTML = '<span class="profile-blog-thumb-label" aria-hidden="true">BLOG</span>';
+  } else {
+    img.style.display = 'none';
+  }
+}
+
+function renderProfileBlogThumb_(post){
+  const candidates = profileBlogImgCandidates_(
+    post && post.thumbCandidates && post.thumbCandidates.length ? post.thumbCandidates : post && post.thumb
+  );
+  if(!candidates.length) return renderProfileBlogEmptyThumb_();
+  return '<div class="profile-blog-thumb' + (post.isVideo ? ' is-video' : '') + '">' +
+    '<img src="' + escapeProfileHtml_(candidates[0]) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" ' +
+    'data-fallback-srcs="' + escapeProfileHtml_(candidates.slice(1).join('\n')) + '" onerror="handleProfileBlogThumbError_(this)">' +
+    '</div>';
 }
 
 function isProfileBlogVideo_(html, title){
@@ -5756,13 +5890,15 @@ function parseProfileNaverRssItems_(xmlText){
     let link = (item.querySelector('link') && item.querySelector('link').textContent) || '';
     link = link.replace(/\?fromRss=true.*$/i, '').trim();
     const descHtml = (item.querySelector('description') && item.querySelector('description').textContent) || '';
+    const thumbCandidates = profileBlogImgSourcesFromHtml_(descHtml);
     const pubDate = (item.querySelector('pubDate') && item.querySelector('pubDate').textContent) || '';
     return {
       category: category.trim(),
       title: title.trim(),
       link: link.trim(),
       excerpt: stripProfileHtml_(descHtml).slice(0, 120),
-      thumb: firstProfileBlogImg_(descHtml),
+      thumb: thumbCandidates[0] || '',
+      thumbCandidates: thumbCandidates,
       date: formatProfileBlogDate_(pubDate),
       isVideo: isProfileBlogVideo_(descHtml, title),
       haystack: (category + ' ' + title + ' ' + stripProfileHtml_(descHtml)).toLowerCase()
@@ -5802,9 +5938,7 @@ function renderProfileBlogFeed_(posts){
   }
   let html = '<ul class="profile-blog-list">';
   posts.forEach(p => {
-    const thumb = p.thumb
-      ? '<div class="profile-blog-thumb' + (p.isVideo ? ' is-video' : '') + '"><img src="' + escapeProfileHtml_(p.thumb) + '" alt="" loading="lazy" decoding="async"></div>'
-      : '<div class="profile-blog-thumb profile-blog-thumb--empty" aria-hidden="true">📄</div>';
+    const thumb = renderProfileBlogThumb_(p);
     html += '<li class="profile-blog-item"><a href="' + escapeProfileHtml_(p.link) + '" target="_blank" rel="noopener noreferrer">' +
       thumb +
       '<div class="profile-blog-body">' +
