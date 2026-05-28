@@ -3385,6 +3385,10 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
             <h3 class="pl-manual-reviews-label">움직임 · 자세 리뷰</h3>
             <div class="pl-beauty-reviews-viewport" id="profileBeautyReviewsViewport"></div>
           </section>
+          <section class="pl-manual-reviews" id="profileExpertReviews" aria-label="전문가 교육 리뷰" hidden>
+            <h3 class="pl-manual-reviews-label">전문가 교육 리뷰</h3>
+            <div class="pl-manual-reviews-viewport" id="profileExpertReviewsViewport"></div>
+          </section>
         </div>
         <div class="profile-home-blog" id="profileHomeBlog">
           <h3 class="profile-home-blog-label">미카닥 블로그</h3>
@@ -5105,10 +5109,14 @@ const CONSULT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwVJSc6rY5t
 /** 네이버 블로그 — 원장 프로필 글 */
 const PROFILE_NAVER_PROFILE_URL = 'https://blog.naver.com/allenjoy/120205433765';
 /** 도수치료 리뷰 DB — profile-reviews-db.js 에서 로드 */
+const PROFILE_MANUAL_REVIEWS_INLINE_FALLBACK = [
+  { reviewerId: '별이***', text: '도수치료 후 몸이 가벼워진 느낌', rating: '⭐⭐⭐⭐⭐' },
+  { reviewerId: 'joeu***', text: '도수치료 후 많이 호전, 신경주사 치료도 잘해줌', rating: '⭐⭐⭐⭐⭐' }
+];
 const PROFILE_MANUAL_REVIEWS_FALLBACK =
   (typeof PROFILE_MANUAL_REVIEWS_DB !== 'undefined' && PROFILE_MANUAL_REVIEWS_DB.length)
     ? PROFILE_MANUAL_REVIEWS_DB
-    : [];
+    : PROFILE_MANUAL_REVIEWS_INLINE_FALLBACK;
 const PROFILE_REVIEW_ROTATE_MS = 5000;
 const PROFILE_REVIEW_CACHE_KEY = 'profileManualReviews_v1';
 const PROFILE_REVIEW_CACHE_TTL_MS = 1800000;
@@ -5117,10 +5125,17 @@ let profileReviewRotateTimer_ = null;
 let profileReviewFadeTimer_ = null;
 let profileReviewLastPairKey_ = '';
 /** 움직임·뷰티 리뷰 — profile-beauty-reviews-db.js + 후기데이터 시트 */
+const PROFILE_BEAUTY_REVIEWS_INLINE_FALLBACK = [
+  {
+    name: '최OO',
+    text: '작은 얼굴 관리를 받고 있는데 턱선과 두피에 효과가 정말 좋아요! 몸의 불편한 부분이나 아픈 곳을 생활 치료로 관리하는 방법도 친절하게 설명해주셔서 큰 도움을 받았습니다.',
+    rating: '⭐⭐⭐⭐⭐'
+  }
+];
 const PROFILE_BEAUTY_REVIEWS_FALLBACK =
   (typeof PROFILE_BEAUTY_REVIEWS_DB !== 'undefined' && PROFILE_BEAUTY_REVIEWS_DB.length)
     ? PROFILE_BEAUTY_REVIEWS_DB
-    : [];
+    : PROFILE_BEAUTY_REVIEWS_INLINE_FALLBACK;
 const PROFILE_BEAUTY_ROTATE_MS = 10000;
 const PROFILE_BEAUTY_CACHE_KEY = 'profileBeautyReviews_v1';
 let profileBeautyPool_ = [];
@@ -5128,6 +5143,43 @@ let profileBeautyIndex_ = 0;
 let profileBeautyRotateTimer_ = null;
 let profileBeautyFadeTimer_ = null;
 let profileBeautyModalOpen_ = false;
+const PROFILE_EXPERT_REVIEWS_FALLBACK = [
+  { name: '김시은', text: '전공 지식을 깊이있게 쌓을 수 있었던 유익한 시간이었습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '정시원', text: '교과목에서는 배우기 어려운 부분들을 오랜 시간 동안 자세히 실습할 수 있어서 좋았습니다. 실무인재양성과 같은 프로그램을 세 번째로 듣고 있는데, 정말 많이 배우고 의미 있다고 느껴서 앞으로도 계속 이런 기회가 있었으면 좋겠습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '김도현', text: '수업시간에 간단하게 넘어갔던 근골격계 중재방법을 좀 더 심도있게 배울 수 있었고 근골격계 물리치료에 대한 실무적인 이해도를 높일 수 있었습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '안찬호', text: '좋은 내용을 정말 많이 배웠지만, 한편으로 이 가르침들을 내 것으로 만들 수 있을까 생각했습니다. 하지만 실무 인재 과정을 이수하며 배웠던 촉진법과 기법이 전공 실습에서 큰 도움이 된다고 요즘 느낍니다. 제가 하는 동작들을 보며 "역시 실무인재를 들어서 다르다"라는 반응도 있었고, 이론 수업과는 다른 실무 능력에서 확실히 앞서나가게 된 것 같습니다. 좋은 기회를 만들어주신 이용우, 신두철 교수님과 박준규 선생님께 깊은 감사를 드리며 앞으로도 많은 학생들이 이 과정을 이수할 수 있으면 좋겠습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '이준성', text: '직접 보고 실습을 진행해보아야 알 수 있는 것들을 배울 수 있어 좋았습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '오수빈', text: '유익했습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '박준수', text: '실제로 임상에서 사용될만한 내용으로 구성해주셔서 취업했을 때 쉽게 적응할 수 있을 것 같습니다. 정말 감사합니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '신이선', text: '근골격계 질환의 진단과 중재에 대하여 실무적인 관점으로 이론도 배우고 실습도 할 수 있어서 좋았습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '양하영', text: '이론에 그치지 않고 실제 치료까지 이어지는 수업이 의미있고 귀했습니다. 좋은 기회 마련해주셔서 감사합니다!', rating: '⭐⭐⭐⭐⭐' },
+  { name: '권아인', text: '실무에 많은 도움 되었습니다!', rating: '⭐⭐⭐⭐⭐' },
+  { name: '조진영', text: '교수님들과 강사님 모두 개인 시간 내주셔서 가르쳐주신 만큼 더 열심히 들었던 것 같습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '김나연', text: '학과 수업에서 더 난이도 있고 임상과 관련이 높은 실습을 할 수 있어 많은 도움이 되었습니다!', rating: '⭐⭐⭐⭐⭐' },
+  { name: '김도희', text: '임상에서 필요한 기술들과 정보를 알 수 있어서 유익했습니다. 실습을 할 기회가 많지 않은데 실제로 실습을 할 수 있어서 유익했습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '이은지', text: '곧 졸업을 앞둔 4학년 학생으로서 실제 임상에 들어갔을 때 환자를 어떤 관점으로 보고 치료사가 어떻게 판단하는지 배울 수 있어 좋았습니다. 큐잉과 통증 양상까지 자세히 알 수 있었고 실제 수업 진도와 겹치는 내용도 많아 큰 도움이 되었습니다. 다시 프로그램이 열리면 다른 학생들에게도 추천하고 싶습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '차한결', text: '실무적인 교육을 들을 수 있어 좋았습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '백소라', text: '수업 외 시간에 추가로 좋은 강의를 듣고 실습도 해서 유익했습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '김지원', text: '매우 유익한 시간이었습니다!', rating: '⭐⭐⭐⭐⭐' },
+  { name: '이주형', text: '실무에 계신 치료사 선생님이 오셔서 현재 상황과 실제 사용하는 기술들을 배울 수 있어서 좋았습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '김재윤', text: '추천합니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '권혁제', text: '교수님들의 노고에 정말 감사드립니다. 촉진, 스트레칭, 임상적 내용 등 좋은 강의를 해주셔서 너무 좋았습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '주유진', text: '실제 임상에서 어떻게 적용되는지 배우며 직접 실습할 수 있는 기회가 주어져 보람찬 프로그램이었습니다. 실습했던 경험들을 잊지 않고 더 열심히 노력해서 임상에 나가야겠다는 생각을 했습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '이준혁', text: '수업시간에는 경험하지 못했던 내용들을 배울 수 있어 좋았습니다. 이론뿐 아니라 실무 환경에서 어떤 방식으로 치료가 이루어지는지부터 다양한 테크닉을 보고 배울 수 있는 시간이었습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '김예진', text: '실무인재양성프로그램에 참여하면서 학교 수업만으로는 접하기 어려웠던 실제 현장 경험을 할 수 있어 정말 의미 있는 시간이었습니다. 실무에서 사용하는 방식과 업무 흐름을 직접 경험해보며 진로에 대한 방향도 더 구체적으로 생각하게 되었습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '이민지', text: '이론과 실습 모두 실제 임상에서 적용하기에 큰 도움이 되는 유익한 시간이었습니다. 작은 질문에도 자세히 답변해주시고 열정적으로 지도해주셔서 감사합니다. 배운 내용을 잘 기억해서 성장하는 모습 보여드리겠습니다!', rating: '⭐⭐⭐⭐⭐' },
+  { name: '이연주', text: '어려운 부분들을 질문하면 강사분께서 친절하게 알려주셔서 좋았습니다. 여태 참여한 프로그램 중 전반적으로 만족도가 가장 높았습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '박신영', text: '유익한 강의였습니다!', rating: '⭐⭐⭐⭐⭐' },
+  { name: '정윤영', text: '유익했습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '전희재', text: '좋은 기회로 이렇게 훌륭한 강사님 강의를 듣게 되어 뜻깊은 시간이었습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '정원재', text: '강사님과 교수님들이 열정적으로 가르쳐주셨습니다. 특히 강사님 강의가 가장 도움됐습니다.', rating: '⭐⭐⭐⭐⭐' },
+  { name: '고윤호', text: '이번 실무인재양성 프로그램을 통해 학교에서 배운 이론이 실제 임상 현장에서 어떻게 적용되는지 확실히 이해할 수 있었습니다. 실습 중심 교육 덕분에 임상 능력에 대한 자신감을 얻었고, 상세한 피드백이 실무 역량을 높이는 데 큰 도움이 되었습니다.', rating: '⭐⭐⭐⭐⭐' }
+];
+const PROFILE_EXPERT_ROTATE_MS = 5000;
+let profileExpertPool_ = [];
+let profileExpertRotateTimer_ = null;
+let profileExpertFadeTimer_ = null;
+let profileExpertLastPairKey_ = '';
 const PROFILE_NAVER_BLOG_RSS = 'https://rss.blog.naver.com/allenjoy.xml';
 const PROFILE_NAVER_BLOG_URL = 'https://blog.naver.com/allenjoy';
 const PROFILE_BLOG_FETCH_MAX = 24;
@@ -5182,10 +5234,13 @@ function cancelProfileHeroFade_(){
 function syncProfileHomeReviews_(){
   const manual = document.getElementById('profileManualReviews');
   const beauty = document.getElementById('profileBeautyReviews');
+  const expert = document.getElementById('profileExpertReviews');
   const showManual = profileReviewPool_.length > 0;
   const showBeauty = profileBeautyPool_.length > 0;
+  const showExpert = profileExpertPool_.length > 0;
   if(manual) manual.hidden = !showManual;
   if(beauty) beauty.hidden = !showBeauty;
+  if(expert) expert.hidden = !showExpert;
   if(showManual){
     const pair = pickProfileReviewPair_(profileReviewPool_);
     profileReviewLastPairKey_ = profileReviewPairKey_(pair);
@@ -5199,6 +5254,12 @@ function syncProfileHomeReviews_(){
     startProfileBeautyRotation_();
   } else {
     stopProfileBeautyRotation_();
+  }
+  if(showExpert){
+    renderProfileExpertCurrent_(false);
+    startProfileExpertRotation_();
+  } else {
+    stopProfileExpertRotation_();
   }
 }
 
@@ -5727,6 +5788,106 @@ async function loadProfileBeautyReviews_(){
       if(!wasModal) syncProfileHomeReviews_();
     }
   } catch (err) { /* embedded only */ }
+}
+
+function normalizeProfileExpertReviews_(raw){
+  if(!Array.isArray(raw)) return [];
+  return raw.map((r, i) => {
+    const text = String((r && r.text) || '').replace(/\s+/g, ' ').trim();
+    if(text.length < 4) return null;
+    return {
+      id: String((r && r.id) || ('e' + i)),
+      name: String((r && (r.name || r.reviewerId)) || '').trim(),
+      text: text,
+      rating: String((r && r.rating) || '⭐⭐⭐⭐⭐').trim() || '⭐⭐⭐⭐⭐'
+    };
+  }).filter(Boolean);
+}
+
+function renderProfileExpertCardHtml_(r){
+  const stars = r.rating || '⭐⭐⭐⭐⭐';
+  const reviewer = maskProfileMemberName_(r.name);
+  return '<article class="pl-review-card">' +
+    '<div class="pl-review-stars">' + escapeProfileReviewHtml_(stars) + '</div>' +
+    '<p class="pl-review-reviewer">' + escapeProfileReviewHtml_(reviewer) + '</p>' +
+    '<p class="pl-review-text">' + escapeProfileReviewHtml_(r.text) + '</p>' +
+    '</article>';
+}
+
+function pickProfileExpertPair_(pool){
+  if(pool.length <= 2) return pool.slice();
+  let tries = 0;
+  while(tries < 12){
+    const shuffled = shuffleProfileArray_(pool);
+    const pair = shuffled.slice(0, 2);
+    const key = profileReviewPairKey_(pair);
+    if(key !== profileExpertLastPairKey_) return pair;
+    tries++;
+  }
+  return shuffleProfileArray_(pool).slice(0, 2);
+}
+
+function renderProfileExpertCurrent_(animate){
+  const wrap = document.getElementById('profileExpertReviews');
+  const viewport = document.getElementById('profileExpertReviewsViewport');
+  if(!wrap || !viewport) return;
+  if(!profileExpertPool_.length){
+    wrap.hidden = true;
+    return;
+  }
+  wrap.hidden = false;
+  const pair = pickProfileExpertPair_(profileExpertPool_);
+  profileExpertLastPairKey_ = profileReviewPairKey_(pair);
+  const html = pair.map(renderProfileExpertCardHtml_).join('');
+  const apply = () => {
+    viewport.innerHTML = html;
+    viewport.classList.remove('is-fading');
+  };
+  if(!animate ||
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    apply();
+    return;
+  }
+  viewport.classList.add('is-fading');
+  if(profileExpertFadeTimer_) clearTimeout(profileExpertFadeTimer_);
+  profileExpertFadeTimer_ = setTimeout(() => {
+    apply();
+    profileExpertFadeTimer_ = null;
+  }, 280);
+}
+
+function stopProfileExpertRotation_(){
+  if(profileExpertRotateTimer_){
+    clearInterval(profileExpertRotateTimer_);
+    profileExpertRotateTimer_ = null;
+  }
+}
+
+function startProfileExpertRotation_(resetIndex){
+  stopProfileExpertRotation_();
+  if(!profileExpertPool_.length) return;
+  if(resetIndex !== false) profileExpertLastPairKey_ = '';
+  renderProfileExpertCurrent_(false);
+  if(profileExpertPool_.length >= 2){
+    profileExpertRotateTimer_ = setInterval(function(){
+      renderProfileExpertCurrent_(true);
+    }, PROFILE_EXPERT_ROTATE_MS);
+  }
+}
+
+function applyProfileExpertPool_(reviews){
+  profileExpertPool_ = normalizeProfileExpertReviews_(reviews);
+  if(profileExpertPool_.length){
+    syncProfileHomeReviews_();
+    return;
+  }
+  const wrap = document.getElementById('profileExpertReviews');
+  if(wrap) wrap.hidden = true;
+  stopProfileExpertRotation_();
+}
+
+function loadProfileExpertReviews_(){
+  applyProfileExpertPool_(PROFILE_EXPERT_REVIEWS_FALLBACK);
 }
 
 function escapeProfileHtml_(s){
@@ -7232,6 +7393,7 @@ loadProfileBlogFeed_(false);
 initProfileBeautyReviewModal_();
 loadProfileManualReviews_();
 loadProfileBeautyReviews_();
+loadProfileExpertReviews_();
 </script>
 </body>
 </html>
