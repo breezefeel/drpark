@@ -1642,6 +1642,17 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
     background: rgba(74, 206, 168, 0.1);
     border: 1px solid rgba(74, 206, 168, 0.28);
   }
+  /* A-ROM 판단 흐름 — Position 2·3 */
+  #s-psp3 .proto-doc .mv-common-flow-box--a-judgment {
+    background: rgba(232, 147, 74, 0.06);
+    border: 1px solid rgba(232, 147, 74, 0.22);
+    margin-bottom: 14px;
+  }
+  #s-psp3 .proto-doc .mv-common-flow-box--a-judgment-green {
+    background: rgba(74, 206, 168, 0.06);
+    border: 1px solid rgba(74, 206, 168, 0.22);
+    margin-bottom: 14px;
+  }
   #s-psp3 .proto-doc .mv-active-action-title {
     font-size: 13px;
     font-weight: 600;
@@ -1840,6 +1851,410 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
     font-size: 11px;
     color: var(--text-dim);
     line-height: 1.8;
+  }
+  #s-psp3 .proto-doc .mv-stretch-panel-cell--full {
+    grid-column: 1 / -1;
+  }
+  #s-psp3 .proto-doc .mv-part-ref {
+    font-size: 10px;
+    color: var(--text-dim);
+    line-height: 1.55;
+    margin: 0 0 8px;
+    padding: 6px 8px;
+    background: rgba(74, 157, 232, 0.05);
+    border-radius: 4px;
+    border-left: 2px solid rgba(74, 157, 232, 0.35);
+  }
+  #s-psp3 .proto-doc .mv-lower-summary {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+  #s-psp3 .proto-doc .mv-lower-summary .mv-par-chain {
+    font-weight: 600;
+    color: var(--blue);
+  }
+  #s-psp3 .proto-doc details.mv-lower-phase {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 6px;
+    background: var(--bg2);
+  }
+  #s-psp3 .proto-doc details.mv-lower-phase > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 8px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  #s-psp3 .proto-doc .mv-par-badge-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  #s-psp3 .proto-doc .mv-phase-summary-label {
+    font-weight: 700;
+    color: var(--text);
+  }
+  #s-psp3 .proto-doc .mv-r-meta-block {
+    background: rgba(124, 58, 237, 0.06);
+    border: 1px solid rgba(124, 58, 237, 0.18);
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+  }
+  #s-psp3 .proto-doc .mv-r-meta-block-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 6px;
+  }
+  #s-psp3 .proto-doc .mv-r-meta-item {
+    font-size: 11px;
+    line-height: 1.65;
+    color: var(--text-dim);
+    margin: 0 0 4px;
+  }
+  #s-psp3 .proto-doc .mv-r-meta-item:last-child { margin-bottom: 0; }
+  #s-psp3 .proto-doc .mv-r-meta-k {
+    display: inline-block;
+    min-width: 3.2em;
+    font-weight: 700;
+    color: var(--purple);
+  }
+  #s-psp3 .proto-doc .mv-r-lines-block {
+    border-left: 3px solid rgba(74, 157, 232, 0.35);
+    padding-left: 10px;
+    margin-top: 2px;
+  }
+  #s-psp3 .proto-doc .mv-r-lines-block-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+  #s-psp3 .proto-doc .mv-r-line-item {
+    background: var(--bg3);
+    border-radius: 5px;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    font-size: 11px;
+    line-height: 1.7;
+    color: var(--text-dim);
+  }
+  #s-psp3 .proto-doc .mv-r-line-item:last-child { margin-bottom: 0; }
+  #s-psp3 .proto-doc .mv-r-line-item strong {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 3px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+  #s-psp3 .proto-doc .mv-r-line-item--back strong { color: #5b6b8a; }
+  #s-psp3 .proto-doc .mv-r-line-item--front strong { color: #b86a14; }
+  #s-psp3 .proto-doc .mv-r-line-item--lat strong { color: #0d7a6e; }
+  #s-psp3 .proto-doc .mv-r-line-item--back {
+    border-top: 2px solid rgba(91, 107, 138, 0.35);
+  }
+  #s-psp3 .proto-doc .mv-r-line-item--front {
+    border-top: 2px solid rgba(184, 106, 20, 0.35);
+  }
+  #s-psp3 .proto-doc .mv-r-line-item--lat {
+    border-top: 2px solid rgba(13, 122, 110, 0.35);
+  }
+  #s-psp3 .proto-doc .mv-r-line-item--note {
+    border-top: 2px solid rgba(74, 157, 232, 0.3);
+    background: rgba(74, 157, 232, 0.04);
+  }
+  #s-psp3 .proto-doc .mv-r-line-item--note strong { color: var(--blue); }
+  #s-psp3 .proto-doc .mv-p-aside {
+    margin-top: 8px;
+    padding: 6px 8px;
+    font-size: 10px;
+    line-height: 1.6;
+    color: var(--text-dim);
+    background: rgba(74, 157, 232, 0.05);
+    border-radius: 4px;
+    border-left: 2px solid rgba(74, 157, 232, 0.25);
+  }
+  #s-psp3 .proto-doc details.mv-lower-phase--par > summary {
+    background: rgba(74, 157, 232, 0.05);
+    border-radius: 6px 6px 0 0;
+  }
+  #s-psp3 .proto-doc details.mv-lower-phase--r > summary {
+    background: rgba(124, 58, 237, 0.06);
+    border-radius: 6px 6px 0 0;
+  }
+  #s-psp3 .proto-doc details.mv-lower-phase > summary::-webkit-details-marker { display: none; }
+  #s-psp3 .proto-doc details.mv-lower-phase > summary::after {
+    content: '▾';
+    margin-left: auto;
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+  #s-psp3 .proto-doc details.mv-lower-phase[open] > summary::after { transform: rotate(180deg); }
+  #s-psp3 .proto-doc .mv-lower-phase-body {
+    padding: 0 10px 10px;
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.75;
+  }
+  #s-psp3 .proto-doc .mv-lower-phase-body strong { color: var(--text); }
+  #s-psp3 .proto-doc .mv-judge-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10px;
+    margin: 8px 0;
+  }
+  #s-psp3 .proto-doc .mv-judge-table th,
+  #s-psp3 .proto-doc .mv-judge-table td {
+    border: 1px solid var(--border);
+    padding: 6px 8px;
+    text-align: left;
+    vertical-align: top;
+  }
+  #s-psp3 .proto-doc .mv-judge-table th {
+    background: var(--bg3);
+    color: var(--text);
+    font-weight: 600;
+  }
+  #s-psp3 .proto-doc .mv-flow-badge--active {
+    background: rgba(232, 147, 74, 0.15);
+    color: var(--orange);
+  }
+  #s-psp3 .proto-doc .mv-flow-badge--resist {
+    background: rgba(124, 58, 237, 0.12);
+    color: var(--purple);
+  }
+  #s-psp3 .proto-doc .mv-lower-order-note {
+    background: rgba(74, 157, 232, 0.06);
+    border-radius: 5px;
+    padding: 8px 10px;
+    margin-top: 8px;
+    font-size: 10px;
+    line-height: 1.65;
+  }
+  #s-psp3 .proto-doc .mv-par-sep {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: 'DM Mono', monospace;
+    margin: 14px 0 8px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(74, 206, 168, 0.35);
+  }
+  #s-psp3 .proto-doc .mv-func-6steps {
+    margin-top: 8px;
+    padding-left: 0;
+    list-style: none;
+  }
+  #s-psp3 .proto-doc .mv-func-6steps li {
+    padding: 4px 0 4px 1.4em;
+    position: relative;
+    font-size: 11px;
+    line-height: 1.65;
+    color: var(--text);
+  }
+  #s-psp3 .proto-doc .mv-func-6steps li::before {
+    content: attr(data-step);
+    position: absolute;
+    left: 0;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--blue);
+    font-weight: 700;
+  }
+  #s-psp3 .proto-doc .mv-posture-program {
+    background: rgba(74, 157, 232, 0.05);
+    border: 1px solid rgba(74, 157, 232, 0.18);
+    border-radius: 8px;
+    padding: 14px 14px 12px;
+    margin-top: 4px;
+  }
+  #s-psp3 .proto-doc .mv-posture-program-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--blue);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  #s-psp3 .proto-doc .mv-posture-goal-box {
+    background: var(--bg3);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+    font-size: 11px;
+    line-height: 1.75;
+    color: var(--text-dim);
+  }
+  #s-psp3 .proto-doc .mv-posture-goal-box strong { color: var(--text); }
+  #s-psp3 .proto-doc .mv-posture-part {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(74, 157, 232, 0.12);
+  }
+  #s-psp3 .proto-doc .mv-posture-part:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  #s-psp3 .proto-doc .mv-posture-part-head {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  #s-psp3 .proto-doc .mv-posture-part-num {
+    flex-shrink: 0;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--blue);
+    width: 1.35em;
+    height: 1.35em;
+    line-height: 1.35em;
+    text-align: center;
+    border-radius: 4px;
+  }
+  #s-psp3 .proto-doc .mv-posture-part-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  #s-psp3 .proto-doc .mv-posture-part-lead {
+    font-size: 10px;
+    color: var(--text-dim);
+    line-height: 1.55;
+    margin: 0 0 8px;
+  }
+  #s-psp3 .proto-doc .mv-posture-6grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  @media (max-width: 520px) {
+    #s-psp3 .proto-doc .mv-posture-6grid { grid-template-columns: 1fr; }
+  }
+  #s-psp3 .proto-doc .mv-posture-6card {
+    background: var(--bg3);
+    border-radius: 6px;
+    padding: 10px 12px;
+  }
+
+  /* 기능운동 · Resistive(어드밴스드) — 별도 메뉴 */
+  #s-psp3 .proto-doc details.pos-acc.pos-func > summary .meta {
+    background: rgba(45, 168, 130, 0.12);
+    border-color: rgba(45, 168, 130, 0.28);
+    color: var(--teal);
+  }
+  #s-psp3 .proto-doc details.pos-acc.pos-func > summary .meta::before { background: var(--teal); }
+  #s-psp3 .proto-doc details.pos-acc.pos-func > summary .pos-summary-name { color: var(--teal); }
+  #s-psp3 .proto-doc .mv-func-standalone {
+    padding: 4px 0 8px;
+  }
+  #s-psp3 .proto-doc .mv-func-block {
+    background: rgba(96, 165, 250, 0.04);
+    border: 1px solid rgba(96, 165, 250, 0.2);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+  #s-psp3 .proto-doc .mv-func-block-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--green);
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+  #s-psp3 .proto-doc .mv-func-dual-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  @media (max-width: 520px) {
+    #s-psp3 .proto-doc .mv-func-dual-grid { grid-template-columns: 1fr; }
+  }
+  #s-psp3 .proto-doc .mv-func-dual-cell {
+    background: var(--bg3);
+    border-radius: 6px;
+    padding: 12px 14px;
+  }
+  #s-psp3 .proto-doc .mv-func-dual-cell h4 {
+    font-size: 11px;
+    font-weight: 700;
+    margin: 0 0 6px;
+  }
+  #s-psp3 .proto-doc .mv-func-dual-cell--lymph h4 { color: var(--teal); }
+  #s-psp3 .proto-doc .mv-func-dual-cell--line h4 { color: var(--green); }
+  #s-psp3 .proto-doc .mv-r-advanced-block {
+    background: rgba(155, 111, 232, 0.06);
+    border: 1px solid rgba(155, 111, 232, 0.22);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  #s-psp3 .proto-doc .mv-r-advanced-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  #s-psp3 .proto-doc .mv-r-advanced-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--purple);
+  }
+  #s-psp3 .proto-doc .mv-coil-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  @media (max-width: 520px) {
+    #s-psp3 .proto-doc .mv-coil-grid { grid-template-columns: 1fr; }
+  }
+  #s-psp3 .proto-doc .mv-coil-item {
+    background: var(--bg3);
+    border-radius: 6px;
+    padding: 10px 12px;
+    border-left: 3px solid rgba(155, 111, 232, 0.45);
+    font-size: 11px;
+    line-height: 1.55;
+    color: var(--text-dim);
+  }
+  #s-psp3 .proto-doc .mv-coil-item strong {
+    display: block;
+    color: var(--text);
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+  #s-psp3 .proto-doc .mv-coil-placeholder {
+    font-size: 10px;
+    color: var(--text-dim);
+    font-style: italic;
   }
 
   /* 생활습관 & 자세 교육 (통합 박스) */
@@ -2262,6 +2677,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   #s-psp3 .proto-doc details.proto-acc.part-c > summary .meta { background: rgba(176,138,21,0.12); border-color: rgba(176,138,21,0.30); color: var(--yellow); }
   #s-psp3 .proto-doc details.proto-acc.part-d > summary .meta { background: rgba(176,109,26,0.12); border-color: rgba(176,109,26,0.30); color: var(--orange); }
   #s-psp3 .proto-doc details.proto-acc.part-e > summary .meta { background: rgba(107,78,174,0.10); border-color: rgba(107,78,174,0.25); color: var(--purple); }
+  #s-psp3 .proto-doc details.proto-acc.step-2-ct > summary .meta { background: rgba(107,78,174,0.10); border-color: rgba(107,78,174,0.25); color: var(--purple); }
 
   #s-psp3 .proto-doc details.proto-acc.step-0 > summary .meta { background: rgba(107,78,174,0.10); border-color: rgba(107,78,174,0.25); color: var(--purple); }
 
@@ -2473,6 +2889,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
     #s-psp3 .proto-doc details.pos-acc.pos1 > summary .pos-summary-name { color: var(--blue); }
     #s-psp3 .proto-doc details.pos-acc.pos2 > summary .pos-summary-name { color: var(--orange); }
     #s-psp3 .proto-doc details.pos-acc.pos3 > summary .pos-summary-name { color: var(--green); }
+    #s-psp3 .proto-doc details.pos-acc.pos-func > summary .pos-summary-name { color: var(--teal); }
     #s-psp3 .proto-doc details.pos-acc > summary .pos-summary-detail .sub {
       font-size: 11px;
       font-weight: 400;
@@ -4341,9 +4758,68 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
 
       <div class="note-box" style="margin-top:12px;">
         <span class="note-icon">→</span>
-        <span>통증 해결 시 <strong style="color:var(--accent)">움직임 평가</strong>로 이동 · 인대·힘줄 결합조직 손상 시 프로토콜은 <strong style="color:var(--purple)">가장 하단</strong> 참고</span>
+        <span>통증 해결 시 <strong style="color:var(--accent)">움직임 평가(STEP 03)</strong>로 이동 · PAR 완료 후 <strong style="color:var(--teal)">기능운동</strong> · 인대·힘줄 손상은 <strong style="color:var(--purple)">아래 결합조직</strong> 참고</span>
       </div>
     </div>
+
+    <!-- 결합조직 손상 — Manual Therapy 마지막 -->
+    <details class="proto-acc step-2-ct" style="margin-top:16px;">
+      <summary><span class="meta">결합조직</span> 인대 · 힘줄 손상 <span class="sub">STEP 02 Manual · 마지막</span><span class="chev">▾</span></summary>
+      <div class="acc-body">
+        <div style="background:rgba(155,111,232,0.08);border:1px solid rgba(155,111,232,0.28);border-radius:10px;padding:18px 20px;">
+          <div style="font-size:12px;font-weight:700;color:var(--purple);margin-bottom:4px;font-family:'DM Mono',monospace;letter-spacing:0.06em;">인대 · 힘줄 결합조직 손상</div>
+
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.65;margin-bottom:14px;">
+            인대·힘줄·근육 파열은 모두 <strong style="color:var(--text)">콜라겐 섬유(결합조직)의 찢어짐</strong>으로 비슷한 통증을 보일 수 있어 역할에 따라 감별합니다.
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:16px;">
+            <div style="background:var(--bg3);border-radius:7px;padding:12px 13px;border-left:3px solid var(--purple);">
+              <div style="font-size:12px;font-weight:700;color:var(--purple);margin-bottom:6px;">인대 (Ligament)</div>
+              <div style="font-size:11px;color:var(--text-dim);line-height:1.55;">
+                <span style="color:var(--blue);font-weight:600">유발:</span> 패시브하게 늘렸을 때 · end-range 통증 · 스트레스 검사 양성 · 불안정감
+              </div>
+            </div>
+            <div style="background:var(--bg3);border-radius:7px;padding:12px 13px;border-left:3px solid var(--yellow);">
+              <div style="font-size:12px;font-weight:700;color:var(--yellow);margin-bottom:6px;">힘줄 (Tendon)</div>
+              <div style="font-size:11px;color:var(--text-dim);line-height:1.55;">
+                <span style="color:var(--orange);font-weight:600">유발:</span> 힘을 줄 때 · 부착부 압통 · 저항 검사 양성
+              </div>
+            </div>
+            <div style="background:var(--bg3);border-radius:7px;padding:12px 13px;border-left:3px solid var(--orange);">
+              <div style="font-size:12px;font-weight:700;color:var(--orange);margin-bottom:6px;">근육 파열</div>
+              <div style="font-size:11px;color:var(--text-dim);line-height:1.55;">
+                <span style="color:var(--orange);font-weight:600">유발:</span> 수축·저항 시 · 근복부 압통·멍 · 근력 저하
+              </div>
+            </div>
+          </div>
+
+          <div style="background:rgba(155,111,232,0.12);border-radius:8px;padding:12px 14px;margin-bottom:14px;">
+            <div style="font-size:11px;font-weight:700;color:var(--purple);margin-bottom:8px;">임상에서 추천하는 치료 옵션</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.65;">
+              증상 완화·조직 환경 개선 목적으로 <strong style="color:var(--text)">주사 · 충격파 · 침</strong> 등을 단계적으로 고려할 수 있습니다. 다만 이들은 <strong style="color:var(--text)">치료보다 관리가 우선</strong>일 때 비로소 의미가 있습니다.
+            </div>
+          </div>
+
+          <div style="font-size:11px;font-weight:700;color:var(--purple);margin-bottom:8px;">치료보다 관리가 더 중요한 이유</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.75;margin-bottom:14px;">
+            손상된 부위는 말 그대로 <strong style="color:var(--text)">찢어진 상태</strong>입니다. 그 부위에 계속해서 찢어지게 하는 스트레스가 반복되면, 아무리 좋은 치료를 받아도 <strong style="color:var(--text)">아물 만 하면 다시 찢히고</strong>, 그 결과 <strong style="color:var(--text)">회복 기간이 점점 길어집니다</strong>.
+          </div>
+
+          <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:8px;">생활·운동 관리 포인트</div>
+          <div style="font-size:11px;color:var(--text-dim);line-height:1.75;margin-bottom:14px;">
+            <strong style="color:var(--text)">족저근막염·테니스 엘보</strong> 등에서는 통증 부위를 <strong style="color:var(--text)">늘리거나 당기는 동작</strong>을 가급적 피합니다. Manual Therapy와 병행하여 힘줄과 연관된 근육의 <strong style="color:var(--text)">tightness를 잘 풀어 주면</strong> 손상된 힘줄에 가해지는 <strong style="color:var(--text)">장력을 줄여</strong> 회복에 도움이 됩니다.
+          </div>
+
+          <div style="background:var(--bg3);border-radius:8px;padding:12px 14px;border-left:3px solid rgba(224,92,106,0.6);">
+            <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:8px;">약 3주 Rule &amp; 재손상 주의</div>
+            <div style="font-size:11px;color:var(--text-dim);line-height:1.75;">
+              대략 <strong style="color:var(--text)">3주 정도는 통증이 나타나는 동작을 하지 않도록</strong> 안내합니다. “나았는지 확인”하려고 움직였다가 통증이 다시 뜨면 <strong style="color:var(--text)">재손상</strong>으로 보고, 회복 타이밍이 <strong style="color:var(--text)">처음부터 다시 시작</strong>된다고 분명히 안내합니다.
+            </div>
+          </div>
+        </div>
+      </div>
+    </details>
 
   </div>
     </div>
@@ -4353,7 +4829,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
 
   <!-- STEP 3: Passive Stretching -->
   <details class="proto-acc step-3">
-    <summary><span class="meta">STEP 03</span> Movement <span class="sub">Position 1 → 2 → 3</span><span class="chev">▾</span></summary>
+    <summary><span class="meta">STEP 03</span> Movement <span class="sub">PAR · Position 1 → 2 → 3</span><span class="chev">▾</span></summary>
     <div class="acc-body">
   <div class="section">
     <div class="step-header">
@@ -4374,24 +4850,49 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
       </div>
 
       <div class="mv-common-flow-outside">
-        <div class="mv-common-flow-title">각 파트 공통 진행 흐름</div>
-        <p class="mv-common-flow-desc">Supine·Prone 등 각 파트마다 <strong style="color:var(--text)">통증·ROM</strong>을 보고 같은 순서로 진행합니다. 아래 박스는 공통 판단 흐름이며, 이후 분기에서 세부 중재로 이어집니다.</p>
+        <div class="mv-common-flow-title">PAR 공통 진행 흐름</div>
+        <p class="mv-common-flow-desc">각 파트마다 <strong style="color:var(--text)">통증·ROM</strong>을 체크 하며 같은 순서로 진행합니다. 아래 박스는 공통 판단 흐름이며, 이후 분기에서 세부 중재로 이어집니다.</p>
       </div>
       <div class="mv-common-flow-box mv-common-flow-box--judgment">
         <div class="mv-common-flow-rows">
           <div class="mv-common-flow-row">
-            <span class="mv-flow-badge mv-flow-badge--passive">Passive</span>
-            <span style="color:var(--text-dim);">통증 있음 → Pin&amp;Stretching · 소도구 자극</span>
+            <span class="mv-flow-badge mv-flow-badge--label">관절별</span>
+            <span style="color:var(--text-dim);"><strong style="color:var(--text)">각 관절마다</strong> P → AA → A 진행 한 후 다음 관절</span>
           </div>
           <div class="mv-common-flow-row">
-            <span style="color:var(--text-dim);">통증 없음 + ROM↓</span>
+            <span class="mv-flow-badge mv-flow-badge--passive">P</span>
+            <span style="color:var(--text-dim);">Passive Stretching: 말단 → 근위로 진행하며 통증·ROM 매 순간 확인</span>
+          </div>
+          <div class="mv-common-flow-row">
+            <span style="color:var(--text-dim);">1) 통증 Fascia/Muscle</span>
+            <span style="color:var(--text-dim);">→</span>
+            <span style="color:var(--text-dim);">통증 부위 소도구 자극 or Pin & Stretching → <strong style="color:var(--text)">해소 후 ROM↓?</strong></span>
+          </div>
+          <div class="mv-common-flow-row">
+            <span style="color:var(--text-dim);">(통증 · 결합조직 의심</span>
+            <span style="color:var(--text-dim);">→</span>
+            <span style="color:var(--red);font-weight:600;">무통 범위만</span>
+            <span style="color:var(--text-dim);">· 통증 동작 자제)</span>
+          </div>
+          <div class="mv-common-flow-row">
+            <span style="color:var(--text-dim);">2) 통증 없음 + ROM↓</span>
             <span style="color:var(--text-dim);">→</span>
             <span class="mv-flow-badge mv-flow-badge--aa">AA</span>
             <span style="color:var(--text-dim);">CIE · Hold&amp;Relax · Pull&amp;Push</span>
           </div>
           <div class="mv-common-flow-row">
-            <span class="mv-flow-badge mv-flow-badge--rom">ROM 정상</span>
-            <span style="color:var(--text-dim);">→ 생활습관·자세 교육 → 기능운동</span>
+            <span style="color:var(--text-dim);">3) 통증 없음 + ROM 정상</span>
+            <span style="color:var(--text-dim);">→</span>
+            <span class="mv-flow-badge mv-flow-badge--active">A</span>
+            <span style="color:var(--text-dim);">A-ROM 정상 확인</span>
+          </div>
+          <div class="mv-common-flow-row">
+            <span class="mv-flow-badge mv-flow-badge--resist">R</span>
+            <span style="color:var(--text-dim);">근막경선 따라 <strong style="color:var(--text)">굴곡 → 신전 → 외전 → 내전 → 회전</strong></span>
+          </div>
+          <div class="mv-common-flow-row">
+            <span class="mv-flow-badge mv-flow-badge--rom">PAR 완료 후</span>
+            <span style="color:var(--text-dim);">→ 생활습관·자세 교정 · <strong style="color:var(--teal)">기능운동</strong></span>
           </div>
         </div>
       </div>
@@ -4408,10 +4909,8 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
           <div class="branch-condition">통증 있음</div>
           <div class="branch-action">Pin &amp; Stretching<br>소도구를 이용한 자극 운동</div>
           <div class="branch-detail">
-            <div style="font-size:10px;color:var(--red);margin-bottom:6px;font-weight:600;">Passive Stretching과 병행</div>
-            통증이 있을 때는 <strong style="color:var(--text);">Passive Stretching</strong> 동작으로 안전한 범위를 유지·늘리면서 Pin &amp; Stretching을 진행합니다.<br><br>
-            <span style="font-size:10px;color:var(--text-dim);display:block;margin-bottom:4px;font-weight:600;">폼롤러 · 소도구 자극</span>
-            <strong style="color:var(--text);">폼롤러</strong>나 <strong style="color:var(--text);">소도구</strong>를 이용해 근막·근육 부위를 자극하는 운동을 함께 시행합니다.
+            <div style="font-size:10px;color:var(--red);margin-bottom:6px;font-weight:600;">Fascia/Muscle 통증 시 적용</div>
+             <strong style="color:var(--text);">문제가 없어지면</strong> ROM 감소 여부로 재판단합니다. (결합조직 손상 의심 시 <strong style="color:var(--red);">무통 범위만</strong>).<br><br>                        
           </div>
         </div>
         <div class="branch flex">
@@ -4424,11 +4923,12 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
         </div>
         <div class="branch ok">
           <div class="branch-condition">통증 없음<br>가동범위 정상</div>
-          <div class="branch-action">자세·생활습관 교육</div>
+          <div class="branch-action">Active & Resistive</div>
           <div class="branch-detail">
-            수행 가능 시<br>
+            <div style="margin-top:6px;font-size:10px;color:var(--green);font-weight:600;">생활습관·자세교정</div>
+            <div style="font-size:10px;color:var(--text-dim);">바른 자세 인지 교육·자세 유지를 위한 교정 운동</div>
             <div style="margin-top:6px;font-size:10px;color:var(--green);font-weight:600;">기능운동</div>
-            <div style="font-size:10px;color:var(--text-dim);">다관절 — 근막경선을 따라<br>말단→근위부 순차 활성화</div>
+            <div style="font-size:10px;color:var(--text-dim);">Resistive(어드밴스드) 8종</div>
           </div>
         </div>
       </div>
@@ -4446,76 +4946,163 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
           <span class="meta">POSITION 1</span>
           <div class="pos-name">Supine / Prone</div>
           <div class="pos-gravity">누운 자세 · 중력 부하 최소</div>
-        </div>
+        </div>        
 
-        <!-- Passive Stretching -->
-        <div class="mv-common-flow-outside mv-common-flow-outside--passive">
-          <div class="mv-stretch-head">
-            <div class="mv-common-flow-title">Passive Stretching</div>
-            <span class="mv-rom-tag mv-rom-tag--p">= P-ROM</span>
-          </div>
-          <p class="mv-common-flow-desc"><strong style="color:#2a6fa8">P-ROM</strong> — Passive Stretching 시행 자체가 관절 가동범위와 질을 평가하는 과정.</p>
-        </div>
-        <div class="mv-common-flow-box mv-common-flow-box--passive-action">
-          <div class="mv-passive-action-title">Passive Stretching 시행</div>
-          <div class="mv-passive-action-sub">안전한 움직임 + P-ROM 평가</div>
-        </div>
-
-        <!-- Passive Stretching — Supine · Prone 4파트 -->
         <div class="mv-stretch-panel mv-stretch-panel--passive">
-          <div class="mv-stretch-panel-title">Supine · Prone 4파트</div>
-          <div class="mv-stretch-panel-grid">
-            <div class="mv-stretch-panel-cell">
-              <div class="mv-stretch-cell-title" style="color:var(--blue);">SUPINE — Lower</div>
-              <div class="mv-stretch-cell-list">
-                ① SLR (하지직거상)<br>
-                ② Hip Flexion 패시브<br>
-                ③ 고관절 내·외회전<br>
-                ④ Knee-to-chest<br>
-                ⑤ Knee drop (흉요추 회전)
-              </div>
+          <div class="mv-stretch-panel-title">Supine · Prone — 파트별 순서 (①→④)</div>
+          <div class="mv-stretch-panel-grid" style="grid-template-columns:1fr;">
+
+            <!-- ① Supine Lower -->
+            <div class="mv-stretch-panel-cell mv-stretch-panel-cell--full">
+              <div class="mv-stretch-cell-title" style="color:var(--blue);">① SUPINE — Lower</div>              
+              <details class="mv-lower-phase mv-lower-phase--par" open>
+                <summary>
+                  <span class="mv-par-badge-row" aria-label="P, AA, A">
+                    <span class="mv-flow-badge mv-flow-badge--passive">P</span>
+                    <span class="mv-flow-badge mv-flow-badge--aa">AA</span>
+                    <span class="mv-flow-badge mv-flow-badge--active">A</span>
+                  </span>
+                  <span class="mv-phase-summary-label">말단 → 근위</span>
+                </summary>
+                <div class="mv-lower-phase-body">
+                  <p style="margin:0;"><strong>순서</strong> — 발(족부·발가락) → 발목 → 무릎 → 고관절</p>
+                </div>
+              </details>
+              <details class="mv-lower-phase mv-lower-phase--r" open>
+                <summary>
+                  <span class="mv-flow-badge mv-flow-badge--resist">R</span>
+                  <span class="mv-phase-summary-label">Resistive(베이직): 하지 근막경선을 따라 근위 → 말단</span>
+                </summary>
+                <div class="mv-lower-phase-body">
+                  <div class="mv-r-meta-block">
+                    <div class="mv-r-meta-block-title">진행 규칙</div>
+                    <p class="mv-r-meta-item"><span class="mv-r-meta-k">순서</span>고관절 → 무릎 → 발목 → 발 → 발가락(엄지→2→3→4→5) → 회전 저항</p>
+                    <p class="mv-r-meta-item"><span class="mv-r-meta-k">방향 순</span>굴곡(전방) → 신전(후방) → 외전 → 내전 → 회전</p>
+                  </div>
+                  <div class="mv-r-lines-block">
+                    <div class="mv-r-lines-block-title">근막경선별 연쇄 · 세부</div>
+                    <div class="mv-r-line-item mv-r-line-item--back">
+                      <strong>후방 경선</strong>
+                      고관절·무릎·발목·발 <em>굴곡</em>에서 → 연쇄 <em>신전</em>(배굴).
+                    </div>
+                    <div class="mv-r-line-item mv-r-line-item--front">
+                      <strong>전방 경선</strong>
+                      <em>신전(편 상태)</em>에서 연쇄 <em>굴곡</em>.
+                    </div>
+                    <div class="mv-r-line-item mv-r-line-item--lat">
+                      <strong>외전 · 내전 · 회전</strong>
+                      고관절·무릎·발목 연쇄적 움직임.
+                    </div>
+                  </div>
+                </div>
+              </details>
             </div>
-            <div class="mv-stretch-panel-cell">
-              <div class="mv-stretch-cell-title" style="color:var(--blue);">SUPINE — Upper</div>
-              <div class="mv-stretch-cell-list">
-                ① 경추 굴곡·측굴·회전 패시브<br>
-                ② 어깨 굴곡·외전 패시브<br>
-                ③ 어깨 외·내회전<br>
-                ④ 흉추 신전 (foam roller)<br>
-                ⑤ Chin tuck
-              </div>
+
+            <!-- ② Supine Upper -->
+            <div class="mv-stretch-panel-cell mv-stretch-panel-cell--full">
+              <div class="mv-stretch-cell-title" style="color:var(--blue);">② SUPINE — Upper</div>
+              <details class="mv-lower-phase mv-lower-phase--par" open>
+                <summary>
+                  <span class="mv-par-badge-row" aria-label="P, AA, A">
+                    <span class="mv-flow-badge mv-flow-badge--passive">P</span>
+                    <span class="mv-flow-badge mv-flow-badge--aa">AA</span>
+                    <span class="mv-flow-badge mv-flow-badge--active">A</span>
+                  </span>
+                  <span class="mv-phase-summary-label">말단 → 근위</span>
+                </summary>
+                <div class="mv-lower-phase-body">
+                  <p style="margin:0 0 6px;"><strong>순서</strong> — 손가락 → 손목 → 팔꿈치 → 어깨</p>                  
+                </div>
+              </details>
+              <details class="mv-lower-phase mv-lower-phase--r" open>
+                <summary>
+                  <span class="mv-flow-badge mv-flow-badge--resist">R</span>
+                  <span class="mv-phase-summary-label">Resistive(베이직): 상지 근막경선을 따라 근위 → 말단</span>
+                </summary>
+                <div class="mv-lower-phase-body">
+                  <div class="mv-r-meta-block">
+                    <div class="mv-r-meta-block-title">진행 규칙</div>
+                    <p class="mv-r-meta-item"><span class="mv-r-meta-k">순서</span>어깨 → 팔꿈치 → 손목 → 손 → 손가락(엄지→2→3→4→5) → 회전 저항</p>
+                    <p class="mv-r-meta-item"><span class="mv-r-meta-k">방향 순</span>굴곡 → 신전 → 외전 → 내전 → 회전</p>
+                  </div>                  
+                </div>
+              </details>
             </div>
-            <div class="mv-stretch-panel-cell">
-              <div class="mv-stretch-cell-title" style="color:rgba(74,157,232,0.85);">PRONE — Lower</div>
-              <div class="mv-stretch-cell-list">
-                ① 고관절 Extension 패시브<br>
-                ② Prone knee bend (슬굴곡)<br>
-                ③ 고관절 내·외회전<br>
-                ④ 발목 배굴 패시브
-              </div>
+
+            <!-- ③ Prone Upper -->
+            <div class="mv-stretch-panel-cell mv-stretch-panel-cell--full">
+              <div class="mv-stretch-cell-title" style="color:rgba(74,157,232,0.85);">③ PRONE — Upper</div>
+              <details class="mv-lower-phase mv-lower-phase--par" open>
+                <summary>
+                  <span class="mv-par-badge-row" aria-label="P, AA, A">
+                    <span class="mv-flow-badge mv-flow-badge--passive">P</span>
+                    <span class="mv-flow-badge mv-flow-badge--aa">AA</span>
+                    <span class="mv-flow-badge mv-flow-badge--active">A</span>
+                  </span>
+                  <span class="mv-phase-summary-label">말단 → 근위</span>
+                </summary>
+                <div class="mv-lower-phase-body">
+                  <p style="margin:0;"><strong>순서</strong> — 손가락 → 손목 → 팔꿈치 → 어깨 (Supine Upper와 동일)</p>                  
+                </div>
+              </details>
+              <details class="mv-lower-phase mv-lower-phase--r" open>
+                <summary>
+                  <span class="mv-flow-badge mv-flow-badge--resist">R</span>
+                  <span class="mv-phase-summary-label">Resistive(베이직): 상지 근막경선을 따라 근위 → 말단</span>
+                </summary>
+                <div class="mv-lower-phase-body">
+                  <div class="mv-r-meta-block">
+                    <div class="mv-r-meta-block-title">진행 규칙</div>
+                    <p class="mv-r-meta-item"><span class="mv-r-meta-k">순서</span>어깨 → 팔꿈치 → 손목 → 손 → 손가락(엄지→2→3→4→5) → 회전 저항</p>
+                    <p class="mv-r-meta-item"><span class="mv-r-meta-k">방향 순</span>굴곡 → 신전 → 외전 → 내전 → 회전</p>
+                  </div>                  
+                </div>
+              </details>
             </div>
-            <div class="mv-stretch-panel-cell">
-              <div class="mv-stretch-cell-title" style="color:rgba(74,157,232,0.85);">PRONE — Upper</div>
-              <div class="mv-stretch-cell-list">
-                ① 흉추 Extension 패시브 (Cobra)<br>
-                ② 경추 Extension·회전<br>
-                ③ 어깨 외회전·신전 패시브<br>
-                ④ 견갑 내전 패시브
-              </div>
+
+            <!-- ④ Prone Lower -->
+            <div class="mv-stretch-panel-cell mv-stretch-panel-cell--full">
+              <div class="mv-stretch-cell-title" style="color:rgba(74,157,232,0.85);">④ PRONE — Lower</div>
+              <details class="mv-lower-phase mv-lower-phase--par" open>
+                <summary>
+                  <span class="mv-par-badge-row" aria-label="P, AA, A">
+                    <span class="mv-flow-badge mv-flow-badge--passive">P</span>
+                    <span class="mv-flow-badge mv-flow-badge--aa">AA</span>
+                    <span class="mv-flow-badge mv-flow-badge--active">A</span>
+                  </span>
+                  <span class="mv-phase-summary-label">말단 → 근위</span>
+                </summary>
+                <div class="mv-lower-phase-body">
+                  <p style="margin:0;"><strong>순서</strong> — 발가락·발(족부) → 발목 → 무릎 → 고관절</p>                  
+                </div>
+              </details>
+              <details class="mv-lower-phase mv-lower-phase--r" open>
+                <summary>
+                  <span class="mv-flow-badge mv-flow-badge--resist">R</span>
+                  <span class="mv-phase-summary-label">Resistive(베이직): 하지 근막경선을 따라 근위 → 말단</span>
+                </summary>
+                <div class="mv-lower-phase-body">
+                  <div class="mv-r-meta-block">
+                    <div class="mv-r-meta-block-title">진행 규칙</div>
+                    <p class="mv-r-meta-item"><span class="mv-r-meta-k">순서</span>고관절 → 무릎 → 발목 → 발 → 발가락(엄지→2→3→4→5) → 회전 저항</p>
+                    <p class="mv-r-meta-item"><span class="mv-r-meta-k">방향 순</span>굴곡 → 신전 → 외전 → 내전 → 회전</p>
+                  </div>             
+                </div>
+              </details>
             </div>
+
           </div>
         </div>
+
+        <p class="mv-par-sep">생활습관 &amp; 자세 교정</p>
 
         <!-- 생활습관 & 자세 교정 -->
-        <div class="mv-edu-combined">
-          <div class="mv-edu-combined-title">생활습관 &amp; 자세 교정</div>
-          <p class="mv-edu-combined-kicker">ROM 정상 후 · Supine / Prone</p>
-
+        <div class="mv-edu-combined">          
           <div class="mv-edu-subsection">
             <div class="mv-edu-subsection-label">생활습관</div>
             <p class="mv-edu-lead">편하게 호흡하는 법 · 누운 자세에서 긴장 부위 인식</p>
             <p class="mv-edu-goal">목표 — 불필요한 긴장의 최소화</p>
-            <p class="mv-edu-body">바른 자세의 궁극적인 목표는 올바른 형태가 아니라 <strong style="color:var(--text)">긴장 없는 상태</strong>다.</p>
+            <p class="mv-edu-body">바른 자세의 궁극적인 목표는 올바른 형태가 아니라 <strong style="color:var(--text)">지속적인 긴장을 최소화</strong>하는 것</p>
             <div class="mv-edu-trio">
               <div class="mv-edu-trio-item">
                 <div class="mv-edu-trio-icon" aria-hidden="true">🌬</div>
@@ -4536,44 +5123,69 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
             <p class="mv-edu-foot">코치의 역할 — 이 세 가지를 스스로 할 수 있도록 안내하는 것</p>
           </div>
 
-          <div class="mv-edu-subsection">
-            <div class="mv-edu-subsection-label mv-edu-subsection-label--posture">자세 교육</div>
-            <p class="mv-edu-lead"><strong style="color:var(--text)">누워서 호흡 운동</strong></p>
-            <p class="mv-edu-body" style="margin-bottom:8px;">호흡 운동과 함께 발, 엉덩이, 어깨, 손끝, 목까지 정렬시키고 있어.</p>
-            <div class="mv-align-chain" aria-label="호흡과 함께 정렬하는 순서">
-              <span class="mv-align-step">발</span>
-              <span class="mv-align-arrow" aria-hidden="true">→</span>
-              <span class="mv-align-step">엉덩이</span>
-              <span class="mv-align-arrow" aria-hidden="true">→</span>
-              <span class="mv-align-step">어깨</span>
-              <span class="mv-align-arrow" aria-hidden="true">→</span>
-              <span class="mv-align-step">손끝</span>
-              <span class="mv-align-arrow" aria-hidden="true">→</span>
-              <span class="mv-align-step">목</span>
+          <div class="mv-posture-program">
+            <div class="mv-posture-program-title">자세 교정 운동</div>
+            <div class="mv-posture-goal-box">
+              <strong>공통 목표</strong> — <strong>밸런스</strong>를 잡으며 <strong>천천히</strong> 움직입니다.
+              가능하면 <strong>거울</strong>을 보며 스스로를 관찰·인지합니다(좌우·전후 대칭, 호흡, 긴장 최소화를 우선합니다.).<br>
+              또 하나의 목표는 <strong>기초 체력 향상</strong>입니다. (회원이 운동을 포기하는 가장 큰 원인 중 하나가 기초 체력 부족)              
             </div>
-          </div>
-        </div>
 
-        <!-- 기능운동 -->
-        <div style="background:rgba(74,157,232,0.06);border:1px solid rgba(74,157,232,0.15);border-radius:8px;padding:14px;">
-          <div style="font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:0.1em;font-family:'DM Mono',monospace;margin-bottom:10px;">기능운동 — 천천히 · 밸런스 관찰 중심</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
-              <div style="font-size:11px;font-weight:700;color:var(--text-dim);margin-bottom:6px;">Supine 기반</div>
-              <div style="font-size:11px;color:var(--text);line-height:1.9;">
-                1) 발끝 pump → 무릎 굴신<br>
-                골반 틸트 (요추 분절)<br>
-                Chin tuck → 경추 굴곡<br>
-                <strong>2) Sit-up</strong> — 6단계 분절별<br>
-                <span style="font-size:10px;color:var(--text-dim);">천천히 · 좌우 밸런스 확인</span>
+            <div class="mv-posture-part">
+              <div class="mv-posture-part-head">
+                <span class="mv-posture-part-num">1</span>
+                <span class="mv-posture-part-name">누워서 호흡 운동</span>
+              </div>
+              <p class="mv-posture-part-lead">편안한 호흡 다음으로 호흡 운동을 코칭하며 몸을 바르게 정렬합니다.</p>
+              <p class="mv-edu-body" style="margin:0 0 8px;font-size:11px;">호흡 운동과 함께 아래 순서로 등척성 운동을 지도합니다.</p>
+              <div class="mv-align-chain" aria-label="호흡과 함께 정렬하는 순서">
+                <span class="mv-align-step">엉덩이</span>
+                <span class="mv-align-arrow" aria-hidden="true">→</span>
+                <span class="mv-align-step">발</span>
+                <span class="mv-align-arrow" aria-hidden="true">→</span>
+                <span class="mv-align-step">무릎</span>
+                <span class="mv-align-arrow" aria-hidden="true">→</span>
+                <span class="mv-align-step">척추</span>
+                <span class="mv-align-arrow" aria-hidden="true">→</span>
+                <span class="mv-align-step">어깨</span>
+                <span class="mv-align-arrow" aria-hidden="true">→</span>
+                <span class="mv-align-step">손끝</span>
               </div>
             </div>
-            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
-              <div style="font-size:11px;font-weight:700;color:var(--text-dim);margin-bottom:6px;">Prone 기반</div>
-              <div style="font-size:11px;color:var(--text);line-height:1.9;">               
-                <strong>1) 손·발 들기 6단계</strong><br>
-                <span style="font-size:10px;color:var(--text-dim);">① 한팔 ② 한발 ③ 양팔<br>④ 양발 ⑤ 대각선 ⑥ 전신</span><br>
-                <strong>2) Push-up</strong> — 체간 안정 확인
+
+            <div class="mv-posture-part">
+              <div class="mv-posture-part-head">
+                <span class="mv-posture-part-num">2</span>
+                <span class="mv-posture-part-name">Supine — Sit-up 6단계 분절법</span>
+              </div>
+              <p class="mv-posture-part-lead">① 호흡·정렬 후 · 상·하체를 번갈아 분절 → 정식 Sit-up · 교차 터치로 마무리. 매 단계에서 좌우·전후 밸런스 확인.</p>
+              <div class="mv-posture-6card">
+                <ol class="mv-func-6steps" aria-label="Sit-up 6단계">
+                  <li data-step="①"><strong>상체</strong> — 누운 상태에서 상체 약 45° 들어 올리기 (견갑이 바닥에서 떨어질 정도)</li>
+                  <li data-step="②"><strong>하체</strong> — 견갑을 살짝 띄운 상태에서 다리 <strong>한쪽씩</strong> 번갈아 들기 → <strong>양쪽 동시</strong> 들기</li>
+                  <li data-step="③"><strong>상체</strong> — 무릎 굽힌 채 앉은 자세(90°)에서 45° 정도까지 내려갔다가 다시 복귀</li>
+                  <li data-step="④"><strong>하체</strong> — 등(견갑·흉추)이 바닥에 닿은 상태에서 다리 <strong>한쪽씩</strong> 번갈아 들기 → <strong>양쪽 동시</strong> 들기</li>
+                  <li data-step="⑤"><strong>정식 Sit-up</strong> — 통증 없는 범위에서 정상적인 Sit-up</li>
+                  <li data-step="⑥"><strong>교차 터치</strong> — 무릎 펴고 누운 상태에서 양손·양발을 배 위(몸 중간)에서 서로 터치</li>
+                </ol>
+              </div>
+            </div>
+
+            <div class="mv-posture-part">
+              <div class="mv-posture-part-head">
+                <span class="mv-posture-part-num">3</span>
+                <span class="mv-posture-part-name">Prone — Superman 6단계 (후방 경선 분절)</span>
+              </div>
+              <p class="mv-posture-part-lead">② 이후 · 엎드린 채 후방 경선·체간 안정·회전을 단계적으로. 「Superman」은 통칭 — 접영·대각선·회전이 포함된 <strong>분절 prone 프로그램</strong>.</p>
+              <div class="mv-posture-6card">
+                <ol class="mv-func-6steps" aria-label="Prone Superman 6단계">
+                  <li data-step="①"><strong>대각선</strong> — 한 손 + 반대 발 동시 들기</li>
+                  <li data-step="②"><strong>양손·양발</strong> — 낮게 동시 들기 (classic Superman에 가까움)</li>
+                  <li data-step="③"><strong>접영</strong> — 양손·양발 모두 든 상태에서 → 접영 동작 + 발 벌림</li>
+                  <li data-step="④"><strong>팔 신전·무릎 굴곡</strong> — 양손·양발 모두 든 상태에서 → 견갑골 모으기 → 양쪽 무릎 <strong>높게</strong> 밴딩</li>
+                  <li data-step="⑤"><strong>팔꿈치·회전</strong> — 양손·양발 모두 든 상태에서 → <strong>한쪽 팔꿈치부터</strong> 번갈아 더 높이 들며 몸통 회전</li>
+                  <li data-step="⑥"><strong>고관절 회전</strong> — 양손·양발 모두 든 상태에서 → 무릎 위치는 고정하고, <strong>양발을 좌·우로</strong> 번갈아 보내기</li>
+                </ol>                
               </div>
             </div>
           </div>
@@ -4581,7 +5193,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
 
         <div class="advance-box">
           <span class="advance-icon">↓</span>
-          <span>충족 시 다음 단계로 이동 : <strong style="color:var(--purple)">ROM 정상 + 교육 수행 + 기능운동 밸런스 확인</strong></span>
+          <span>충족 시 다음 단계로 이동 : <strong style="color:var(--purple)">P·A·R 완료 + 교육 수행</strong> 후 Position 2</span>
         </div>
       </div>
         </div>
@@ -4609,6 +5221,53 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
         <div class="mv-common-flow-box mv-common-flow-box--active-action">
           <div class="mv-active-action-title">Active Stretching 시행</div>
           <div class="mv-active-action-sub">부분 하중 · A-ROM 평가</div>
+        </div>
+
+        <div class="mv-common-flow-outside" style="margin-bottom:8px;">
+          <div class="mv-common-flow-title">A-ROM 판단 흐름</div>
+          <p class="mv-common-flow-desc" style="margin-bottom:0;">Position 1과 달리 <strong style="color:var(--text)">Active Stretching을 먼저</strong> 시행합니다. 경선별 성공 기준 충족 여부에 따라 분기합니다.</p>
+        </div>
+        <div class="mv-common-flow-box mv-common-flow-box--a-judgment">
+          <div class="mv-common-flow-rows">
+            <div class="mv-common-flow-row">
+              <span class="mv-flow-badge mv-flow-badge--active">A</span>
+              <span style="color:var(--text-dim);">근막경선별 4동작 — A-ROM · 움직임 질 · <strong style="color:var(--text)">성공 기준</strong> 확인</span>
+            </div>
+            <div class="mv-common-flow-row">
+              <span style="color:var(--text-dim);">기준 미달</span>
+              <span style="color:var(--text-dim);">→</span>
+              <span class="mv-flow-badge mv-flow-badge--passive">P</span>
+              <span style="color:var(--text-dim);">Passive Stretching (P-ROM) 보완 — 통증·ROM 매 순간 확인</span>
+            </div>
+            <div class="mv-common-flow-row">
+              <span style="color:var(--text-dim);">1) 통증 Fascia/Muscle</span>
+              <span style="color:var(--text-dim);">→</span>
+              <span style="color:var(--text-dim);">소도구 자극 or Pin &amp; Stretching → <strong style="color:var(--text)">해소 후 ROM↓?</strong></span>
+            </div>
+            <div class="mv-common-flow-row">
+              <span style="color:var(--text-dim);">(결합조직 의심</span>
+              <span style="color:var(--text-dim);">→</span>
+              <span style="color:var(--red);font-weight:600;">무통 범위만</span>
+              <span style="color:var(--text-dim);">)</span>
+            </div>
+            <div class="mv-common-flow-row">
+              <span style="color:var(--text-dim);">2) 통증 없음 + ROM↓</span>
+              <span style="color:var(--text-dim);">→</span>
+              <span class="mv-flow-badge mv-flow-badge--aa">AA</span>
+              <span style="color:var(--text-dim);">CIE · Hold&amp;Relax · Pull&amp;Push</span>
+            </div>
+            <div class="mv-common-flow-row">
+              <span style="color:var(--text-dim);"><strong style="color:var(--text)">A-ROM 성공</strong></span>
+              <span style="color:var(--text-dim);">→</span>
+              <span class="mv-flow-badge mv-flow-badge--resist">R</span>
+              <span style="color:var(--text-dim);"><strong style="color:var(--purple)">Resistive(베이직)</strong> — 근막경선 따라 근위→말단</span>
+            </div>
+            <div class="mv-common-flow-row">
+              <span style="color:var(--text-dim);">R 완료 후</span>
+              <span style="color:var(--text-dim);">→</span>
+              <span style="color:var(--text-dim);">생활습관 · <strong style="color:var(--text)">자세 교정 운동</strong></span>
+            </div>
+          </div>
         </div>
 
         <!-- Active Stretching — 경선별 4동작 -->
@@ -4669,60 +5328,71 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
             </div>
           </div>
 
-          <div class="mv-edu-subsection">
-            <div class="mv-edu-subsection-label mv-edu-subsection-label--posture">자세 교육</div>
-            <p class="mv-edu-lead"><strong style="color:var(--text)">바르게 앉은 상태에서의 호흡 운동</strong></p>
-            <p class="mv-edu-body" style="margin-bottom:8px;">중력에 대항해 <strong style="color:var(--text)">상체 정렬</strong>을 바로잡는 훈련을 합니다. 호흡할 때마다 아래에서 위로 순서대로 맞춥니다.</p>
-            <div class="mv-align-chain" aria-label="앉은 자세 호흡 정렬 순서">
-              <span class="mv-align-step">발·무릎</span>
-              <span class="mv-align-arrow" aria-hidden="true">→</span>
-              <span class="mv-align-step">골반</span>
-              <span class="mv-align-arrow" aria-hidden="true">→</span>
-              <span class="mv-align-step">척추</span>
-              <span class="mv-align-arrow" aria-hidden="true">→</span>
-              <span class="mv-align-step">어깨</span>
-              <span class="mv-align-arrow" aria-hidden="true">→</span>
-              <span class="mv-align-step">목</span>
+          <div class="mv-posture-program">
+            <div class="mv-posture-program-title">자세 교정 운동</div>
+            <div class="mv-posture-goal-box">
+              <strong>공통 목표</strong> — <strong>밸런스</strong>를 잡으며 <strong>천천히</strong> 움직입니다.
+              가능하면 <strong>거울</strong>을 보며 스스로를 관찰합니다. Position 1(누움)에서 쌓은 정렬·호흡을 <strong>부분 하중(네발·무릎 지지)</strong>으로 이어갑니다.
+            </div>
+
+            <div class="mv-posture-part">
+              <div class="mv-posture-part-head">
+                <span class="mv-posture-part-num">1</span>
+                <span class="mv-posture-part-name">바르게 앉은 상태에서 호흡 운동</span>
+              </div>
+              <p class="mv-posture-part-lead">중력에 대항해 상체 정렬을 바로잡습니다. 호흡할 때마다 아래에서 위로 순서대로 맞춥니다.</p>
+              <div class="mv-align-chain" aria-label="앉은 자세 호흡 정렬 순서">                
+                <span class="mv-align-step">골반</span>
+                <span class="mv-align-arrow" aria-hidden="true">→</span>
+                <span class="mv-align-step">척추</span>
+                <span class="mv-align-arrow" aria-hidden="true">→</span>
+                <span class="mv-align-step">어깨</span>
+                <span class="mv-align-arrow" aria-hidden="true">→</span>
+                <span class="mv-align-step">팔꿈치</span>
+              </div>
+            </div>
+
+            <div class="mv-posture-part">
+              <div class="mv-posture-part-head">
+                <span class="mv-posture-part-num">2</span>
+                <span class="mv-posture-part-name">Push-up 6단계 — 전·후방 경선 · 동적 분절</span>
+              </div>
+              <p class="mv-posture-part-lead">무릎 지지 → 무릎 뗀 네발 순으로 난이도 상승. <strong>웨이브</strong>(머리→몸통→골반)와 <strong>동시 하강</strong>을 번갈아 익힙니다. Position 1 Sit-up 6단계의 네발 버전.</p>
+              <div class="mv-posture-6card">
+                <ol class="mv-func-6steps" aria-label="Push-up 6단계">
+                  <li data-step="①"><strong>무릎 대고 네발</strong> — <strong>웨이브</strong>로 내려갔다 올라오기</li>
+                  <li data-step="②"><strong>무릎 지지</strong> — <strong>몸통+골반 동시</strong> 하강 → 웨이브로 상승</li>
+                  <li data-step="③"><strong>무릎 지지</strong> — 몸통+골반 <strong>동시</strong> 하강·상승 (웨이브 없이)</li>
+                  <li data-step="④"><strong>무릎 뗀 네발</strong> — <strong>웨이브</strong>로 내려갔다 올라오기</li>
+                  <li data-step="⑤"><strong>무릎 뗀 네발</strong> — 몸통+골반 <strong>동시</strong> 하강 → 웨이브로 상승</li>
+                  <li data-step="⑥"><strong>정상 Push-up</strong> — 통증 없는 범위에서 완성 동작</li>
+                </ol>
+              </div>
+            </div>
+
+            <div class="mv-posture-part">
+              <div class="mv-posture-part-head">
+                <span class="mv-posture-part-num">3</span>
+                <span class="mv-posture-part-name">Plank 6단계 — 측방·나선 경선 · 안정·회전</span>
+              </div>
+              <p class="mv-posture-part-lead">전·후방(Push-up)과 겹치지 않게 <strong>지지·버티기·측면·골반 회전</strong>에 초점. Position 1 Prone Superman 6단계의 지지·회전 버전.</p>
+              <div class="mv-posture-6card">
+                <ol class="mv-func-6steps" aria-label="Plank 6단계">
+                  <li data-step="①"><strong>무릎 대고 네발</strong> — 버티기</li>
+                  <li data-step="②"><strong>사이드 플랭크</strong> — 위쪽 발을 구부려 지지</li>
+                  <li data-step="③"><strong>무릎 뗀 네발</strong> 플랭크 — 버티기</li>
+                  <li data-step="④"><strong>사이드 플랭크</strong> (무릎 뗀 상태)</li>
+                  <li data-step="⑤"><strong>무릎 뗀 네발</strong> — 버티기 + <strong>골반 좌우 회전</strong></li>
+                  <li data-step="⑥"><strong>사이드 플랭크</strong> + <strong>골반 좌우 움직임</strong></li>
+                </ol>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- 기능운동 -->
-        <div style="padding:14px 16px;background:rgba(232,147,74,0.06);border:1px solid rgba(232,147,74,0.15);border-radius:8px;">
-          <div style="font-size:11px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:0.1em;font-family:'DM Mono',monospace;margin-bottom:10px;">기능운동 — 천천히 · 밸런스 관찰 중심</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
-              <div style="font-size:11px;font-weight:700;color:var(--text-dim);margin-bottom:6px;">스쿼트 5단계</div>
-              <div style="font-size:11px;color:var(--text);line-height:1.9;">
-                ① 의자에서 일어나는 법<br>
-                <div style="background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.2);border-radius:5px;padding:6px 9px;margin:4px 0;">
-                  <span style="color:var(--accent);font-weight:700;">② 골반 중립 + 허리 이완 기립</span><br>
-                  <span style="font-size:10px;color:var(--text-dim);">천천히 일어나면서 골반 중립 위치 유지<br>허리 긴장 빼고 그 상태 인지하면서 기립<br>서는 과정의 몸 인식에 초점</span>
-                </div>
-                ③ 하프 스쿼트 — 천천히 앉기·서기<br>
-                <span style="font-size:10px;color:var(--text-dim);padding-left:12px;">발끝·무릎·고관절 정렬 확인</span><br>
-                ④ 풀 스쿼트<br>
-                <span style="font-size:10px;color:var(--text-dim);padding-left:12px;">최하단에서 골반 중립·허리 이완 유지</span><br>
-                ⑤ <strong style="color:var(--orange)">스쿼트 완성</strong><br>
-                <span style="font-size:10px;color:var(--text-dim);padding-left:12px;">템포 조절 · 좌우 밸런스 확인</span>
-              </div>
-            </div>
-            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
-              <div style="font-size:11px;font-weight:700;color:var(--text-dim);margin-bottom:6px;">척추·견갑·GH 분절 운동</div>
-              <div style="font-size:11px;color:var(--text);line-height:1.8;">
-                Flexion / Extension<br>
-                <span style="font-size:10px;color:var(--text-dim);">↓ 경추→흉추→요추 분절별</span><br>
-                Lateral Flexion<br>
-                Rotation<br>
-                <span style="font-size:10px;color:var(--text-dim);">↓ 견갑 + GH Joint 포함</span><br>
-                <span style="font-size:10px;color:var(--text-dim);">좌우 대칭·밸런스 관찰</span>
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="advance-box">
           <span class="advance-icon">↓</span>
-          <span>충족 시 다음 단계로 이동 : <strong style="color:var(--purple)">스트레칭 완료 + 교육 수행 + 스쿼트 밸런스 확인</strong></span>
+          <span>충족 시 다음 단계로 이동 : <strong style="color:var(--purple)">A-ROM → R(베이직) + 자세교정 확인</strong> 후 Position 3</span>
         </div>
       </div>
         </div>
@@ -4745,35 +5415,80 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
             <div class="mv-common-flow-title">Active Stretching</div>
             <span class="mv-rom-tag mv-rom-tag--a-green">= A-ROM</span>
           </div>
-          <p class="mv-common-flow-desc">Position 1·2에서 조직 문제 해결 후 진행. <strong style="color:#2563eb">A-ROM</strong> — Active Stretching 시행 자체가 능동 가동범위와 움직임 질을 평가하는 과정.</p>
+          <p class="mv-common-flow-desc"><strong style="color:#2563eb">A-ROM</strong> — Active Stretching 시행 자체가 능동 가동범위와 움직임 질을 평가하는 과정.</p>
         </div>
         <div class="mv-common-flow-box mv-common-flow-box--active-action mv-common-flow-box--active-action-green">
           <div class="mv-active-action-title">Active Stretching 시행</div>
           <div class="mv-active-action-sub">완전 하중 · A-ROM 평가</div>
         </div>
 
-        <!-- Active Stretching — 상체·하체 4동작 -->
+        <div class="mv-common-flow-outside" style="margin-bottom:8px;">
+          <div class="mv-common-flow-title">A-ROM 판단 흐름</div>
+          <p class="mv-common-flow-desc" style="margin-bottom:0;">Position 2와 동일 — <strong style="color:var(--text)">Active Stretching 선행</strong> · 기준 미달 시 Passive 보완 후 통증·ROM 분기.</p>
+        </div>
+        <div class="mv-common-flow-box mv-common-flow-box--a-judgment-green">
+          <div class="mv-common-flow-rows">
+            <div class="mv-common-flow-row">
+              <span class="mv-flow-badge mv-flow-badge--active">A</span>
+              <span style="color:var(--text-dim);">상체 4 · 하체 4 — A-ROM · 움직임 질 · <strong style="color:var(--text)">성공 기준</strong> 확인</span>
+            </div>
+            <div class="mv-common-flow-row">
+              <span style="color:var(--text-dim);">기준 미달</span>
+              <span style="color:var(--text-dim);">→</span>
+              <span class="mv-flow-badge mv-flow-badge--passive">P</span>
+              <span style="color:var(--text-dim);">Passive Stretching (P-ROM) 보완 — 통증·ROM 매 순간 확인</span>
+            </div>
+            <div class="mv-common-flow-row">
+              <span style="color:var(--text-dim);">1) 통증 Fascia/Muscle</span>
+              <span style="color:var(--text-dim);">→</span>
+              <span style="color:var(--text-dim);">소도구 자극 or Pin &amp; Stretching → <strong style="color:var(--text)">해소 후 ROM↓?</strong></span>
+            </div>
+            <div class="mv-common-flow-row">
+              <span style="color:var(--text-dim);">(결합조직 의심</span>
+              <span style="color:var(--text-dim);">→</span>
+              <span style="color:var(--red);font-weight:600;">무통 범위만</span>
+              <span style="color:var(--text-dim);">)</span>
+            </div>
+            <div class="mv-common-flow-row">
+              <span style="color:var(--text-dim);">2) 통증 없음 + ROM↓</span>
+              <span style="color:var(--text-dim);">→</span>
+              <span class="mv-flow-badge mv-flow-badge--aa">AA</span>
+              <span style="color:var(--text-dim);">CIE · Hold&amp;Relax · Pull&amp;Push</span>
+            </div>
+            <div class="mv-common-flow-row">
+              <span style="color:var(--text-dim);"><strong style="color:var(--text)">A-ROM 성공</strong></span>
+              <span style="color:var(--text-dim);">→</span>
+              <span class="mv-flow-badge mv-flow-badge--resist">R</span>
+              <span style="color:var(--text-dim);"><strong style="color:var(--purple)">Resistive(베이직)</strong> — 근막경선 따라 근위→말단</span>
+            </div>
+            <div class="mv-common-flow-row">
+              <span style="color:var(--text-dim);">R 완료 후</span>
+              <span style="color:var(--text-dim);">→</span>
+              <span style="color:var(--text-dim);">생활습관 · <strong style="color:var(--text)">자세 교정 운동</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Stretching — 상체·하체 각 4부위 -->
         <div class="mv-stretch-panel mv-stretch-panel--active-green">
-          <div class="mv-stretch-panel-title">상체 4 · 하체 4</div>
+          <div class="mv-stretch-panel-title">Active Stretching — 상체 4 · 하체 4</div>
           <div class="mv-stretch-panel-grid">
             <div class="mv-stretch-panel-cell">
-              <div class="mv-stretch-cell-title" style="color:var(--blue);">상체 (Upper) × 4</div>
+              <div class="mv-stretch-cell-title" style="color:var(--blue);">상체 4</div>
               <div class="mv-stretch-cell-list">
-                ① 경추 굴신·측굴·회전<br>
-                ② 흉추 신전 (팔 교차 뒤로)<br>
-                ③ 흉추 회전 (서서 한팔 열기)<br>
-                ④ 어깨 굴곡·수평 내전<br>
-                <span style="font-size:10px;">↓ Roll down — 경추→흉추→요추 순</span>
+                ① <strong>상지</strong> — 손·손목·팔 연쇄<br>
+                ② <strong>목</strong> — 경추 굴곡·신전·측굴·회전<br>
+                ③ <strong>어깨</strong> — GH·견갑 연쇄<br>
+                ④ <strong>몸통</strong> — 흉·요추 분절 (Roll down/up)
               </div>
             </div>
             <div class="mv-stretch-panel-cell">
-              <div class="mv-stretch-cell-title" style="color:var(--orange);">하체 (Lower) × 4</div>
+              <div class="mv-stretch-cell-title" style="color:var(--orange);">하체 4</div>
               <div class="mv-stretch-cell-list">
-                ① 서서 햄스트링 스트레칭<br>
-                ② 서서 고관절 굴곡근 스트레칭<br>
-                ③ 종아리·발목 스트레칭<br>
-                ④ 측굴 — IT band·외측 경선<br>
-                <span style="font-size:10px;">↓ Roll up — 요추→흉추→경추 순</span>
+                ① <strong>허리</strong> — 요추·골반 정렬<br>
+                ② <strong>고관절</strong> — 굴곡·신전·회전<br>
+                ③ <strong>무릎</strong> — 슬관절 가동<br>
+                ④ <strong>발목</strong> — 족부·종아리 연쇄
               </div>
             </div>
           </div>
@@ -4782,7 +5497,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
         <!-- 생활습관 & 자세 교정 -->
         <div class="mv-edu-combined">
           <div class="mv-edu-combined-title">생활습관 &amp; 자세 교정</div>
-          <p class="mv-edu-combined-kicker">Standing · 완전 하중</p>
+          <p class="mv-edu-combined-kicker">Standing · 완전 하중 · A-ROM 성공 → R(베이직) 후 진행</p>
 
           <div class="mv-edu-subsection">
             <div class="mv-edu-subsection-label">생활습관</div>
@@ -4803,113 +5518,102 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
             </div>
           </div>
 
-          <div class="mv-edu-subsection">
-            <div class="mv-edu-subsection-label mv-edu-subsection-label--posture">자세 교육</div>
-            <p class="mv-edu-lead"><strong style="color:var(--text)">바르게 선 상태에서 호흡 운동</strong></p>
-            <p class="mv-edu-body" style="margin-bottom:8px;">호흡과 함께 <strong style="color:var(--text)">전신 정렬</strong>을 잡는 훈련을 합니다. 발부터 목까지 하중이 고르게 실리는지 확인합니다.</p>
-            <div class="mv-align-chain" aria-label="선 자세 호흡 정렬 순서">
-              <span class="mv-align-step">발</span>
-              <span class="mv-align-arrow" aria-hidden="true">→</span>
-              <span class="mv-align-step">골반</span>
-              <span class="mv-align-arrow" aria-hidden="true">→</span>
-              <span class="mv-align-step">어깨</span>
-              <span class="mv-align-arrow" aria-hidden="true">→</span>
-              <span class="mv-align-step">손</span>
-              <span class="mv-align-arrow" aria-hidden="true">→</span>
-              <span class="mv-align-step">목</span>
+          <div class="mv-posture-program">
+            <div class="mv-posture-program-title">자세 교정 운동</div>
+            <div class="mv-posture-goal-box">
+              <strong>공통 목표</strong> — <strong>밸런스</strong>를 잡으며 <strong>천천히</strong> 움직입니다.
+              가능하면 <strong>거울</strong>을 보며 스스로를 관찰합니다. Position 2(앉은 자세)에서 쌓은 힘을 <strong>서서·완전 하중</strong>으로 이어갑니다.
             </div>
-          </div>
-        </div>
 
-        <!-- 기능운동 -->
-        <div style="background:rgba(96,165,250,0.04);border:1px solid rgba(96,165,250,0.2);border-radius:8px;padding:16px 18px;">
-          <div style="font-size:11px;font-weight:700;color:var(--green);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">기능운동 — 전신 통합</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-
-            <div style="background:var(--bg3);border-radius:6px;padding:12px 14px;">
-              <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:6px;">림프 전신 운동</div>
-              <div style="font-size:11px;color:var(--text-dim);line-height:1.8;">
-                전신 림프 순환 촉진<br>
-                리듬감 있는 반복 동작<br>
-                <span style="font-size:10px;color:var(--text-dim);">정체된 체액·노폐물 순환<br>면역·회복 기능 활성화</span>
+            <div class="mv-posture-part">
+              <div class="mv-posture-part-head">
+                <span class="mv-posture-part-num">1</span>
+                <span class="mv-posture-part-name">바르게 선 상태에서 호흡 운동</span>
+              </div>
+              <p class="mv-posture-part-lead">호흡과 함께 전신 정렬. 발부터 목까지 하중이 고르게 실리는지 확인합니다.</p>
+              <div class="mv-align-chain" aria-label="선 자세 호흡 정렬 순서">
+                <span class="mv-align-step">발</span>
+                <span class="mv-align-arrow" aria-hidden="true">→</span>
+                <span class="mv-align-step">골반</span>
+                <span class="mv-align-arrow" aria-hidden="true">→</span>
+                <span class="mv-align-step">척추</span>
+                <span class="mv-align-arrow" aria-hidden="true">→</span>
+                <span class="mv-align-step">어깨</span>
+                <span class="mv-align-arrow" aria-hidden="true">→</span>
+                <span class="mv-align-step">목</span>
               </div>
             </div>
 
-            <div style="background:var(--bg3);border-radius:6px;padding:12px 14px;">
-              <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:6px;">근막경선 운동</div>
-              <div style="font-size:11px;color:var(--text-dim);line-height:1.8;">
-                경선을 따라 순차 활성화<br>
-                말단→근위부 · Flexion/Extension<br>
-                <span style="font-size:10px;color:var(--text-dim);">척추 분절별 움직임<br>전신 장력 통합 인식</span>
+            <div class="mv-posture-part">
+              <div class="mv-posture-part-head">
+                <span class="mv-posture-part-num">2</span>
+                <span class="mv-posture-part-name">스쿼트 6단계 — 앉은 자세에서 바르게 일어설 힘</span>
+              </div>
+              <p class="mv-posture-part-lead">의자·벽을 활용해 <strong>엉덩이 앞으로 떼기 → 기립 → 앉기</strong> 순으로 난이도를 올립니다. 골반 중립·무릎·발끝 정렬을 매 단계 확인합니다.</p>
+              <div class="mv-posture-6card">
+                <ol class="mv-func-6steps" aria-label="스쿼트 6단계">
+                  <li data-step="①">의자에 <strong>살짝 걸터 앉은</strong> 상태에서 — 엉덩이를 <strong>앞으로 떼었다가</strong> 다시 앉기</li>
+                  <li data-step="②">엉덩이를 앞으로 뗀 뒤 — <strong>일어났다가</strong> 다시 앉기</li>
+                  <li data-step="③"><strong>일어났다가 깊게 앉았다가</strong> — 의자 높이까지 일어난 후 다시 앉기</li>
+                  <li data-step="④"><strong>한쪽 다리</strong>에 중심을 실고 — ①번 동작 (좌·우)</li>
+                  <li data-step="⑤">한쪽 다리에 중심을 실고 — ②번 동작 (좌·우)</li>
+                  <li data-step="⑥">한쪽 다리에 중심을 실고 — ③번 동작 (좌·우)</li>
+                </ol>
               </div>
             </div>
 
+            <div class="mv-posture-part">
+              <div class="mv-posture-part-head">
+                <span class="mv-posture-part-num">3</span>
+                <span class="mv-posture-part-name">밸런스 트레이닝 6단계</span>
+              </div>
+              <p class="mv-posture-part-lead">한 발 지지 → 반대 다리 뒤로 뻗기(전굴) → 무릎 들어 올리기(신전)까지 <strong>한 사이클</strong>로 연결. 골반이 돌출된 쪽 다리로 지지 · 발 <strong>삼각 지지</strong>(엄지·새끼·뒤꿈치). 양쪽 교대.</p>
+              <div class="mv-posture-6card">
+                <ol class="mv-func-6steps" aria-label="밸런스 6단계">
+                  <li data-step="①">일어선 상태에서 <strong>한발 살짝 들기</strong> — <strong>30초</strong> 유지 (좌·우)</li>
+                  <li data-step="②"><strong>무릎 높이</strong>까지 들어 올리기 — <strong>30초</strong> 유지 (좌·우)</li>
+                  <li data-step="③">한 발 지지 · 반대 다리를 <strong>뒤로 짧게</strong> 뻗기 — 발끝이 바닥에 <strong>살짝 닿아도 됨</strong>. 상체 소폭 전굴, 지지측 무릎·발끝 정렬</li>
+                  <li data-step="④">한 발 지지 · 반대 다리 <strong>뒤로 뻗기</strong>(발이 바닥에 닿지 않음) — 골반 정면, 상체 전굴, <strong>팔은 다리 각도와 맞춰</strong> 동반</li>
+                  <li data-step="⑤">④ 자세에서 <strong>천천히</strong> 반대 다리를 앞으로 — <strong>대퇴가 수평</strong>(무릎 약 90°)까지. 흉추 하부(T8–12) 살짝 전방으로 세우고, 발·무릎·골반·머리 정면 유지</li>
+                  <li data-step="⑥"><strong>최종</strong> — 뒤로 뻗기(전굴) → 무릎 들어 올리기(흉추 세우기)를 <strong>한 사이클</strong>로 연속·리듬 있게. 발 삼각 지지 · 무릎·골반·발 정면 · 팔은 다리와 <strong>동시</strong>에 움직임</li>
+                </ol>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="advance-box">
           <span class="advance-icon">✓</span>
-          <span>충족 시 프로토콜 완료 : <strong style="color:var(--purple)">스트레칭 완료 + 교육 수행 + 기능운동 밸런스 확인</strong></span>
+          <span>충족 시 <strong style="color:var(--teal)">기능운동 메뉴</strong> : <strong style="color:var(--purple)">A-ROM → R(베이직) + 스쿼트·밸런스 자세교정</strong></span>
         </div>
       </div>
         </div>
       </details>
 
-      <!-- Position 3 하단: 결합조직 손상(별도 섹션) -->
-      <details class="proto-acc pos-acc" style="margin-top:12px;">
-        <summary><span class="meta">결합조직</span> 인대 · 힘줄 손상 <span class="sub">Position 3 하단(별도)</span><span class="chev">▾</span></summary>
+      <!-- 기능운동 · Resistive(어드밴스드) — 별도 메뉴 -->
+      <details class="proto-acc pos-acc pos-func">
+        <summary><span class="pos-summary-body"><span class="meta">기능운동</span><span class="pos-summary-detail"><span class="pos-summary-name">전신 통합</span><span class="sub">Resistive(어드밴스드)</span></span></span><span class="chev">▾</span></summary>
         <div class="acc-body">
-          <div style="background:rgba(155,111,232,0.08);border:1px solid rgba(155,111,232,0.28);border-radius:10px;padding:18px 20px;">
-            <div style="font-size:12px;font-weight:700;color:var(--purple);margin-bottom:4px;font-family:'DM Mono',monospace;letter-spacing:0.06em;">인대 · 힘줄 결합조직 손상</div>
+          <div class="mv-func-standalone">            
 
-            <div style="font-size:11px;color:var(--text-dim);line-height:1.65;margin-bottom:14px;">
-              인대·힘줄·근육 파열은 모두 <strong style="color:var(--text)">콜라겐 섬유(결합조직)의 찢어짐</strong>으로 비슷한 통증을 보일 수 있어 역할에 따라 감별합니다.
-            </div>
-
-            <div style="display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:16px;">
-              <div style="background:var(--bg3);border-radius:7px;padding:12px 13px;border-left:3px solid var(--purple);">
-                <div style="font-size:12px;font-weight:700;color:var(--purple);margin-bottom:6px;">인대 (Ligament)</div>
-                <div style="font-size:11px;color:var(--text-dim);line-height:1.55;">
-                  <span style="color:var(--blue);font-weight:600">유발:</span> 패시브하게 늘렸을 때 · end-range 통증 · 스트레스 검사 양성 · 불안정감
-                </div>
+            <div class="mv-r-advanced-block">
+              <div class="mv-r-advanced-head">
+                <span class="mv-flow-badge mv-flow-badge--resist">R</span>
+                <span class="mv-r-advanced-title">Resistive(어드밴스드) — 코일 운동 8종</span>
               </div>
-              <div style="background:var(--bg3);border-radius:7px;padding:12px 13px;border-left:3px solid var(--yellow);">
-                <div style="font-size:12px;font-weight:700;color:var(--yellow);margin-bottom:6px;">힘줄 (Tendon)</div>
-                <div style="font-size:11px;color:var(--text-dim);line-height:1.55;">
-                  <span style="color:var(--orange);font-weight:600">유발:</span> 힘을 줄 때 · 부착부 압통 · 저항 검사 양성
-                </div>
-              </div>
-              <div style="background:var(--bg3);border-radius:7px;padding:12px 13px;border-left:3px solid var(--orange);">
-                <div style="font-size:12px;font-weight:700;color:var(--orange);margin-bottom:6px;">근육 파열</div>
-                <div style="font-size:11px;color:var(--text-dim);line-height:1.55;">
-                  <span style="color:var(--orange);font-weight:600">유발:</span> 수축·저항 시 · 근복부 압통·멍 · 근력 저하
-                </div>
+              <p class="mv-posture-part-lead" style="margin-top:0;"><strong>Resistive(베이직)</strong> 이후 단계. 나선·연쇄 저항을 <strong>코일(Coil)</strong> 패턴으로 통합.</p>
+              <div class="mv-coil-grid" aria-label="코일 운동 8종">
+                <div class="mv-coil-item"><strong>코일 ①</strong><span class="mv-coil-placeholder">동작·코칭 — 추후 입력</span></div>
+                <div class="mv-coil-item"><strong>코일 ②</strong><span class="mv-coil-placeholder">동작·코칭 — 추후 입력</span></div>
+                <div class="mv-coil-item"><strong>코일 ③</strong><span class="mv-coil-placeholder">동작·코칭 — 추후 입력</span></div>
+                <div class="mv-coil-item"><strong>코일 ④</strong><span class="mv-coil-placeholder">동작·코칭 — 추후 입력</span></div>
+                <div class="mv-coil-item"><strong>코일 ⑤</strong><span class="mv-coil-placeholder">동작·코칭 — 추후 입력</span></div>
+                <div class="mv-coil-item"><strong>코일 ⑥</strong><span class="mv-coil-placeholder">동작·코칭 — 추후 입력</span></div>
+                <div class="mv-coil-item"><strong>코일 ⑦</strong><span class="mv-coil-placeholder">동작·코칭 — 추후 입력</span></div>
+                <div class="mv-coil-item"><strong>코일 ⑧</strong><span class="mv-coil-placeholder">동작·코칭 — 추후 입력</span></div>
               </div>
             </div>
 
-            <div style="background:rgba(155,111,232,0.12);border-radius:8px;padding:12px 14px;margin-bottom:14px;">
-              <div style="font-size:11px;font-weight:700;color:var(--purple);margin-bottom:8px;">임상에서 추천하는 치료 옵션</div>
-              <div style="font-size:11px;color:var(--text-dim);line-height:1.65;">
-                증상 완화·조직 환경 개선 목적으로 <strong style="color:var(--text)">주사 · 충격파 · 침</strong> 등을 단계적으로 고려할 수 있습니다. 다만 이들은 <strong style="color:var(--text)">치료보다 관리가 우선</strong>일 때 비로소 의미가 있습니다.
-              </div>
-            </div>
-
-            <div style="font-size:11px;font-weight:700;color:var(--purple);margin-bottom:8px;">치료보다 관리가 더 중요한 이유</div>
-            <div style="font-size:11px;color:var(--text-dim);line-height:1.75;margin-bottom:14px;">
-              손상된 부위는 말 그대로 <strong style="color:var(--text)">찢어진 상태</strong>입니다. 그 부위에 계속해서 찢어지게 하는 스트레스가 반복되면, 아무리 좋은 치료를 받아도 <strong style="color:var(--text)">아물 만 하면 다시 찢히고</strong>, 그 결과 <strong style="color:var(--text)">회복 기간이 점점 길어집니다</strong>.
-            </div>
-
-            <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:8px;">생활·운동 관리 포인트</div>
-            <div style="font-size:11px;color:var(--text-dim);line-height:1.75;margin-bottom:14px;">
-              <strong style="color:var(--text)">족저근막염·테니스 엘보</strong> 등에서는 통증 부위를 <strong style="color:var(--text)">늘리거나 당기는 동작</strong>을 가급적 피합니다. Manual Therapy와 병행하여 힘줄과 연관된 근육의 <strong style="color:var(--text)">tightness를 잘 풀어 주면</strong> 손상된 힘줄에 가해지는 <strong style="color:var(--text)">장력을 줄여</strong> 회복에 도움이 됩니다.
-            </div>
-
-            <div style="background:var(--bg3);border-radius:8px;padding:12px 14px;border-left:3px solid rgba(224,92,106,0.6);">
-              <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:8px;">약 3주 Rule &amp; 재손상 주의</div>
-              <div style="font-size:11px;color:var(--text-dim);line-height:1.75;">
-                대략 <strong style="color:var(--text)">3주 정도는 통증이 나타나는 동작을 하지 않도록</strong> 안내합니다. “나았는지 확인”하려고 움직였다가 통증이 다시 뜨면 <strong style="color:var(--text)">재손상</strong>으로 보고, 회복 타이밍이 <strong style="color:var(--text)">처음부터 다시 시작</strong>된다고 분명히 안내합니다.
-              </div>
-            </div>
           </div>
         </div>
       </details>
