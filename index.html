@@ -3157,8 +3157,13 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   animation: plActivityScroll 60s linear infinite;
   will-change: transform;
 }
-.pl-activity-gallery:hover .pl-activity-track {
+.pl-activity-gallery.is-paused .pl-activity-track {
   animation-play-state: paused;
+}
+@media (hover: hover) and (pointer: fine) {
+  .pl-activity-gallery:not(.is-paused):hover .pl-activity-track {
+    animation-play-state: paused;
+  }
 }
 .pl-activity-set {
   display: flex;
@@ -3168,12 +3173,64 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .pl-activity-set img {
   display: block;
   width: 132px;
-  height: 88px;
+  height: 100px;
   object-fit: cover;
+  object-position: center 28%;
   border-radius: 10px;
   flex-shrink: 0;
   background: #e8edf4;
   box-shadow: 0 1px 4px rgba(30, 58, 110, 0.08);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.pl-activity-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 11500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+.pl-activity-lightbox[hidden] { display: none !important; }
+.pl-activity-lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.9);
+}
+.pl-activity-lightbox-panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: min(100%, 520px);
+  max-height: min(92vh, 760px);
+  box-sizing: border-box;
+}
+.pl-activity-lightbox-close {
+  align-self: flex-end;
+  margin: 0 0 10px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  color: #fff;
+  background: #2563eb;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+}
+.pl-activity-lightbox-close:active { transform: scale(0.98); }
+.pl-activity-lightbox-img {
+  display: block;
+  width: 100%;
+  max-height: calc(92vh - 58px);
+  object-fit: contain;
+  border-radius: 12px;
+  background: #0f172a;
 }
 @keyframes plActivityScroll {
   from { transform: translateX(0); }
@@ -5982,6 +6039,14 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
 
 <iframe name="consultHiddenFrame" id="consultHiddenFrame" title="상담 접수 전송" style="display:none;width:0;height:0;border:0;visibility:hidden;"></iframe>
 
+<div id="profileActivityLightbox" class="pl-activity-lightbox" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="활동 사진 보기">
+  <div class="pl-activity-lightbox-backdrop" aria-hidden="true"></div>
+  <div class="pl-activity-lightbox-panel">
+    <button type="button" class="pl-activity-lightbox-close">닫기</button>
+    <img id="profileActivityLightboxImg" class="pl-activity-lightbox-img" src="" alt="">
+  </div>
+</div>
+
 <div id="consultModal" class="consult-modal hidden" aria-hidden="true" role="dialog" aria-labelledby="consultModalTitle">
   <div class="consult-modal-backdrop" onclick="closeConsultModal()"></div>
   <div class="consult-modal-panel">
@@ -6170,6 +6235,11 @@ const PROFILE_ACTIVITY_PHOTOS = [
   'activity-14.jpg',
 ].map(function (name) { return PROFILE_ACTIVITY_BASE + name; });
 
+const PROFILE_ACTIVITY_FOCUS = {
+  'activity-01.jpg': 'center top',
+  'activity-02.jpg': 'center top',
+};
+
 function buildProfileActivitySet_() {
   const set = document.createElement('div');
   set.className = 'pl-activity-set';
@@ -6178,21 +6248,83 @@ function buildProfileActivitySet_() {
     img.src = src;
     img.alt = '활동 사진 ' + (i + 1);
     img.width = 132;
-    img.height = 88;
+    img.height = 100;
     img.loading = i < 2 ? 'eager' : 'lazy';
     img.decoding = 'async';
+    const file = src.split('/').pop();
+    if (PROFILE_ACTIVITY_FOCUS[file]) {
+      img.style.objectPosition = PROFILE_ACTIVITY_FOCUS[file];
+    }
     set.appendChild(img);
   });
   return set;
 }
 
+let profileActivityLightboxOpen_ = false;
+
+function openProfileActivityLightbox_(src, alt) {
+  const modal = document.getElementById('profileActivityLightbox');
+  const gallery = document.getElementById('profileActivityGallery');
+  const img = document.getElementById('profileActivityLightboxImg');
+  if (!modal || !img || !gallery || !src) return;
+  img.src = src;
+  img.alt = alt || '활동 사진';
+  modal.hidden = false;
+  modal.setAttribute('aria-hidden', 'false');
+  gallery.classList.add('is-paused');
+  profileActivityLightboxOpen_ = true;
+  document.body.style.overflow = 'hidden';
+  const closeBtn = modal.querySelector('.pl-activity-lightbox-close');
+  if (closeBtn) closeBtn.focus();
+}
+
+function closeProfileActivityLightbox_() {
+  const modal = document.getElementById('profileActivityLightbox');
+  const gallery = document.getElementById('profileActivityGallery');
+  const img = document.getElementById('profileActivityLightboxImg');
+  if (!modal) return;
+  modal.hidden = true;
+  modal.setAttribute('aria-hidden', 'true');
+  if (gallery) gallery.classList.remove('is-paused');
+  profileActivityLightboxOpen_ = false;
+  document.body.style.overflow = '';
+  if (img) {
+    img.removeAttribute('src');
+    img.alt = '';
+  }
+}
+
+function initProfileActivityLightbox_() {
+  const modal = document.getElementById('profileActivityLightbox');
+  if (!modal || modal.dataset.bound) return;
+  modal.dataset.bound = '1';
+  const closeBtn = modal.querySelector('.pl-activity-lightbox-close');
+  const backdrop = modal.querySelector('.pl-activity-lightbox-backdrop');
+  if (closeBtn) closeBtn.addEventListener('click', closeProfileActivityLightbox_);
+  if (backdrop) backdrop.addEventListener('click', closeProfileActivityLightbox_);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && profileActivityLightboxOpen_) closeProfileActivityLightbox_();
+  });
+}
+
 function initProfileActivityGallery_() {
   const track = document.getElementById('profileActivityTrack');
+  const gallery = document.getElementById('profileActivityGallery');
   if (!track || track.childElementCount) return;
   track.appendChild(buildProfileActivitySet_());
   const clone = buildProfileActivitySet_();
   clone.setAttribute('aria-hidden', 'true');
   track.appendChild(clone);
+
+  if (gallery && !gallery.dataset.clickBound) {
+    gallery.dataset.clickBound = '1';
+    gallery.addEventListener('click', function (e) {
+      const thumb = e.target.closest('.pl-activity-set img');
+      if (!thumb || !thumb.src) return;
+      openProfileActivityLightbox_(thumb.currentSrc || thumb.src, thumb.alt);
+    });
+  }
+  initProfileActivityLightbox_();
 }
 
 function pushProfileViewLog_(label) {
