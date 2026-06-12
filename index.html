@@ -3143,6 +3143,52 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   .pl-trust-icon { width: 28px; height: 28px; }
   .pl-trust-icon svg { width: 16px; height: 16px; }
 }
+.pl-activity-gallery {
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 14px;
+  border-radius: 12px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 5%, #000 95%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 5%, #000 95%, transparent 100%);
+}
+.pl-activity-track {
+  display: flex;
+  width: max-content;
+  animation: plActivityScroll 60s linear infinite;
+  will-change: transform;
+}
+.pl-activity-gallery:hover .pl-activity-track {
+  animation-play-state: paused;
+}
+.pl-activity-set {
+  display: flex;
+  gap: 8px;
+  padding-right: 8px;
+}
+.pl-activity-set img {
+  display: block;
+  width: 132px;
+  height: 88px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+  background: #e8edf4;
+  box-shadow: 0 1px 4px rgba(30, 58, 110, 0.08);
+}
+@keyframes plActivityScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pl-activity-gallery {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .pl-activity-track {
+    animation: none;
+  }
+}
 .pl-branch-section {
   width: 100%;
   margin-bottom: 10px;
@@ -3925,6 +3971,10 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
       <div class="pl-hero-top">
         <div class="hero-name">미카닥 박준규</div>
         <div class="hero-cred pl-hero-cred">근골격계 · 미국 카이로프랙틱 닥터 · 물리치료사</div>
+
+        <div class="pl-activity-gallery" id="profileActivityGallery" aria-label="활동 사진" aria-live="off">
+          <div class="pl-activity-track" id="profileActivityTrack"></div>
+        </div>
 
         <div class="pl-trust-strip pl-hero-stats" aria-label="경력·전문성">
           <div class="pl-trust-item">
@@ -6101,6 +6151,49 @@ const PROFILE_SCREEN_LABELS = {
   's-e2': '전문가 교육 2',
   's-e3': '전문가 교육 3',
 };
+
+const PROFILE_ACTIVITY_BASE = 'https://breezefeel.github.io/drpark/';
+const PROFILE_ACTIVITY_PHOTOS = [
+  'activity-01.jpg',
+  'activity-02.jpg',
+  'activity-03.jpg',
+  'activity-04.jpg',
+  'activity-05.jpg',
+  'activity-06.jpg',
+  'activity-07.jpg',
+  'activity-08.jpg',
+  'activity-09.jpg',
+  'activity-10.jpg',
+  'activity-11.jpg',
+  'activity-12.jpg',
+  'activity-13.jpg',
+  'activity-14.jpg',
+].map(function (name) { return PROFILE_ACTIVITY_BASE + name; });
+
+function buildProfileActivitySet_() {
+  const set = document.createElement('div');
+  set.className = 'pl-activity-set';
+  PROFILE_ACTIVITY_PHOTOS.forEach(function (src, i) {
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = '활동 사진 ' + (i + 1);
+    img.width = 132;
+    img.height = 88;
+    img.loading = i < 2 ? 'eager' : 'lazy';
+    img.decoding = 'async';
+    set.appendChild(img);
+  });
+  return set;
+}
+
+function initProfileActivityGallery_() {
+  const track = document.getElementById('profileActivityTrack');
+  if (!track || track.childElementCount) return;
+  track.appendChild(buildProfileActivitySet_());
+  const clone = buildProfileActivitySet_();
+  clone.setAttribute('aria-hidden', 'true');
+  track.appendChild(clone);
+}
 
 function pushProfileViewLog_(label) {
   const text = String(label || '').trim();
@@ -9094,6 +9187,7 @@ pushProfileViewLog_('프로필 홈');
 resetProfileBranchPicker_();
 loadProfileBlogFeed_(false);
 initProfileBeautyReviewModal_();
+initProfileActivityGallery_();
 loadProfileManualReviews_();
 loadProfileBeautyReviews_();
 loadProfileExpertReviews_();
