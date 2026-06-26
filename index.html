@@ -30,6 +30,24 @@
   --red: #c0392b;
   --red-bg: #fdf2f1;
   --red-border: #f0b8b2;
+  --branch-treatment: #c4685e;
+  --branch-treatment-deep: #a8554d;
+  --branch-treatment-bg: #faf4f3;
+  --branch-treatment-border: #e6cfcb;
+  --branch-treatment-hover: #f5ebe9;
+  --branch-treatment-active: #f0e0dd;
+  --branch-wellness: #4a78c4;
+  --branch-wellness-deep: #3a63a8;
+  --branch-wellness-bg: #f3f7fc;
+  --branch-wellness-border: #c5d8ee;
+  --branch-wellness-hover: #e9f0f9;
+  --branch-wellness-active: #dfeaf7;
+  --branch-expert: #917a56;
+  --branch-expert-deep: #7a6648;
+  --branch-expert-bg: #f9f6f1;
+  --branch-expert-border: #e0d4c3;
+  --branch-expert-hover: #f3ede4;
+  --branch-expert-active: #ede4d6;
   --shadow-sm: 0 1px 4px rgba(0,0,0,0.06);
   --shadow-md: 0 4px 18px rgba(0,0,0,0.08);
   --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
@@ -60,13 +78,22 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .nav-home.hidden { display: none; }
 
 /* ── PROGRESS ── */
-.progress-bar { position: fixed; top: 56px; left: 0; right: 0; z-index: 99; height: 3px; background: var(--border); }
+.progress-bar {
+  position: fixed; top: 56px; left: 0; right: 0; z-index: 99;
+  background: white; border-bottom: 1px solid var(--border);
+  padding: 10px 20px 8px;
+}
 .progress-bar.hidden { display: none; }
-.progress-fill { height: 100%; background: var(--green); transition: width 0.4s ease; }
+.progress-row-meta { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 6px; }
+.progress-label-text { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--green); }
+.progress-pct-text { font-size: 12px; color: var(--dim); font-weight: 600; }
+.progress-track { height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--green), #1d4ed8); border-radius: 99px; transition: width 0.4s ease; width: 0; }
+.progress-step-text { margin-top: 5px; font-size: 11px; color: var(--dim); font-weight: 500; font-family: 'DM Mono', monospace; }
 
 /* ── BREADCRUMB (선택 경로) ── */
 .breadcrumb {
-  position: fixed; top: 59px; left: 0; right: 0; z-index: 98;
+  position: fixed; top: 108px; left: 0; right: 0; z-index: 98;
   padding: 8px 20px; background: white; border-bottom: 1px solid var(--border);
   display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
   min-height: 36px; overflow-x: auto;
@@ -101,7 +128,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .breadcrumb.hidden { display: none; }
 
 /* ── WRAP ── */
-.wrap { max-width: 600px; margin: 0 auto; padding: 108px 20px 80px; }
+.wrap { max-width: 600px; margin: 0 auto; padding: 148px 20px 80px; }
 .wrap.home-wrap { padding-top: 0; }
 
 /* ══════════════════════════════
@@ -185,7 +212,10 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   box-sizing: border-box;
 }
 .hero-panel {
-  padding: 18px 16px 16px;
+  padding: 18px 16px 12px;
+}
+.hero-panel:has(#profileHeroOutcome:not(.is-visible)) {
+  padding-bottom: 10px;
 }
 
 /* 프로필 사진 — 원형 마스크 */
@@ -696,6 +726,45 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .q-title { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; font-size: 20px; font-weight: 700; line-height: 1.4; margin-bottom: 5px; }
 .q-sub { font-size: 13px; color: var(--dim); font-weight: 300; }
 
+/* 인트로 · 칩 · VAS 캡션 · 결과 요약 */
+.profile-intro { padding: 8px 0 24px; }
+.profile-intro-mark { width: 44px; height: 4px; background: var(--green); border-radius: 2px; margin-bottom: 22px; }
+.profile-intro-eyebrow { font-size: 12px; font-weight: 700; color: var(--green); letter-spacing: .04em; margin-bottom: 12px; }
+.profile-intro-title { font-size: 24px; line-height: 1.35; font-weight: 800; margin: 0 0 12px; }
+.profile-intro-desc { font-size: 14px; line-height: 1.7; color: var(--light); margin: 0 0 22px; }
+.profile-intro-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.profile-intro-pill { background: white; border: 1px solid var(--border); border-radius: 99px; padding: 7px 12px; font-size: 12px; color: var(--green); font-weight: 600; }
+.profile-intro-steps { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+.profile-intro-step { display: flex; gap: 10px; align-items: flex-start; }
+.profile-intro-step-num { width: 24px; height: 24px; flex-shrink: 0; border-radius: 50%; background: var(--green-bg); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+.profile-intro-step-text { font-size: 13px; line-height: 1.6; color: var(--light); padding-top: 2px; }
+.profile-intro-step-text b { color: var(--text); }
+.profile-intro-start { width: 100%; border: none; border-radius: 12px; padding: 15px 18px; background: var(--green); color: white; font-size: 15px; font-weight: 700; cursor: pointer; }
+.profile-intro-start:hover { filter: brightness(1.05); }
+
+.chip-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+.profile-chip { border: 1.5px solid var(--border); background: white; border-radius: 99px; padding: 9px 14px; font-size: 13px; font-weight: 600; color: var(--text); cursor: pointer; transition: all .15s; }
+.profile-chip:hover { border-color: var(--green-border); background: var(--green-bg); }
+.profile-chip.active { border-color: var(--green); background: var(--green-bg); color: var(--green); }
+.profile-chip-confirm { width: 100%; margin-top: 18px; border: none; border-radius: 12px; padding: 14px; background: var(--green); color: white; font-size: 14px; font-weight: 700; cursor: pointer; }
+.profile-chip-confirm:disabled { opacity: .45; cursor: not-allowed; }
+.profile-field-textarea { width: 100%; min-height: 120px; border: 1.5px solid var(--border); border-radius: 12px; padding: 12px 14px; font-size: 14px; line-height: 1.6; resize: vertical; font-family: inherit; box-sizing: border-box; }
+.profile-field-textarea:focus { outline: none; border-color: var(--green); }
+.profile-example-box { margin-top: 10px; padding: 10px 12px; border-radius: 10px; background: #f8faf8; border: 1px dashed var(--border); font-size: 12px; line-height: 1.55; color: var(--dim); }
+.profile-skip-link { display: block; width: 100%; margin-top: 10px; border: none; background: none; color: var(--dim); font-size: 13px; cursor: pointer; text-decoration: underline; }
+
+.vas-slider-wrap { margin: 16px 0 12px; }
+.vas-slider { width: 100%; height: 6px; border-radius: 99px; appearance: none; background: linear-gradient(to right, var(--green) 0%, var(--border) 0%); cursor: pointer; }
+.vas-slider::-webkit-slider-thumb { appearance: none; width: 22px; height: 22px; border-radius: 50%; background: white; border: 2px solid var(--green); box-shadow: 0 2px 6px rgba(0,0,0,.12); }
+.vas-caption { margin-top: 12px; padding: 11px 14px; border-radius: 10px; font-size: 13px; line-height: 1.55; font-weight: 600; background: var(--green-bg); color: var(--green); }
+
+.result-summary-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin-bottom: 16px; box-shadow: var(--shadow-sm); }
+.result-summary-title { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); margin-bottom: 12px; }
+.result-summary-row { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid #f0f2f0; font-size: 13px; line-height: 1.45; }
+.result-summary-row:last-child { border-bottom: none; padding-bottom: 0; }
+.result-summary-label { color: var(--dim); flex-shrink: 0; }
+.result-summary-value { color: var(--text); font-weight: 600; text-align: right; }
+
 .option-list { display: flex; flex-direction: column; gap: 9px; }
 .option { background: white; border: 1.5px solid var(--border); border-radius: 12px; padding: 14px 16px; cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow-sm); }
 .option:hover { border-color: var(--green); background: var(--green-bg); box-shadow: var(--shadow-md); }
@@ -1053,6 +1122,24 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   box-shadow: var(--shadow-sm);
 }
 .contact-bar-row .contact-bar--expert:hover { background: var(--green-bg); border-color: var(--green); }
+.contact-bar-row--wellness { flex-direction: column; gap: 10px; }
+.contact-bar-row--wellness .contact-bar { margin-top: 0; }
+.contact-bar--intake {
+  background: #fff;
+  border: 1.5px solid rgba(74,157,232,0.45);
+  color: var(--blue);
+  box-shadow: var(--shadow-sm);
+}
+.contact-bar--intake:hover { background: rgba(74,157,232,0.06); border-color: var(--blue); }
+.contact-bar--intake .ct-text { color: var(--blue); }
+.contact-bar--intake .ct-sub { color: var(--dim); }
+.consult-schedule-field--focus {
+  border: 1.5px solid rgba(74,157,232,0.5);
+  border-radius: 12px;
+  padding: 12px;
+  background: rgba(74,157,232,0.04);
+}
+.consult-schedule-field--focus .consult-field-label-block { color: var(--blue); font-weight: 700; }
 .contact-bar-expert-label { font-size: 11px; font-weight: 700; line-height: 1.35; color: #2563eb; }
 .contact-bar-ico { font-size: 22px; flex-shrink: 0; }
 .ct-text { font-size: 14px; font-weight: 700; color: white; }
@@ -3248,17 +3335,82 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 }
 .pl-branch-section {
   width: 100%;
-  margin-bottom: 10px;
-  padding: 16px 14px 14px;
+  margin-bottom: 0;
+  padding: 14px 12px 10px;
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(220, 228, 240, 0.95);
   border-radius: 16px;
   box-shadow: 0 2px 12px rgba(30, 58, 110, 0.05);
   box-sizing: border-box;
 }
+.pl-branch-section--focus {
+  position: relative;
+  margin-top: 4px;
+  padding: 14px 12px 10px;
+  background: linear-gradient(165deg, #ffffff 0%, #f6f9fc 52%, #f2f6fb 100%);
+  border: 2px solid rgba(74, 120, 196, 0.16);
+  border-radius: 18px;
+  box-shadow:
+    0 0 0 4px rgba(74, 120, 196, 0.05),
+    0 10px 28px rgba(30, 58, 110, 0.08);
+  animation: plBranchSectionIn 0.5s ease;
+}
+.pl-branch-section--focus::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 19px;
+  padding: 2px;
+  background: linear-gradient(135deg, rgba(196, 104, 94, 0.2), rgba(74, 120, 196, 0.22), rgba(145, 122, 86, 0.2));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.55;
+}
+@keyframes plBranchSectionIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.pl-branch-focus-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 auto 8px;
+  padding: 6px 12px 6px 10px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--branch-wellness-deep), var(--branch-wellness));
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 14px rgba(58, 99, 168, 0.22);
+}
+.pl-branch-section--focus .pl-branch-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pl-branch-focus-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+  animation: plBranchDotPulse 2s ease infinite;
+}
+@keyframes plBranchDotPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.55); }
+  50% { box-shadow: 0 0 0 6px rgba(255, 255, 255, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pl-branch-section--focus { animation: none; }
+  .pl-branch-focus-dot { animation: none; }
+}
 .pl-branch-head {
   text-align: center;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 .pl-branch-eyebrow {
   margin: 0 0 6px;
@@ -3267,6 +3419,15 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #94a3b8;
+}
+.pl-branch-section--focus .pl-branch-label {
+  font-size: 19px;
+  margin-bottom: 4px;
+}
+.pl-branch-section--focus .pl-branch-hint {
+  font-size: 13px;
+  color: #475569;
+  font-weight: 500;
 }
 .pl-hero-top .hero-intro--top {
   margin-bottom: 10px;
@@ -3297,12 +3458,13 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   display: none;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   width: 100%;
   margin: 0;
 }
 .pl-hero-outcome.is-visible {
   display: flex;
+  margin-top: 16px;
   animation: plBranchOutcomeIn 0.32s ease;
 }
 @keyframes plBranchOutcomeIn {
@@ -3321,7 +3483,8 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .pl-hero-copy-panel {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  padding: 2px 0 4px;
   opacity: 1;
   transition: opacity 0.2s ease;
 }
@@ -3377,9 +3540,9 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 }
 .pl-branch-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: stretch;
-  gap: 8px;
+  grid-template-columns: 1fr;
+  align-items: start;
+  gap: 10px;
   margin-bottom: 0;
   width: 100%;
   max-width: 100%;
@@ -3388,105 +3551,204 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .pl-branch-grid::-webkit-scrollbar { display: none; }
 .pl-branch-chip {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  gap: 3px;
+  gap: 12px;
   min-width: 0;
   width: 100%;
-  min-height: 56px;
-  text-align: center;
+  min-height: 0;
+  text-align: left;
   font-family: inherit;
-  padding: 10px 6px;
-  border-radius: 12px;
-  border: 1.5px solid #dce4f0;
-  background: #f8fafc;
-  color: #4b5563;
+  padding: 11px 14px 11px 16px;
+  border-radius: 14px;
+  border: 1.5px solid transparent;
+  color: #1e293b;
   cursor: pointer;
-  box-shadow: none;
-  transition: border-color .2s, background .2s, color .2s, box-shadow .2s;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+  transition: border-color .2s, background .2s, color .2s, box-shadow .2s, transform .15s;
+}
+.pl-branch-chip--treatment {
+  background: var(--branch-treatment-bg);
+  border-color: var(--branch-treatment-border);
+  box-shadow: inset 4px 0 0 var(--branch-treatment), 0 2px 8px rgba(168, 85, 77, 0.05);
+}
+.pl-branch-chip--wellness {
+  background: var(--branch-wellness-bg);
+  border-color: var(--branch-wellness-border);
+  box-shadow: inset 4px 0 0 var(--branch-wellness), 0 2px 8px rgba(58, 99, 168, 0.05);
+}
+.pl-branch-chip--expert {
+  background: var(--branch-expert-bg);
+  border-color: var(--branch-expert-border);
+  box-shadow: inset 4px 0 0 var(--branch-expert), 0 2px 8px rgba(122, 102, 72, 0.05);
+}
+.pl-branch-chip-icon {
+  display: none;
+}
+.pl-branch-chip-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.pl-branch-chip-arrow {
+  flex-shrink: 0;
+  font-size: 20px;
+  font-weight: 300;
+  color: #cbd5e1;
+  transition: color .2s, transform .2s;
 }
 .pl-branch-chip-title {
   display: block;
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 800;
   line-height: 1.25;
   letter-spacing: -0.02em;
   color: inherit;
 }
+.pl-branch-chip--treatment .pl-branch-chip-title { color: var(--branch-treatment-deep); }
+.pl-branch-chip--wellness .pl-branch-chip-title { color: var(--branch-wellness-deep); }
+.pl-branch-chip--expert .pl-branch-chip-title { color: var(--branch-expert-deep); }
 .pl-branch-chip-sub {
   display: block;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 500;
-  line-height: 1.3;
+  line-height: 1.35;
   letter-spacing: -0.01em;
-  color: #94a3b8;
+  color: #6b7a8f;
   transition: color .2s;
 }
+.pl-branch-chip--treatment .pl-branch-chip-sub { color: #9a706b; }
+.pl-branch-chip--wellness .pl-branch-chip-sub { color: #6a84a8; }
+.pl-branch-chip--expert .pl-branch-chip-sub { color: #8a7860; }
+@media (min-width: 560px) {
+  .pl-branch-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    align-items: start;
+  }
+  .pl-branch-chip {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    gap: 4px;
+    height: auto;
+    padding: 12px 8px 10px;
+    box-shadow: inset 0 4px 0 0 currentColor, 0 2px 8px rgba(15, 23, 42, 0.05);
+  }
+  .pl-branch-chip--treatment { box-shadow: inset 0 4px 0 0 var(--branch-treatment), 0 2px 8px rgba(168, 85, 77, 0.05); }
+  .pl-branch-chip--wellness { box-shadow: inset 0 4px 0 0 var(--branch-wellness), 0 2px 8px rgba(58, 99, 168, 0.05); }
+  .pl-branch-chip--expert { box-shadow: inset 0 4px 0 0 var(--branch-expert), 0 2px 8px rgba(122, 102, 72, 0.05); }
+  .pl-branch-chip-text { flex: none; align-items: center; width: 100%; }
+  .pl-branch-chip-arrow { display: none; }
+  .pl-branch-chip-title { font-size: 13px; }
+  .pl-branch-chip-sub { font-size: 10px; }
+}
 @media (max-width: 400px) {
-  .pl-branch-grid { gap: 6px; }
-  .pl-branch-chip { min-height: 52px; padding: 8px 4px; }
-  .pl-branch-chip-title { font-size: 11px; }
-  .pl-branch-chip-sub { font-size: 8px; }
+  .pl-branch-chip { padding: 10px 12px 10px 14px; }
+  .pl-branch-chip-title { font-size: 14px; }
+}
+.pl-branch-chip--treatment:hover:not(.active) {
+  border-color: var(--branch-treatment-border);
+  background: var(--branch-treatment-hover);
+  box-shadow: inset 4px 0 0 var(--branch-treatment), 0 4px 14px rgba(168, 85, 77, 0.1);
+}
+.pl-branch-chip--wellness:hover:not(.active) {
+  border-color: var(--branch-wellness-border);
+  background: var(--branch-wellness-hover);
+  box-shadow: inset 4px 0 0 var(--branch-wellness), 0 4px 14px rgba(58, 99, 168, 0.1);
+}
+.pl-branch-chip--expert:hover:not(.active) {
+  border-color: var(--branch-expert-border);
+  background: var(--branch-expert-hover);
+  box-shadow: inset 4px 0 0 var(--branch-expert), 0 4px 14px rgba(122, 102, 72, 0.1);
 }
 .pl-branch-chip:hover:not(.active) {
-  border-color: #bfdbfe;
-  background: #fff;
-  color: #1e3a6e;
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
-  transform: none;
+  transform: translateY(-1px);
 }
-.pl-branch-chip:hover:not(.active) .pl-branch-chip-sub {
-  color: #6b7484;
+.pl-branch-chip:hover:not(.active) .pl-branch-chip-arrow {
+  color: #94a3b8;
+  transform: translateX(2px);
 }
 .pl-branch-chip:focus-visible {
   outline: 2px solid var(--green);
   outline-offset: 2px;
 }
+.pl-branch-chip--treatment.active {
+  border-color: var(--branch-treatment);
+  background: var(--branch-treatment-active);
+  box-shadow: inset 4px 0 0 var(--branch-treatment), 0 0 0 1px rgba(196, 104, 94, 0.18), 0 6px 18px rgba(168, 85, 77, 0.12);
+}
+.pl-branch-chip--treatment.active .pl-branch-chip-sub { color: var(--branch-treatment-deep); }
+.pl-branch-chip--treatment.active .pl-branch-chip-arrow { color: var(--branch-treatment); }
+.pl-branch-chip--wellness.active {
+  border-color: var(--branch-wellness);
+  background: var(--branch-wellness-active);
+  box-shadow: inset 4px 0 0 var(--branch-wellness), 0 0 0 1px rgba(74, 120, 196, 0.18), 0 6px 18px rgba(58, 99, 168, 0.12);
+}
+.pl-branch-chip--wellness.active .pl-branch-chip-sub { color: var(--branch-wellness-deep); }
+.pl-branch-chip--wellness.active .pl-branch-chip-arrow { color: var(--branch-wellness); }
+.pl-branch-chip--expert.active {
+  border-color: var(--branch-expert);
+  background: var(--branch-expert-active);
+  box-shadow: inset 4px 0 0 var(--branch-expert), 0 0 0 1px rgba(145, 122, 86, 0.18), 0 6px 18px rgba(122, 102, 72, 0.1);
+}
+.pl-branch-chip--expert.active .pl-branch-chip-sub { color: var(--branch-expert-deep); }
+.pl-branch-chip--expert.active .pl-branch-chip-arrow { color: var(--branch-expert); }
 .pl-branch-chip.active {
-  border-color: #2563eb;
-  background: #fff;
   color: #1e3a6e;
-  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.15), 0 4px 14px rgba(37, 99, 235, 0.12);
   transform: none;
 }
-.pl-branch-chip.active .pl-branch-chip-sub {
-  color: #2563eb;
-  opacity: 0.85;
+@media (min-width: 560px) {
+  .pl-branch-chip--treatment.active {
+    box-shadow: inset 0 4px 0 0 var(--branch-treatment), 0 0 0 1px rgba(196, 104, 94, 0.18), 0 6px 18px rgba(168, 85, 77, 0.12);
+  }
+  .pl-branch-chip--wellness.active {
+    box-shadow: inset 0 4px 0 0 var(--branch-wellness), 0 0 0 1px rgba(74, 120, 196, 0.18), 0 6px 18px rgba(58, 99, 168, 0.12);
+  }
+  .pl-branch-chip--expert.active {
+    box-shadow: inset 0 4px 0 0 var(--branch-expert), 0 0 0 1px rgba(145, 122, 86, 0.18), 0 6px 18px rgba(122, 102, 72, 0.1);
+  }
+  .pl-branch-chip--treatment:hover:not(.active) {
+    box-shadow: inset 0 4px 0 0 var(--branch-treatment), 0 4px 14px rgba(168, 85, 77, 0.1);
+  }
+  .pl-branch-chip--wellness:hover:not(.active) {
+    box-shadow: inset 0 4px 0 0 var(--branch-wellness), 0 4px 14px rgba(58, 99, 168, 0.1);
+  }
+  .pl-branch-chip--expert:hover:not(.active) {
+    box-shadow: inset 0 4px 0 0 var(--branch-expert), 0 4px 14px rgba(122, 102, 72, 0.1);
+  }
 }
-.pl-branch-chip.active:hover {
-  border-color: var(--green-mid);
-  color: #1e3a6e;
-}
+.pl-branch-chip.active:hover { transform: none; }
 a.pl-branch-chip {
   text-decoration: none;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
   box-sizing: border-box;
 }
 a.pl-branch-chip:hover:not(.active) {
-  border-color: #bfdbfe;
-  background: #fff;
-  color: #1e3a6e;
-}
-a.pl-branch-chip.active {
-  color: #1e3a6e;
-  background: #fff;
-  border-color: #2563eb;
+  transform: translateY(-1px);
 }
 .pl-branch-cta {
   display: none;
   width: 100%;
-  margin: 0;
+  margin: 2px 0 0;
   padding: 15px 16px; font-size: 14px; font-weight: 700; font-family: inherit;
   color: #fff; background: var(--green); border: none; border-radius: 12px;
-  cursor: pointer; transition: background .2s, transform .15s;
+  cursor: pointer; transition: background .2s, transform .15s, box-shadow .2s;
   box-sizing: border-box;
 }
-.pl-branch-cta.visible { display: block; }
-.pl-branch-cta:hover { background: var(--green-mid); transform: translateY(-1px); }
+.pl-branch-cta.visible { display: block; animation: plBranchOutcomeIn 0.32s ease; }
+.pl-branch-cta--treatment { background: var(--branch-treatment); box-shadow: 0 4px 14px rgba(168, 85, 77, 0.22); }
+.pl-branch-cta--treatment:hover { background: var(--branch-treatment-deep); }
+.pl-branch-cta--wellness { background: var(--branch-wellness); box-shadow: 0 4px 14px rgba(58, 99, 168, 0.22); }
+.pl-branch-cta--wellness:hover { background: var(--branch-wellness-deep); }
+.pl-branch-cta--expert { background: var(--branch-expert); box-shadow: 0 4px 14px rgba(122, 102, 72, 0.2); }
+.pl-branch-cta--expert:hover { background: var(--branch-expert-deep); }
+.pl-branch-cta:hover { transform: translateY(-1px); }
 .pl-manual-reviews {
   width: 100%;
   margin: 0;
@@ -3995,7 +4257,14 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
 </nav>
 
 <!-- PROGRESS -->
-<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+<div class="progress-bar hidden" id="progressBar">
+  <div class="progress-row-meta">
+    <span class="progress-label-text" id="progressLabelText">맞춤 안내</span>
+    <span class="progress-pct-text" id="progressPctText">0%</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-step-text" id="progressStepText"></div>
+</div>
 
 <!-- BREADCRUMB -->
 <div class="breadcrumb hidden" id="bcBar"></div>
@@ -4057,25 +4326,37 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
           </div>
         </div>
 
-        <section class="pl-branch-section" id="profileBranchPickerAnchor" aria-labelledby="profileBranchLabel">
+        <section class="pl-branch-section pl-branch-section--focus" id="profileBranchPickerAnchor" aria-labelledby="profileBranchLabel">
+          <div class="pl-branch-focus-badge" aria-hidden="true">
+            <span class="pl-branch-focus-dot"></span>
+            맞춤 안내
+          </div>
           <header class="pl-branch-head">
-            <p class="pl-branch-eyebrow">서울 약수점 · 인천 작전점</p>
-            <h3 class="pl-branch-label" id="profileBranchLabel">관심 분야 선택</h3>
-            <p class="pl-branch-hint">지금 상황에 가장 가까운 항목을 눌러 주세요.</p>
+            <p class="pl-branch-eyebrow">서울 약수점 · 인천 작전점 운영 중</p>            
+            <p class="pl-branch-hint">관심 있는 분야를 선택해 주세요</p>
           </header>
           <div class="pl-branch-picker">
             <div class="pl-branch-grid" role="radiogroup" aria-label="관심 분야">
-              <button type="button" class="pl-branch-chip" role="radio" aria-checked="false" data-branch="treatment" onclick="selectProfileBranch('treatment')">
-                <span class="pl-branch-chip-title">통증·재활</span>
-                <span class="pl-branch-chip-sub">증상 평가·치료</span>
+              <button type="button" class="pl-branch-chip pl-branch-chip--treatment" role="radio" aria-checked="false" data-branch="treatment" onclick="selectProfileBranch('treatment')">
+                <span class="pl-branch-chip-text">
+                  <span class="pl-branch-chip-title">통증·재활</span>
+                  <span class="pl-branch-chip-sub">증상 평가 · 치료 안내</span>
+                </span>
+                <span class="pl-branch-chip-arrow" aria-hidden="true">›</span>
               </button>
-              <button type="button" class="pl-branch-chip" role="radio" aria-checked="false" data-branch="wellness" onclick="selectProfileBranch('wellness')">
-                <span class="pl-branch-chip-title">움직임·자세</span>
-                <span class="pl-branch-chip-sub">예방·교정·운동</span>
+              <button type="button" class="pl-branch-chip pl-branch-chip--wellness" role="radio" aria-checked="false" data-branch="wellness" onclick="selectProfileBranch('wellness')">
+                <span class="pl-branch-chip-text">
+                  <span class="pl-branch-chip-title">움직임·자세</span>
+                  <span class="pl-branch-chip-sub">기능 · 교정 · 운동</span>
+                </span>
+                <span class="pl-branch-chip-arrow" aria-hidden="true">›</span>
               </button>
-              <button type="button" class="pl-branch-chip" role="radio" aria-checked="false" data-branch="expert" onclick="selectProfileBranch('expert')">
-                <span class="pl-branch-chip-title">전문가 교육</span>
-                <span class="pl-branch-chip-sub">임상·교육 콘텐츠</span>
+              <button type="button" class="pl-branch-chip pl-branch-chip--expert" role="radio" aria-checked="false" data-branch="expert" onclick="selectProfileBranch('expert')">
+                <span class="pl-branch-chip-text">
+                  <span class="pl-branch-chip-title">전문가 교육</span>
+                  <span class="pl-branch-chip-sub">CMT · IFC · Re:Al</span>
+                </span>
+                <span class="pl-branch-chip-arrow" aria-hidden="true">›</span>
               </button>
             </div>
           </div>
@@ -5768,6 +6049,26 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
 
 
 <!-- ══════════════════════════════
+     PATIENT INTRO
+══════════════════════════════ -->
+<div class="screen" id="s-p-intro">
+  <div class="wrap">
+    <div class="profile-intro">
+      <div class="profile-intro-mark"></div>
+      <p class="profile-intro-eyebrow" id="profileIntroEyebrow">맞춤 안내</p>
+      <h1 class="profile-intro-title" id="profileIntroTitle">몸 상태를 알려주시면<br />맞춤 방향을 안내해 드려요</h1>
+      <p class="profile-intro-desc" id="profileIntroDesc">짧은 질문에 답해 주시면, 증상·목표에 맞는 프로그램과 다음 단계를 바로 확인하실 수 있습니다.</p>
+      <div class="profile-intro-meta">
+        <span class="profile-intro-pill">⏱ 약 2~3분</span>
+        <span class="profile-intro-pill" id="profileIntroStepCount">질문 진행</span>
+      </div>
+      <div class="profile-intro-steps" id="profileIntroSteps"></div>
+      <button type="button" class="profile-intro-start" id="profileIntroStartBtn" onclick="startProfileIntroFlow_()">시작하기 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
      PATIENT Q1 — 치료 vs 웰니스
 ══════════════════════════════ -->
 <div class="screen" id="s-p1">
@@ -5830,7 +6131,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
 <div class="screen" id="s-p-vas">
   <div class="wrap">
     <div class="q-header">
-      <div class="q-step">2단계</div>
+      <div class="q-step" id="vasStepBadge">3단계</div>
       <div class="q-title">통증이 어느 정도인가?</div>
       <div class="q-sub">해당하는 구간을 선택해주세요</div>
     </div>
@@ -5844,6 +6145,11 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
       <div class="vas-labels">
         <span class="vas-label-num" onclick="setVasValue(1,true)">1</span><span class="vas-label-num" onclick="setVasValue(2,true)">2</span><span class="vas-label-num" onclick="setVasValue(3,true)">3</span><span class="vas-label-num" onclick="setVasValue(4,true)">4</span><span class="vas-label-num" onclick="setVasValue(5,true)">5</span><span class="vas-label-num" onclick="setVasValue(6,true)">6</span><span class="vas-label-num" onclick="setVasValue(7,true)">7</span><span class="vas-label-num" onclick="setVasValue(8,true)">8</span><span class="vas-label-num" onclick="setVasValue(9,true)">9</span><span class="vas-label-num" onclick="setVasValue(10,true)">10</span>
       </div>
+
+      <div class="vas-slider-wrap">
+        <input type="range" class="vas-slider" id="vasSlider" min="1" max="10" value="1" oninput="onVasSliderInput_(this.value)">
+      </div>
+      <div class="vas-caption" id="vasCaption">슬라이더 또는 아래 구간을 선택해주세요.</div>
 
       <div class="vas-zones">
         <div class="vas-zone low" id="vz-low" onclick="selectVasZone('low')">
@@ -5876,17 +6182,12 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
 <div class="screen" id="s-p2">
   <div class="wrap">
     <div class="q-header">
-      <div class="q-step">1단계</div>
-      <div class="q-title">어디가 불편하세요?</div>
-      <div class="q-sub">가장 불편한 부위를 선택해주세요</div>
+      <div class="q-step" id="p2StepBadge">2단계</div>
+      <div class="q-title">현재 가장 불편한 부위는?</div>
+      <div class="q-sub">해당하는 부위를 모두 선택해주세요. (복수 선택 가능)</div>
     </div>
-    <div class="option-list">
-      <div class="option" onclick="pSet('area','neck'); bc('목 어깨 등'); goS('s-p-vas')"><div class="opt-ico opt-ico-dot opt-ico-dot--blue" aria-hidden="true"></div><div><div class="opt-name">목 어깨 등</div><div class="opt-desc">목·어깨·등 통증, 두통 포함</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="pSet('area','back'); bc('허리 골반'); goS('s-p-vas')"><div class="opt-ico opt-ico-dot opt-ico-dot--orange" aria-hidden="true"></div><div><div class="opt-name">허리 골반</div><div class="opt-desc">허리 통증, 골반 불균형, 좌골신경통 포함</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="pSet('area','arm'); bc('팔꿈치 상지'); goS('s-p-vas')"><div class="opt-ico opt-ico-dot opt-ico-dot--purple" aria-hidden="true"></div><div><div class="opt-name">팔꿈치 상지</div><div class="opt-desc">팔꿈치, 손목, 손·어깨 포함</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="pSet('area','leg'); bc('무릎 하지'); goS('s-p-vas')"><div class="opt-ico opt-ico-dot opt-ico-dot--yellow" aria-hidden="true"></div><div><div class="opt-name">무릎 하지</div><div class="opt-desc">무릎 통증, 발목, 종아리, 고관절 포함</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="pSet('area','full'); bc('여러 곳이 불편해요'); goS('s-p-vas')"><div class="opt-ico opt-ico-dot opt-ico-dot--red" aria-hidden="true"></div><div><div class="opt-name">여러 곳이 불편해요</div><div class="opt-desc">특정 부위를 딱 짚기 어려운 경우</div></div><div class="opt-arr">›</div></div>
-    </div>
+    <div class="chip-grid" id="painAreaChips"></div>
+    <button type="button" class="profile-chip-confirm" id="painAreaConfirmBtn" onclick="confirmPainAreas_()" disabled>다음 →</button>
   </div>
 </div>
 
@@ -5894,17 +6195,49 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
 <div class="screen" id="s-p3">
   <div class="wrap">
     <div class="q-header">
-      <div class="q-step">3단계</div>
+      <div class="q-step" id="p3StepBadge">4단계</div>
       <div class="q-title">어떻게 아프세요?</div>
       <div class="q-sub">가장 가까운 느낌을 선택해주세요</div>
     </div>
     <div class="option-list">
-      <div class="option" onclick="pSet('quality','aching'); bc('뻐근·묵직'); showPatientResult()"><div class="opt-ico">😤</div><div><div class="opt-name">뻐근하고 묵직해요</div><div class="opt-desc">누르면 시원한 느낌 · 근육이 뭉친 느낌</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="pSet('quality','tight'); bc('당김·뻣뻣'); showPatientResult()"><div class="opt-ico">↔️</div><div><div class="opt-name">당기고 뻣뻣해요</div><div class="opt-desc">늘릴 때 당기는 느낌 · 아침에 특히 심함</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="pSet('quality','sharp'); bc('찌릿·저림'); showPatientResult()"><div class="opt-ico">⚡</div><div><div class="opt-name">찌릿하거나 저려요</div><div class="opt-desc">전기 오는 느낌 · 팔다리로 뻗는 통증</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="pSet('quality','sharp_local'); bc('날카로운'); showPatientResult()"><div class="opt-ico">📍</div><div><div class="opt-name">날카롭게 한 점이 아파요</div><div class="opt-desc">특정 동작에서 강하게 · 관절 느낌</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="pSet('quality','tear'); bc('찢어지는'); showPatientResult()"><div class="opt-ico">💥</div><div><div class="opt-name">찢어지는 느낌이에요</div><div class="opt-desc">갑자기 생긴 강한 통증 · 부종 동반</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="pickPainQuality_('aching','뻐근·묵직')"><div class="opt-ico">😤</div><div><div class="opt-name">뻐근하고 묵직해요</div><div class="opt-desc">누르면 시원한 느낌 · 근육이 뭉친 느낌</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="pickPainQuality_('tight','당김·뻣뻣')"><div class="opt-ico">↔️</div><div><div class="opt-name">당기고 뻣뻣해요</div><div class="opt-desc">늘릴 때 당기는 느낌 · 아침에 특히 심함</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="pickPainQuality_('sharp','찌릿·저림')"><div class="opt-ico">⚡</div><div><div class="opt-name">찌릿하거나 저려요</div><div class="opt-desc">전기 오는 느낌 · 팔다리로 뻗는 통증</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="pickPainQuality_('sharp_local','날카로운')"><div class="opt-ico">📍</div><div><div class="opt-name">날카롭게 한 점이 아파요</div><div class="opt-desc">특정 동작에서 강하게 · 관절 느낌</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="pickPainQuality_('tear','찢어지는')"><div class="opt-ico">💥</div><div><div class="opt-name">찢어지는 느낌이에요</div><div class="opt-desc">갑자기 생긴 강한 통증 · 부종 동반</div></div><div class="opt-arr">›</div></div>
     </div>
+  </div>
+</div>
+
+<!-- PATIENT Q — 진단 이력 -->
+<div class="screen" id="s-p-diagnosis">
+  <div class="wrap">
+    <div class="q-header">
+      <div class="q-step" id="pDiagStepBadge">5단계</div>
+      <div class="q-title">진단받은 질환이 있으신가요?</div>
+      <div class="q-sub">현재 또는 과거 진단 이력을 선택해주세요.</div>
+    </div>
+    <div class="chip-grid" id="diagnosisChips"></div>
+    <div style="margin-top:16px;">
+      <div class="q-sub" style="margin-bottom:8px;">추가 설명 <span style="opacity:.7">(선택)</span></div>
+      <textarea class="profile-field-textarea" id="diagnosisNoteInput" rows="3" placeholder="예) 2022년 허리디스크 진단, 현재 통증 경미" oninput="pSet('diagnosisNote', this.value)"></textarea>
+    </div>
+    <button type="button" class="profile-chip-confirm" id="diagnosisConfirmBtn" onclick="confirmDiagnosis_()" disabled>다음 →</button>
+  </div>
+</div>
+
+<!-- PATIENT Q — 증상 상세 -->
+<div class="screen" id="s-p-symptom">
+  <div class="wrap">
+    <div class="q-header">
+      <div class="q-step" id="pSymStepBadge">6단계</div>
+      <div class="q-title">어떤 증상이 있으신가요?</div>
+      <div class="q-sub">느끼시는 증상을 자유롭게 적어주세요. (선택)</div>
+    </div>
+    <textarea class="profile-field-textarea" id="symptomDetailInput" placeholder="예) 허리를 숙일 때 아픔, 오래 앉아 있으면 통증" oninput="pSet('symptomDetail', this.value)"></textarea>
+    <div class="profile-example-box">예시 — 허리를 숙일 때 아픔 · 오래 앉아 있으면 통증 · 어깨가 잘 안 올라감 · 무릎 계단 통증</div>
+    <button type="button" class="profile-chip-confirm" onclick="confirmSymptomDetail_()">결과 보기 →</button>
+    <button type="button" class="profile-skip-link" onclick="confirmSymptomDetail_()">건너뛰기</button>
   </div>
 </div>
 
@@ -6116,6 +6449,39 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   </div>
 </div>
 
+<div id="wellnessIntakeModal" class="consult-modal hidden" aria-hidden="true" role="dialog" aria-labelledby="wellnessIntakeModalTitle">
+  <div class="consult-modal-backdrop" onclick="closeWellnessIntakeModal()"></div>
+  <div class="consult-modal-panel">
+    <button type="button" class="consult-modal-close" onclick="closeWellnessIntakeModal()" aria-label="닫기">×</button>
+    <h2 id="wellnessIntakeModalTitle" class="consult-modal-title">사전 문진 제출</h2>
+    <p class="consult-modal-sub">작성하신 내용을 센터로 전달합니다. 초회 평가 시 참고 자료로 활용됩니다.</p>
+    <div class="consult-contact-block">
+      <div class="consult-field">
+        <span class="consult-field-label-block">연락처</span>
+        <div class="consult-phone-row" role="group" aria-label="휴대전화 번호">
+          <input type="text" class="consult-phone-part consult-phone-prefix" value="010" readonly tabindex="-1" aria-label="앞자리 010">
+          <span class="consult-phone-sep" aria-hidden="true">-</span>
+          <input type="tel" class="consult-phone-part" id="wellnessIntakePhoneP2" maxlength="4" inputmode="numeric" placeholder="0000" oninput="onWellnessIntakePhoneMidInput()">
+          <span class="consult-phone-sep" aria-hidden="true">-</span>
+          <input type="tel" class="consult-phone-part" id="wellnessIntakePhoneP3" maxlength="4" inputmode="numeric" placeholder="0000" oninput="onWellnessIntakePhoneLastInput()" onkeydown="onWellnessIntakePhoneLastKeydown(event)">
+        </div>
+      </div>
+      <div class="consult-field">
+        <label for="wellnessIntakeName">이름</label>
+        <input type="text" id="wellnessIntakeName" autocomplete="name" placeholder="홍길동" maxlength="40">
+      </div>
+      <div class="consult-summary-block">
+        <label class="consult-summary-label">작성 내용 요약</label>
+        <div id="wellnessIntakeSummaryBody" class="consult-summary-box"></div>
+      </div>
+    </div>
+    <div class="consult-actions">
+      <button type="button" class="consult-submit" id="wellnessIntakeSubmitBtn" onclick="submitProfileIntake_()">제출하기</button>
+    </div>
+    <p id="wellnessIntakeSubmitting" class="consult-submitting hidden" aria-live="polite">전송 중…</p>
+  </div>
+</div>
+
 <div id="expertEvalModal" class="consult-modal expert-eval-modal hidden" aria-hidden="true" role="dialog" aria-labelledby="expertEvalModalTitle">
   <div class="consult-modal-backdrop" onclick="closeExpertEvalModal()"></div>
   <div class="consult-modal-panel">
@@ -6187,6 +6553,8 @@ let bcPath = [];
 /** bcPath 길이별 화면 스냅샷 — 브레드크럼 클릭 복원용 */
 let bcCheckpointsByLen_ = {};
 let consultFlowKind = 'treatment';
+/** 웰니스 딥링크 채널: online(온라인 문의) | visit(센터 방문) */
+let wellnessEntryChannel = null;
 let profileBranch = null;
 let profileHeroFadeTimer = null;
 const PROFILE_HERO_FADE_MS = 200;
@@ -6204,10 +6572,13 @@ const PROFILE_SCREEN_LABELS = {
   's-home': '프로필 홈',
   's-psp1': 'PSP 컨셉 요약',
   's-psp3': 'PSP 전체 구조',
+  's-p-intro': '맞춤 안내 시작',
   's-p1': '몸 상태 선택',
   's-p-vas': '통증 평가',
   's-p2': '통증 부위',
   's-p3': '통증 양상',
+  's-p-diagnosis': '진단 이력',
+  's-p-symptom': '증상 상세',
   's-p-wellness': '웰니스 목표',
   's-p-w-comfort': '웰니스 · 불편함',
   's-p-w-follow': '웰니스 · 맞춤 질문',
@@ -6216,6 +6587,17 @@ const PROFILE_SCREEN_LABELS = {
   's-e2': '전문가 교육 2',
   's-e3': '전문가 교육 3',
 };
+
+const PAIN_AREA_OPTIONS = ['목', '어깨', '팔꿈치', '손목', '허리', '골반', '고관절', '무릎', '발목', '발', '특별한 통증 없음'];
+const DIAGNOSIS_OPTIONS = ['디스크', '협착증', '회전근개 손상', '오십견', '슬개건염', '수술 이력 있음', '진단 없음', '기타'];
+const PAIN_AREA_REGION_ = {
+  '목': 'neck', '어깨': 'neck',
+  '허리': 'back', '골반': 'back',
+  '팔꿈치': 'arm', '손목': 'arm',
+  '고관절': 'leg', '무릎': 'leg', '발목': 'leg', '발': 'leg',
+};
+const TREATMENT_FLOW_STEPS_ = ['s-p-intro', 's-p2', 's-p-vas', 's-p3', 's-p-diagnosis', 's-p-symptom'];
+const WELLNESS_FLOW_BASE_ = ['s-p-intro', 's-p-wellness', 's-p-w-comfort'];
 
 const PROFILE_ACTIVITY_BASE = 'https://breezefeel.github.io/drpark/';
 const PROFILE_ACTIVITY_PHOTOS = [
@@ -6437,8 +6819,8 @@ const PROFILE_BRANCH_COPY = {
     cta: '통증이나 불편함이 있어요 →'
   },
   wellness: {
-    title: '자세와 움직임, 몸을 더 편하게',
-    sub: 'PAR · P-스트레칭 · 체형 밸런스 · 기능 운동',
+    title: '기능 교정 예방',
+    sub: 'P-스트레칭 · 자세 교정 · 기능 운동',
     cta: '움직임·자세부터 살펴볼게요 →'
   },
   expert: {
@@ -6506,7 +6888,7 @@ function resetProfileBranchPicker_(){
   const outcome = document.getElementById('profileHeroOutcome');
   if(outcome) outcome.classList.remove('is-visible');
   const btn = document.getElementById('profileBranchAction');
-  if(btn) btn.classList.remove('visible');
+  if(btn) btn.className = 'pl-branch-cta';
   const titleEl = document.getElementById('profileHeroTitle');
   const subEl = document.getElementById('profileHeroSub');
   if(titleEl) titleEl.textContent = '';
@@ -6538,7 +6920,7 @@ function setProfileHeroCopy(branch, animate){
     subEl.textContent = copy.sub;
     if(btn){
       btn.textContent = copy.cta;
-      btn.classList.add('visible');
+      btn.className = 'pl-branch-cta visible pl-branch-cta--' + branch;
     }
   };
 
@@ -7491,7 +7873,7 @@ function runProfileBranchAction(){
   if(b === 'wellness'){
     bc('움직임·자세');
     pSet('mode', 'wellness');
-    goS('s-p-wellness');
+    startWellnessFlow_();
     return;
   }
   if(b === 'expert'){
@@ -7506,6 +7888,217 @@ function runProfileBranchAction(){
 
 function pSet(k,v){ P[k]=v; }
 function eSet(k,v){ E[k]=v; }
+
+function padProgressStep_(n, total){
+  return String(n).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+}
+
+function getWellnessFlowTotalSteps_(){
+  const followCount = getWellnessFollowQuestions_().length;
+  return WELLNESS_FLOW_BASE_.length + followCount;
+}
+
+function getProgressInfo_(screenId){
+  if(screenId === 's-home') return { pct: 0, stepText: '', label: '맞춤 안내' };
+  if(screenId === 's-result'){
+    const label = (P.mode === 'wellness' || consultFlowKind === 'wellness') ? '움직임·자세 안내' : '통증·재활 안내';
+    return { pct: 100, stepText: '완료', label: label };
+  }
+  if(expertFlow.includes(screenId)){
+    const idx = expertFlow.indexOf(screenId);
+    const total = expertFlow.length - 1;
+    return { pct: Math.min((idx / total) * 100, 100), stepText: padProgressStep_(idx, total), label: '전문가 교육' };
+  }
+  if(P.mode === 'wellness' || consultFlowKind === 'wellness' || wellnessFlow.includes(screenId)){
+    const total = getWellnessFlowTotalSteps_();
+    if(screenId === 's-p-intro') return { pct: Math.round((1 / total) * 100), stepText: padProgressStep_(1, total), label: '움직임·자세 안내' };
+    if(screenId === 's-p-wellness') return { pct: Math.round((2 / total) * 100), stepText: padProgressStep_(2, total), label: '움직임·자세 안내' };
+    if(screenId === 's-p-w-comfort') return { pct: Math.round((3 / total) * 100), stepText: padProgressStep_(3, total), label: '움직임·자세 안내' };
+    if(screenId === 's-p-w-follow'){
+      const qStep = getWellnessFollowStepFromState_();
+      const current = WELLNESS_FLOW_BASE_.length + qStep;
+      return { pct: Math.min(Math.round((current / total) * 100), 99), stepText: padProgressStep_(current, total), label: '움직임·자세 안내' };
+    }
+  }
+  if(TREATMENT_FLOW_STEPS_.includes(screenId) || screenId === 's-p-vas'){
+    const order = TREATMENT_FLOW_STEPS_.slice();
+    order.splice(2, 0, 's-p-vas');
+    const idx = order.indexOf(screenId);
+    const total = order.length;
+    const current = idx >= 0 ? idx + 1 : 1;
+    return { pct: Math.min(Math.round((current / total) * 100), 99), stepText: padProgressStep_(current, total), label: '통증·재활 안내' };
+  }
+  return { pct: 0, stepText: '', label: '맞춤 안내' };
+}
+
+function renderProfileIntro_(){
+  const isWellness = P.mode === 'wellness' || profileBranch === 'wellness';
+  const eyebrow = document.getElementById('profileIntroEyebrow');
+  const title = document.getElementById('profileIntroTitle');
+  const desc = document.getElementById('profileIntroDesc');
+  const stepsEl = document.getElementById('profileIntroSteps');
+  const countEl = document.getElementById('profileIntroStepCount');
+  const total = isWellness ? getWellnessFlowTotalSteps_() : TREATMENT_FLOW_STEPS_.length + 1;
+  if(eyebrow) eyebrow.textContent = isWellness ? '움직임·자세 안내' : '통증·재활 안내';
+  if(title) title.innerHTML = isWellness ? '목표에 맞는 프로그램을<br />함께 찾아볼게요' : '증상을 알려주시면<br />맞춤 치료 방향을 안내해 드려요';
+  if(desc) desc.textContent = isWellness
+    ? '짧은 질문에 답해 주시면, 목표·불편함에 맞는 웰니스 프로그램과 로드맵을 바로 확인하실 수 있습니다.'
+    : '짧은 질문에 답해 주시면, 통증 부위·정도·진단 이력을 바탕으로 맞춤 프로그램과 다음 단계를 안내해 드립니다.';
+  if(countEl) countEl.textContent = total + '개 질문';
+  if(stepsEl){
+    const steps = isWellness ? [
+      ['현재 상태', '목표와 불편함을 확인합니다'],
+      ['맞춤 질문', '선택에 맞는 추가 질문을 진행합니다'],
+      ['프로그램 추천', '로드맵과 상담 안내를 제공합니다'],
+    ] : [
+      ['증상 파악', '부위·정도·통증 종류를 확인합니다'],
+      ['진단·증상', '병원 진단 이력과 증상을 정리합니다'],
+      ['맞춤 결과', '프로그램과 로드맵을 안내합니다'],
+    ];
+    stepsEl.innerHTML = steps.map(function (s, i) {
+      return '<div class="profile-intro-step"><span class="profile-intro-step-num">' + (i + 1) + '</span><span class="profile-intro-step-text"><b>' + escapeHtml(s[0]) + '</b> — ' + escapeHtml(s[1]) + '</span></div>';
+    }).join('');
+  }
+}
+
+function startProfileIntroFlow_(){
+  if(P.mode === 'wellness' || profileBranch === 'wellness'){
+    goS('s-p-wellness');
+    return;
+  }
+  goS('s-p2');
+}
+
+function startWellnessFlow_(){
+  pSet('mode', 'wellness');
+  goS('s-p-intro');
+}
+
+function renderPainAreaChips_(){
+  if(!P.painAreas) P.painAreas = [];
+  const box = document.getElementById('painAreaChips');
+  const btn = document.getElementById('painAreaConfirmBtn');
+  if(!box) return;
+  box.innerHTML = PAIN_AREA_OPTIONS.map(function (label) {
+    const active = P.painAreas.indexOf(label) >= 0;
+    return '<button type="button" class="profile-chip' + (active ? ' active' : '') + '" onclick="togglePainAreaChip_(\'' + label.replace(/'/g, "\\'") + '\')">' + escapeHtml(label) + '</button>';
+  }).join('');
+  if(btn) btn.disabled = P.painAreas.length === 0;
+}
+
+function togglePainAreaChip_(label){
+  if(!P.painAreas) P.painAreas = [];
+  if(label === '특별한 통증 없음'){
+    P.painAreas = P.painAreas.indexOf(label) >= 0 ? [] : ['특별한 통증 없음'];
+  } else {
+    P.painAreas = P.painAreas.filter(function (x) { return x !== '특별한 통증 없음'; });
+    const idx = P.painAreas.indexOf(label);
+    if(idx >= 0) P.painAreas.splice(idx, 1); else P.painAreas.push(label);
+  }
+  renderPainAreaChips_();
+}
+
+function deriveAreaFromPainAreas_(areas){
+  if(!areas || !areas.length) return P.area || 'full';
+  if(areas.indexOf('특별한 통증 없음') >= 0) return 'full';
+  const regions = {};
+  areas.forEach(function (a) {
+    const r = PAIN_AREA_REGION_[a];
+    if(r) regions[r] = true;
+  });
+  const keys = Object.keys(regions);
+  if(keys.length === 0) return 'full';
+  if(keys.length > 1) return 'full';
+  return keys[0];
+}
+
+function getPainAreasDisplay_(){
+  if(P.painAreas && P.painAreas.length) return P.painAreas.join(', ');
+  const areaKo = { neck:'목 어깨 등', back:'허리 골반', arm:'팔꿈치 상지', leg:'무릎 하지', full:'여러 곳이 불편해요' };
+  return areaKo[P.area] || '-';
+}
+
+function confirmPainAreas_(){
+  if(!P.painAreas || !P.painAreas.length) return;
+  P.area = deriveAreaFromPainAreas_(P.painAreas);
+  bcPath = bcPath.filter(function (x) { return x.indexOf('통증부위:') !== 0; });
+  bc('통증부위: ' + P.painAreas.join(', '));
+  goS('s-p-vas');
+}
+
+function renderDiagnosisChips_(){
+  if(!P.diagnosis) P.diagnosis = [];
+  const box = document.getElementById('diagnosisChips');
+  const btn = document.getElementById('diagnosisConfirmBtn');
+  if(!box) return;
+  box.innerHTML = DIAGNOSIS_OPTIONS.map(function (label) {
+    const active = P.diagnosis.indexOf(label) >= 0;
+    return '<button type="button" class="profile-chip' + (active ? ' active' : '') + '" onclick="toggleDiagnosisChip_(\'' + label.replace(/'/g, "\\'") + '\')">' + escapeHtml(label) + '</button>';
+  }).join('');
+  if(btn) btn.disabled = P.diagnosis.length === 0;
+}
+
+function toggleDiagnosisChip_(label){
+  if(!P.diagnosis) P.diagnosis = [];
+  const idx = P.diagnosis.indexOf(label);
+  if(idx >= 0) P.diagnosis.splice(idx, 1); else P.diagnosis.push(label);
+  renderDiagnosisChips_();
+}
+
+function confirmDiagnosis_(){
+  if(!P.diagnosis || !P.diagnosis.length) return;
+  bcPath = bcPath.filter(function (x) { return x.indexOf('진단:') !== 0; });
+  bc('진단: ' + P.diagnosis.join(', '));
+  goS('s-p-symptom');
+}
+
+function pickPainQuality_(id, bcLabel){
+  pSet('quality', id);
+  bc(bcLabel);
+  goS('s-p-diagnosis');
+}
+
+function confirmSymptomDetail_(){
+  const el = document.getElementById('symptomDetailInput');
+  if(el) pSet('symptomDetail', el.value.trim());
+  if(P.symptomDetail){
+    bcPath = bcPath.filter(function (x) { return x.indexOf('증상:') !== 0; });
+    bc('증상: ' + (P.symptomDetail.length > 40 ? P.symptomDetail.slice(0, 40) + '…' : P.symptomDetail));
+  }
+  showPatientResult();
+}
+
+function renderResultSummaryCard_(rows){
+  if(!rows || !rows.length) return '';
+  const body = rows.map(function (r) {
+    return '<div class="result-summary-row"><span class="result-summary-label">' + escapeHtml(r.dt) + '</span><span class="result-summary-value">' + escapeHtml(r.dd) + '</span></div>';
+  }).join('');
+  return '<div class="result-summary-card"><div class="result-summary-title">선택하신 내용</div>' + body + '</div>';
+}
+
+function getTreatmentSummaryRows_(){
+  const sevKo = { mild:'경증 (VAS 1~3)', moderate:'중등도 (VAS 4~6)', severe:'중증 (VAS 7~10)' };
+  const qualKo = { aching:'뻐근·묵직', tight:'당김·뻣뻣', sharp:'찌릿·저림', sharp_local:'날카로운(한 점)', tear:'찢어지는 느낌' };
+  const rows = [];
+  rows.push({ dt: '통증 부위', dd: getPainAreasDisplay_() });
+  if(P.vasScore != null && P.vasScore !== '') rows.push({ dt: '통증 점수', dd: String(P.vasScore) + ' / 10' });
+  if(P.severity) rows.push({ dt: '통증 정도', dd: sevKo[P.severity] || P.severity });
+  if(P.quality) rows.push({ dt: '통증 종류', dd: qualKo[P.quality] || P.quality });
+  if(P.diagnosis && P.diagnosis.length) rows.push({ dt: '진단 이력', dd: P.diagnosis.join(', ') });
+  if(P.diagnosisNote) rows.push({ dt: '진단 추가', dd: P.diagnosisNote });
+  if(P.symptomDetail) rows.push({ dt: '증상 상세', dd: P.symptomDetail });
+  return rows;
+}
+
+function getWellnessSummaryRows_(){
+  const goalKo = { stretch:'유연성 향상', posture:'자세·체형 교정', fitness:'기능·체력 향상', face:'얼굴 교정·관리', prevention:'예방·셀프 케어' };
+  const comfortKo = { none:'불편 없음', mild:'가벼운 불편', exercise:'운동·스트레칭 시 불편', daily:'일상생활 어려움' };
+  const rows = [];
+  if(P.goal) rows.push({ dt: '프로그램', dd: goalKo[P.goal] || P.goal });
+  if(P.wellnessComfort) rows.push({ dt: '현재 상태', dd: comfortKo[P.wellnessComfort] || P.wellnessComfort });
+  getWellnessAnswerRows_().forEach(function (r) { rows.push(r); });
+  return rows;
+}
 
 function bc(label){
   bcPath.push(label);
@@ -7595,6 +8188,19 @@ function applyNavCheckpoint_(cp){
 
   if(cp.screen === 's-e2') syncE2VariantPanels_();
   if(cp.screen === 's-home') applyHomeBranchUi_();
+  if(cp.screen === 's-p-intro') renderProfileIntro_();
+  if(cp.screen === 's-p2') renderPainAreaChips_();
+  if(cp.screen === 's-p-vas') initVasScreen_();
+  if(cp.screen === 's-p-diagnosis'){
+    renderDiagnosisChips_();
+    const noteEl = document.getElementById('diagnosisNoteInput');
+    if(noteEl) noteEl.value = P.diagnosisNote || '';
+  }
+  if(cp.screen === 's-p-symptom'){
+    const symEl = document.getElementById('symptomDetailInput');
+    if(symEl) symEl.value = P.symptomDetail || '';
+  }
+  if(cp.screen === 's-p-w-follow') renderWellnessFollowUp_(getWellnessFollowStepFromState_());
 
   refreshResultScreenContent_();
   syncProfileHomeReviews_();
@@ -7632,21 +8238,30 @@ function resolveScreenForBcPrefix_(prefix){
   }
 
   if(prefix[0] === '통증·재활' || prefix.indexOf('치료 영역') >= 0){
-    if(last === 'VAS 0') return { screen: 's-p-wellness' };
-    if(/^VAS\s/.test(last)) return { screen: 's-p3' };
-    if(['목 어깨 등', '허리 골반', '팔꿈치 상지', '무릎 하지', '여러 곳이 불편해요', '목·어깨', '허리·골반', '무릎·하지', '전신'].indexOf(last) >= 0){
-      return { screen: 's-p-vas' };
+    if(last === 'VAS 0') return { screen: 's-p-wellness', flow: 'wellness' };
+    if(last.indexOf('증상:') === 0) return { screen: 's-result', flow: 'treatment' };
+    if(prefix.some(function (x) { return x.indexOf('진단:') === 0; })){
+      if(last.indexOf('진단:') === 0) return { screen: 's-p-symptom', flow: 'treatment' };
     }
     if(['뻐근·묵직', '당김·뻣뻣', '찌릿·저림', '날카로운', '찢어지는'].indexOf(last) >= 0){
-      return { screen: 's-result', flow: 'treatment' };
+      return { screen: 's-p-diagnosis', flow: 'treatment' };
     }
-    return { screen: 's-p2' };
+    if(/^VAS\s/.test(last) || prefix.some(function (x) { return /^VAS\s/.test(x); })){
+      return { screen: 's-p3', flow: 'treatment' };
+    }
+    if(prefix.some(function (x) { return x.indexOf('통증부위:') === 0; })){
+      return { screen: 's-p-vas', flow: 'treatment' };
+    }
+    if(prefix.indexOf('치료 영역') >= 0) return { screen: 's-p2', flow: 'treatment' };
+    if(prefix[0] === '통증·재활' && prefix.length === 1) return { screen: 's-p-intro', flow: 'treatment' };
+    return { screen: 's-p2', flow: 'treatment' };
   }
 
   if(prefix[0] === '움직임·자세' || prefix.indexOf('웰니스 영역') >= 0){
+    if(prefix.length === 1) return { screen: 's-p-intro', flow: 'wellness' };
     const wResolved = resolveWellnessFromBc_(prefix);
     if(wResolved) return wResolved;
-    return { screen: 's-p-wellness' };
+    return { screen: 's-p-intro', flow: 'wellness' };
   }
 
   return { screen: 's-home' };
@@ -7662,6 +8277,7 @@ function applyBcPrefixNavigate_(prefix, index){
       profileBranch = 'wellness';
       pSet('mode', 'wellness');
       if(resolved.goal) pSet('goal', resolved.goal);
+      syncPainAreasFromBc_(prefix);
     }
   } else if(prefix[0] === '통증·재활' || prefix.indexOf('치료 영역') >= 0){
     profileBranch = 'treatment';
@@ -7680,11 +8296,26 @@ function applyBcPrefixNavigate_(prefix, index){
   if(resolved.flow === 'treatment'){
     profileBranch = 'treatment';
     pSet('mode', 'treatment');
+    syncPainAreasFromBc_(bcPath);
+    syncDiagnosisFromBc_(bcPath);
+    syncSymptomFromBc_(bcPath);
   }
   if(resolved.goal) pSet('goal', resolved.goal);
   if(resolved.screen === 's-p-w-follow'){
     syncWellnessAnswersFromBc_(bcPath, resolved.goal || P.goal);
     renderWellnessFollowUp_(resolved.followStep || getWellnessFollowStepFromState_());
+  }
+  if(resolved.screen === 's-p-intro') renderProfileIntro_();
+  if(resolved.screen === 's-p2') renderPainAreaChips_();
+  if(resolved.screen === 's-p-vas') initVasScreen_();
+  if(resolved.screen === 's-p-diagnosis'){
+    renderDiagnosisChips_();
+    const noteEl = document.getElementById('diagnosisNoteInput');
+    if(noteEl) noteEl.value = P.diagnosisNote || '';
+  }
+  if(resolved.screen === 's-p-symptom'){
+    const symEl = document.getElementById('symptomDetailInput');
+    if(symEl) symEl.value = P.symptomDetail || '';
   }
   if(resolved.screen === 's-result' && resolved.flow === 'wellness'){
     syncWellnessAnswersFromBc_(bcPath, resolved.goal || P.goal);
@@ -7805,10 +8436,14 @@ function buildConsultSelectionRows(opts){
   }
 
   rows.push({ dt: '구분', dd: '치료 영역 (통증)' });
+  if(P.painAreas && P.painAreas.length) rows.push({ dt: '통증 부위', dd: P.painAreas.join(', ') });
+  else if(P.area) rows.push({ dt: '부위', dd: areaKo[P.area] || P.area });
   if(P.vasScore != null && P.vasScore !== '') rows.push({ dt: 'VAS', dd: String(P.vasScore) });
   if(P.severity) rows.push({ dt: '통증 정도', dd: sevKo[P.severity] || P.severity });
-  if(P.area) rows.push({ dt: '부위', dd: areaKo[P.area] || P.area });
   if(P.quality) rows.push({ dt: '통증 질', dd: qualKo[P.quality] || P.quality });
+  if(P.diagnosis && P.diagnosis.length) rows.push({ dt: '진단 이력', dd: P.diagnosis.join(', ') });
+  if(P.diagnosisNote) rows.push({ dt: '진단 추가', dd: P.diagnosisNote });
+  if(P.symptomDetail) rows.push({ dt: '증상 상세', dd: P.symptomDetail });
   const sched = formatConsultScheduleDisplay_();
   if(sched) rows.push({ dt: '희망 일정', dd: sched });
   return rows;
@@ -8024,6 +8659,7 @@ function appendConsultScheduleToText_(text){
 
 function renderResultContactActions_(opts){
   opts = opts || {};
+  if(opts.variant === 'wellness') return renderWellnessResultContactActions_();
   const mainText = escapeHtml(opts.mainText || '프로그램 상담 신청하기');
   const mainSub = escapeHtml(opts.mainSub || '목표에 맞는 일정을 함께 잡아드립니다');
   return '<div class="contact-bar-row">' +
@@ -8032,6 +8668,200 @@ function renderResultContactActions_(opts){
     '<span class="contact-bar-ico" aria-hidden="true">💬</span></button>' +
     '<button type="button" class="contact-bar contact-bar--expert" onclick="openExpertEvalModal()">' +
     '<span class="contact-bar-expert-label">전문가용<br>상담</span></button></div>';
+}
+
+/** 통증·재활 결과 — 상담 신청 + 통증 문진 제출 */
+function renderTreatmentResultContactActions_(){
+  return '<div class="contact-bar-row contact-bar-row--wellness">' +
+    '<button type="button" class="contact-bar contact-bar--main" onclick="openConsultModal()">' +
+    '<div><div class="ct-text">지금 바로 상담 신청하기</div><div class="ct-sub">결과를 바탕으로 정확한 안내를 드립니다</div></div>' +
+    '<span class="contact-bar-ico" aria-hidden="true">💬</span></button>' +
+    '<button type="button" class="contact-bar contact-bar--intake" onclick="openProfileIntakeModal(\'treatment\')">' +
+    '<div><div class="ct-text">통증 문진 제출하기</div><div class="ct-sub">작성 내용을 초회 평가에 반영합니다</div></div>' +
+    '<span class="contact-bar-ico" aria-hidden="true">📋</span></button></div>';
+}
+
+/** 웰니스 결과 — 상담 신청(일정 선택) + 사전 문진 제출(센터 방문) */
+function renderWellnessResultContactActions_(){
+  return '<div class="contact-bar-row contact-bar-row--wellness">' +
+    '<button type="button" class="contact-bar contact-bar--main" onclick="openWellnessConsultModal()">' +
+    '<div><div class="ct-text">상담 신청하기</div><div class="ct-sub">희망 요일·시간대를 선택해 주세요</div></div>' +
+    '<span class="contact-bar-ico" aria-hidden="true">📅</span></button>' +
+    '<button type="button" class="contact-bar contact-bar--intake" onclick="openWellnessIntakeModal()">' +
+    '<div><div class="ct-text">사전 문진 제출하기</div><div class="ct-sub">센터에서 작성하신 분은 여기서 제출</div></div>' +
+    '<span class="contact-bar-ico" aria-hidden="true">📋</span></button></div>';
+}
+
+function buildWellnessIntakeSummaryText_(){
+  const rows = getWellnessSummaryRows_();
+  if(!rows.length) return buildConsultSummaryPlainText() || '(선택 내용 없음)';
+  return rows.map(function (r) { return r.dt + ': ' + r.dd; }).join('\n');
+}
+
+function getWellnessIntakePhoneCombined_(){
+  const b = document.getElementById('wellnessIntakePhoneP2').value.replace(/\D/g, '');
+  const c = document.getElementById('wellnessIntakePhoneP3').value.replace(/\D/g, '');
+  return { digits: '010' + b + c, last4: c };
+}
+
+function onWellnessIntakePhoneMidInput(){
+  const p2 = document.getElementById('wellnessIntakePhoneP2');
+  const p3 = document.getElementById('wellnessIntakePhoneP3');
+  let d = p2.value.replace(/\D/g, '');
+  if(d.length > 4){ p2.value = d.slice(0, 4); p3.value = d.slice(4, 8); p3.focus(); return; }
+  p2.value = d;
+  if(p2.value.length >= 4){ p3.focus(); p3.select(); }
+}
+
+function onWellnessIntakePhoneLastInput(){
+  consultPhoneDigitsOnly(document.getElementById('wellnessIntakePhoneP3'), 4);
+}
+
+function onWellnessIntakePhoneLastKeydown(e){
+  const p3 = document.getElementById('wellnessIntakePhoneP3');
+  const p2 = document.getElementById('wellnessIntakePhoneP2');
+  if(e.key === 'Backspace' && !p3.value.length) p2.focus();
+}
+
+function openWellnessConsultModal(){
+  consultFlowKind = 'wellness';
+  openConsultModal({ emphasizeSchedule: true });
+}
+
+let profileIntakeKind_ = 'wellness';
+
+function formatTreatmentSummaryHtml_(){
+  const rows = getTreatmentSummaryRows_();
+  if(!rows.length){
+    return '<p style="margin:0;color:var(--dim);font-size:12px;">선택 항목이 없습니다.</p>';
+  }
+  return '<dl>' + rows.map(function (r) {
+    return '<dt>' + escapeHtml(r.dt) + '</dt><dd>' + escapeHtml(r.dd) + '</dd>';
+  }).join('') + '</dl>';
+}
+
+function buildTreatmentIntakeSummaryText_(){
+  const rows = getTreatmentSummaryRows_();
+  if(!rows.length) return '(선택 내용 없음)';
+  return rows.map(function (r) { return r.dt + ': ' + r.dd; }).join('\n');
+}
+
+function openProfileIntakeModal(kind){
+  profileIntakeKind_ = kind === 'treatment' ? 'treatment' : 'wellness';
+  const titleEl = document.getElementById('wellnessIntakeModalTitle');
+  const subEl = document.querySelector('#wellnessIntakeModal .consult-modal-sub');
+  if(titleEl) titleEl.textContent = profileIntakeKind_ === 'treatment' ? '통증 문진 제출' : '사전 문진 제출';
+  if(subEl) subEl.textContent = '작성하신 내용을 센터로 전달합니다. 초회 평가 시 참고 자료로 활용됩니다.';
+  const summaryEl = document.getElementById('wellnessIntakeSummaryBody');
+  if(summaryEl) {
+    summaryEl.innerHTML = profileIntakeKind_ === 'treatment'
+      ? formatTreatmentSummaryHtml_()
+      : formatConsultSummaryHtml();
+  }
+  document.getElementById('wellnessIntakeName').value = '';
+  document.getElementById('wellnessIntakePhoneP2').value = '';
+  document.getElementById('wellnessIntakePhoneP3').value = '';
+  document.getElementById('wellnessIntakeSubmitting').classList.add('hidden');
+  document.getElementById('wellnessIntakeSubmitBtn').disabled = false;
+  document.getElementById('wellnessIntakeModal').classList.remove('hidden');
+  document.getElementById('wellnessIntakeModal').setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  requestAnimationFrame(function () { document.getElementById('wellnessIntakePhoneP2').focus(); });
+}
+
+function openWellnessIntakeModal(){
+  openProfileIntakeModal('wellness');
+}
+
+function closeWellnessIntakeModal(){
+  document.getElementById('wellnessIntakeModal').classList.add('hidden');
+  document.getElementById('wellnessIntakeModal').setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+async function submitProfileIntake_(){
+  const name = document.getElementById('wellnessIntakeName').value.trim();
+  const { digits: phone, last4 } = getWellnessIntakePhoneCombined_();
+  if(!name){ alert('이름을 입력해 주세요.'); return; }
+  if(phone.length !== 11 || !/^010\d{8}$/.test(phone)){
+    alert('연락처를 확인해 주세요. (010 포함 11자리)');
+    return;
+  }
+  if(!CONSULT_WEBHOOK_URL){
+    alert('서버 URL이 설정되지 않았습니다.');
+    return;
+  }
+  const isTreatment = profileIntakeKind_ === 'treatment';
+  const btn = document.getElementById('wellnessIntakeSubmitBtn');
+  const submitting = document.getElementById('wellnessIntakeSubmitting');
+  btn.disabled = true;
+  submitting.classList.remove('hidden');
+  const summaryText = isTreatment ? buildTreatmentIntakeSummaryText_() : buildWellnessIntakeSummaryText_();
+  const payload = {
+    action: isTreatment ? 'submitTreatmentIntake' : 'submitWellnessIntake',
+    name: name,
+    phone: phone,
+    flow: isTreatment ? 'treatment_intake' : 'wellness_intake',
+    channel: wellnessEntryChannel || 'visit',
+    summaryText: summaryText,
+    selections: buildConsultSelectionRows(),
+    profileAnswers: JSON.parse(JSON.stringify(P || {})),
+    bcPath: bcPath.slice(),
+    profileBranch: profileBranch,
+    submittedAt: new Date().toISOString(),
+    userAgent: navigator.userAgent
+  };
+  try {
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = CONSULT_WEBHOOK_URL;
+    form.target = 'consultHiddenFrame';
+    form.acceptCharset = 'UTF-8';
+    const inp = document.createElement('input');
+    inp.type = 'hidden';
+    inp.name = 'data';
+    inp.value = JSON.stringify(payload);
+    form.appendChild(inp);
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
+    closeWellnessIntakeModal();
+    alert(isTreatment
+      ? '제출되었습니다.\n\n센터에서 확인 후 초회 평가에 반영됩니다.'
+      : '제출되었습니다.\n\n센터에서 확인 후 초회 평가에 반영됩니다.');
+  } catch (err) {
+    alert('전송에 실패했습니다. 잠시 후 다시 시도해 주세요.');
+    btn.disabled = false;
+  } finally {
+    submitting.classList.add('hidden');
+  }
+}
+
+async function submitWellnessIntake_(){
+  profileIntakeKind_ = 'wellness';
+  return submitProfileIntake_();
+}
+
+function initProfileDeepLink_(){
+  const params = new URLSearchParams(window.location.search);
+  const flow = (params.get('flow') || '').toLowerCase();
+  if(flow !== 'wellness') return;
+  const ch = (params.get('channel') || '').toLowerCase();
+  if(ch === 'visit' || ch === 'online') wellnessEntryChannel = ch;
+  profileBranch = 'wellness';
+  pSet('mode', 'wellness');
+  consultFlowKind = 'wellness';
+  const cleanUrl = window.location.pathname + (window.location.hash || '');
+  history.replaceState({ screen: 's-p-intro', H: JSON.stringify(['s-home', 's-p-intro']), bc: JSON.stringify([]) }, '', cleanUrl);
+  pushProfileViewLog_('딥링크: 웰니스' + (wellnessEntryChannel ? '(' + wellnessEntryChannel + ')' : ''));
+  startWellnessFlow_();
+}
+
+/** 공유용 웰니스 사전 문진 URL (현재 페이지 기준) */
+function getWellnessShareUrl_(channel){
+  const base = window.location.href.split('?')[0].split('#')[0];
+  const ch = channel || 'visit';
+  return base + '?flow=wellness&channel=' + encodeURIComponent(ch);
 }
 
 /** 전문가용 회원 평가 — 항목은 추후 설정 가능 (예시 8개) */
@@ -8244,7 +9074,7 @@ async function submitMemberEvalForm(){
 
 function updateProfileSticky(){
   const nav = document.getElementById('profileNav');
-  const progress = document.querySelector('.progress-bar');
+  const progress = document.getElementById('progressBar');
   const blogFeed = document.getElementById('profileBlogFeed');
   const onHome = document.getElementById('s-home') && document.getElementById('s-home').classList.contains('active');
   if(nav) nav.classList.toggle('hidden', onHome);
@@ -8259,10 +9089,14 @@ function openProfileQuickConsult(){
   openConsultModal();
 }
 
-function openConsultModal(){
+function openConsultModal(opts){
+  opts = opts || {};
   const isExpert = consultFlowKind === 'expert';
   const isQuick = consultFlowKind === 'profile_quick';
-  document.getElementById('consultModalTitle').textContent = isExpert ? '교육 상담 신청' : (isQuick ? '상황에 맞는 방향을 짧게 안내해드려요' : '상담 신청');
+  const isWellness = consultFlowKind === 'wellness';
+  document.getElementById('consultModalTitle').textContent = isExpert
+    ? '교육 상담 신청'
+    : (isQuick ? '상황에 맞는 방향을 짧게 안내해드려요' : (isWellness ? '상담 일정 신청' : '상담 신청'));
   const quickHint = document.getElementById('consultQuickHint');
   if(quickHint) quickHint.classList.toggle('hidden', !isQuick);
   const summaryBlock = document.getElementById('consultSummaryBlock');
@@ -8307,10 +9141,20 @@ function openConsultModal(){
   document.getElementById('consultPhoneP2').value = '';
   document.getElementById('consultPhoneP3').value = '';
   resetConsultSchedulePicker_();
+  const schedField = document.querySelector('.consult-schedule-field');
+  if(schedField){
+    schedField.classList.toggle('consult-schedule-field--focus', !!(opts.emphasizeSchedule || isWellness));
+  }
   document.getElementById('consultModal').classList.remove('hidden');
   document.getElementById('consultModal').setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
-  requestAnimationFrame(() => document.getElementById('consultPhoneP2').focus());
+  requestAnimationFrame(function () {
+    if(opts.emphasizeSchedule || isWellness){
+      const sf = document.querySelector('.consult-schedule-field');
+      if(sf) sf.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    document.getElementById('consultPhoneP2').focus();
+  });
 }
 
 function closeConsultModal(){
@@ -8389,7 +9233,20 @@ function goS(id){
   H.push(id);
   history.pushState({ screen: id, H: JSON.stringify(H), bc: JSON.stringify(bcPath) }, '', '');
   if(id === 's-e2') syncE2VariantPanels_();
+  if(id === 's-p-intro') renderProfileIntro_();
+  if(id === 's-p2') renderPainAreaChips_();
+  if(id === 's-p-vas') initVasScreen_();
+  if(id === 's-p-diagnosis'){
+    renderDiagnosisChips_();
+    const noteEl = document.getElementById('diagnosisNoteInput');
+    if(noteEl) noteEl.value = P.diagnosisNote || '';
+  }
+  if(id === 's-p-symptom'){
+    const symEl = document.getElementById('symptomDetailInput');
+    if(symEl) symEl.value = P.symptomDetail || '';
+  }
   if(id === 's-p-w-follow') renderWellnessFollowUp_(getWellnessFollowStepFromState_());
+  updateQuestionStepBadges_(id);
   recordNavCheckpoint_();
   updateProgress(id);
   updateProfileSticky();
@@ -8408,7 +9265,7 @@ function goHome(){
   document.querySelector('.screen.active').classList.remove('active');
   document.getElementById('s-home').classList.add('active');
   document.getElementById('bcBar').classList.add('hidden');
-  document.getElementById('progressFill').style.width='0%';
+  updateProgress('s-home');
   document.getElementById('backBtn').classList.add('hidden');
   document.getElementById('homeBtn').classList.add('hidden');
   // VAS 초기화
@@ -8444,7 +9301,20 @@ window.addEventListener('popstate', (e) => {
   if(el){ el.classList.add('active'); }
   if(id === 's-e2') syncE2VariantPanels_();
   if(id === 's-home') applyHomeBranchUi_();
+  if(id === 's-p-intro') renderProfileIntro_();
+  if(id === 's-p2') renderPainAreaChips_();
+  if(id === 's-p-vas') initVasScreen_();
+  if(id === 's-p-diagnosis'){
+    renderDiagnosisChips_();
+    const noteEl = document.getElementById('diagnosisNoteInput');
+    if(noteEl) noteEl.value = P.diagnosisNote || '';
+  }
+  if(id === 's-p-symptom'){
+    const symEl = document.getElementById('symptomDetailInput');
+    if(symEl) symEl.value = P.symptomDetail || '';
+  }
   if(id === 's-p-w-follow') renderWellnessFollowUp_(getWellnessFollowStepFromState_());
+  updateQuestionStepBadges_(id);
   refreshResultScreenContent_();
   syncProfileHomeReviews_();
   updateBc();
@@ -8453,9 +9323,59 @@ window.addEventListener('popstate', (e) => {
   window.scrollTo(0,0);
 });
 
+function updateQuestionStepBadges_(screenId){
+  const treatmentMap = {
+    's-p2': 'p2StepBadge',
+    's-p-vas': 'vasStepBadge',
+    's-p3': 'p3StepBadge',
+    's-p-diagnosis': 'pDiagStepBadge',
+    's-p-symptom': 'pSymStepBadge',
+  };
+  const order = ['s-p2', 's-p-vas', 's-p3', 's-p-diagnosis', 's-p-symptom'];
+  const idx = order.indexOf(screenId);
+  if(idx >= 0){
+    const n = idx + 2;
+    const badgeId = treatmentMap[screenId];
+    if(badgeId){
+      const el = document.getElementById(badgeId);
+      if(el) el.textContent = n + '단계';
+    }
+  }
+}
+
+function syncPainAreasFromBc_(prefix){
+  let item = null;
+  prefix.forEach(function (x) {
+    if(x.indexOf('통증부위:') === 0 || x.indexOf('불편부위:') === 0) item = x;
+  });
+  if(!item) return;
+  P.painAreas = item.split(':').slice(1).join(':').split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+  P.area = deriveAreaFromPainAreas_(P.painAreas);
+}
+
+function syncDiagnosisFromBc_(prefix){
+  let item = null;
+  prefix.forEach(function (x) {
+    if(x.indexOf('진단:') === 0) item = x;
+  });
+  if(!item) return;
+  P.diagnosis = item.split(':').slice(1).join(':').split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+}
+
+function syncSymptomFromBc_(prefix){
+  let item = null;
+  prefix.forEach(function (x) {
+    if(x.indexOf('증상:') === 0) item = x;
+  });
+  if(!item) return;
+  P.symptomDetail = item.replace(/^증상:\s*/, '');
+}
+
 function startPatient(){
   pSet('mode', 'treatment');
-  goS('s-p2');
+  if(!P.painAreas) P.painAreas = [];
+  if(!P.diagnosis) P.diagnosis = [];
+  goS('s-p-intro');
 }
 function startExpert(){ goS('s-e1'); }
 
@@ -8490,42 +9410,34 @@ function pspToggleDetail(btn, detailId){
   }
 }
 
-const treatmentFlow = ['s-home','s-p2','s-p-vas','s-p3','s-result'];
-const wellnessFlow  = ['s-home','s-p-wellness','s-p-w-comfort','s-p-w-follow','s-result'];
+const treatmentFlow = ['s-home','s-p-intro','s-p2','s-p-vas','s-p3','s-p-diagnosis','s-p-symptom','s-result'];
+const wellnessFlow  = ['s-home','s-p-intro','s-p-wellness','s-p-w-comfort','s-p-w-follow','s-result'];
 const expertFlow    = ['s-home','s-e1','s-e2','s-e3','s-result'];
 
 function wellnessProgressPct_(id){
-  const steps = { 's-home': 0, 's-p-wellness': 1, 's-p-w-comfort': 2, 's-p-w-follow': 3, 's-result': 4 };
-  if(id === 's-p-w-follow'){
-    const qs = WELLNESS_GOAL_QUESTIONS[P.goal];
-    const qStep = getWellnessFollowStepFromState_();
-    if(qs && qStep >= 2) return 90;
-    return 75;
-  }
-  const idx = steps[id];
-  if(idx == null) return 0;
-  return Math.min((idx / 4) * 100, 100);
+  return getProgressInfo_(id).pct;
 }
 
 function updateProgress(id){
   const isHome = H.length <= 1;
   document.getElementById('backBtn').classList.toggle('hidden', isHome);
   document.getElementById('homeBtn').classList.toggle('hidden', isHome);
-  let pct = 0;
-  if(treatmentFlow.includes(id)){
-    const idx = treatmentFlow.indexOf(id);
-    pct = Math.min((idx/4)*100, 100);
-  } else if(wellnessFlow.includes(id) || (id === 's-result' && consultFlowKind === 'wellness' && P.mode === 'wellness')){
-    pct = wellnessProgressPct_(id === 's-result' ? 's-result' : id);
-  } else if(expertFlow.includes(id)){
-    const idx = expertFlow.indexOf(id);
-    pct = Math.min((idx/4)*100, 100);
-  } else if(id === 's-psp1') {
-    pct = 50;
-  } else if(id === 's-psp3') {
-    pct = 100;
+  let info = getProgressInfo_(id);
+  if(id === 's-result'){
+    if(consultFlowKind === 'wellness' && P.mode === 'wellness') info = getProgressInfo_('s-result');
+    else if(consultFlowKind === 'expert') info = getProgressInfo_('s-e3');
+    else if(consultFlowKind === 'treatment' || P.mode === 'treatment') info = getProgressInfo_('s-result');
   }
-  document.getElementById('progressFill').style.width = pct + '%';
+  if(id === 's-psp1') info = { pct: 50, stepText: '01 / 02', label: 'PSP 컨셉' };
+  if(id === 's-psp3') info = { pct: 100, stepText: '02 / 02', label: 'PSP 컨셉' };
+  const fill = document.getElementById('progressFill');
+  const pctText = document.getElementById('progressPctText');
+  const stepText = document.getElementById('progressStepText');
+  const labelText = document.getElementById('progressLabelText');
+  if(fill) fill.style.width = info.pct + '%';
+  if(pctText) pctText.textContent = info.pct + '%';
+  if(stepText) stepText.textContent = info.stepText || '';
+  if(labelText) labelText.textContent = info.label || '맞춤 안내';
 }
 
 // ── VAS ──
@@ -8551,6 +9463,46 @@ function vasZoneLabel(zone){
   if(zone === 'low') return '경증 (1~3)';
   if(zone === 'mid') return '중등도 (4~6)';
   return '중증 (7~10)';
+}
+
+function getVasCaption_(v){
+  if(v == null || v === '' || Number(v) <= 0){
+    return { text: '슬라이더 또는 아래 구간을 선택해주세요.', bg: 'var(--green-bg)', color: 'var(--green)' };
+  }
+  const n = Number(v);
+  if(n <= 3) return { text: '경미한 불편감이 있으신 상태입니다.', bg: '#f0f7f0', color: '#3d6b4f' };
+  if(n <= 6) return { text: '일상에 영향을 줄 수 있는 통증입니다.', bg: '#fff8eb', color: '#8a6d1f' };
+  return { text: '전문가의 면밀한 확인이 필요한 정도입니다.', bg: '#fdeeed', color: '#b4533a' };
+}
+
+function updateVasCaption_(v){
+  const cap = getVasCaption_(v);
+  const el = document.getElementById('vasCaption');
+  if(!el) return;
+  el.textContent = cap.text;
+  el.style.background = cap.bg;
+  el.style.color = cap.color;
+}
+
+function updateVasSliderTrack_(v){
+  const slider = document.getElementById('vasSlider');
+  if(!slider || v == null || v === '') return;
+  const pct = ((Number(v) - 1) / 9) * 100;
+  slider.value = String(v);
+  slider.style.background = 'linear-gradient(to right, var(--green) 0%, #d97b5c ' + pct + '%, var(--border) ' + pct + '%)';
+}
+
+function initVasScreen_(){
+  if(selectedVasValue != null){
+    syncVasSelectionUI(selectedVasValue);
+  } else {
+    updateVasCaption_(null);
+    updateVasSliderTrack_(1);
+  }
+}
+
+function onVasSliderInput_(val){
+  setVasValue(val, false);
 }
 
 function syncVasSelectionUI(v){
@@ -8579,6 +9531,8 @@ function syncVasSelectionUI(v){
 
   const confirmBtn = document.getElementById('vasConfirmBtn');
   if(confirmBtn) confirmBtn.classList.add('ready');
+  updateVasCaption_(v);
+  updateVasSliderTrack_(v);
 }
 
 /** VAS 확정 후 — 통증 양상 질문 */
@@ -8717,7 +9671,7 @@ function renderPatientResult(){
   if((severity == null || severity === '') && P.vasScore != null && isVasLowRange(Number(P.vasScore))){
     severity = 'mild';
   }
-  const areaName = area==='neck'?'목 어깨 등':area==='back'?'허리 골반':area==='arm'?'팔꿈치 상지':area==='leg'?'무릎 하지':'여러 곳이 불편해요';
+  const areaName = getPainAreasDisplay_();
   const tissue = getTissueName(quality);
 
   // 현재 단계 결정 (경증이라도 신경·국소 날카로움·찢어짐 통증은 도수부터)
@@ -8803,6 +9757,8 @@ function renderPatientResult(){
       <div class="result-sub">${areaName} · 예상 원인: ${tissue}</div>
     </div>
 
+    ${renderResultSummaryCard_(getTreatmentSummaryRows_())}
+
     ${imagingPriorHtml}
 
     <div class="roadmap-card">
@@ -8826,7 +9782,7 @@ function renderPatientResult(){
       <p>${rec.alt}</p>
     </div>
 
-    ${renderResultContactActions_({ mainText: '지금 바로 상담 신청하기', mainSub: '결과를 바탕으로 정확한 안내를 드립니다' })}
+    ${renderTreatmentResultContactActions_()}
     <div class="note-box">※ 이 결과는 간단한 자가 가이드이며, 정확한 평가는 전문가 상담이 필요합니다.</div>
   `;
 }
@@ -8975,6 +9931,56 @@ const WELLNESS_GOAL_QUESTIONS = {
   ],
 };
 
+const WELLNESS_MILD_EXTRA_QUESTIONS = [
+  {
+    key: 'wMildArea',
+    multi: true,
+    title: '어디가 불편하세요?',
+    sub: '해당하는 부위를 모두 선택해주세요. (복수 선택 가능)',
+  },
+  {
+    key: 'wMildSeverity',
+    title: '어느 정도인가요?',
+    sub: '불편함의 정도를 선택해주세요',
+    options: [
+      { id: 'light', bc: '가볍게 뻐근', name: '가볍게 뻐근·뻣뻣해요', desc: '가끔 느껴지는 정도예요' },
+      { id: 'moderate', bc: '중간 정도', name: '중간 정도로 불편해요', desc: '움직일 때 확실히 느껴져요' },
+      { id: 'frequent', bc: '자주 신경 씀', name: '자주 신경 쓰이는 정도예요', desc: '하루 중 여러 번 느껴져요' },
+    ],
+  },
+  {
+    key: 'wMildQuality',
+    title: '어떻게 아프세요?',
+    sub: '가장 가까운 느낌을 선택해주세요',
+    options: [
+      { id: 'aching', bc: '뻐근·묵직', name: '뻐근하고 묵직해요', desc: '누르면 시원한 느낌 · 근육이 뭉친 느낌' },
+      { id: 'tight', bc: '당김·뻣뻣', name: '당기고 뻣뻣해요', desc: '늘릴 때 당기는 느낌 · 아침에 특히 심함' },
+      { id: 'sharp', bc: '찌릿·저림', name: '찌릿하거나 저려요', desc: '전기 오는 느낌 · 팔다리로 뻗는 통증' },
+      { id: 'sharp_local', bc: '날카로운', name: '날카롭게 한 점이 아파요', desc: '특정 동작에서 강하게 · 관절 느낌' },
+      { id: 'tear', bc: '찢어지는', name: '찢어지는 느낌이에요', desc: '갑자기 생긴 강한 통증 · 부종 동반' },
+    ],
+  },
+];
+
+function getWellnessComfortFromTail_(tail){
+  if(!tail || !tail[0]) return null;
+  let comfort = null;
+  Object.keys(WELLNESS_COMFORT_BC).forEach(function (k) {
+    if(tail[0] === WELLNESS_COMFORT_BC[k]) comfort = k;
+  });
+  return comfort;
+}
+
+function getWellnessFollowQuestionsForGoal_(goal, comfort){
+  const base = WELLNESS_GOAL_QUESTIONS[goal] || [];
+  if(comfort === 'mild') return base.concat(WELLNESS_MILD_EXTRA_QUESTIONS);
+  return base;
+}
+
+function getWellnessFollowQuestions_(){
+  return getWellnessFollowQuestionsForGoal_(P.goal, P.wellnessComfort);
+}
+
 function pickWellnessGoal_(goal){
   pSet('mode', 'wellness');
   pSet('goal', goal);
@@ -8988,6 +9994,8 @@ function pickWellnessComfort_(id, bcLabel){
   bc(bcLabel);
   if(id === 'daily' || id === 'exercise'){
     pSet('mode', 'treatment');
+    if(!P.painAreas) P.painAreas = [];
+    if(!P.diagnosis) P.diagnosis = [];
     bc('치료 영역');
     goS('s-p2');
     return;
@@ -8996,8 +10004,33 @@ function pickWellnessComfort_(id, bcLabel){
   goS('s-p-w-follow');
 }
 
+function toggleWellnessPainChip_(label){
+  togglePainAreaChip_(label);
+  const btn = document.getElementById('wellnessMultiConfirm');
+  if(btn) btn.disabled = !P.painAreas || !P.painAreas.length;
+  document.querySelectorAll('#wFollowOptions .profile-chip').forEach(function (chip) {
+    const val = chip.getAttribute('data-value');
+    if(val) chip.classList.toggle('active', P.painAreas.indexOf(val) >= 0);
+  });
+}
+
+function confirmWellnessMultiAnswer_(step){
+  if(!P.painAreas || !P.painAreas.length) return;
+  pSet('wMildArea', P.painAreas.join(','));
+  bcPath = bcPath.filter(function (x) { return x.indexOf('불편부위:') !== 0; });
+  bc('불편부위: ' + P.painAreas.join(', '));
+  const qs = getWellnessFollowQuestions_() || [];
+  if(step < qs.length){
+    renderWellnessFollowUp_(step + 1);
+    updateProgress('s-p-w-follow');
+    window.scrollTo(0, 0);
+    return;
+  }
+  showWellnessResult();
+}
+
 function renderWellnessFollowUp_(step){
-  const qs = WELLNESS_GOAL_QUESTIONS[P.goal];
+  const qs = getWellnessFollowQuestions_();
   if(!qs || !qs[step - 1]){
     showWellnessResult();
     return;
@@ -9008,10 +10041,21 @@ function renderWellnessFollowUp_(step){
   const title = document.getElementById('wFollowTitle');
   const sub = document.getElementById('wFollowSub');
   const list = document.getElementById('wFollowOptions');
-  if(badge) badge.textContent = '웰니스 · ' + (step + 2) + '단계';
+  if(badge) badge.textContent = '웰니스 · ' + (WELLNESS_FLOW_BASE_.length + step) + '단계';
   if(title) title.textContent = q.title;
   if(sub) sub.textContent = q.sub;
   if(!list) return;
+  if(q.multi){
+    if(!P.painAreas) P.painAreas = [];
+    const chips = PAIN_AREA_OPTIONS.map(function (label) {
+      const active = P.painAreas.indexOf(label) >= 0;
+      return '<button type="button" class="profile-chip' + (active ? ' active' : '') + '" data-value="' + escapeHtml(label) + '" onclick="toggleWellnessPainChip_(\'' + label.replace(/'/g, "\\'") + '\')">' + escapeHtml(label) + '</button>';
+    }).join('');
+    list.innerHTML = '<div class="chip-grid">' + chips + '</div>' +
+      '<button type="button" class="profile-chip-confirm" id="wellnessMultiConfirm" onclick="confirmWellnessMultiAnswer_(' + step + ')"' +
+      (P.painAreas.length ? '' : ' disabled') + '>다음 →</button>';
+    return;
+  }
   list.innerHTML = q.options.map(function (opt) {
     const desc = opt.desc ? '<div class="opt-desc">' + escapeHtml(opt.desc) + '</div>' : '';
     return '<div class="option" style="border-color:var(--green-border);" onclick="pickWellnessAnswer_(' +
@@ -9024,7 +10068,7 @@ function renderWellnessFollowUp_(step){
 function pickWellnessAnswer_(step, key, id, bcLabel){
   pSet(key, id);
   bc(bcLabel);
-  const qs = WELLNESS_GOAL_QUESTIONS[P.goal] || [];
+  const qs = getWellnessFollowQuestions_() || [];
   if(step < qs.length){
     renderWellnessFollowUp_(step + 1);
     updateProgress('s-p-w-follow');
@@ -9045,7 +10089,8 @@ function getWellnessFollowStepFromState_(){
   const comforts = Object.values(WELLNESS_COMFORT_BC);
   let start = comforts.indexOf(tail[0]) >= 0 ? 1 : 0;
   const ansCount = tail.slice(start).length;
-  const qs = WELLNESS_GOAL_QUESTIONS[goal];
+  const comfort = getWellnessComfortFromTail_(tail);
+  const qs = getWellnessFollowQuestionsForGoal_(goal, comfort || P.wellnessComfort);
   const maxQ = qs ? qs.length : 1;
   return Math.max(1, Math.min(ansCount + 1, maxQ));
 }
@@ -9056,15 +10101,27 @@ function syncWellnessAnswersFromBc_(prefix, goal){
   const goalIdx = prefix.indexOf(goalBc);
   if(goalIdx < 0) return;
   const tail = prefix.slice(goalIdx + 1);
+  let comfort = null;
   Object.keys(WELLNESS_COMFORT_BC).forEach(function (k) {
-    if(tail[0] === WELLNESS_COMFORT_BC[k]) pSet('wellnessComfort', k);
+    if(tail[0] === WELLNESS_COMFORT_BC[k]){
+      comfort = k;
+      pSet('wellnessComfort', k);
+    }
   });
-  const qs = WELLNESS_GOAL_QUESTIONS[goal];
+  const qs = getWellnessFollowQuestionsForGoal_(goal, comfort);
   if(!qs) return;
   let ansStart = 0;
   if(tail[0] && Object.values(WELLNESS_COMFORT_BC).indexOf(tail[0]) >= 0) ansStart = 1;
   const answers = tail.slice(ansStart);
   qs.forEach(function (q, i) {
+    if(q.multi){
+      const ans = answers[i];
+      if(ans && ans.indexOf('불편부위:') === 0){
+        syncPainAreasFromBc_([ans]);
+        pSet('wMildArea', P.painAreas.join(','));
+      }
+      return;
+    }
     if(!answers[i]) return;
     const opt = q.options.find(function (o) { return o.bc === answers[i]; });
     if(opt) pSet(q.key, opt.id);
@@ -9083,7 +10140,8 @@ function resolveWellnessFromBc_(prefix){
   }
   if(!goal) return null;
   const tail = prefix.slice(goalIdx + 1);
-  const qs = WELLNESS_GOAL_QUESTIONS[goal];
+  const comfort = getWellnessComfortFromTail_(tail);
+  const qs = getWellnessFollowQuestionsForGoal_(goal, comfort);
   const qCount = qs ? qs.length : 0;
   if(!tail.length) return { screen: 's-p-w-comfort', goal: goal, flow: 'wellness' };
   if(tail[0] === '운동 시 불편' || tail[0] === '일상 어려움' || tail.indexOf('치료 영역') >= 0){
@@ -9096,11 +10154,15 @@ function resolveWellnessFromBc_(prefix){
 }
 
 function getWellnessAnswerRows_(){
-  const qs = WELLNESS_GOAL_QUESTIONS[P.goal];
+  const qs = getWellnessFollowQuestions_();
   if(!qs) return [];
   return qs.map(function (q) {
+    if(q.multi && P.painAreas && P.painAreas.length){
+      return { dt: q.title.replace(/\?$/, ''), dd: P.painAreas.join(', ') };
+    }
     const val = P[q.key];
     if(!val) return null;
+    if(q.multi) return null;
     const opt = q.options.find(function (o) { return o.id === val; });
     if(!opt) return null;
     const dt = q.title.replace(/\?$/, '');
@@ -9175,6 +10237,8 @@ function renderWellnessResult(){
       <div class="result-sub">${resultSub}</div>
     </div>
 
+    ${renderResultSummaryCard_(getWellnessSummaryRows_())}
+
     ${faceTmjNote}
 
     <div class="roadmap-card">
@@ -9198,7 +10262,7 @@ function renderWellnessResult(){
       <p>웰니스 운동 중 통증이 발생하면 먼저 치료 평가를 받는 것을 권장합니다. 치료 후 다시 웰니스로 이어집니다.</p>
     </div>
 
-    ${renderResultContactActions_({ mainText: '프로그램 상담 신청하기', mainSub: '목표에 맞는 일정을 함께 잡아드립니다' })}
+    ${renderResultContactActions_({ variant: 'wellness' })}
     <div class="note-box">※ 웰니스 프로그램 중 통증이 생기면 먼저 치료 평가를 받는 것을 권장합니다.</div>
   `;
 }
@@ -9323,6 +10387,7 @@ initProfileActivityGallery_();
 loadProfileManualReviews_();
 loadProfileBeautyReviews_();
 loadProfileExpertReviews_();
+initProfileDeepLink_();
 </script>
 </body>
 </html>
