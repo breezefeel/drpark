@@ -6639,13 +6639,13 @@ const PROFILE_SCREEN_LABELS = {
   's-e3': '전문가 교육 3',
 };
 
-const PAIN_AREA_OPTIONS = ['목', '어깨', '팔꿈치', '손목', '허리', '골반', '고관절', '무릎', '발목', '발', '특별한 통증 없음'];
+const PAIN_AREA_OPTIONS = ['목', '어깨', '팔', '등', '허리', '골반', '다리'];
 const DIAGNOSIS_OPTIONS = ['디스크', '협착증', '회전근개 손상', '오십견', '슬개건염', '수술 이력 있음', '진단 없음', '기타'];
 const PAIN_AREA_REGION_ = {
-  '목': 'neck', '어깨': 'neck',
+  '목': 'neck', '어깨': 'neck', '등': 'neck',
   '허리': 'back', '골반': 'back',
-  '팔꿈치': 'arm', '손목': 'arm',
-  '고관절': 'leg', '무릎': 'leg', '발목': 'leg', '발': 'leg',
+  '팔': 'arm',
+  '다리': 'leg',
 };
 const TREATMENT_FLOW_STEPS_ = ['s-p-intro', 's-p2', 's-p-vas', 's-p3', 's-p-diagnosis', 's-p-symptom'];
 const WELLNESS_FLOW_BASE_ = ['s-p-intro', 's-p-wellness', 's-p-w-comfort'];
@@ -8814,7 +8814,7 @@ function renderWellnessResultContactActions_(){
     '<div><div class="ct-text">상담 신청하기</div><div class="ct-sub">희망 요일·시간대를 선택해 주세요</div></div>' +
     '<span class="contact-bar-ico" aria-hidden="true">📅</span></button>' +
     '<button type="button" class="contact-bar contact-bar--intake" onclick="openWellnessIntakeModal()">' +
-    '<div><div class="ct-text">사전 문진 제출하기</div><div class="ct-sub">센터에서 작성하신 분은 여기서 제출</div></div>' +
+    '<div><div class="ct-text">사전 문진 제출하기</div><div class="ct-sub">방문 예약을 완료하셨다면 여기서 제출</div></div>' +
     '<span class="contact-bar-ico" aria-hidden="true">📋</span></button></div>';
 }
 
@@ -10091,7 +10091,7 @@ const WELLNESS_MILD_EXTRA_QUESTIONS = [
   {
     key: 'wMildArea',
     multi: true,
-    title: '어디가 불편하세요?',
+    title: '불편한 곳이 있으신가요?',
     sub: '해당하는 부위를 모두 선택해주세요. (복수 선택 가능)',
   },
   {
