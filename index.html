@@ -115,7 +115,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 
 /* ── BREADCRUMB (선택 경로) ── */
 .breadcrumb {
-  position: fixed; top: 108px; left: 0; right: 0; z-index: 98;
+  position: fixed; top: 124px; left: 0; right: 0; z-index: 98;
   padding: 8px 20px; background: white; border-bottom: 1px solid var(--border);
   display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
   min-height: 36px; overflow-x: auto;
@@ -4379,25 +4379,25 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
             맞춤 안내
           </div>
           <header class="pl-branch-head">
-            <p class="pl-branch-hint">관심 있는 분야를 선택해 주세요</p>
+            <p class="pl-branch-hint">관심 있는 분야를 눌러 바로 시작하세요</p>
           </header>
           <div class="pl-branch-picker">
-            <div class="pl-branch-grid" role="radiogroup" aria-label="관심 분야">
-              <button type="button" class="pl-branch-chip pl-branch-chip--treatment" role="radio" aria-checked="false" data-branch="treatment" onclick="selectProfileBranch('treatment')">
+            <div class="pl-branch-grid" role="group" aria-label="관심 분야">
+              <button type="button" class="pl-branch-chip pl-branch-chip--treatment" aria-label="통증·재활 문진 시작" data-branch="treatment" onclick="selectProfileBranch('treatment')">
                 <span class="pl-branch-chip-text">
                   <span class="pl-branch-chip-title">통증·재활</span>
                   <span class="pl-branch-chip-sub">증상 평가 · 치료 안내</span>
                 </span>
                 <span class="pl-branch-chip-arrow" aria-hidden="true">›</span>
               </button>
-              <button type="button" class="pl-branch-chip pl-branch-chip--wellness" role="radio" aria-checked="false" data-branch="wellness" onclick="selectProfileBranch('wellness')">
+              <button type="button" class="pl-branch-chip pl-branch-chip--wellness" aria-label="움직임·자세 문진 시작" data-branch="wellness" onclick="selectProfileBranch('wellness')">
                 <span class="pl-branch-chip-text">
                   <span class="pl-branch-chip-title">움직임·자세</span>
                   <span class="pl-branch-chip-sub">기능 · 교정 · 운동</span>
                 </span>
                 <span class="pl-branch-chip-arrow" aria-hidden="true">›</span>
               </button>
-              <button type="button" class="pl-branch-chip pl-branch-chip--expert" role="radio" aria-checked="false" data-branch="expert" onclick="selectProfileBranch('expert')">
+              <button type="button" class="pl-branch-chip pl-branch-chip--expert" aria-label="전문가 교육 문진 시작" data-branch="expert" onclick="selectProfileBranch('expert')">
                 <span class="pl-branch-chip-text">
                   <span class="pl-branch-chip-title">전문가 교육</span>
                   <span class="pl-branch-chip-sub">CMT · IFC · Re:Al</span>
@@ -4413,14 +4413,14 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
           </div>
         </section>
 
-        <div class="pl-hero-outcome" id="profileHeroOutcome" aria-live="polite">
+        <div class="pl-hero-outcome hidden" id="profileHeroOutcome" aria-hidden="true">
           <div class="pl-hero-copy" id="profileHeroCopy">
             <div class="pl-hero-copy-panel" id="profileHeroCopyPanel">
               <h2 class="pl-hero-title" id="profileHeroTitle"></h2>
               <p class="pl-hero-sub" id="profileHeroSub"></p>
             </div>
           </div>
-          <button type="button" class="pl-branch-cta" id="profileBranchAction" onclick="runProfileBranchAction()"></button>
+          <button type="button" class="pl-branch-cta" id="profileBranchAction" hidden onclick="runProfileBranchAction()"></button>
         </div>
       </div>
 
@@ -6934,7 +6934,6 @@ function resetProfileBranchPicker_(){
   cancelProfileHeroFade_();
   document.querySelectorAll('.pl-branch-chip').forEach(chip => {
     chip.classList.remove('active');
-    chip.setAttribute('aria-checked', 'false');
   });
   const outcome = document.getElementById('profileHeroOutcome');
   if(outcome) outcome.classList.remove('is-visible');
@@ -7898,19 +7897,14 @@ function refreshProfileBlogFeed(){
 
 function selectProfileBranch(branch, options){
   options = options || {};
-  const hadBranch = !!profileBranch;
   profileBranch = branch;
   document.querySelectorAll('.pl-branch-chip').forEach(chip => {
     const on = chip.getAttribute('data-branch') === branch;
     chip.classList.toggle('active', on);
-    chip.setAttribute('aria-checked', on ? 'true' : 'false');
   });
   pushProfileViewLog_('탭: ' + (PROFILE_BRANCH_CHIP_LABEL[branch] || branch));
-  revealProfileBranchOutcome_(branch, hadBranch);
-  refreshProfileBlogFeed();
-  if(options.scroll !== false){
-    setTimeout(scrollToProfileBranchPicker_, 80);
-  }
+  if(options.navigate === false) return;
+  runProfileBranchAction();
 }
 
 function runProfileBranchAction(){
@@ -8288,16 +8282,7 @@ function refreshResultScreenContent_(){
 }
 
 function applyHomeBranchUi_(){
-  if(!profileBranch){
-    resetProfileBranchPicker_();
-    return;
-  }
-  document.querySelectorAll('.pl-branch-chip').forEach(function (chip) {
-    const on = chip.getAttribute('data-branch') === profileBranch;
-    chip.classList.toggle('active', on);
-    chip.setAttribute('aria-checked', on ? 'true' : 'false');
-  });
-  revealProfileBranchOutcome_(profileBranch, false);
+  resetProfileBranchPicker_();
 }
 
 function applyNavCheckpoint_(cp){
@@ -8372,10 +8357,10 @@ function resolveScreenForBcPrefix_(prefix){
     if(['뻐근·묵직', '당김·뻣뻣', '찌릿·저림', '날카로운', '찢어지는'].indexOf(last) >= 0){
       return { screen: 's-p-diagnosis', flow: 'treatment' };
     }
-    if(/^VAS\s/.test(last) || prefix.some(function (x) { return /^VAS\s/.test(x); })){
-      return { screen: 's-p3', flow: 'treatment' };
+    if(last.indexOf('통증부위:') === 0 || last.indexOf('불편부위:') === 0){
+      return { screen: 's-p2', flow: 'treatment' };
     }
-    if(prefix.some(function (x) { return x.indexOf('통증부위:') === 0; })){
+    if(/^VAS\s/.test(last) || last === '경증 (1~3)' || last === '중등도 (4~6)' || last === '중증 (7~10)'){
       return { screen: 's-p-vas', flow: 'treatment' };
     }
     if(prefix.indexOf('치료 영역') >= 0) return { screen: 's-p2', flow: 'treatment' };
@@ -8471,7 +8456,8 @@ function navigateToBcIndex(index){
   const cp = bcCheckpointsByLen_[idx];
   trimBcCheckpointsAfter_(idx);
 
-  if(cp && bcPathsEqual_(cp.bc, targetBc)){
+  const resolved = resolveScreenForBcPrefix_(targetBc);
+  if(cp && bcPathsEqual_(cp.bc, targetBc) && cp.screen === resolved.screen){
     applyNavCheckpoint_(cp);
     return;
   }
@@ -8480,7 +8466,7 @@ function navigateToBcIndex(index){
 
 function updateBc(){
   const bar = document.getElementById('bcBar');
-  if(bcPath.length === 0){ bar.classList.add('hidden'); return; }
+  if(bcPath.length === 0){ bar.classList.add('hidden'); scheduleFlowChromeLayout_(); return; }
   bar.classList.remove('hidden');
   const items = ['홈'].concat(bcPath);
   bar.innerHTML = items.map(function (label, i) {
@@ -8492,6 +8478,7 @@ function updateBc(){
     return '<button type="button" class="' + cls + '" onclick="navigateToBcIndex(' + i + ')">' +
       escapeHtml(label) + '</button><span class="bc-sep">›</span>';
   }).join('');
+  scheduleFlowChromeLayout_();
 }
 
 function escapeHtml(str){
@@ -8796,26 +8783,28 @@ function renderResultContactActions_(opts){
     '<span class="contact-bar-expert-label">전문가용<br>상담</span></button></div>';
 }
 
-/** 통증·재활 결과 — 상담 신청 + 통증 문진 제출 */
+function renderIntakeContactButton_(onclick){
+  return '<button type="button" class="contact-bar contact-bar--intake" onclick="' + onclick + '">' +
+    '<div><div class="ct-text">사전 문진표 제출하기</div><div class="ct-sub">이미 예약 후 방문 예정이라면 여기서 제출</div></div>' +
+    '<span class="contact-bar-ico" aria-hidden="true">📋</span></button>';
+}
+
+/** 통증·재활 결과 — 상담 신청 + 사전 문진표 제출 */
 function renderTreatmentResultContactActions_(){
   return '<div class="contact-bar-row contact-bar-row--wellness">' +
     '<button type="button" class="contact-bar contact-bar--main" onclick="openConsultModal()">' +
     '<div><div class="ct-text">지금 바로 상담 신청하기</div><div class="ct-sub">결과를 바탕으로 정확한 안내를 드립니다</div></div>' +
     '<span class="contact-bar-ico" aria-hidden="true">💬</span></button>' +
-    '<button type="button" class="contact-bar contact-bar--intake" onclick="openProfileIntakeModal(\'treatment\')">' +
-    '<div><div class="ct-text">통증 문진 제출하기</div><div class="ct-sub">작성 내용을 초회 평가에 반영합니다</div></div>' +
-    '<span class="contact-bar-ico" aria-hidden="true">📋</span></button></div>';
+    renderIntakeContactButton_('openProfileIntakeModal(\'treatment\')') + '</div>';
 }
 
-/** 웰니스 결과 — 상담 신청(일정 선택) + 사전 문진 제출(센터 방문) */
+/** 웰니스 결과 — 상담 신청(일정 선택) + 사전 문진표 제출(센터 방문) */
 function renderWellnessResultContactActions_(){
   return '<div class="contact-bar-row contact-bar-row--wellness">' +
     '<button type="button" class="contact-bar contact-bar--main" onclick="openWellnessConsultModal()">' +
     '<div><div class="ct-text">상담 신청하기</div><div class="ct-sub">희망 요일·시간대를 선택해 주세요</div></div>' +
     '<span class="contact-bar-ico" aria-hidden="true">📅</span></button>' +
-    '<button type="button" class="contact-bar contact-bar--intake" onclick="openWellnessIntakeModal()">' +
-    '<div><div class="ct-text">사전 문진 제출하기</div><div class="ct-sub">방문 예약을 완료하셨다면 여기서 제출</div></div>' +
-    '<span class="contact-bar-ico" aria-hidden="true">📋</span></button></div>';
+    renderIntakeContactButton_('openWellnessIntakeModal()') + '</div>';
 }
 
 function buildWellnessIntakeSummaryText_(){
@@ -9207,6 +9196,31 @@ async function submitMemberEvalForm(){
   }
 }
 
+function syncFlowChromeLayout_(){
+  const progress = document.getElementById('progressBar');
+  const bcBar = document.getElementById('bcBar');
+  const home = document.getElementById('s-home');
+  const onHome = home && home.classList.contains('active');
+  const progressVisible = progress && !progress.classList.contains('hidden') && !onHome;
+  const bcVisible = bcBar && !bcBar.classList.contains('hidden');
+
+  let chromeBottom = 56;
+  if(progressVisible) chromeBottom = progress.getBoundingClientRect().bottom;
+  if(bcBar) bcBar.style.top = chromeBottom + 'px';
+  if(bcVisible) chromeBottom = bcBar.getBoundingClientRect().bottom;
+
+  const activeWrap = document.querySelector('.screen.active .wrap');
+  if(activeWrap){
+    activeWrap.style.paddingTop = onHome ? '' : (chromeBottom + 12) + 'px';
+  }
+}
+
+function scheduleFlowChromeLayout_(){
+  requestAnimationFrame(function () {
+    requestAnimationFrame(syncFlowChromeLayout_);
+  });
+}
+
 function updateProfileSticky(){
   const nav = document.getElementById('profileNav');
   const progress = document.getElementById('progressBar');
@@ -9216,6 +9230,7 @@ function updateProfileSticky(){
   if(progress) progress.classList.toggle('hidden', onHome);
   if(blogFeed) blogFeed.hidden = !onHome;
   document.body.classList.toggle('profile-home-sticky', onHome);
+  scheduleFlowChromeLayout_();
 }
 
 function openProfileQuickConsult(){
@@ -9594,6 +9609,7 @@ function updateProgress(id){
   if(pctText) pctText.textContent = info.pct + '%';
   if(stepText) stepText.textContent = info.stepText || '';
   if(labelText) labelText.textContent = info.label || '맞춤 안내';
+  scheduleFlowChromeLayout_();
 }
 
 // ── VAS ──
@@ -10320,6 +10336,13 @@ function resolveWellnessFromBc_(prefix){
   const qs = getWellnessFollowQuestionsForGoal_(goal, comfort);
   const qCount = qs ? qs.length : 0;
   if(!tail.length) return { screen: 's-p-w-comfort', goal: goal, flow: 'wellness' };
+  const last = prefix[prefix.length - 1];
+  if(last.indexOf('통증부위:') === 0 || last.indexOf('불편부위:') === 0){
+    return { screen: 's-p2', goal: goal, flow: 'treatment' };
+  }
+  if(/^VAS\s/.test(last) || last === '경증 (1~3)' || last === '중등도 (4~6)' || last === '중증 (7~10)'){
+    return { screen: 's-p-vas', goal: goal, flow: 'treatment' };
+  }
   if(tail[0] === '운동 시 불편' || tail[0] === '일상 어려움' || tail.indexOf('치료 영역') >= 0){
     return { screen: 's-p2', goal: goal, flow: 'treatment' };
   }
@@ -10566,6 +10589,7 @@ loadProfileManualReviews_();
 loadProfileBeautyReviews_();
 loadProfileExpertReviews_();
 initProfileDeepLink_(profileLaunchSearch_);
+window.addEventListener('resize', scheduleFlowChromeLayout_);
 </script>
 </body>
 </html>
