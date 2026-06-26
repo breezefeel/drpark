@@ -1420,6 +1420,22 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .member-eval-degree { display: flex; gap: 6px; margin-top: 8px; }
 .member-eval-degree.hidden { display: none; }
 .member-eval-degree .consult-sched-chip { flex: 1 1 0; padding: 7px 4px; font-size: 11px; }
+.w-follow-chips {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px;
+}
+.w-follow-chips .consult-sched-chip {
+  flex: 0 1 auto; padding: 8px 14px; font-size: 12px; border-radius: 999px;
+}
+.w-follow-chips .consult-sched-chip.on,
+.w-follow-chips .consult-sched-chip[aria-pressed="true"] {
+  background: var(--blue-bg); border-color: var(--blue); color: var(--blue); font-weight: 700;
+}
+.w-follow-next-wrap { margin-top: 18px; padding-top: 4px; }
+.w-follow-next-btn {
+  width: 100%; padding: 14px 16px; border: none; border-radius: 12px;
+  background: var(--blue); color: #fff; font-size: 15px; font-weight: 800; cursor: pointer;
+}
+.w-follow-next-btn:disabled { opacity: 0.45; cursor: not-allowed; }
 .member-eval-report {
   background: var(--green-bg); border: 1px solid var(--green-border); border-radius: 11px;
   padding: 14px 16px; margin-top: 12px; font-size: 13px; line-height: 1.75; color: var(--light);
@@ -8469,10 +8485,14 @@ function updateBc(){
   if(bcPath.length === 0){ bar.classList.add('hidden'); scheduleFlowChromeLayout_(); return; }
   bar.classList.remove('hidden');
   const items = ['홈'].concat(bcPath);
+  const activeScreen = document.querySelector('.screen.active');
+  const activeId = activeScreen ? activeScreen.id : '';
   bar.innerHTML = items.map(function (label, i) {
     const isLast = i === items.length - 1;
-    const cls = 'bc-item' + (isLast ? ' active' : ' bc-item--link');
-    if(isLast){
+    const isAnswerLabel = i > 0 && isWellnessAnswerBcLabel_(label, P.goal);
+    const canLink = !isLast || ((activeId === 's-p-w-follow' || activeId === 's-result') && isAnswerLabel);
+    const cls = 'bc-item' + ((isLast && !canLink) ? ' active' : ' bc-item--link');
+    if(isLast && !canLink){
       return '<span class="' + cls + '">' + escapeHtml(label) + '</span>';
     }
     return '<button type="button" class="' + cls + '" onclick="navigateToBcIndex(' + i + ')">' +
@@ -9980,6 +10000,12 @@ function renderPatientResult(){
 }
 
 // ── WELLNESS FOLLOW-UP ──
+const WELLNESS_LEGACY_SYMPTOM_BC = {
+  '턱·저작 불편': ['jaw'],
+  '두통·어깨 결림': ['headache', 'shoulder'],
+  '특별히 없음': [],
+};
+
 const WELLNESS_GOAL_BC = {
   stretch: '유연성 향상',
   posture: '자세·체형 교정',
@@ -10087,13 +10113,21 @@ const WELLNESS_GOAL_QUESTIONS = {
       ],
     },
     {
-      key: 'wFaceSymptom',
-      title: '함께 불편한 증상이 있나요?',
-      sub: '해당되면 선택해주세요',
+      key: 'wDiscomfortAreas',
+      title: '불편한 곳이 있으신가요?',
+      sub: '해당하는 부위를 모두 선택해주세요. (복수 선택 가능)',
+      multiSelect: true,
       options: [
-        { id: 'head', bc: '두통·어깨 결림', name: '두통·어깨 결림', desc: '머리·어깨 불편이 함께 있어요' },
-        { id: 'tmj', bc: '턱·저작 불편', name: '턱·저작 불편', desc: '턱·씹을 때 불편함이 있어요' },
-        { id: 'none', bc: '특별히 없음', name: '특별히 없어요', desc: '미용·균형 목적이에요' },
+        { id: 'headache', bc: '두통', name: '두통' },
+        { id: 'jaw', bc: '턱', name: '턱' },
+        { id: 'neck', bc: '목', name: '목' },
+        { id: 'shoulder', bc: '어깨', name: '어깨' },
+        { id: 'arm', bc: '팔', name: '팔' },
+        { id: 'back', bc: '등', name: '등' },
+        { id: 'waist', bc: '허리', name: '허리' },
+        { id: 'pelvis', bc: '골반', name: '골반' },
+        { id: 'leg', bc: '다리', name: '다리' },
+        { id: 'other', bc: '기타', name: '기타' },
       ],
     },
   ],
@@ -10165,8 +10199,37 @@ function getWellnessComfortFromTail_(tail){
 
 function getWellnessFollowQuestionsForGoal_(goal, comfort){
   const base = WELLNESS_GOAL_QUESTIONS[goal] || [];
-  if(comfort === 'mild') return base.concat(WELLNESS_MILD_EXTRA_QUESTIONS);
+  if(comfort === 'mild'){
+    const extras = goal === 'face'
+      ? WELLNESS_MILD_EXTRA_QUESTIONS.filter(function (q) { return q.key !== 'wMildArea'; })
+      : WELLNESS_MILD_EXTRA_QUESTIONS;
+    return base.concat(extras);
+  }
   return base;
+}
+
+function getWellnessDiscomfortAreas_(){
+  const raw = P.wDiscomfortAreas;
+  if(Array.isArray(raw)) return raw.slice();
+  if(typeof raw === 'string' && raw) return raw.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+  return [];
+}
+
+function setWellnessDiscomfortAreas_(ids){
+  pSet('wDiscomfortAreas', ids.slice());
+}
+
+function isWellnessAnswerBcLabel_(label, goal){
+  if(!goal || !label) return false;
+  if(WELLNESS_LEGACY_SYMPTOM_BC[label]) return true;
+  if(String(label).indexOf('불편부위:') === 0) return true;
+  const comfort = P.wellnessComfort || getWellnessComfortFromTail_(bcPath.slice(bcPath.indexOf(WELLNESS_GOAL_BC[goal]) + 1));
+  const qs = getWellnessFollowQuestionsForGoal_(goal, comfort);
+  if(!qs) return false;
+  return qs.some(function (q) {
+    if(q.multiSelect || q.multi) return false;
+    return q.options && q.options.some(function (o) { return o.bc === label; });
+  });
 }
 
 function getWellnessFollowQuestions_(){
@@ -10215,6 +10278,49 @@ function confirmWellnessMultiAnswer_(step){
   if(step < qs.length){
     renderWellnessFollowUp_(step + 1);
     updateProgress('s-p-w-follow');
+    recordNavCheckpoint_();
+    window.scrollTo(0, 0);
+    return;
+  }
+  showWellnessResult();
+}
+
+function toggleWellnessDiscomfortChip_(step, optId){
+  const areas = getWellnessDiscomfortAreas_();
+  const idx = areas.indexOf(optId);
+  if(idx >= 0) areas.splice(idx, 1);
+  else areas.push(optId);
+  setWellnessDiscomfortAreas_(areas);
+  document.querySelectorAll('#wFollowOptions .w-follow-chips .consult-sched-chip').forEach(function (btn) {
+    const id = btn.getAttribute('data-id');
+    const on = areas.indexOf(id) >= 0;
+    btn.classList.toggle('on', on);
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+  const nextBtn = document.getElementById('wellnessDiscomfortConfirm');
+  if(nextBtn) nextBtn.disabled = !areas.length;
+}
+
+function confirmWellnessDiscomfortAnswer_(step){
+  const qs = getWellnessFollowQuestions_() || [];
+  const q = qs[step - 1];
+  const areas = getWellnessDiscomfortAreas_();
+  if(!q || !areas.length) return;
+  const optBcs = q.options.map(function (o) { return o.bc; });
+  bcPath = bcPath.filter(function (x) {
+    if(x.indexOf('불편부위:') === 0) return false;
+    if(WELLNESS_LEGACY_SYMPTOM_BC[x]) return false;
+    return optBcs.indexOf(x) < 0;
+  });
+  const labels = areas.map(function (id) {
+    const opt = q.options.find(function (o) { return o.id === id; });
+    return opt ? opt.bc : id;
+  });
+  bc('불편부위: ' + labels.join(', '));
+  if(step < qs.length){
+    renderWellnessFollowUp_(step + 1);
+    updateProgress('s-p-w-follow');
+    recordNavCheckpoint_();
     window.scrollTo(0, 0);
     return;
   }
@@ -10246,6 +10352,17 @@ function renderWellnessFollowUp_(step){
     list.innerHTML = '<div class="chip-grid">' + chips + '</div>' +
       '<button type="button" class="profile-chip-confirm" id="wellnessMultiConfirm" onclick="confirmWellnessMultiAnswer_(' + step + ')"' +
       (P.painAreas.length ? '' : ' disabled') + '>다음 →</button>';
+    return;
+  }
+  if(q.multiSelect){
+    const selected = getWellnessDiscomfortAreas_();
+    const chips = q.options.map(function (opt) {
+      const active = selected.indexOf(opt.id) >= 0;
+      return '<button type="button" class="consult-sched-chip' + (active ? ' on' : '') + '" data-id="' + escapeHtml(opt.id) + '" aria-pressed="' + (active ? 'true' : 'false') + '" onclick="toggleWellnessDiscomfortChip_(' + step + ',\'' + opt.id.replace(/'/g, "\\'") + '\')">' + escapeHtml(opt.name) + '</button>';
+    }).join('');
+    list.innerHTML = '<div class="w-follow-chips">' + chips + '</div>' +
+      '<div class="w-follow-next-wrap"><button type="button" class="w-follow-next-btn" id="wellnessDiscomfortConfirm" onclick="confirmWellnessDiscomfortAnswer_(' + step + ')"' +
+      (selected.length ? '' : ' disabled') + '>다음 →</button></div>';
     return;
   }
   list.innerHTML = q.options.map(function (opt) {
@@ -10305,7 +10422,25 @@ function syncWellnessAnswersFromBc_(prefix, goal){
   let ansStart = 0;
   if(tail[0] && Object.values(WELLNESS_COMFORT_BC).indexOf(tail[0]) >= 0) ansStart = 1;
   const answers = tail.slice(ansStart);
+  qs.forEach(function (q) {
+    if(q.multiSelect) setWellnessDiscomfortAreas_([]);
+    else if(!q.multi) pSet(q.key, null);
+  });
   qs.forEach(function (q, i) {
+    if(q.multiSelect){
+      const ans = answers[i];
+      if(ans && ans.indexOf('불편부위:') === 0){
+        const labels = ans.slice('불편부위: '.length).split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+        const ids = labels.map(function (lbl) {
+          const opt = q.options.find(function (o) { return o.bc === lbl; });
+          return opt ? opt.id : null;
+        }).filter(Boolean);
+        setWellnessDiscomfortAreas_(ids);
+      } else if(ans && WELLNESS_LEGACY_SYMPTOM_BC[ans]){
+        setWellnessDiscomfortAreas_(WELLNESS_LEGACY_SYMPTOM_BC[ans]);
+      }
+      return;
+    }
     if(q.multi){
       const ans = answers[i];
       if(ans && ans.indexOf('불편부위:') === 0){
@@ -10347,15 +10482,24 @@ function resolveWellnessFromBc_(prefix){
     return { screen: 's-p2', goal: goal, flow: 'treatment' };
   }
   const afterComfort = tail.slice(1);
-  if(afterComfort.length >= qCount) return { screen: 's-result', goal: goal, flow: 'wellness' };
+  if(afterComfort.length > qCount) return { screen: 's-result', goal: goal, flow: 'wellness' };
   if(!afterComfort.length) return { screen: 's-p-w-follow', goal: goal, flow: 'wellness', followStep: 1 };
-  return { screen: 's-p-w-follow', goal: goal, flow: 'wellness', followStep: afterComfort.length + 1 };
+  return { screen: 's-p-w-follow', goal: goal, flow: 'wellness', followStep: Math.min(afterComfort.length, qCount) };
 }
 
 function getWellnessAnswerRows_(){
   const qs = getWellnessFollowQuestions_();
   if(!qs) return [];
   return qs.map(function (q) {
+    if(q.multiSelect){
+      const areas = getWellnessDiscomfortAreas_();
+      if(!areas.length) return null;
+      const names = areas.map(function (id) {
+        const opt = q.options.find(function (o) { return o.id === id; });
+        return opt ? opt.name : id;
+      });
+      return { dt: q.title.replace(/\?$/, ''), dd: names.join(', ') };
+    }
     if(q.multi && P.painAreas && P.painAreas.length){
       return { dt: q.title.replace(/\?$/, ''), dd: P.painAreas.join(', ') };
     }
@@ -10403,7 +10547,8 @@ function renderWellnessResult(){
   if(P.goal === 'posture') activeStep = 'active';
 
   let faceTmjNote = '';
-  if(P.goal === 'face' && P.wFaceSymptom === 'tmj'){
+  const discomfortAreas = getWellnessDiscomfortAreas_();
+  if(P.goal === 'face' && (discomfortAreas.indexOf('jaw') >= 0 || P.wFaceSymptom === 'tmj')){
     faceTmjNote = `
     <div class="info-card" style="border:1px solid rgba(74,157,232,0.38);background:rgba(74,157,232,0.07);margin-bottom:14px;">
       <h4 style="color:var(--blue);margin-top:0;">턱·저작 불편 — 병원 평가 권장</h4>
