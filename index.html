@@ -790,7 +790,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .option-list { display: flex; flex-direction: column; gap: 9px; }
 .option { background: white; border: 1.5px solid var(--border); border-radius: 12px; padding: 14px 16px; cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow-sm); }
 .option:hover { border-color: var(--green); background: var(--green-bg); box-shadow: var(--shadow-md); }
-.opt-ico { font-size: 20px; flex-shrink: 0; width: 34px; text-align: center; }
+.opt-ico { font-size: 20px; flex-shrink: 0; width: 34px; text-align: center; line-height: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .opt-ico-dot {
   display: inline-flex;
   align-items: center;
@@ -930,6 +930,15 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   background: white; border: 1px solid var(--border); border-radius: 14px;
   padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow-sm);
 }
+.vas-zero-option {
+  width: 100%; margin-top: 14px; margin-bottom: 0; padding: 12px 14px; text-align: left;
+  border: 1.5px solid var(--green-border); border-radius: 10px;
+  background: var(--green-bg); cursor: pointer; transition: all .2s;
+}
+.vas-zero-option:hover { border-color: var(--green); background: #eef7ef; }
+.vas-zero-option.selected { border-color: var(--green); box-shadow: var(--shadow-md); transform: scale(1.01); }
+.vas-zero-title { display: block; font-size: 13px; font-weight: 700; color: #2d6b4a; margin-bottom: 3px; }
+.vas-zero-sub { display: block; font-size: 11px; color: var(--dim); line-height: 1.45; }
 .vas-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
 .vas-sub { font-size: 11px; color: var(--dim); margin-bottom: 16px; }
 
@@ -1098,6 +1107,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .rs-badge { display: inline-block; font-size: 9px; background: var(--green); color: white; padding: 1px 7px; border-radius: 3px; margin-left: 6px; font-family: 'DM Mono', monospace; }
 .rs-badge.next-badge { background: var(--blue); }
 .rs-badge.parallel-badge { background: var(--amber); }
+.rs-badge.need-badge { background: #7a8494; }
 
 .divider-0 { display: flex; align-items: center; gap: 10px; padding: 10px 18px; background: var(--bg3); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 .divider-0-line { flex: 1; height: 2px; background: var(--green); }
@@ -1113,6 +1123,21 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .info-card.next h4 { color: var(--blue); }
 .info-card.alt h4 { color: var(--amber); }
 .info-card p { font-size: 12px; color: var(--light); line-height: 1.7; }
+.info-card.result-guide {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 16px 18px;
+}
+.result-guide-section + .result-guide-section {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.result-guide-section h4 { font-size: 12px; font-weight: 700; margin: 0 0 6px; }
+.result-guide-section p { font-size: 12px; color: var(--light); line-height: 1.7; margin: 0; }
+.result-guide-section--rec h4 { color: var(--green); }
+.result-guide-section--next h4 { color: var(--blue); }
+.result-guide-section--alt h4 { color: var(--amber); }
 .edu-apply-btns { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
 .edu-apply-btn {
   display: block; text-align: center; padding: 12px 16px; border-radius: 10px;
@@ -6168,63 +6193,6 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
 </div>
 
 <!-- ══════════════════════════════
-     PATIENT Q1 — 치료 vs 웰니스
-══════════════════════════════ -->
-<div class="screen" id="s-p1">
-  <div class="wrap">
-    <div class="q-header">
-      <div class="q-step">1단계</div>
-      <div class="q-title">지금 몸 상태가 어떤가요?</div>
-      <div class="q-sub">해당하는 상태를 선택해주세요</div>
-    </div>
-
-    <!-- 치료/웰니스 시각화 -->
-    <div class="zone-visual">
-      <div class="zone-wellness">
-        <div class="zone-icon">⬆️</div>
-        <div>
-          <div class="zone-title">웰니스 영역</div>
-          <div class="zone-desc">통증 없음: 더 좋은 상태로 끌어올리는 과정</div>
-        </div>
-      </div>
-      <div class="zone-line">
-        <div class="zone-line-dash"></div>
-        <div class="zone-line-label">편안한 상태 (기준선)</div>
-        <div class="zone-line-dash"></div>
-      </div>
-      <div class="zone-treatment">
-        <div class="zone-icon">⬇️</div>
-        <div>
-          <div class="zone-title">치료 영역</div>
-          <div class="zone-desc">통증 있음: 정상으로 되돌리는 과정</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="q-divider" aria-hidden="true"></div>
-
-    <div class="option-list">
-      <div class="option" style="border-color:var(--red-border);background:var(--red-bg);" onclick="pSet('mode','treatment'); bc('치료 영역'); goS('s-p2')">
-        <div class="opt-ico">🔴</div>
-        <div>
-          <div class="opt-name" style="color:var(--red);">통증이나 불편함이 있어요</div>
-          <div class="opt-desc">아픈 곳이 있거나 움직임이 불편한 상태</div>
-        </div>
-        <div class="opt-arr">›</div>
-      </div>
-      <div class="option" style="border-color:var(--green-border);background:var(--green-bg);" onclick="pSet('mode','wellness'); bc('웰니스 영역'); goS('s-p-wellness')">
-        <div class="opt-ico">🟢</div>
-        <div>
-          <div class="opt-name" style="color:var(--green);">몸을 더 좋게 만들고 싶어요</div>
-          <div class="opt-desc">자세·체형·기능·예방 관리가 목표</div>
-        </div>
-        <div class="opt-arr">›</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════
      PATIENT VAS
 ══════════════════════════════ -->
 <div class="screen" id="s-p-vas">
@@ -6236,7 +6204,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
     </div>
 
     <div class="vas-container">
-      <div class="vas-title">통증 강도 (VAS 1~10)</div>
+      <div class="vas-title">통증이 있으시면 강도를 선택해 주세요 (VAS 1~10)</div>
       <div class="vas-sub">1 = 가장 가벼운 통증 &nbsp;·&nbsp; 10 = 살면서 가장 아팠을 때</div>
       <div class="vas-scale" id="vasScale" onclick="handleVasClick(event)" ontouchend="handleVasTouch(event)">
         <div class="vas-thumb" id="vasThumb" style="left:0%;display:none;">1</div>
@@ -6268,6 +6236,11 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
         </div>
       </div>
 
+      <button type="button" class="vas-zero-option" id="vasZeroOption" onclick="pickVasZero_()">
+        <span class="vas-zero-title">통증이 거의 없거나 아주 가끔 있어요. (VAS 0)</span>
+        <span class="vas-zero-sub">움직임·자세 프로그램으로 안내합니다</span>
+      </button>
+
       <button class="vas-confirm-btn" id="vasConfirmBtn" onclick="confirmVas()" style="display:none;">
         다음 단계로 →
       </button>
@@ -6283,9 +6256,14 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
     <div class="q-header">
       <div class="q-step" id="p2StepBadge">2단계</div>
       <div class="q-title">현재 가장 불편한 부위는?</div>
-      <div class="q-sub">해당하는 부위를 모두 선택해주세요. (복수 선택 가능)</div>
+      <div class="q-sub">해당하는 부위를 선택하거나 직접 적어 주세요. (복수 선택 가능)</div>
     </div>
     <div class="chip-grid" id="painAreaChips"></div>
+    <div style="margin-top:16px;">
+      <div class="q-sub" style="margin-bottom:8px;">직접 입력 <span style="opacity:.7">(선택)</span></div>
+      <textarea class="profile-field-textarea" id="painAreaNoteInput" rows="2" placeholder="예) 오른쪽 어깨 앞쪽, 손목 바깥쪽" oninput="onPainAreaNoteInput_()"></textarea>
+    </div>
+    <div class="profile-example-box">칩으로 고르거나 위에 직접 적어 주셔도 됩니다. 둘 다 사용하셔도 괜찮아요.</div>
     <button type="button" class="profile-chip-confirm" id="painAreaConfirmBtn" onclick="confirmPainAreas_()" disabled>다음 →</button>
   </div>
 </div>
@@ -6364,7 +6342,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
         <div class="opt-ico">✨</div><div><div class="opt-name">얼굴 교정·관리</div><div class="opt-desc">얼굴이 치우치거나 붓는 게 신경 쓰여요.</div></div><div class="opt-arr">›</div>
       </div>
       <div class="option" style="border-color:var(--green-border);" onclick="pickWellnessGoal_('prevention')">
-        <div class="opt-ico">🌿</div><div><div class="opt-name">예방·유지 관리 (셀프 통증 케어)</div><div class="opt-desc">또 아플까 봐 걱정되고, 스스로 관리하고 싶어요.</div></div><div class="opt-arr">›</div>
+        <div class="opt-ico">🌿</div><div><div class="opt-name">예방·셀프 케어</div><div class="opt-desc">또 아플까 봐 걱정되고, 스스로 관리하고 싶어요.</div></div><div class="opt-arr">›</div>
       </div>
     </div>
   </div>
@@ -6436,18 +6414,17 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
     <div class="q-header">
       <div class="q-step" style="background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber);">전문가 · 2/3</div>
       <div class="q-title">어떤 분야에 계세요?</div>
-      <div class="q-sub">현재 직군을 선택해주세요</div>
+      <div class="q-sub">현재 직군·활동 분야를 선택해주세요</div>
     </div>
     <div class="option-list" id="e2-default">
       <div class="option" onclick="eSet('type','medical'); bc('의료인'); goS('s-e3')"><div class="opt-ico">🏥</div><div><div class="opt-name">의사 · 물리치료사 · 카이로프랙터</div><div class="opt-desc">의료인 · 의료기사</div></div><div class="opt-arr">›</div></div>
       <div class="option" onclick="eSet('type','wellness'); bc('웰니스 전문가'); goS('s-e3')"><div class="opt-ico">🧘</div><div><div class="opt-name">필라테스 · 트레이너 · 요가 강사</div><div class="opt-desc">웰니스 · 피트니스 분야</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="eSet('type','beginner'); bc('입문자'); goS('s-e3')"><div class="opt-ico">🌱</div><div><div class="opt-name">막 시작했거나 공부 중이에요</div><div class="opt-desc">경험이 많지 않지만 배우고 싶음</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="eSet('type','other'); bc('기타'); goS('s-e3')"><div class="opt-ico">💼</div><div><div class="opt-name">기타</div><div class="opt-desc">다른 분야 · 개인 관심</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="eSet('type','other'); bc('기타'); goS('s-e3')"><div class="opt-ico">💼</div><div><div class="opt-name">기타 · 관심 분야</div><div class="opt-desc">다른 분야이거나 아직 정하지 않았어요</div></div><div class="opt-arr">›</div></div>
     </div>
 
     <div class="option-list" id="e2-cmt" style="display:none;">
       <div class="option" onclick="eSet('type','doctor'); bc('의사·한의사'); goS('s-e3')"><div class="opt-ico">🩺</div><div><div class="opt-name">의사 · 한의사</div><div class="opt-desc">의료인</div></div><div class="opt-arr">›</div></div>
-      <div class="option" onclick="eSet('type','pt'); bc('물리치료사'); goS('s-e3')"><div class="opt-ico">🧑‍⚕️</div><div><div class="opt-name">물리치료사</div><div class="opt-desc">의료기사</div></div><div class="opt-arr">›</div></div>
+      <div class="option" onclick="eSet('type','pt'); bc('물리치료사'); goS('s-e3')"><div class="opt-ico">🩹</div><div><div class="opt-name">물리치료사</div><div class="opt-desc">의료기사</div></div><div class="opt-arr">›</div></div>
       <div class="option" onclick="eSet('type','pt_student'); bc('물리치료학과 학생'); goS('s-e3')"><div class="opt-ico">🎓</div><div><div class="opt-name">물리치료학과 학생</div><div class="opt-desc">재학/실습 중</div></div><div class="opt-arr">›</div></div>
     </div>
   </div>
@@ -6458,8 +6435,8 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   <div class="wrap">
     <div class="q-header">
       <div class="q-step" style="background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber);">전문가 · 3/3</div>
-      <div class="q-title">현재 경험이 어느 정도인가요?</div>
-      <div class="q-sub">비슷한 교육을 받아본 적 있나요?</div>
+      <div class="q-title">교육·실무 경험이 어느 정도인가요?</div>
+      <div class="q-sub">해당 과정과 관련된 학습·실무 경험을 선택해주세요</div>
     </div>
     <div class="option-list">
       <div class="option" onclick="eSet('level','none'); bc('처음'); showExpertResult()"><div class="opt-ico">🌱</div><div><div class="opt-name">처음입니다</div><div class="opt-desc">관련 교육을 거의 받아본 적 없어요</div></div><div class="opt-arr">›</div></div>
@@ -6672,7 +6649,6 @@ const PROFILE_SCREEN_LABELS = {
   's-psp1': 'PSP 컨셉 요약',
   's-psp3': 'PSP 전체 구조',
   's-p-intro': '맞춤 안내 시작',
-  's-p1': '몸 상태 선택',
   's-p-vas': '통증 평가',
   's-p2': '통증 부위',
   's-p3': '통증 양상',
@@ -6687,13 +6663,40 @@ const PROFILE_SCREEN_LABELS = {
   's-e3': '전문가 교육 3',
 };
 
-const PAIN_AREA_OPTIONS = ['목', '어깨', '팔', '등', '허리', '골반', '다리'];
-const DIAGNOSIS_OPTIONS = ['디스크', '협착증', '회전근개 손상', '오십견', '슬개건염', '수술 이력 있음', '진단 없음', '기타'];
+const PAIN_AREA_OPTIONS = ['목', '어깨', '등', '허리', '골반', '팔', '다리'];
+const DIAGNOSIS_OPTIONS = ['진단 없음', '디스크', '협착증', '회전근개 손상', '오십견', '슬개건염', '수술 이력 있음', '기타'];
 const PAIN_AREA_REGION_ = {
   '목': 'neck', '어깨': 'neck', '등': 'neck',
   '허리': 'back', '골반': 'back',
   '팔': 'arm',
   '다리': 'leg',
+};
+const PAIN_QUALITY_BC_TO_ID = {
+  '뻐근·묵직': 'aching',
+  '당김·뻣뻣': 'tight',
+  '찌릿·저림': 'sharp',
+  '날카로운': 'sharp_local',
+  '찢어지는': 'tear',
+};
+const PAIN_QUALITY_BC_LABELS = Object.keys(PAIN_QUALITY_BC_TO_ID);
+const EXPERT_WANT_BC_TO_ID = {
+  'CMT 도수치료': 'cmt',
+  'IFC 얼굴교정': 'ifc',
+  'Re:Al 움직임': 'pstr',
+};
+const EXPERT_TYPE_BC_TO_ID = {
+  '의료인': 'medical',
+  '웰니스 전문가': 'wellness',
+  '입문자': 'beginner',
+  '기타': 'other',
+  '의사·한의사': 'doctor',
+  '물리치료사': 'pt',
+  '물리치료학과 학생': 'pt_student',
+};
+const EXPERT_LEVEL_BC_TO_ID = {
+  '처음': 'none',
+  '기초 있음': 'basic',
+  '실무 중': 'advanced',
 };
 const TREATMENT_FLOW_STEPS_ = ['s-p-intro', 's-p2', 's-p-vas', 's-p3', 's-p-diagnosis', 's-p-symptom'];
 const WELLNESS_FLOW_BASE_ = ['s-p-intro', 's-p-wellness', 's-p-w-comfort'];
@@ -7959,18 +7962,18 @@ function runProfileBranchAction(){
   const b = profileBranch;
   if(!b) return;
   if(b === 'treatment'){
-    bc('통증·재활');
+    bcEnsureRootBranch_('통증·재활');
     startPatient();
     return;
   }
   if(b === 'wellness'){
-    bc('움직임·자세');
+    bcEnsureRootBranch_('움직임·자세');
     pSet('mode', 'wellness');
     startWellnessFlow_();
     return;
   }
   if(b === 'expert'){
-    bc('전문가 교육');
+    bcEnsureRootBranch_('전문가 교육');
     startExpert();
     return;
   }
@@ -8062,7 +8065,7 @@ function getExpertProgressInfo_(screenId){
   const phaseMap = {
     's-e1': { phase: 1, label: '과정 안내', phaseFill: 0.34 },
     's-e2': { phase: 2, label: '분야 선택', phaseFill: 0.34 },
-    's-e3': { phase: 3, label: '상담 신청', phaseFill: 0.5 },
+    's-e3': { phase: 3, label: '경험 확인', phaseFill: 0.5 },
   };
   if(screenId === 's-result' && consultFlowKind === 'expert'){
     return { pct: 100, stepText: formatPhasedProgressText_(3, '완료', true), label: '전문가 교육', phase: 3, phaseFill: 1 };
@@ -8112,7 +8115,7 @@ function renderProfileIntro_(){
   if(desc) desc.textContent = isWellness
     ? '짧은 질문에 답해 주시면, 목표·불편함에 맞는 웰니스 프로그램과 로드맵을 바로 확인하실 수 있습니다.'
     : '짧은 질문에 답해 주시면, 통증 부위·정도·진단 이력을 바탕으로 맞춤 프로그램과 다음 단계를 안내해 드립니다.';
-  if(countEl) countEl.textContent = '3단계 · 약 2~3분';
+  if(countEl) countEl.textContent = isWellness ? '4~5단계 · 약 2~3분' : '5단계 · 약 2~3분';
   if(stepsEl){
     const steps = isWellness ? [
       ['현재 상태', '목표와 불편함을 확인합니다'],
@@ -8142,16 +8145,33 @@ function startWellnessFlow_(){
   goS('s-p-intro');
 }
 
+function hasPainAreaAnswer_(){
+  const note = String(P.painAreaNote || '').trim();
+  return (P.painAreas && P.painAreas.length > 0) || !!note;
+}
+
+function updatePainAreaConfirmState_(){
+  const btn = document.getElementById('painAreaConfirmBtn');
+  if(btn) btn.disabled = !hasPainAreaAnswer_();
+}
+
+function onPainAreaNoteInput_(){
+  const el = document.getElementById('painAreaNoteInput');
+  pSet('painAreaNote', el ? el.value.trim() : '');
+  updatePainAreaConfirmState_();
+}
+
 function renderPainAreaChips_(){
   if(!P.painAreas) P.painAreas = [];
   const box = document.getElementById('painAreaChips');
-  const btn = document.getElementById('painAreaConfirmBtn');
+  const noteEl = document.getElementById('painAreaNoteInput');
   if(!box) return;
   box.innerHTML = PAIN_AREA_OPTIONS.map(function (label) {
     const active = P.painAreas.indexOf(label) >= 0;
     return '<button type="button" class="profile-chip' + (active ? ' active' : '') + '" onclick="togglePainAreaChip_(\'' + label.replace(/'/g, "\\'") + '\')">' + escapeHtml(label) + '</button>';
   }).join('');
-  if(btn) btn.disabled = P.painAreas.length === 0;
+  if(noteEl && document.activeElement !== noteEl) noteEl.value = P.painAreaNote || '';
+  updatePainAreaConfirmState_();
 }
 
 function togglePainAreaChip_(label){
@@ -8181,16 +8201,29 @@ function deriveAreaFromPainAreas_(areas){
 }
 
 function getPainAreasDisplay_(){
-  if(P.painAreas && P.painAreas.length) return P.painAreas.join(', ');
+  const chips = (P.painAreas && P.painAreas.length) ? P.painAreas.join(', ') : '';
+  const note = String(P.painAreaNote || '').trim();
+  if(chips && note) return chips + ' · ' + note;
+  if(chips) return chips;
+  if(note) return note;
   const areaKo = { neck:'목 어깨 등', back:'허리 골반', arm:'팔꿈치 상지', leg:'무릎 하지', full:'여러 곳이 불편해요' };
   return areaKo[P.area] || '-';
 }
 
 function confirmPainAreas_(){
-  if(!P.painAreas || !P.painAreas.length) return;
-  P.area = deriveAreaFromPainAreas_(P.painAreas);
-  bcPath = bcPath.filter(function (x) { return x.indexOf('통증부위:') !== 0; });
-  bc('통증부위: ' + P.painAreas.join(', '));
+  const noteEl = document.getElementById('painAreaNoteInput');
+  const note = noteEl ? noteEl.value.trim() : String(P.painAreaNote || '').trim();
+  pSet('painAreaNote', note);
+  const hasChips = P.painAreas && P.painAreas.length;
+  if(!hasChips && !note) return;
+  P.area = hasChips ? deriveAreaFromPainAreas_(P.painAreas) : 'full';
+  bcPath = bcPath.filter(function (x) {
+    return x.indexOf('통증부위:') !== 0 && x.indexOf('부위 추가:') !== 0;
+  });
+  if(hasChips) bc('통증부위: ' + P.painAreas.join(', '));
+  if(note){
+    bc('부위 추가: ' + (note.length > 40 ? note.slice(0, 40) + '…' : note));
+  }
   goS('s-p-vas');
 }
 
@@ -8244,6 +8277,15 @@ function renderResultSummaryCard_(rows){
   return '<div class="result-summary-card"><div class="result-summary-title">선택하신 내용</div>' + body + '</div>';
 }
 
+function renderResultGuideCard_(sections){
+  if(!sections || !sections.length) return '';
+  const body = sections.map(function (s) {
+    const tone = s.tone ? ' result-guide-section--' + s.tone : '';
+    return '<div class="result-guide-section' + tone + '"><h4>' + s.title + '</h4><p>' + s.text + '</p></div>';
+  }).join('');
+  return '<div class="info-card result-guide">' + body + '</div>';
+}
+
 function getTreatmentSummaryRows_(){
   const sevKo = { mild:'경증 (VAS 1~3)', moderate:'중등도 (VAS 4~6)', severe:'중증 (VAS 7~10)' };
   const qualKo = { aching:'뻐근·묵직', tight:'당김·뻣뻣', sharp:'찌릿·저림', sharp_local:'날카로운(한 점)', tear:'찢어지는 느낌' };
@@ -8269,8 +8311,22 @@ function getWellnessSummaryRows_(){
 }
 
 function bc(label){
+  label = String(label || '').trim();
+  if(!label) return;
+  if(bcPath.length && bcPath[bcPath.length - 1] === label) return;
   bcPath.push(label);
   updateBc();
+}
+
+/** 같은 루트(움직임·자세 등) 재진입 시 이후 경로 제거 */
+function bcEnsureRootBranch_(label){
+  const idx = bcPath.indexOf(label);
+  if(idx >= 0){
+    bcPath = bcPath.slice(0, idx + 1);
+    updateBc();
+    return;
+  }
+  bc(label);
 }
 
 function bcPathsEqual_(a, b){
@@ -8388,24 +8444,20 @@ function resolveScreenForBcPrefix_(prefix){
   if(last === '전체 구조 상세보기') return { screen: 's-psp3' };
 
   if(prefix[0] === '전문가 교육' || prefix.includes('CMT 도수치료') || prefix.includes('IFC 얼굴교정') || prefix.includes('Re:Al 움직임')){
-    if(['처음', '기초 있음', '실무 중'].indexOf(last) >= 0) return { screen: 's-result', flow: 'expert' };
+    if(['처음', '기초 있음', '실무 중'].indexOf(last) >= 0) return { screen: 's-e3', flow: 'expert' };
     if(['의료인', '웰니스 전문가', '입문자', '기타', '의사·한의사', '물리치료사', '물리치료학과 학생'].indexOf(last) >= 0){
-      return { screen: 's-e3' };
+      return { screen: 's-e2', flow: 'expert' };
     }
-    if(['CMT 도수치료', 'IFC 얼굴교정', 'Re:Al 움직임'].indexOf(last) >= 0) return { screen: 's-e2' };
-    return { screen: 's-e1' };
+    if(['CMT 도수치료', 'IFC 얼굴교정', 'Re:Al 움직임'].indexOf(last) >= 0) return { screen: 's-e1', flow: 'expert' };
+    return { screen: 's-e1', flow: 'expert' };
   }
 
   if(prefix[0] === '통증·재활' || prefix.indexOf('치료 영역') >= 0){
     if(last === 'VAS 0') return { screen: 's-p-wellness', flow: 'wellness' };
-    if(last.indexOf('증상:') === 0) return { screen: 's-result', flow: 'treatment' };
-    if(prefix.some(function (x) { return x.indexOf('진단:') === 0; })){
-      if(last.indexOf('진단:') === 0) return { screen: 's-p-symptom', flow: 'treatment' };
-    }
-    if(['뻐근·묵직', '당김·뻣뻣', '찌릿·저림', '날카로운', '찢어지는'].indexOf(last) >= 0){
-      return { screen: 's-p-diagnosis', flow: 'treatment' };
-    }
-    if(last.indexOf('통증부위:') === 0 || last.indexOf('불편부위:') === 0){
+    if(last.indexOf('증상:') === 0) return { screen: 's-p-symptom', flow: 'treatment' };
+    if(last.indexOf('진단:') === 0) return { screen: 's-p-diagnosis', flow: 'treatment' };
+    if(PAIN_QUALITY_BC_LABELS.indexOf(last) >= 0) return { screen: 's-p3', flow: 'treatment' };
+    if(last.indexOf('통증부위:') === 0 || last.indexOf('부위 추가:') === 0 || last.indexOf('불편부위:') === 0){
       return { screen: 's-p2', flow: 'treatment' };
     }
     if(/^VAS\s/.test(last) || last === '경증 (1~3)' || last === '중등도 (4~6)' || last === '중증 (7~10)'){
@@ -8436,7 +8488,7 @@ function applyBcPrefixNavigate_(prefix, index){
       profileBranch = 'wellness';
       pSet('mode', 'wellness');
       if(resolved.goal) pSet('goal', resolved.goal);
-      syncPainAreasFromBc_(prefix);
+      syncWellnessAnswersFromBc_(prefix, resolved.goal || P.goal);
     }
   } else if(prefix[0] === '통증·재활' || prefix.indexOf('치료 영역') >= 0){
     profileBranch = 'treatment';
@@ -8455,15 +8507,17 @@ function applyBcPrefixNavigate_(prefix, index){
   if(resolved.flow === 'treatment'){
     profileBranch = 'treatment';
     pSet('mode', 'treatment');
-    syncPainAreasFromBc_(bcPath);
-    syncDiagnosisFromBc_(bcPath);
-    syncSymptomFromBc_(bcPath);
+    syncTreatmentStateFromBc_(bcPath);
+  }
+  if(resolved.flow === 'expert'){
+    syncExpertFromBc_(bcPath);
   }
   if(resolved.goal) pSet('goal', resolved.goal);
   if(resolved.screen === 's-p-w-follow'){
     syncWellnessAnswersFromBc_(bcPath, resolved.goal || P.goal);
     renderWellnessFollowUp_(resolved.followStep || getWellnessFollowStepFromState_());
   }
+  if(resolved.screen === 's-e2') syncE2VariantPanels_();
   if(resolved.screen === 's-p-intro') renderProfileIntro_();
   if(resolved.screen === 's-p2') renderPainAreaChips_();
   if(resolved.screen === 's-p-vas') initVasScreen_();
@@ -8476,8 +8530,9 @@ function applyBcPrefixNavigate_(prefix, index){
     const symEl = document.getElementById('symptomDetailInput');
     if(symEl) symEl.value = P.symptomDetail || '';
   }
-  if(resolved.screen === 's-result' && resolved.flow === 'wellness'){
-    syncWellnessAnswersFromBc_(bcPath, resolved.goal || P.goal);
+  if(resolved.screen === 's-result'){
+    if(resolved.flow === 'wellness') syncWellnessAnswersFromBc_(bcPath, resolved.goal || P.goal);
+    refreshResultScreenContent_();
   }
 
   applyNavCheckpoint_({
@@ -8517,18 +8572,16 @@ function updateBc(){
   if(bcPath.length === 0){ bar.classList.add('hidden'); scheduleFlowChromeLayout_(); return; }
   bar.classList.remove('hidden');
   const items = ['홈'].concat(bcPath);
-  const activeScreen = document.querySelector('.screen.active');
-  const activeId = activeScreen ? activeScreen.id : '';
   bar.innerHTML = items.map(function (label, i) {
     const isLast = i === items.length - 1;
-    const isAnswerLabel = i > 0 && isWellnessAnswerBcLabel_(label, P.goal);
-    const canLink = !isLast || ((activeId === 's-p-w-follow' || activeId === 's-result') && isAnswerLabel);
-    const cls = 'bc-item' + ((isLast && !canLink) ? ' active' : ' bc-item--link');
-    if(isLast && !canLink){
-      return '<span class="' + cls + '">' + escapeHtml(label) + '</span>';
+    const navigable = i === 0 || isBcNavigableLabel_(label, P.goal);
+    const cls = 'bc-item' + (navigable ? ' bc-item--link' : '') + (isLast ? ' active' : '');
+    if(!navigable){
+      return '<span class="' + cls + '">' + escapeHtml(label) + '</span>' +
+        (isLast ? '' : '<span class="bc-sep">›</span>');
     }
     return '<button type="button" class="' + cls + '" onclick="navigateToBcIndex(' + i + ')">' +
-      escapeHtml(label) + '</button><span class="bc-sep">›</span>';
+      escapeHtml(label) + '</button>' + (isLast ? '' : '<span class="bc-sep">›</span>');
   }).join('');
   scheduleFlowChromeLayout_();
 }
@@ -8601,8 +8654,8 @@ function buildConsultSelectionRows(opts){
   }
 
   rows.push({ dt: '구분', dd: '치료 영역 (통증)' });
-  if(P.painAreas && P.painAreas.length) rows.push({ dt: '통증 부위', dd: P.painAreas.join(', ') });
-  else if(P.area) rows.push({ dt: '부위', dd: areaKo[P.area] || P.area });
+  const areaDisplay = getPainAreasDisplay_();
+  if(areaDisplay && areaDisplay !== '-') rows.push({ dt: '통증 부위', dd: areaDisplay });
   if(P.vasScore != null && P.vasScore !== '') rows.push({ dt: 'VAS', dd: String(P.vasScore) });
   if(P.severity) rows.push({ dt: '통증 정도', dd: sevKo[P.severity] || P.severity });
   if(P.quality) rows.push({ dt: '통증 질', dd: qualKo[P.quality] || P.quality });
@@ -9461,28 +9514,42 @@ function goBack(){
 }
 
 function goHome(){
-  const depth = H.length - 1;
-  P={}; E={}; bcPath=[]; bcCheckpointsByLen_={};
-  selectedVasZone=null; selectedVasValue=null;
-  document.querySelector('.screen.active').classList.remove('active');
-  document.getElementById('s-home').classList.add('active');
-  document.getElementById('bcBar').classList.add('hidden');
-  updateProgress('s-home');
-  document.getElementById('backBtn').classList.add('hidden');
-  document.getElementById('homeBtn').classList.add('hidden');
-  // VAS 초기화
-  document.getElementById('vasThumb').style.display='none';
-  ['vz-low','vz-mid','vz-high'].forEach(id=>document.getElementById(id).classList.remove('selected'));
-  document.getElementById('vasConfirmBtn').classList.remove('ready');
-  H.length=0; H.push('s-home');
+  P = {};
+  E = {};
+  bcPath = [];
+  bcCheckpointsByLen_ = {};
+  selectedVasZone = null;
+  selectedVasValue = null;
+  consultFlowKind = 'treatment';
+  wellnessEntryChannel = null;
+  H = ['s-home'];
+
+  document.querySelector('.screen.active')?.classList.remove('active');
+  document.getElementById('s-home')?.classList.add('active');
+  document.getElementById('bcBar')?.classList.add('hidden');
+
   resetProfileBranchPicker_();
+  applyHomeBranchUi_();
+  updateBc();
+  syncProfileHomeReviews_();
+  updateProgress('s-home');
   updateProfileSticky();
-  window.scrollTo(0,0);
-  if(depth > 0){
-    history.go(-depth);
-  } else {
-    history.replaceState({ screen: 's-home', H: JSON.stringify(['s-home']), bc: JSON.stringify([]) }, '', '');
-  }
+
+  const vasThumb = document.getElementById('vasThumb');
+  if(vasThumb) vasThumb.style.display = 'none';
+  ['vz-low', 'vz-mid', 'vz-high'].forEach(function (id) {
+    document.getElementById(id)?.classList.remove('selected');
+  });
+  document.getElementById('vasConfirmBtn')?.classList.remove('ready');
+
+  window.scrollTo(0, 0);
+
+  const url = window.location.pathname + window.location.search + (window.location.hash || '');
+  history.replaceState({
+    screen: 's-home',
+    H: JSON.stringify(['s-home']),
+    bc: JSON.stringify([]),
+  }, '', url);
 }
 
 window.addEventListener('popstate', (e) => {
@@ -9497,10 +9564,25 @@ window.addEventListener('popstate', (e) => {
     H = ['s-home'];
     bcPath = [];
   }
-  const id = st.screen;
-  document.querySelector('.screen.active').classList.remove('active');
-  const el = document.getElementById(id);
-  if(el){ el.classList.add('active'); }
+  let id = st.screen;
+  if(id === 's-home'){
+    P = {};
+    E = {};
+    bcCheckpointsByLen_ = {};
+    selectedVasZone = null;
+    selectedVasValue = null;
+    consultFlowKind = 'treatment';
+    wellnessEntryChannel = null;
+  }
+  document.querySelector('.screen.active')?.classList.remove('active');
+  let el = document.getElementById(id);
+  if(!el){
+    id = 's-home';
+    H = ['s-home'];
+    bcPath = [];
+    el = document.getElementById('s-home');
+  }
+  if(el) el.classList.add('active');
   if(id === 's-e2') syncE2VariantPanels_();
   if(id === 's-home') applyHomeBranchUi_();
   if(id === 's-p-intro') renderProfileIntro_();
@@ -9545,14 +9627,115 @@ function updateQuestionStepBadges_(screenId){
   }
 }
 
-function syncPainAreasFromBc_(prefix){
-  let item = null;
+function isTreatmentAnswerBcLabel_(label){
+  if(!label) return false;
+  if(label === '통증·재활' || label === '치료 영역' || label === '웰니스 영역') return true;
+  if(label === 'VAS 0') return true;
+  if(label.indexOf('통증부위:') === 0 || label.indexOf('부위 추가:') === 0) return true;
+  if(label.indexOf('진단:') === 0 || label.indexOf('증상:') === 0) return true;
+  if(/^VAS\s/.test(label) || label === '경증 (1~3)' || label === '중등도 (4~6)' || label === '중증 (7~10)') return true;
+  return PAIN_QUALITY_BC_LABELS.indexOf(label) >= 0;
+}
+
+function isExpertAnswerBcLabel_(label){
+  if(!label) return false;
+  if(label === '전문가 교육') return true;
+  if(EXPERT_WANT_BC_TO_ID[label] || EXPERT_TYPE_BC_TO_ID[label] || EXPERT_LEVEL_BC_TO_ID[label]) return true;
+  return false;
+}
+
+function isBcNavigableLabel_(label, goal){
+  if(!label || label === '홈') return false;
+  if(isTreatmentAnswerBcLabel_(label)) return true;
+  if(isExpertAnswerBcLabel_(label)) return true;
+  if(label === '움직임·자세' || label === '웰니스 영역') return true;
+  if(WELLNESS_GOAL_BC_TO_ID[label]) return true;
+  if(Object.values(WELLNESS_COMFORT_BC).indexOf(label) >= 0) return true;
+  if(isWellnessAnswerBcLabel_(label, goal)) return true;
+  if(label === 'PSP 컨셉' || label === '전체 구조 상세보기') return true;
+  return false;
+}
+
+function syncVasFromBc_(prefix){
+  let found = false;
   prefix.forEach(function (x) {
-    if(x.indexOf('통증부위:') === 0 || x.indexOf('불편부위:') === 0) item = x;
+    if(x === 'VAS 0'){
+      P.vasScore = 0;
+      P.severity = null;
+      selectedVasValue = 0;
+      selectedVasZone = null;
+      found = true;
+      return;
+    }
+    const m = x.match(/^VAS\s+(\d+)$/);
+    if(!m) return;
+    const v = Number(m[1]);
+    if(v < 1) return;
+    P.vasScore = v;
+    P.severity = vasSeverityFromValue(v);
+    selectedVasValue = v;
+    selectedVasZone = vasZoneFromValue(v);
+    found = true;
   });
-  if(!item) return;
-  P.painAreas = item.split(':').slice(1).join(':').split(',').map(function (s) { return s.trim(); }).filter(Boolean);
-  P.area = deriveAreaFromPainAreas_(P.painAreas);
+  if(!found){
+    P.vasScore = null;
+    P.severity = null;
+    selectedVasValue = null;
+    selectedVasZone = null;
+  }
+}
+
+function syncQualityFromBc_(prefix){
+  let found = false;
+  prefix.forEach(function (x) {
+    if(PAIN_QUALITY_BC_TO_ID[x]){
+      P.quality = PAIN_QUALITY_BC_TO_ID[x];
+      found = true;
+    }
+  });
+  if(!found) P.quality = null;
+}
+
+function syncTreatmentStateFromBc_(prefix){
+  syncPainAreasFromBc_(prefix);
+  syncVasFromBc_(prefix);
+  syncQualityFromBc_(prefix);
+  syncDiagnosisFromBc_(prefix);
+  syncSymptomFromBc_(prefix);
+}
+
+function syncExpertFromBc_(prefix){
+  E = E || {};
+  let want = null;
+  let type = null;
+  let level = null;
+  prefix.forEach(function (x) {
+    if(EXPERT_WANT_BC_TO_ID[x]) want = EXPERT_WANT_BC_TO_ID[x];
+    if(EXPERT_TYPE_BC_TO_ID[x]) type = EXPERT_TYPE_BC_TO_ID[x];
+    if(EXPERT_LEVEL_BC_TO_ID[x]) level = EXPERT_LEVEL_BC_TO_ID[x];
+  });
+  if(want) E.want = want; else delete E.want;
+  if(type) E.type = type; else delete E.type;
+  if(level) E.level = level; else delete E.level;
+}
+
+function syncPainAreasFromBc_(prefix){
+  P.painAreas = [];
+  P.painAreaNote = '';
+  prefix.forEach(function (x) {
+    if(x.indexOf('통증부위:') === 0 || x.indexOf('불편부위:') === 0){
+      const raw = x.split(':').slice(1).join(':').trim();
+      raw.split(',').forEach(function (s) {
+        const t = s.trim();
+        if(t) P.painAreas.push(t);
+      });
+    }
+    if(x.indexOf('부위 추가:') === 0){
+      P.painAreaNote = x.replace(/^부위 추가:\s*/, '');
+    }
+  });
+  if(P.painAreas.length) P.area = deriveAreaFromPainAreas_(P.painAreas);
+  else if(P.painAreaNote) P.area = 'full';
 }
 
 function syncDiagnosisFromBc_(prefix){
@@ -9560,7 +9743,11 @@ function syncDiagnosisFromBc_(prefix){
   prefix.forEach(function (x) {
     if(x.indexOf('진단:') === 0) item = x;
   });
-  if(!item) return;
+  if(!item){
+    P.diagnosis = [];
+    P.diagnosisNote = '';
+    return;
+  }
   P.diagnosis = item.split(':').slice(1).join(':').split(',').map(function (s) { return s.trim(); }).filter(Boolean);
 }
 
@@ -9569,7 +9756,10 @@ function syncSymptomFromBc_(prefix){
   prefix.forEach(function (x) {
     if(x.indexOf('증상:') === 0) item = x;
   });
-  if(!item) return;
+  if(!item){
+    P.symptomDetail = '';
+    return;
+  }
   P.symptomDetail = item.replace(/^증상:\s*/, '');
 }
 
@@ -9690,10 +9880,13 @@ function vasZoneLabel(zone){
 }
 
 function getVasCaption_(v){
-  if(v == null || v === '' || Number(v) <= 0){
-    return { text: '슬라이더 또는 아래 구간을 선택해주세요.', bg: 'var(--green-bg)', color: 'var(--green)' };
+  if(v == null || v === ''){
+    return { text: '통증이 없으면 아래 버튼을, 있으면 슬라이더·구간을 선택해주세요.', bg: 'var(--green-bg)', color: 'var(--green)' };
   }
   const n = Number(v);
+  if(n === 0){
+    return { text: '통증이 거의 없거나 아주 가끔 있으시면 움직임·자세 프로그램으로 안내해 드립니다.', bg: '#eef7ef', color: '#2d6b4a' };
+  }
   if(n <= 3) return { text: '경미한 불편감이 있으신 상태입니다.', bg: '#f0f7f0', color: '#3d6b4f' };
   if(n <= 6) return { text: '일상에 영향을 줄 수 있는 통증입니다.', bg: '#fff8eb', color: '#8a6d1f' };
   return { text: '전문가의 면밀한 확인이 필요한 정도입니다.', bg: '#fdeeed', color: '#b4533a' };
@@ -9717,6 +9910,13 @@ function updateVasSliderTrack_(v){
 }
 
 function initVasScreen_(){
+  const zeroBtn = document.getElementById('vasZeroOption');
+  if(zeroBtn) zeroBtn.classList.remove('selected');
+  if(selectedVasValue === 0){
+    if(zeroBtn) zeroBtn.classList.add('selected');
+    updateVasCaption_(0);
+    return;
+  }
   if(selectedVasValue != null){
     syncVasSelectionUI(selectedVasValue);
   } else {
@@ -9730,6 +9930,8 @@ function onVasSliderInput_(val){
 }
 
 function syncVasSelectionUI(v){
+  const zeroBtn = document.getElementById('vasZeroOption');
+  if(zeroBtn) zeroBtn.classList.remove('selected');
   const zone = vasZoneFromValue(v);
   selectedVasValue = v;
   selectedVasZone = zone;
@@ -9757,6 +9959,32 @@ function syncVasSelectionUI(v){
   if(confirmBtn) confirmBtn.classList.add('ready');
   updateVasCaption_(v);
   updateVasSliderTrack_(v);
+}
+
+/** VAS 0 — 통증 없음 → 웰니스로 전환 */
+function pickVasZero_(){
+  P.vasScore = 0;
+  P.severity = null;
+  selectedVasValue = 0;
+  selectedVasZone = null;
+
+  ['vz-low', 'vz-mid', 'vz-high'].forEach(function (id) {
+    const el = document.getElementById(id);
+    if(el) el.classList.remove('selected');
+  });
+  document.querySelectorAll('.vas-label-num').forEach(function (el) {
+    el.classList.remove('active');
+  });
+  const thumb = document.getElementById('vasThumb');
+  if(thumb) thumb.style.display = 'none';
+  const zeroBtn = document.getElementById('vasZeroOption');
+  if(zeroBtn) zeroBtn.classList.add('selected');
+  updateVasCaption_(0);
+
+  bcPath = bcPath.filter(function (x) {
+    return !x.includes('경증') && !x.includes('중등도') && !x.includes('중증') && !/^VAS\s/.test(x);
+  });
+  setTimeout(function () { goAfterVas_(0); }, 250);
 }
 
 /** VAS 확정 후 — 통증 양상 질문 */
@@ -9868,8 +10096,15 @@ function renderRoadmapVisual(steps, activeId){
   </div>`;
 }
 
+function renderRoadmapStepBadge_(label){
+  if(!label) return '';
+  const cls = label === '병행' ? 'parallel-badge' : label === '필요시' ? 'need-badge' : label === '다음' ? 'next-badge' : '';
+  return '<span class="rs-badge' + (cls ? ' ' + cls : '') + '">' + escapeHtml(label) + '</span>';
+}
+
 function renderRoadmapSteps(steps, activeId, options){
   options = options || {};
+  const stepBadges = options.stepBadges || {};
   const parallelIds = options.parallelStepIds || [];
   const stepIdx = Math.max(0, steps.findIndex(x => x.id === activeId));
   return steps.map((s, thisIdx) => {
@@ -9878,9 +10113,15 @@ function renderRoadmapSteps(steps, activeId, options){
     const isPrev   = thisIdx < stepIdx;
     const isParallel = isNext && parallelIds.includes(s.id);
     let badge = '';
-    if(isActive) badge = '<span class="rs-badge">현재</span>';
-    else if(isParallel) badge = '<span class="rs-badge parallel-badge">병행</span>';
-    else if(isNext) badge = '<span class="rs-badge next-badge">다음</span>';
+    if(stepBadges[s.id]){
+      badge = renderRoadmapStepBadge_(stepBadges[s.id]);
+    } else if(isActive){
+      badge = renderRoadmapStepBadge_('추천');
+    } else if(isParallel){
+      badge = renderRoadmapStepBadge_('병행');
+    } else if(isNext){
+      badge = renderRoadmapStepBadge_('다음');
+    }
     return `<div class="rs ${isActive?'active':isNext?'done':isPrev?'dim-step':''}">
       <div class="rs-dot">${isActive?'★':isNext?'✓':''}</div>
       <div class="rs-info">
@@ -9890,57 +10131,156 @@ function renderRoadmapSteps(steps, activeId, options){
   }).join('');
 }
 
+const TREATMENT_NERVE_LIKE_QUALITIES_ = ['sharp', 'sharp_local', 'tear'];
+const TREATMENT_MUSCLE_FASCIA_QUALITIES_ = ['aching', 'tight'];
+
+function getTreatmentResultPlan_(severity, quality){
+  const isMild = severity === 'mild';
+  const isModOrAbove = severity === 'moderate' || severity === 'severe';
+  const isNerveLike = TREATMENT_NERVE_LIKE_QUALITIES_.includes(quality);
+  const isMuscleFascia = TREATMENT_MUSCLE_FASCIA_QUALITIES_.includes(quality);
+  const shockManualQualities = ['sharp_local', 'tear'];
+  const useShockManual = isNerveLike && shockManualQualities.includes(quality);
+
+  let activeStep = 'pstr';
+  let stepBadges = {};
+  let needsMedicalFirst = false;
+  let parallelStepIds = [];
+
+  if(isNerveLike){
+    activeStep = 'manual';
+    needsMedicalFirst = true;
+    parallelStepIds = ['pstr'];
+    stepBadges = { invasive: '필요시', manual: '추천', pstr: '병행' };
+  } else if(isMuscleFascia && isMild){
+    activeStep = 'pstr';
+    stepBadges = { invasive: '필요시', manual: '필요시', pstr: '추천' };
+  } else if(isMuscleFascia && isModOrAbove){
+    activeStep = 'manual';
+    needsMedicalFirst = true;
+    parallelStepIds = ['pstr'];
+    stepBadges = { invasive: '필요시', manual: '추천', pstr: '병행' };
+  } else if(isModOrAbove){
+    activeStep = severity === 'severe' ? 'invasive' : 'manual';
+    needsMedicalFirst = true;
+    parallelStepIds = activeStep === 'manual' ? ['pstr'] : [];
+    stepBadges = activeStep === 'invasive'
+      ? { invasive: '추천', manual: '다음', pstr: '병행' }
+      : { invasive: '필요시', manual: '추천', pstr: '병행' };
+  } else {
+    stepBadges = { invasive: '필요시', manual: '필요시', pstr: '추천' };
+  }
+
+  return {
+    activeStep: activeStep,
+    stepBadges: stepBadges,
+    needsMedicalFirst: needsMedicalFirst,
+    parallelStepIds: parallelStepIds,
+    useShockManual: useShockManual,
+    isNerveLike: isNerveLike,
+    isMuscleFascia: isMuscleFascia,
+    isMild: isMild,
+    isModOrAbove: isModOrAbove,
+  };
+}
+
+function buildTreatmentRec_(plan, tissue, quality){
+  const { activeStep, needsMedicalFirst, isNerveLike, isMuscleFascia, isMild, useShockManual } = plan;
+
+  if(isNerveLike){
+    const vasNote = isMild ? 'VAS가 낮아도 ' : '';
+    if(useShockManual){
+      return {
+        name: '병원 진료 권장 · 비침습 치료',
+        desc: `${vasNote}<strong>찌릿·날카로움·찢어짐</strong> 통증은 원인 확인이 우선입니다. <strong>병원 진료·검사</strong> 후 <strong>비침습 치료</strong>(충격파·도수 등)를 진행하고, <strong>Passive Stretching</strong>은 병행하시는 것을 권합니다. 예상 원인: <strong>${tissue}</strong>.`,
+        next: '병원 평가 → 비침습 치료와 Passive Stretching 병행 → Assisted Active → Active 운동 순으로 진행합니다.',
+        alt: '증상이 지속되거나 악화되면 병원에서 재평가·영상 검사를 통해 치료 계획을 조정하시면 됩니다.',
+      };
+    }
+    return {
+      name: '병원 진료 권장 · 비침습 치료',
+      desc: `${vasNote}<strong>찌릿·저림</strong> 등 신경성 통증은 원인 확인이 우선입니다. <strong>병원 진료·검사</strong> 후 <strong>비침습 치료</strong>를 진행하고, <strong>Passive Stretching</strong>은 병행하시는 것을 권합니다. 예상 원인: <strong>${tissue}</strong>.`,
+      next: '병원 평가 → 비침습 치료와 Passive Stretching 병행 → Assisted Active → Active 운동 순으로 진행합니다.',
+      alt: '방사통·저림이 심해지면 병원 재평가를 먼저 받으시는 것이 좋습니다.',
+    };
+  }
+
+  if(isMuscleFascia && isMild){
+    return {
+      name: 'Passive Stretching + 셀프 관리',
+      desc: `통증은 경미한 편(VAS 1~3)이고 <strong>뻐근·당김</strong> 양상입니다. <strong>Passive Stretching</strong>을 중심으로 진행하고, 증상이 지속되면 <strong>병원·비침습 치료</strong>를 검토하시면 됩니다. 예상 원인: <strong>${tissue}</strong>.`,
+      next: '유연성 회복 → 생활습관·자세 교정 → 기능 운동 순으로 진행합니다.',
+      alt: '관리 중 통증이 심해지거나 찌릿·날카로운 통증이 생기면 병원 평가를 받아 단계를 조정하시면 됩니다.',
+    };
+  }
+
+  if(isMuscleFascia && needsMedicalFirst){
+    return {
+      name: '병원 진료 권장 · 비침습 치료',
+      desc: `중등도 이상의 <strong>뻐근·당김</strong> 통증은 우선 <strong>병원 진료·평가</strong>를 권합니다. 이후 <strong>비침습 치료</strong>와 <strong>Passive Stretching</strong>을 병행하시면 좋습니다. 예상 원인: <strong>${tissue}</strong>.`,
+      next: '병원 평가 → 비침습 치료와 Passive Stretching 병행 → Assisted Active → Active 운동 순으로 진행합니다.',
+      alt: '개선이 더뎌지면 병원에서 재평가·촉진(Palpation) 후 치료 방향을 조정하시는 것이 좋습니다.',
+    };
+  }
+
+  const recs = {
+    invasive: {
+      name: '전문 의료 상담 권장',
+      desc: '현재 통증 수준에서는, 먼저 <strong>병원에서 정확한 검사와 치료</strong>를 받으시는 것을 권합니다. 통증이 안정되면 <strong>비침습 치료</strong>와 <strong>Passive Stretching</strong>을 병행하며, 이후 단계적으로 운동으로 확장해 나가시면 좋습니다.',
+      next: '통증이 줄어들면 비침습 치료와 Passive Stretching을 함께 진행하며, Assisted Active → Active 운동으로 이어갑니다.',
+      alt: '통증이 지속되거나 악화되면 병원 재평가·영상 검사를 통해 원인을 다시 확인하시는 것이 좋습니다.',
+    },
+    manual: {
+      name: '도수치료 + P-스트레칭',
+      desc: `예상 원인은 <strong>${tissue}</strong> 쪽으로 보입니다. <strong>병원 비침습 치료</strong>(도수·충격파 등)와 <strong>Passive Stretching</strong>을 병행하며, 통증 범위 안에서 단계적으로 운동으로 이어가시는 것을 권합니다.`,
+      next: 'Passive Stretching → Assisted Active → Active 운동 순으로 진행합니다.',
+      alt: '개선이 더뎌지면 병원에서 재평가·촉진(Palpation) 후 치료 방향을 조정하시는 것이 좋습니다.',
+    },
+    pstr: {
+      name: 'Passive Stretching + 셀프 관리',
+      desc: '통증은 경미한 편(VAS 1~3)입니다. <strong>Passive Stretching</strong>으로 유연성을 회복하고, <strong>셀프 통증 관리 방법</strong>을 익히는 것이 핵심입니다.',
+      next: '유연성 회복 → 생활습관·자세 교정 → 기능 운동 순으로 진행합니다.',
+      alt: '관리 중 통증이 심해지거나 범위가 넓어지면, 병원·전문가 평가를 받아 치료 단계를 조정하시면 됩니다.',
+    },
+  };
+  return recs[activeStep] || recs.manual;
+}
+
+function buildTreatmentImagingHtml_(plan, quality){
+  const { needsMedicalFirst, isNerveLike, isModOrAbove } = plan;
+  if(!needsMedicalFirst && !(isModOrAbove && TREATMENT_NERVE_LIKE_QUALITIES_.includes(quality))) return '';
+
+  let imagingExtra = '';
+  if(quality === 'sharp' && (isModOrAbove || isNerveLike)){
+    imagingExtra = '<p style="margin:10px 0 0;font-size:13px;line-height:1.65;color:var(--light);"><strong>찌릿하거나 저리는</strong> 통증(신경·방사 의심)이 있으면, 본격적인 치료에 앞서 <strong>MRI 촬영</strong>으로 구조적 원인을 확인하는 것을 권장합니다.</p>';
+  } else if((quality === 'sharp_local' || quality === 'tear') && (isModOrAbove || isNerveLike)){
+    imagingExtra = '<p style="margin:10px 0 0;font-size:13px;line-height:1.65;color:var(--light);"><strong>날카롭게 한 점이 아프거나</strong>, <strong>찢어지는 느낌</strong>이 있으면, 본격적인 치료에 앞서 근·힘줄·연부조직을 <strong>초음파 검사</strong>로 확인하는 것을 권장합니다.</p>';
+  }
+
+  const imagingTitle = imagingExtra.indexOf('MRI') >= 0
+    ? '🏥 병원 진료 권장 · 치료 전 검사(MRI)'
+    : imagingExtra.indexOf('초음파') >= 0
+      ? '🏥 병원 진료 권장 · 치료 전 검사(초음파)'
+      : '🏥 병원 진료·치료 권장';
+
+  return `
+    <div class="info-card" style="border:1px solid rgba(155,111,232,0.38);background:rgba(155,111,232,0.07);margin-bottom:14px;">
+      <h4 style="color:#5c4b8a;margin-top:0;">${imagingTitle}</h4>
+      <p style="margin:0;font-size:13px;line-height:1.65;color:var(--light);">리얼무브먼트는 <strong>운동·재활 프로그램</strong>을 제공하는 센터입니다. 해당 통증 양상에서는 우선 <strong>병원에서 진료 및 평가</strong>를 진행하시는 것을 권장드립니다.</p>
+      ${imagingExtra}
+    </div>`;
+}
+
 function renderPatientResult(){
-  let { severity, area, quality } = P;
+  let { severity, quality } = P;
   if((severity == null || severity === '') && P.vasScore != null && isVasLowRange(Number(P.vasScore))){
     severity = 'mild';
   }
   const areaName = getPainAreasDisplay_();
   const tissue = getTissueName(quality);
+  const plan = getTreatmentResultPlan_(severity, quality);
+  const rec = buildTreatmentRec_(plan, tissue, quality);
 
-  // 현재 단계 결정 (경증이라도 신경·국소 날카로움·찢어짐 통증은 도수부터)
-  const mildManualFirst = ['sharp','sharp_local','tear'];
-  let activeStep = 'manual';
-  if(severity==='severe') activeStep = 'invasive';
-  else if(severity==='mild' && mildManualFirst.includes(quality)) activeStep = 'manual';
-  else if(severity==='mild') activeStep = 'pstr';
-
-  // 한 점 날카로움·찢어짐 → 충격파 병행 (로드맵·권장 문구)
-  const shockManualQualities = ['sharp_local','tear'];
-  const useShockManual = activeStep === 'manual' && shockManualQualities.includes(quality);
-
-  // 권장 문구
-  const recs = {
-    invasive: {
-      name:'전문 의료 상담 권장',
-      desc:'현재 통증 수준에서는, 먼저 <strong>병원에서 정확한 검사와 치료</strong>를 받으시는 것을 권합니다. 통증이 안정되면 <strong>비침습 치료</strong>와 <strong>Passive Stretching</strong>을 병행하며, 이후 단계적으로 운동으로 확장해 나가시면 좋습니다.',
-      next:'통증이 줄어들면 비침습 치료와 Passive Stretching을 함께 진행하며, Assisted Active → Active 운동으로 이어갑니다.',
-      alt:'통증이 지속되거나 악화되면 병원 재평가·영상 검사를 통해 원인을 다시 확인하시는 것이 좋습니다.'
-    },
-    manual: {
-      name:'도수치료 + P-스트레칭',
-      desc:`예상 원인은 <strong>${tissue}</strong> 쪽으로 보입니다. 이 단계에서는 <strong>병원 비침습 치료</strong>(도수·충격파 등)와 <strong>Passive Stretching</strong>을 병행하며, 통증 범위 안에서 단계적으로 운동으로 이어가시는 것을 권합니다.`,
-      next:'Passive Stretching → Assisted Active → Active 운동 순으로 진행합니다.',
-      alt:'개선이 더뎌지면 병원에서 재평가·촉진(Palpation) 후 치료 방향을 조정하시는 것이 좋습니다.'
-    },
-    pstr: {
-      name:'Passive Stretching + 셀프 관리',
-      desc:'통증은 경미한 편(VAS 1~3)입니다. <strong>Passive Stretching</strong>으로 유연성을 회복하고, <strong>셀프 통증 관리 방법</strong>을 익히는 것이 핵심입니다. 안전한 가동 범위를 확보한 뒤, 생활습관·자세 교정과 기능 운동으로 자연스럽게 이어가시면 좋습니다.',
-      next:'유연성 회복 → 생활습관·자세 교정 → 기능 운동 순으로 진행합니다.',
-      alt:'관리 중 통증이 심해지거나 범위가 넓어지면, 병원·전문가 평가를 받아 치료 단계를 조정하시면 됩니다.'
-    },
-  };
-  let rec = recs[activeStep] || recs['manual'];
-  if(useShockManual){
-    rec = {
-      name:'충격파 + 도수치료 + P-스트레칭',
-      desc:`예상 원인은 <strong>${tissue}</strong> 쪽으로 보입니다. <strong>병원 비침습 치료</strong>(충격파·도수 등)와 <strong>Passive Stretching</strong>을 병행하며, 통증이 줄어들면 단계적으로 운동으로 확장해 나가시는 것을 권합니다.`,
-      next:'충격파·도수 반응을 확인하며 Passive Stretching → Assisted Active → Active로 진행합니다.',
-      alt:'반응이 부족하면 병원에서 세부 평가·영상 검사 후 치료 계획을 조정하시면 됩니다.'
-    };
-  }
-
-  // 단일 로드맵(순서대로 연결)
   const steps = [
     { id:'invasive',  label:'침습적 치료', desc:'약물 · 주사 · 시술 · 수술', vas:'VAS 7~10' },
     { id:'manual',    label:'비침습 치료', desc:'도수치료(Manual Therapy), 충격파, 고주파', vas:'VAS 3~6' },
@@ -9948,51 +10288,19 @@ function renderPatientResult(){
     { id:'aa',        label:'Assisted Active', desc:'ROM 회복 · CIE · Hold&Relax · Pull&Push', vas:'' },
     { id:'active',    label:'Active — 생활습관·자세교정', desc:'불필요한 긴장 최소화 · 바른 자세 만들기', vas:'' },
     { id:'resistive', label:'Resistive — 기능운동', desc:'근막경선 운동 · 림프 전신 운동', vas:'' },
-  ].map(s => {
-    if(s.id === 'manual' && useShockManual){
+  ].map(function (s) {
+    if(s.id === 'manual' && plan.useShockManual){
       return { id:s.id, label:'충격파 · 비침습 치료', desc:'도수치료(Manual Therapy), 충격파, 고주파', vas:s.vas };
     }
     return s;
   });
-  const roadmapViz = renderRoadmapVisual(steps, activeStep);
-  const needsMedicalFirst = activeStep === 'invasive' || activeStep === 'manual';
-  const parallelStepIds = needsMedicalFirst || useShockManual ? ['pstr'] : [];
-  const roadmapHtml = renderRoadmapSteps(steps, activeStep, { parallelStepIds: parallelStepIds });
 
-  // 중등도·중증: 통증 질에 따라 치료 전 영상 검사 권장 + 운동 센터 안내
-  const midOrSevere = severity === 'moderate' || severity === 'severe';
-  let imagingPriorHtml = '';
-  if(needsMedicalFirst){
-    let imagingExtra = '';
-    if(midOrSevere && quality === 'sharp'){
-      imagingExtra = '<p style="margin:10px 0 0;font-size:13px;line-height:1.65;color:var(--light);">중등도 이상에서 <strong>찌릿하거나 저리는</strong> 통증(신경·방사 의심)이 있으면, 본격적인 치료에 앞서 <strong>MRI 촬영</strong>으로 구조적 원인을 확인하는 것을 권장합니다.</p>';
-    } else if(midOrSevere && (quality === 'sharp_local' || quality === 'tear')){
-      imagingExtra = '<p style="margin:10px 0 0;font-size:13px;line-height:1.65;color:var(--light);">중등도 이상에서 <strong>날카롭게 한 점이 아프거나</strong>, <strong>찢어지는 느낌</strong>이 있으면, 본격적인 치료에 앞서 근·힘줄·연부조직을 <strong>초음파 검사</strong>로 확인하는 것을 권장합니다.</p>';
-    }
-    const imagingTitle = imagingExtra.indexOf('MRI') >= 0
-      ? '📷 병원 진료 권장 · 치료 전 검사(MRI)'
-      : imagingExtra.indexOf('초음파') >= 0
-        ? '📷 병원 진료 권장 · 치료 전 검사(초음파)'
-        : '🏥 병원 진료·치료 권장';
-    imagingPriorHtml = `
-    <div class="info-card" style="border:1px solid rgba(155,111,232,0.38);background:rgba(155,111,232,0.07);margin-bottom:14px;">
-      <h4 style="color:#5c4b8a;margin-top:0;">${imagingTitle}</h4>
-      <p style="margin:0;font-size:13px;line-height:1.65;color:var(--light);">리얼무브먼트는 <strong>운동·재활 프로그램</strong>을 제공하는 센터입니다. 결과상 <strong>침습적 치료</strong> 또는 <strong>비침습 치료</strong> 단계에 해당하시면, 우선 <strong>병원에서 진료 및 치료</strong>를 진행하시는 것을 권장드립니다.</p>
-      ${imagingExtra}
-    </div>`;
-  } else if(midOrSevere && quality === 'sharp'){
-    imagingPriorHtml = `
-    <div class="info-card" style="border:1px solid rgba(155,111,232,0.38);background:rgba(155,111,232,0.07);margin-bottom:14px;">
-      <h4 style="color:#5c4b8a;margin-top:0;">📷 치료 전 검사 권장 · MRI</h4>
-      <p style="margin:0;font-size:13px;line-height:1.65;color:var(--light);">중등도 이상에서 <strong>찌릿하거나 저리는</strong> 통증(신경·방사 의심)이 있으면, 본격적인 치료에 앞서 <strong>MRI 촬영</strong>으로 구조적 원인을 확인하는 것을 권장합니다.</p>
-    </div>`;
-  } else if(midOrSevere && (quality === 'sharp_local' || quality === 'tear')){
-    imagingPriorHtml = `
-    <div class="info-card" style="border:1px solid rgba(74,157,232,0.38);background:rgba(74,157,232,0.07);margin-bottom:14px;">
-      <h4 style="color:var(--blue);margin-top:0;">📷 치료 전 검사 권장 · 초음파</h4>
-      <p style="margin:0;font-size:13px;line-height:1.65;color:var(--light);">중등도 이상에서 <strong>날카롭게 한 점이 아프거나</strong>, <strong>찢어지는 느낌</strong>이 있으면, 본격적인 치료에 앞서 근·힘줄·연부조직을 <strong>초음파 검사</strong>로 확인하는 것을 권장합니다.</p>
-    </div>`;
-  }
+  const roadmapViz = renderRoadmapVisual(steps, plan.activeStep);
+  const roadmapHtml = renderRoadmapSteps(steps, plan.activeStep, {
+    stepBadges: plan.stepBadges,
+    parallelStepIds: plan.parallelStepIds,
+  });
+  const imagingPriorHtml = buildTreatmentImagingHtml_(plan, quality);
 
   return `
     <div class="result-hero treatment">
@@ -10013,18 +10321,11 @@ function renderPatientResult(){
       </div>
     </div>
 
-    <div class="info-card rec">
-      <h4>✅ 권장 프로그램</h4>
-      <p>${rec.desc}</p>
-    </div>
-    <div class="info-card next">
-      <h4>➡️ 개선되면 다음 단계</h4>
-      <p>${rec.next}</p>
-    </div>
-    <div class="info-card alt">
-      <h4>⚠️ 개선이 안 된다면</h4>
-      <p>${rec.alt}</p>
-    </div>
+    ${renderResultGuideCard_([
+      { tone: 'rec', title: '✅ 권장 프로그램', text: rec.desc },
+      { tone: 'next', title: '➡️ 개선되면 다음 단계', text: rec.next },
+      { tone: 'alt', title: '⚠️ 개선이 안 된다면', text: rec.alt },
+    ])}
 
     ${renderTreatmentResultContactActions_()}
     <div class="note-box">※ 이 결과는 간단한 자가 가이드이며, 정확한 평가는 전문가 상담이 필요합니다.</div>
@@ -10059,6 +10360,38 @@ const WELLNESS_COMFORT_BC = {
   daily: '일상 어려움',
 };
 
+function getWellnessBranchIndex_(){
+  var i = bcPath.indexOf('움직임·자세');
+  if(i >= 0) return i;
+  return bcPath.indexOf('웰니스 영역');
+}
+
+/** 웰니스 분기 이후(목표·상태·맞춤 답) 전부 제거 */
+function bcTrimWellnessAfterBranch_(){
+  var branchIdx = getWellnessBranchIndex_();
+  if(branchIdx < 0) return;
+  bcPath = bcPath.slice(0, branchIdx + 1);
+}
+
+/** 현재 목표 이후(상태·맞춤 답) 제거 — 목표 재선택·상태 변경 시 */
+function bcTrimWellnessAfterGoal_(){
+  var branchIdx = getWellnessBranchIndex_();
+  if(branchIdx < 0) return;
+  var goalLabels = Object.values(WELLNESS_GOAL_BC);
+  var prefix = bcPath.slice(0, branchIdx + 1);
+  var goalLabel = P.goal ? WELLNESS_GOAL_BC[P.goal] : null;
+  if(!goalLabel){
+    var i;
+    for(i = bcPath.length - 1; i > branchIdx; i--){
+      if(goalLabels.indexOf(bcPath[i]) >= 0){
+        goalLabel = bcPath[i];
+        break;
+      }
+    }
+  }
+  bcPath = goalLabel ? prefix.concat([goalLabel]) : prefix;
+}
+
 const WELLNESS_GOAL_QUESTIONS = {
   stretch: [
     {
@@ -10080,7 +10413,7 @@ const WELLNESS_GOAL_QUESTIONS = {
         { id: 'morning', bc: '아침 뻣뻣', name: '아침에 특히 뻣뻣해요', desc: '기상 후 몸이 잘 안 풀려요' },
         { id: 'sit', bc: '오래 앉을 때', name: '오래 앉아 있을 때', desc: '책상·운전 후가 특히 그래요' },
         { id: 'exercise', bc: '운동 전후', name: '운동 전·후', desc: '움직이기 전후로 불편해요' },
-        { id: 'none', bc: '특별히 없음', name: '특별히 없어요', desc: '전반적으로 뻣뻣한 느낌이에요' },
+        { id: 'none', bc: '특별히 없음', name: '특정 시간 없이 전반적', desc: '전반적으로 뻣뻣한 느낌이에요' },
       ],
     },
   ],
@@ -10146,7 +10479,7 @@ const WELLNESS_GOAL_QUESTIONS = {
     },
     {
       key: 'wDiscomfortAreas',
-      title: '불편한 곳이 있으신가요?',
+      title: '불편한 곳이 어디인가요?',
       sub: '해당하는 부위를 모두 선택해주세요. (복수 선택 가능)',
       multiSelect: true,
       options: [
@@ -10154,10 +10487,10 @@ const WELLNESS_GOAL_QUESTIONS = {
         { id: 'jaw', bc: '턱', name: '턱' },
         { id: 'neck', bc: '목', name: '목' },
         { id: 'shoulder', bc: '어깨', name: '어깨' },
-        { id: 'arm', bc: '팔', name: '팔' },
         { id: 'back', bc: '등', name: '등' },
         { id: 'waist', bc: '허리', name: '허리' },
         { id: 'pelvis', bc: '골반', name: '골반' },
+        { id: 'arm', bc: '팔', name: '팔' },
         { id: 'leg', bc: '다리', name: '다리' },
         { id: 'other', bc: '기타', name: '기타' },
       ],
@@ -10189,36 +10522,19 @@ const WELLNESS_GOAL_QUESTIONS = {
   ],
 };
 
-const WELLNESS_MILD_EXTRA_QUESTIONS = [
-  {
+function getWellnessMildAreaQuestion_(){
+  return {
     key: 'wMildArea',
     multi: true,
-    title: '불편한 곳이 있으신가요?',
+    title: '불편한 곳이 어디인가요?',
     sub: '해당하는 부위를 모두 선택해주세요. (복수 선택 가능)',
-  },
-  {
-    key: 'wMildSeverity',
-    title: '어느 정도인가요?',
-    sub: '불편함의 정도를 선택해주세요',
-    options: [
-      { id: 'light', bc: '가볍게 뻐근', name: '가볍게 뻐근·뻣뻣해요', desc: '가끔 느껴지는 정도예요' },
-      { id: 'moderate', bc: '중간 정도', name: '중간 정도로 불편해요', desc: '움직일 때 확실히 느껴져요' },
-      { id: 'frequent', bc: '자주 신경 씀', name: '자주 신경 쓰이는 정도예요', desc: '하루 중 여러 번 느껴져요' },
-    ],
-  },
-  {
-    key: 'wMildQuality',
-    title: '어떻게 아프세요?',
-    sub: '가장 가까운 느낌을 선택해주세요',
-    options: [
-      { id: 'aching', bc: '뻐근·묵직', name: '뻐근하고 묵직해요', desc: '누르면 시원한 느낌 · 근육이 뭉친 느낌' },
-      { id: 'tight', bc: '당김·뻣뻣', name: '당기고 뻣뻣해요', desc: '늘릴 때 당기는 느낌 · 아침에 특히 심함' },
-      { id: 'sharp', bc: '찌릿·저림', name: '찌릿하거나 저려요', desc: '전기 오는 느낌 · 팔다리로 뻗는 통증' },
-      { id: 'sharp_local', bc: '날카로운', name: '날카롭게 한 점이 아파요', desc: '특정 동작에서 강하게 · 관절 느낌' },
-      { id: 'tear', bc: '찢어지는', name: '찢어지는 느낌이에요', desc: '갑자기 생긴 강한 통증 · 부종 동반' },
-    ],
-  },
-];
+  };
+}
+
+/** 유연성 향상 등 — 첫 질문에서 이미 부위를 묻는 목표 */
+function wellnessGoalAlreadyCoversMildArea_(goal){
+  return goal === 'stretch';
+}
 
 function getWellnessComfortFromTail_(tail){
   if(!tail || !tail[0]) return null;
@@ -10230,14 +10546,44 @@ function getWellnessComfortFromTail_(tail){
 }
 
 function getWellnessFollowQuestionsForGoal_(goal, comfort){
-  const base = WELLNESS_GOAL_QUESTIONS[goal] || [];
-  if(comfort === 'mild'){
-    const extras = goal === 'face'
-      ? WELLNESS_MILD_EXTRA_QUESTIONS.filter(function (q) { return q.key !== 'wMildArea'; })
-      : WELLNESS_MILD_EXTRA_QUESTIONS;
-    return base.concat(extras);
+  if(comfort === 'none') return [];
+  var base = (WELLNESS_GOAL_QUESTIONS[goal] || []).slice();
+  if(comfort !== 'mild') return base;
+  if(wellnessGoalAlreadyCoversMildArea_(goal)) return base;
+
+  if(goal === 'face'){
+    var focusQ = null;
+    var discomfortQ = null;
+    var rest = [];
+    base.forEach(function (q) {
+      if(q.key === 'wFaceFocus') focusQ = q;
+      else if(q.key === 'wDiscomfortAreas') discomfortQ = q;
+      else rest.push(q);
+    });
+    if(discomfortQ && focusQ){
+      return [discomfortQ, focusQ].concat(rest);
+    }
   }
-  return base;
+
+  if(goal === 'prevention'){
+    var reasonQ = null;
+    var areaQ = null;
+    base.forEach(function (q) {
+      if(q.key === 'wPrevReason') reasonQ = q;
+      if(q.key === 'wPrevArea') areaQ = q;
+    });
+    if(reasonQ && areaQ){
+      return [
+        Object.assign({}, areaQ, {
+          title: '가볍게 불편한 부위는 어디인가요?',
+          sub: '우선 관리하고 싶은 부위를 선택해주세요',
+        }),
+        reasonQ,
+      ];
+    }
+  }
+
+  return [getWellnessMildAreaQuestion_()].concat(base);
 }
 
 function getWellnessDiscomfortAreas_(){
@@ -10255,7 +10601,7 @@ function isWellnessAnswerBcLabel_(label, goal){
   if(!goal || !label) return false;
   if(WELLNESS_LEGACY_SYMPTOM_BC[label]) return true;
   if(String(label).indexOf('불편부위:') === 0) return true;
-  const comfort = P.wellnessComfort || getWellnessComfortFromTail_(bcPath.slice(bcPath.indexOf(WELLNESS_GOAL_BC[goal]) + 1));
+  const comfort = P.wellnessComfort || getWellnessComfortFromTail_(bcPath.slice(getWellnessGoalIndexInBc_(bcPath, goal) + 1));
   const qs = getWellnessFollowQuestionsForGoal_(goal, comfort);
   if(!qs) return false;
   return qs.some(function (q) {
@@ -10272,19 +10618,26 @@ function pickWellnessGoal_(goal){
   pSet('mode', 'wellness');
   pSet('goal', goal);
   consultFlowKind = 'wellness';
+  bcTrimWellnessAfterBranch_();
   bc(WELLNESS_GOAL_BC[goal] || goal);
   goS('s-p-w-comfort');
 }
 
 function pickWellnessComfort_(id, bcLabel){
   pSet('wellnessComfort', id);
+  bcTrimWellnessAfterGoal_();
   bc(bcLabel);
   if(id === 'daily' || id === 'exercise'){
     pSet('mode', 'treatment');
     if(!P.painAreas) P.painAreas = [];
     if(!P.diagnosis) P.diagnosis = [];
+    bcPath = bcPath.filter(function (x) { return x !== '치료 영역'; });
     bc('치료 영역');
     goS('s-p2');
+    return;
+  }
+  if(id === 'none'){
+    showWellnessResult();
     return;
   }
   renderWellnessFollowUp_(1);
@@ -10408,8 +10761,13 @@ function renderWellnessFollowUp_(step){
 
 function pickWellnessAnswer_(step, key, id, bcLabel){
   pSet(key, id);
-  bc(bcLabel);
   const qs = getWellnessFollowQuestions_() || [];
+  const q = qs[step - 1];
+  if(q && q.options){
+    const optBcs = q.options.map(function (o) { return o.bc; });
+    bcPath = bcPath.filter(function (x) { return optBcs.indexOf(x) < 0; });
+  }
+  bc(bcLabel);
   if(step < qs.length){
     renderWellnessFollowUp_(step + 1);
     updateProgress('s-p-w-follow');
@@ -10419,12 +10777,21 @@ function pickWellnessAnswer_(step, key, id, bcLabel){
   showWellnessResult();
 }
 
+function getWellnessGoalIndexInBc_(path, goal){
+  const goalBc = WELLNESS_GOAL_BC[goal];
+  if(!goalBc) return -1;
+  let idx = -1;
+  for(let i = 0; i < path.length; i++){
+    if(path[i] === goalBc) idx = i;
+  }
+  return idx;
+}
+
 function getWellnessFollowStepFromState_(){
   const goal = P.goal;
   if(!goal) return 1;
   if(P._wellnessQStep) return P._wellnessQStep;
-  const goalBc = WELLNESS_GOAL_BC[goal];
-  const idx = bcPath.indexOf(goalBc);
+  const idx = getWellnessGoalIndexInBc_(bcPath, goal);
   if(idx < 0) return 1;
   const tail = bcPath.slice(idx + 1);
   const comforts = Object.values(WELLNESS_COMFORT_BC);
@@ -10438,8 +10805,7 @@ function getWellnessFollowStepFromState_(){
 
 function syncWellnessAnswersFromBc_(prefix, goal){
   if(!goal) return;
-  const goalBc = WELLNESS_GOAL_BC[goal];
-  const goalIdx = prefix.indexOf(goalBc);
+  const goalIdx = getWellnessGoalIndexInBc_(prefix, goal);
   if(goalIdx < 0) return;
   const tail = prefix.slice(goalIdx + 1);
   let comfort = null;
@@ -10494,17 +10860,22 @@ function resolveWellnessFromBc_(prefix){
     if(WELLNESS_GOAL_BC_TO_ID[prefix[i]]){
       goal = WELLNESS_GOAL_BC_TO_ID[prefix[i]];
       goalIdx = i;
-      break;
     }
   }
   if(!goal) return null;
+  const last = prefix[prefix.length - 1];
+  if(WELLNESS_GOAL_BC_TO_ID[last]){
+    return { screen: 's-p-wellness', goal: WELLNESS_GOAL_BC_TO_ID[last], flow: 'wellness' };
+  }
+  if(Object.values(WELLNESS_COMFORT_BC).indexOf(last) >= 0){
+    return { screen: 's-p-w-comfort', goal: goal, flow: 'wellness' };
+  }
   const tail = prefix.slice(goalIdx + 1);
   const comfort = getWellnessComfortFromTail_(tail);
   const qs = getWellnessFollowQuestionsForGoal_(goal, comfort);
   const qCount = qs ? qs.length : 0;
   if(!tail.length) return { screen: 's-p-w-comfort', goal: goal, flow: 'wellness' };
-  const last = prefix[prefix.length - 1];
-  if(last.indexOf('통증부위:') === 0 || last.indexOf('불편부위:') === 0){
+  if(last.indexOf('통증부위:') === 0 || last.indexOf('부위 추가:') === 0 || last.indexOf('불편부위:') === 0){
     return { screen: 's-p2', goal: goal, flow: 'treatment' };
   }
   if(/^VAS\s/.test(last) || last === '경증 (1~3)' || last === '중등도 (4~6)' || last === '중증 (7~10)'){
@@ -10515,7 +10886,10 @@ function resolveWellnessFromBc_(prefix){
   }
   const afterComfort = tail.slice(1);
   if(afterComfort.length > qCount) return { screen: 's-result', goal: goal, flow: 'wellness' };
-  if(!afterComfort.length) return { screen: 's-p-w-follow', goal: goal, flow: 'wellness', followStep: 1 };
+  if(!afterComfort.length){
+    if(!qCount || comfort === 'none') return { screen: 's-result', goal: goal, flow: 'wellness' };
+    return { screen: 's-p-w-follow', goal: goal, flow: 'wellness', followStep: 1 };
+  }
   return { screen: 's-p-w-follow', goal: goal, flow: 'wellness', followStep: Math.min(afterComfort.length, qCount) };
 }
 
@@ -10580,7 +10954,7 @@ function renderWellnessResult(){
 
   let faceTmjNote = '';
   const discomfortAreas = getWellnessDiscomfortAreas_();
-  if(P.goal === 'face' && (discomfortAreas.indexOf('jaw') >= 0 || P.wFaceSymptom === 'tmj')){
+  if(P.goal === 'face' && discomfortAreas.indexOf('jaw') >= 0){
     faceTmjNote = `
     <div class="info-card" style="border:1px solid rgba(74,157,232,0.38);background:rgba(74,157,232,0.07);margin-bottom:14px;">
       <h4 style="color:var(--blue);margin-top:0;">턱·저작 불편 — 병원 평가 권장</h4>
@@ -10625,21 +10999,13 @@ function renderWellnessResult(){
       </div>
     </div>
 
-    <div class="info-card rec">
-      <h4>✅ 프로그램 내용</h4>
-      <p>${prog.desc}</p>
-    </div>
-    <div class="info-card next">
-      <h4>➡️ 프로그램 이후</h4>
-      <p>${prog.next}</p>
-    </div>
-    <div class="info-card alt">
-      <h4>⚠️ 프로그램 중 통증이 생기면</h4>
-      <p>웰니스 운동 중 통증이 발생하면 먼저 치료 평가를 받는 것을 권장합니다. 치료 후 다시 웰니스로 이어집니다.</p>
-    </div>
+    ${renderResultGuideCard_([
+      { tone: 'rec', title: '✅ 프로그램 내용', text: prog.desc },
+      { tone: 'next', title: '➡️ 프로그램 이후', text: prog.next },
+      { tone: 'alt', title: '⚠️ 프로그램 중 통증이 생기면', text: '웰니스 운동 중 통증이 발생하면 먼저 치료 평가를 받는 것을 권장합니다. 치료 후 다시 웰니스로 이어집니다.' },
+    ])}
 
     ${renderResultContactActions_({ variant: 'wellness' })}
-    <div class="note-box">※ 웰니스 프로그램 중 통증이 생기면 먼저 치료 평가를 받는 것을 권장합니다.</div>
   `;
 }
 
@@ -10676,7 +11042,7 @@ const eduCurriculum = {
 <li><strong>(3)</strong> 어드밴스 — 고주파, 괄사, 교정법</li>
 </ul></div>`,
   pstr: `<div class="edu-curriculum"><h4>커리큘럼 · Re:Al 움직임</h4><div class="cur-meta">6시간 × 3회 진행</div><ul>
-<li><strong>(1)</strong> Supine / Prone position</li>
+<li><strong>(1)</strong> Lying Position</li>
 <li><strong>(2)</strong> Sitting position</li>
 <li><strong>(3)</strong> Standing position</li>
 </ul><p>각 포지션별로 <strong>P-Stretching → AA-ROM 증진 → A(생활습관·자세교정) → R(기능 운동)</strong> 순으로 진행합니다.</p></div>`,
