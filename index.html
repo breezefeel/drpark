@@ -292,18 +292,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   );
 }
 .hero-bg-spot{
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background-image: var(--profile-img);
-  background-size: cover;
-  background-position: center 18%;
-  transform: scale(1.04);
-  opacity: .92;
-  /* 프로필 원형 위치에만 선명하게 */
-  -webkit-mask-image: radial-gradient(circle at 50% 205px, #000 0 140px, transparent 170px);
-  mask-image: radial-gradient(circle at 50% 205px, #000 0 140px, transparent 170px);
-  pointer-events: none;
+  display: none;
 }
 
 .hero-inner {
@@ -336,48 +325,36 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   padding: 18px 16px 12px;
 }
 
-/* 프로필 사진 — 원형 마스크 */
+/* 프로필 사진 — 배경 제거 컷아웃 */
 .profile-circle-wrap {
   position: relative;
-  width: 220px;
-  height: 220px;
-  margin: 2px auto 14px;
-  overflow: hidden;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+  width: 260px;
+  margin: 4px auto 8px;
+  background: transparent;
+  overflow: visible;
 }
 .profile-circle-img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 18%;
-  border-radius: 50%;
+  height: auto;
   display: block;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.18);
-  transform: scale(1.24);
-  transform-origin: center 18%;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 28px rgba(15, 23, 42, 0.22));
 }
 .profile-circle-border {
-  position: absolute;
-  inset: -2px;
-  border-radius: 50%;
-  border: 5px solid #fff;
-  box-shadow: 0 0 0 1px #fff;
-  pointer-events: none;
+  display: none;
 }
 
 /* 이름 + 타이틀 */
 .hero-name {
   font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 800;
   color: #0f172a;
   margin-bottom: 6px;
   letter-spacing: -0.02em;
 }
 .hero-cred {
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 700;
   color: #2563eb;
   margin-bottom: 6px;
@@ -404,7 +381,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   box-sizing: border-box;
 }
 .pl-home-faq-title {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 800;
   color: #475569;
   margin-bottom: 8px;
@@ -420,7 +397,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   list-style: none;
   cursor: pointer;
   padding: 10px 12px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   color: #64748b;
   background: #f1f5f9;
@@ -433,19 +410,19 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 }
 .pl-home-faq-answer {
   padding: 10px 12px 12px;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.65;
   color: #6b7280;
   background: #f8fafc;
 }
 .pl-symptom-hubs-title {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 800;
   color: #475569;
   margin-bottom: 6px;
 }
 .pl-symptom-hubs-sub {
-  font-size: 11px;
+  font-size: 13px;
   color: #7b8798;
   line-height: 1.5;
   margin: 0 0 10px;
@@ -461,14 +438,14 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .pl-symptom-hub-card {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 4px;
   padding: 12px 14px;
   border-radius: 10px;
   border: 1px solid #d6e2f0;
   background: #f1f5f9;
   cursor: pointer;
-  text-align: left;
+  text-align: center;
   transition: border-color .2s, box-shadow .2s, background-color .2s;
 }
 .pl-symptom-hub-card:hover {
@@ -477,18 +454,23 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   box-shadow: 0 1px 4px rgba(30, 64, 175, 0.08);
 }
 .pl-symptom-hub-card-title {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 800;
   color: #475569;
+  word-break: keep-all;
+  overflow-wrap: normal;
 }
 .pl-symptom-hub-card-sub {
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.45;
   color: #7b8798;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  line-break: strict;
 }
 .hub-wrap { max-width: 720px; padding-bottom: 40px; }
 .hub-eyebrow {
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: .06em;
   text-transform: uppercase;
@@ -496,7 +478,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   margin-bottom: 8px;
 }
 .hub-title {
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 800;
   line-height: 1.35;
   color: var(--text);
@@ -517,14 +499,14 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   margin-bottom: 18px;
 }
 .hub-section h3 {
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 800;
   color: var(--text);
   margin-bottom: 8px;
 }
 .hub-section p,
 .hub-section li {
-  font-size: 13px;
+  font-size: 17px;
   line-height: 1.65;
   color: var(--light);
 }
@@ -540,7 +522,17 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   background: #fff;
   margin-bottom: 16px;
 }
-.hub-alert h3 { color: var(--red); margin-bottom: 6px; }
+.hub-alert h3 {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--red);
+  margin-bottom: 6px;
+}
+.hub-alert li {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--light);
+}
 .hub-program {
   padding: 14px 14px;
   border-radius: 10px;
@@ -548,7 +540,12 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   background: var(--blue-bg);
   margin-bottom: 16px;
 }
-.hub-program h3 { color: var(--blue); margin-bottom: 6px; }
+.hub-program h3 {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
 .hub-program p,
 .hub-alert p {
   margin: 0;
@@ -558,6 +555,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .hub-program-note {
   margin-top: 8px !important;
   color: #475569;
+  font-size: 13px;
 }
 .hub-faq details {
   border: 1px solid var(--border);
@@ -568,7 +566,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .hub-faq summary {
   list-style: none;
   padding: 10px 12px;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
 }
@@ -576,7 +574,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .hub-faq p {
   padding: 0 12px 10px;
   margin: 0;
-  font-size: 12px;
+  font-size: 16px;
   line-height: 1.6;
 }
 .hub-actions {
@@ -592,7 +590,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   border-radius: 10px;
   background: linear-gradient(135deg, var(--green), #1d4ed8);
   color: #fff;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 700;
   cursor: pointer;
 }
@@ -603,12 +601,12 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   border: 1px solid var(--border);
   background: #fff;
   color: var(--dim);
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 600;
   cursor: pointer;
 }
 .hub-disclaimer {
-  font-size: 11px;
+  font-size: 15px;
   line-height: 1.55;
   color: var(--dim);
   margin-top: 16px;
@@ -723,9 +721,9 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 }
 
 @media (max-width: 420px){
-  .profile-circle-wrap{ width: 188px; height: 188px; }
-  .hero-name{ font-size: 22px; }
-  .hero-desc{ font-size: 14px; }
+  .profile-circle-wrap{ width: 220px; }
+  .hero-name{ font-size: 26px; }
+  .hero-desc{ font-size: 16px; }
 }
 .profile-link-btn:hover { background: #1e3a6e; color: white; transform: translateY(-1px); }
 .hero-btn-stack { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 20px; }
@@ -3528,7 +3526,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 }
 .pl-hero-top .hero-name { margin-bottom: 6px; }
 .pl-hero-cred {
-  font-size: 12px !important;
+  font-size: 16px !important;
   color: var(--dim) !important;
   margin-bottom: 12px !important;
   line-height: 1.5;
@@ -3579,22 +3577,22 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   color: #2563eb;
 }
 .pl-trust-num {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 700;
   letter-spacing: -0.03em;
   color: #1e3a6e;
   line-height: 1.15;
 }
 .pl-trust-label {
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 500;
   color: #6b7484;
   line-height: 1.45;
   word-break: keep-all;
 }
 @media (max-width: 360px) {
-  .pl-trust-num { font-size: 16px; }
-  .pl-trust-label { font-size: 9px; }
+  .pl-trust-num { font-size: 20px; }
+  .pl-trust-label { font-size: 13px; }
   .pl-trust-icon { width: 28px; height: 28px; }
   .pl-trust-icon svg { width: 16px; height: 16px; }
 }
@@ -3622,16 +3620,16 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 }
 .pl-activity-set {
   display: flex;
-  gap: 8px;
-  padding-right: 8px;
+  gap: 12px;
+  padding-right: 12px;
 }
 .pl-activity-set img {
   display: block;
-  width: 132px;
-  height: 100px;
+  width: 198px;
+  height: 150px;
   object-fit: cover;
   object-position: center 28%;
-  border-radius: 10px;
+  border-radius: 12px;
   flex-shrink: 0;
   background: #e8edf4;
   box-shadow: 0 1px 4px rgba(30, 58, 110, 0.08);
@@ -3749,7 +3747,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   border-radius: 99px;
   background: linear-gradient(90deg, var(--branch-wellness-deep), var(--branch-wellness));
   color: #fff;
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -3782,7 +3780,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 }
 .pl-branch-eyebrow {
   margin: 0 0 6px;
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -3793,7 +3791,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   text-align: center;
   letter-spacing: 0.04em;
   text-transform: none;
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 500;
   color: #94a3b8;
 }
@@ -3808,11 +3806,11 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   border-bottom-color: rgba(58, 99, 168, 0.45);
 }
 .pl-branch-section--focus .pl-branch-label {
-  font-size: 19px;
+  font-size: 23px;
   margin-bottom: 4px;
 }
 .pl-branch-section--focus .pl-branch-hint {
-  font-size: 14px;
+  font-size: 18px;
   color: #334155;
   font-weight: 600;
   margin-bottom: 2px;
@@ -3832,7 +3830,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   margin-bottom: 4px;
 }
 .hero-intro .pl-branch-hint {
-  font-size: 13px;
+  font-size: 17px;
   color: #444;
   line-height: 1.45;
   font-weight: 400;
@@ -3845,7 +3843,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .pl-branch-label {
   display: block;
   text-align: center;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 700;
   color: #1e3a6e;
   font-family: inherit;
@@ -3854,7 +3852,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 }
 .pl-branch-hint {
   margin: 0;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 400;
   color: #6b7484;
   line-height: 1.5;
@@ -3931,7 +3929,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 }
 .pl-branch-chip-title {
   display: block;
-  font-size: 15px;
+  font-size: 19px;
   font-weight: 800;
   line-height: 1.25;
   letter-spacing: -0.02em;
@@ -3942,7 +3940,7 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
 .pl-branch-chip--expert .pl-branch-chip-title { color: var(--branch-expert-deep); }
 .pl-branch-chip-sub {
   display: block;
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 500;
   line-height: 1.35;
   letter-spacing: -0.01em;
@@ -3973,12 +3971,12 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   .pl-branch-chip--expert { box-shadow: inset 0 4px 0 0 var(--branch-expert), 0 2px 8px rgba(122, 102, 72, 0.05); }
   .pl-branch-chip-text { flex: none; align-items: center; width: 100%; }
   .pl-branch-chip-arrow { display: none; }
-  .pl-branch-chip-title { font-size: 13px; }
-  .pl-branch-chip-sub { font-size: 10px; }
+  .pl-branch-chip-title { font-size: 17px; }
+  .pl-branch-chip-sub { font-size: 14px; }
 }
 @media (max-width: 400px) {
   .pl-branch-chip { padding: 10px 12px 10px 14px; }
-  .pl-branch-chip-title { font-size: 14px; }
+  .pl-branch-chip-title { font-size: 18px; }
 }
 .pl-branch-chip--treatment:hover:not(.active) {
   border-color: var(--branch-treatment-border);
@@ -4314,7 +4312,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
 }
 .pl-home-link-cap {
   margin: 0;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 400;
   line-height: 1.5;
   color: #6b7484;
@@ -4379,7 +4377,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
 .profile-home-reviews .pl-manual-reviews-label {
   margin-bottom: 10px;
   color: #5b6b82;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.02em;
 }
@@ -4388,6 +4386,9 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   border-color: #e5eaf2;
   box-shadow: none;
 }
+.profile-home-reviews .pl-review-stars { font-size: 12px; }
+.profile-home-reviews .pl-review-reviewer { font-size: 13px; }
+.profile-home-reviews .pl-review-text { font-size: 14px; }
 .profile-home-reviews-col .pl-manual-reviews-viewport {
   grid-template-columns: 1fr;
   min-height: 0;
@@ -4405,7 +4406,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   box-sizing: border-box;
 }
 .profile-home-blog-label {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   color: #5b6b82;
   font-family: inherit;
@@ -4420,7 +4421,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
 .profile-home-blog .profile-blog-error {
   margin: 0;
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--dim);
 }
 .profile-blog-list { list-style: none; margin: 0; padding: 0; }
@@ -4477,6 +4478,9 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   background: rgba(255, 255, 255, 0.58);
 }
 .profile-blog-body { flex: 1; min-width: 0; }
+.profile-blog-feed .profile-blog-title { font-size: 17px; }
+.profile-blog-feed .profile-blog-excerpt { font-size: 15px; }
+.profile-blog-feed .profile-blog-date { font-size: 13px; }
 .profile-blog-title {
   font-size: 15px;
   font-weight: 700;
@@ -4523,7 +4527,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   width: auto;
   min-height: 0;
   padding: 5px 14px;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 600;
   font-family: inherit;
   line-height: 1.15;
@@ -4555,7 +4559,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   border-color: #1e3a6e;
 }
 @media (max-width: 400px) {
-  .pl-home-link-btn { font-size: 11px; padding: 4px 12px; }
+  .pl-home-link-btn { font-size: 15px; padding: 4px 12px; }
 }
 </style>
 </head>
@@ -4603,12 +4607,11 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
     <div class="hero-inner pl-home-stack">
       <div class="hero-panel">
 
-      <!-- 프로필 사진 원형 -->
+      <!-- 프로필 사진 (배경 제거 컷아웃) -->
       <div class="profile-circle-wrap">
         <img class="profile-circle-img"
-             src="https://breezefeel.github.io/drpark/프로필-22(최종본).jpg"
+             src="profile-cutout.png"
              alt="박준규 원장">
-        <div class="profile-circle-border"></div>
       </div>
 
       <!-- 상단: 분기 선택 + 맞춤 문장 -->
@@ -4628,8 +4631,8 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
             <span class="pl-trust-icon" aria-hidden="true">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M6 4h12a1 1 0 0 1 1 1v14l-4-2.5L11 19V5a1 1 0 0 1 1-1z"/></svg>
             </span>
-            <div class="pl-trust-num">3,400+</div>
-            <div class="pl-trust-label">전문 블로그 포스트</div>
+            <div class="pl-trust-num">리얼무브먼트</div>
+            <div class="pl-trust-label">약수점/인천점</div>
           </div>
           <div class="pl-trust-item">
             <span class="pl-trust-icon" aria-hidden="true">
@@ -4693,37 +4696,37 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
           <div class="pl-home-links-grid">
             <div class="pl-home-link-item">
               <a class="pl-home-link-btn pl-home-link-btn--profile" id="profileNaverBlogLink" href="https://blog.naver.com/allenjoy/120205433765" target="_blank" rel="noopener noreferrer" onclick="openProfileNaverBlog_()" aria-describedby="profileLinkCapBio">박준규 원장 약력</a>
-              <p class="pl-home-link-cap" id="profileLinkCapBio">미국 DC·PT, 20년 원장이 직접 쓴 이야기를 담았습니다.</p>
+              <p class="pl-home-link-cap" id="profileLinkCapBio">미카닥의 20년 기록</p>
             </div>
             <div class="pl-home-link-item">
               <button type="button" class="pl-home-link-btn pl-home-link-btn--psp" onclick="startPspConcept()" aria-describedby="profileLinkCapPsp">PSP 건강 가이드</button>
-              <p class="pl-home-link-cap" id="profileLinkCapPsp">평가부터 병원 연계·운동까지 이어지는 임상 가이드입니다.</p>
+              <p class="pl-home-link-cap" id="profileLinkCapPsp">근골격계 임상 가이드</p>
             </div>
           </div>
         </div>
         <section class="pl-symptom-hubs" aria-label="증상별 가이드">
-          <h2 class="pl-symptom-hubs-title">증상별 가이드</h2>
+          <h2 class="pl-symptom-hubs-title">현재 어떤 증상이 있으신가요?</h2>
           <p class="pl-symptom-hubs-sub">병원 진료가 필요한 경우와 운동·재활 프로그램 병행이 맞는 경우를 구분해 안내합니다.</p>
           <div class="pl-symptom-hub-grid">
             <button type="button" class="pl-symptom-hub-card" onclick="openSymptomHubFromHome_('back')">
               <span class="pl-symptom-hub-card-title">허리 통증</span>
-              <span class="pl-symptom-hub-card-sub">디스크·요통 · 병원 vs 프로그램</span>
+              <span class="pl-symptom-hub-card-sub">디스크·요통</span>
             </button>
             <button type="button" class="pl-symptom-hub-card" onclick="openSymptomHubFromHome_('neck')">
               <span class="pl-symptom-hub-card-title">목·거북목</span>
-              <span class="pl-symptom-hub-card-sub">경추·어깨 긴장 · 자가 점검</span>
+              <span class="pl-symptom-hub-card-sub">경추·어깨 긴장</span>
             </button>
             <button type="button" class="pl-symptom-hub-card" onclick="openSymptomHubFromHome_('shoulder')">
               <span class="pl-symptom-hub-card-title">어깨 통증</span>
-              <span class="pl-symptom-hub-card-sub">오십견·회전근개 · 다음 단계</span>
+              <span class="pl-symptom-hub-card-sub">오십견·회전근개</span>
             </button>
             <button type="button" class="pl-symptom-hub-card" onclick="openSymptomHubFromHome_('knee')">
               <span class="pl-symptom-hub-card-title">무릎 통증</span>
-              <span class="pl-symptom-hub-card-sub">슬개건·관절 · 계단·웅크림</span>
+              <span class="pl-symptom-hub-card-sub">슬개건·관절</span>
             </button>
             <button type="button" class="pl-symptom-hub-card" onclick="openSymptomHubFromHome_('pelvis')">
               <span class="pl-symptom-hub-card-title">골반·둔부</span>
-              <span class="pl-symptom-hub-card-sub">요통·좌골신경 · 자세·호흡</span>
+              <span class="pl-symptom-hub-card-sub">고관절·좌골신경</span>
             </button>
           </div>
         </section>
