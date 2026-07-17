@@ -3587,6 +3587,17 @@ body { font-family: 'Pretendard', system-ui, -apple-system, 'Segoe UI', Roboto, 
   color: #1e3a6e;
   line-height: 1.15;
 }
+.pl-trust-num--wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 0;
+  row-gap: 0;
+  max-width: 100%;
+}
+.pl-trust-num--wrap > span {
+  white-space: nowrap;
+}
 .pl-trust-label {
   font-size: 14px;
   font-weight: 500;
@@ -4642,7 +4653,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
             <span class="pl-trust-icon" aria-hidden="true">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M6 4h12a1 1 0 0 1 1 1v14l-4-2.5L11 19V5a1 1 0 0 1 1-1z"/></svg>
             </span>
-            <div class="pl-trust-num">리얼<wbr>무브먼트</div>
+            <div class="pl-trust-num pl-trust-num--wrap"><span>리얼</span><span>무브먼트</span></div>
             <div class="pl-trust-label">약수점/인천점</div>
           </div>
           <div class="pl-trust-item">
