@@ -121,7 +121,7 @@
   --text: #111827;
   --dim: #6b7484;
   --light: #4b5563;
-  --profile-img: url("https://breezefeel.github.io/drpark/프로필-22(최종본).jpg");
+  --profile-img: url("profile-photo.png");
   --green: #2563eb;
   --green-mid: #3b82f6;
   --green-light: #60a5fa;
@@ -4292,8 +4292,169 @@ a.pl-branch-chip:hover:not(.active) {
   .pl-hero-btn--consult { flex: none; width: 100%; font-size: 14px; }
 }
 
-#s-home.screen { min-height: 0; }
-#s-home .hero { min-height: 0; }
+#s-home.screen { min-height: 100vh; background: #cad6db; }
+body:has(#s-home.active) { background: #cad6db; }
+#s-home .hero {
+  min-height: 0;
+  background: #cad6db;
+  padding-top: 40px;
+  overflow: visible;
+}
+#s-home .hero-bg-wrap { display: none; }
+#s-home .hero-panel {
+  background: none;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  padding: 8px 0 0;
+}
+#s-home .profile-circle-wrap {
+  width: 104px;
+  height: 104px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #9aadb6;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+}
+#s-home .profile-circle-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: none;
+}
+#s-home .hero-name {
+  font-size: 20px;
+  color: #111;
+  margin-bottom: 8px;
+}
+#s-home .pl-hero-cred {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  font-family: inherit !important;
+  letter-spacing: -0.02em !important;
+  color: #111 !important;
+  margin-bottom: 16px !important;
+}
+.lt-social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin: 0 auto 26px;
+}
+.lt-ig {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin: 0;
+  transition: opacity .15s, transform .15s;
+}
+.lt-ig--blog {
+  width: auto;
+  height: 28px;
+}
+.lt-ig--blog img {
+  height: 28px;
+  width: auto;
+  display: block;
+}
+.lt-ig:hover { opacity: 0.85; transform: translateY(-1px); }
+.lt-ig svg { width: 28px; height: 28px; display: block; }
+.lt-links {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.lt-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 64px;
+  padding: 10px 18px 10px 10px;
+  background: #fff;
+  color: #111;
+  text-decoration: none;
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.12);
+  box-sizing: border-box;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform .15s, box-shadow .15s;
+}
+.lt-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.16);
+}
+.lt-thumb {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: #eef3f6;
+  color: #1e3a6e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lt-thumb svg { width: 22px; height: 22px; }
+.lt-btn--wide { min-height: 76px; }
+.lt-btn--wide .lt-label { font-size: 14px; line-height: 1.4; }
+.lt-label {
+  position: absolute;
+  left: 62px;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  word-break: keep-all;
+  pointer-events: none;
+}
+.lt-places {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  width: 100%;
+}
+.lt-btn--place {
+  min-height: 76px;
+}
+.lt-btn--place .lt-thumb svg {
+  width: 22px;
+  height: 22px;
+}
+.lt-btn--place .lt-label {
+  font-size: 14px;
+  line-height: 1.4;
+}
+#s-home .pl-hero-top .pl-trust-strip { margin: 14px 0; }
+#s-home .pl-home-links {
+  margin: 0 0 14px;
+}
+#s-home .pl-trust-num { font-size: 16px; }
+#s-home .pl-trust-label { font-size: 12px; }
+#s-home .pl-home-link-cap { display: none; }
+#s-home .pl-home-link-item .pl-home-link-btn {
+  min-height: 42px;
+  font-size: 15px;
+}
+#s-home .profile-blog-feed {
+  background: none;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  padding: 0;
+}
 body.profile-home-sticky .hero { padding-top: 12px; }
 body.profile-home-sticky #s-home .hero-inner {
   padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px));
@@ -4632,162 +4793,121 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
 <div class="screen active" id="s-home">
   <div class="hero">
 
-    <!-- 배경: 블러 처리된 사진 -->
-    <div class="hero-bg-wrap">
-      <img class="hero-bg-img" src="https://breezefeel.github.io/drpark/프로필-22(최종본).jpg" alt="">
-      <div class="hero-bg-spot" aria-hidden="true"></div>
-      <div class="hero-bg-overlay"></div>
-    </div>
-
     <div class="hero-inner pl-home-stack">
       <div class="hero-panel">
 
-      <!-- 프로필 사진 (배경 제거 컷아웃) -->
       <div class="profile-circle-wrap">
         <img class="profile-circle-img"
-             src="profile-cutout.png"
-             alt="박준규 원장">
+             src="profile-photo.png?v=2"
+             alt="미카닥 박준규">
       </div>
 
-      <!-- 상단: 분기 선택 + 맞춤 문장 -->
       <div class="pl-hero-top">
         <div class="hero-name">미카닥 박준규</div>
-        <div class="hero-cred pl-hero-cred">미국 카이로프랙틱 닥터<br>대한민국 물리치료사 & 건강관리사</div>        
+        <div class="hero-cred pl-hero-cred">움직임을 해석하는 미국 카이로프랙터·물리치료사</div>
+        <div class="lt-social">
+          <a class="lt-ig lt-ig--blog" href="https://blog.naver.com/allenjoy" target="_blank" rel="noopener noreferrer" aria-label="네이버 블로그">
+            <img src="naver-blog-icon.png?v=2" alt="">
+          </a>
+          <a class="lt-ig" href="https://www.instagram.com/dr.park_dc.pt/" target="_blank" rel="noopener noreferrer" aria-label="인스타그램">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <defs>
+                <radialGradient id="ltIgGrad" cx="0.3" cy="1.1" r="1.2">
+                  <stop offset="0" stop-color="#F9ED32"/>
+                  <stop offset="0.35" stop-color="#EE2A7B"/>
+                  <stop offset="0.7" stop-color="#D62976"/>
+                  <stop offset="1" stop-color="#4F5BD5"/>
+                </radialGradient>
+              </defs>
+              <rect width="24" height="24" rx="6" fill="url(#ltIgGrad)"/>
+              <rect x="6" y="6" width="12" height="12" rx="3.4" fill="none" stroke="#fff" stroke-width="1.7"/>
+              <circle cx="12" cy="12" r="2.85" fill="none" stroke="#fff" stroke-width="1.7"/>
+              <circle cx="15.55" cy="8.45" r="0.85" fill="#fff"/>
+            </svg>
+          </a>
+        </div>
 
-        <div class="pl-trust-strip pl-hero-stats" aria-label="경력·전문성">
+        <section id="profileBranchPickerAnchor" aria-label="관심 분야">
+          <div class="lt-links" role="group">
+            <button type="button" class="lt-btn lt-btn--wide" data-branch="program" aria-label="내게 맞는 프로그램 찾아보기" onclick="selectProfileBranch('program')">
+              <span class="lt-thumb" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-3.5-3.5"/></svg>
+              </span>
+              <span class="lt-label">내게 맞는 프로그램 찾아보기</span>
+            </button>
+            <button type="button" class="lt-btn lt-btn--wide" data-branch="expert" aria-label="전문가 교육: CMT 도수치료, IFC 얼굴케어, Re:Al 움직임 과정" onclick="selectProfileBranch('expert')">
+              <span class="lt-thumb" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19V7l8-3 8 3v12"/><path d="M4 10l8 3 8-3"/><path d="M12 13v6"/></svg>
+              </span>
+              <span class="lt-label">전문가 교육: CMT 도수치료 / IFC 얼굴케어 / Re:Al 움직임 과정</span>
+            </button>
+            <div class="lt-places">
+            <a class="lt-btn lt-btn--place lt-btn--wide" href="https://naver.me/x2YstInq" target="_blank" rel="noopener noreferrer">
+              <span class="lt-thumb" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 21s7-6.2 7-11.2A7 7 0 0 0 5 9.8C5 14.8 12 21 12 21z"/>
+                  <circle cx="12" cy="9.6" r="2.2"/>
+                </svg>
+              </span>
+              <span class="lt-label">서울 약수점</span>
+            </a>
+            <a class="lt-btn lt-btn--place lt-btn--wide" href="https://naver.me/xYNbHrY9" target="_blank" rel="noopener noreferrer">
+              <span class="lt-thumb" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 21s7-6.2 7-11.2A7 7 0 0 0 5 9.8C5 14.8 12 21 12 21z"/>
+                  <circle cx="12" cy="9.6" r="2.2"/>
+                </svg>
+              </span>
+              <span class="lt-label">인천 계양점</span>
+            </a>
+            </div>
+          </div>
+        </section>
+
+        <div class="pl-trust-strip pl-hero-stats" aria-label="전문성">
           <div class="pl-trust-item">
             <span class="pl-trust-icon" aria-hidden="true">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
             </span>
             <div class="pl-trust-num">20년+</div>
-            <div class="pl-trust-label">근골격계 임상</div>
-          </div>
-          <div class="pl-trust-item">
-            <span class="pl-trust-icon" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M6 4h12a1 1 0 0 1 1 1v14l-4-2.5L11 19V5a1 1 0 0 1 1-1z"/></svg>
-            </span>
-            <div class="pl-trust-num pl-trust-num--wrap"><span>리얼</span><span>무브먼트</span></div>
-            <div class="pl-trust-label">약수점/인천점</div>
+            <div class="pl-trust-label">근골격만 봐 온 시간</div>
           </div>
           <div class="pl-trust-item">
             <span class="pl-trust-icon" aria-hidden="true">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M12 3l7 4v6c0 4.2-3 7.8-7 9-4-1.2-7-4.8-7-9V7l7-4z"/><path d="M9 12l2 2 4-4"/></svg>
             </span>
             <div class="pl-trust-num">DC·PT</div>
-            <div class="pl-trust-label">미국 카이로 물리치료사</div>
+            <div class="pl-trust-label">미국·한국 면허</div>
+          </div>
+          <div class="pl-trust-item">
+            <span class="pl-trust-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><path d="M12 4v2M12 18v2M4 12h2M18 12h2"/></svg>
+            </span>
+            <div class="pl-trust-num">원인부터</div>
+            <div class="pl-trust-label">움직임을 해석</div>
+          </div>
+        </div>
+
+        <div class="pl-home-links" id="profileHomeLinks" aria-label="약력·PSP">
+          <div class="pl-home-links-grid">
+            <div class="pl-home-link-item">
+              <a class="pl-home-link-btn pl-home-link-btn--profile" id="profileNaverBlogLink" href="https://blog.naver.com/allenjoy/120205433765" target="_blank" rel="noopener noreferrer" onclick="openProfileNaverBlog_()">약력</a>
+            </div>
+            <div class="pl-home-link-item">
+              <button type="button" class="pl-home-link-btn pl-home-link-btn--psp" onclick="startPspConcept()">PSP 가이드</button>
+            </div>
           </div>
         </div>
 
         <div class="pl-activity-gallery" id="profileActivityGallery" aria-label="활동 사진" aria-live="off">
           <div class="pl-activity-track" id="profileActivityTrack"></div>
-        </div>       
-
-        <section class="pl-branch-section pl-branch-section--focus" id="profileBranchPickerAnchor" aria-labelledby="profileBranchLabel">
-          <div class="pl-branch-focus-badge" aria-hidden="true">
-            <span class="pl-branch-focus-dot"></span>
-            맞춤 안내
-          </div>
-          <header class="pl-branch-head">
-            <p class="pl-branch-hint">관심 있는 분야를 눌러 바로 시작하세요</p>
-          </header>
-          <div class="pl-branch-picker">
-            <div class="pl-branch-grid" role="group" aria-label="관심 분야">
-              <button type="button" class="pl-branch-chip pl-branch-chip--treatment" aria-label="통증·재활 문진 시작" data-branch="treatment" onclick="selectProfileBranch('treatment')">
-                <span class="pl-branch-chip-text">
-                  <span class="pl-branch-chip-title">통증·재활</span>
-                  <span class="pl-branch-chip-sub">증상 평가 · 병원 안내</span>
-                </span>
-                <span class="pl-branch-chip-arrow" aria-hidden="true">클릭›</span>
-              </button>
-              <button type="button" class="pl-branch-chip pl-branch-chip--wellness" aria-label="움직임·자세 문진 시작" data-branch="wellness" onclick="selectProfileBranch('wellness')">
-                <span class="pl-branch-chip-text">
-                  <span class="pl-branch-chip-title">움직임·자세</span>
-                  <span class="pl-branch-chip-sub">기능 · 교정 · 운동</span>
-                </span>
-                <span class="pl-branch-chip-arrow" aria-hidden="true">클릭›</span>
-              </button>
-              <button type="button" class="pl-branch-chip pl-branch-chip--expert" aria-label="전문가 교육 문진 시작" data-branch="expert" onclick="selectProfileBranch('expert')">
-                <span class="pl-branch-chip-text">
-                  <span class="pl-branch-chip-title">전문가 교육</span>
-                  <span class="pl-branch-chip-sub">CMT · IFC · Re:Al</span>
-                </span>
-                <span class="pl-branch-chip-arrow" aria-hidden="true">클릭›</ㄴspan>
-              </button>
-            </div>
-            <p class="pl-branch-eyebrow pl-branch-footnote">
-              <a href="https://blog.naver.com/allenjoy/224307689748" target="_blank" rel="noopener noreferrer">서울 약수점 (위치)</a>
-              <span aria-hidden="true"> · </span>
-              <a href="https://blog.naver.com/allenjoy/224122998739" target="_blank" rel="noopener noreferrer">인천 계양점 (위치)</a>
-            </p>
-          </div>
-        </section>
+        </div>
 
       </div>
 
       </div>
 
       <section class="profile-blog-feed" id="profileBlogFeed" aria-label="미카닥 블로그">
-        <div class="pl-home-links" id="profileHomeLinks" aria-label="약력·PSP">
-          <div class="pl-home-links-grid">
-            <div class="pl-home-link-item">
-              <a class="pl-home-link-btn pl-home-link-btn--profile" id="profileNaverBlogLink" href="https://blog.naver.com/allenjoy/120205433765" target="_blank" rel="noopener noreferrer" onclick="openProfileNaverBlog_()" aria-describedby="profileLinkCapBio">박준규 원장 약력</a>
-              <p class="pl-home-link-cap" id="profileLinkCapBio">미카닥의 20년 기록</p>
-            </div>
-            <div class="pl-home-link-item">
-              <button type="button" class="pl-home-link-btn pl-home-link-btn--psp" onclick="startPspConcept()" aria-describedby="profileLinkCapPsp">PSP 건강 가이드</button>
-              <p class="pl-home-link-cap" id="profileLinkCapPsp">근골격계 임상 가이드</p>
-            </div>
-          </div>
-        </div>
-        <section class="pl-symptom-hubs" aria-label="증상별 가이드">
-          <h2 class="pl-symptom-hubs-title">현재 어떤 증상이 있으신가요?</h2>
-          <p class="pl-symptom-hubs-sub">병원 진료가 필요한 경우와 운동·재활 프로그램 병행이 맞는 경우를 구분해 안내합니다.</p>
-          <div class="pl-symptom-hub-grid">
-            <button type="button" class="pl-symptom-hub-card" onclick="openSymptomHubFromHome_('neck')">
-              <span class="pl-symptom-hub-card-title">목·거북목</span>
-              <span class="pl-symptom-hub-card-sub">경추·자세 긴장</span>
-            </button>
-            <button type="button" class="pl-symptom-hub-card" onclick="openSymptomHubFromHome_('shoulder')">
-              <span class="pl-symptom-hub-card-title">어깨</span>
-              <span class="pl-symptom-hub-card-sub">오십견·회전근개</span>
-            </button>
-            <button type="button" class="pl-symptom-hub-card" onclick="openSymptomHubFromHome_('back')">
-              <span class="pl-symptom-hub-card-title">등·허리</span>
-              <span class="pl-symptom-hub-card-sub">디스크·요통·흉추</span>
-            </button>
-            <button type="button" class="pl-symptom-hub-card" onclick="openSymptomHubFromHome_('pelvis')">
-              <span class="pl-symptom-hub-card-title">골반·둔부</span>
-              <span class="pl-symptom-hub-card-sub">고관절·좌골신경</span>
-            </button>
-            <button type="button" class="pl-symptom-hub-card" onclick="openSymptomHubFromHome_('elbow')">
-              <span class="pl-symptom-hub-card-title">팔꿈치·손목</span>
-              <span class="pl-symptom-hub-card-sub">테니스엘보·수근관</span>
-            </button>
-            <button type="button" class="pl-symptom-hub-card" onclick="openSymptomHubFromHome_('knee')">
-              <span class="pl-symptom-hub-card-title">무릎·발목</span>
-              <span class="pl-symptom-hub-card-sub">슬개건·관절·족부</span>
-            </button>
-          </div>
-        </section>
-        <section class="pl-home-faq" aria-label="자주 묻는 질문">
-          <h2 class="pl-home-faq-title">자주 묻는 질문</h2>
-          <details>
-            <summary>병원에서 진료하시나요?</summary>
-            <p class="pl-home-faq-answer">현재 병원에서 근무하지 않습니다. 치료가 필요해 보이는 증상은 원인을 이해하도록 돕되, <strong>치료와 병행</strong> 할 수 있는 방법과 치료 이후 해야할 프로그램을 진행합니다.</p>
-          </details>
-          <details>
-            <summary>Real Movement는 무엇인가요?</summary>
-            <p class="pl-home-faq-answer">P-스트레칭·기능운동·자세 교정 중심의 <strong>운동·재활·웰니스 프로그램</strong>입니다. 1) 유연성을 위한 패시브 스트레칭, 2) 통증 예방을 위한 생활습관 및 자세교정, 3) 꾸준한 건강을 위한 기능 운동을 메인으로 합니다.</p>
-          </details>
-          <details>
-            <summary>통증이 심해도 바로 운동을 하나요?</summary>
-            <p class="pl-home-faq-answer">아닙니다. 통증이 심하면 원인을 파악하기 위한 상담은 해드릴 수 있지만<strong>병원 진료</strong>를 먼저 권합니다. 치료와 병행하며 센터에서 Passive Stretching과 기능 운동으로 단계적으로 이어갑니다.</p>
-          </details>
-          <details>
-            <summary>약수·인천 외에도 문의할 수 있나요?</summary>
-            <p class="pl-home-faq-answer">서울 약수·인천 계양에서 프로그램을 운영합니다. 상담·교육 문의는 프로필 하단 상담 버튼 또는 네이버 블로그를 이용해 주세요.</p>
-          </details>
-        </section>
         <div class="profile-home-reviews" id="profileHomeReviews">
           <section class="pl-beauty-reviews pl-manual-reviews profile-home-reviews-top" id="profileBeautyReviews" aria-label="움직임·자세 리뷰" hidden>
             <h3 class="pl-manual-reviews-label">움직임 · 자세 리뷰</h3>
@@ -6516,8 +6636,8 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   <div class="wrap">
     <div class="q-header">
       <div class="q-step">1단계</div>
-      <div class="q-title">지금 몸 상태가 어떤가요?</div>
-      <div class="q-sub">해당하는 상태를 선택해주세요</div>
+      <div class="q-title">지금 통증이 있으신가요?</div>
+      <div class="q-sub">통증 안내가 필요한지, 다른 프로그램을 볼지 먼저 고르면 됩니다</div>
     </div>
 
     <!-- 통증·재활/웰니스 시각화 -->
@@ -6546,19 +6666,19 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
     <div class="q-divider" aria-hidden="true"></div>
 
     <div class="option-list">
-      <div class="option" style="border-color:var(--red-border);background:var(--red-bg);" onclick="pSet('mode','treatment'); bc('통증·재활'); goS('s-p2')">
+      <div class="option" style="border-color:var(--red-border);background:var(--red-bg);" onclick="chooseProgramPath_('treatment')">
         <div class="opt-ico">🔴</div>
         <div>
-          <div class="opt-name" style="color:var(--red);">통증이나 불편함이 있어요</div>
-          <div class="opt-desc">아픈 곳이 있거나 움직임이 불편한 상태</div>
+          <div class="opt-name" style="color:var(--red);">통증이 있어요</div>
+          <div class="opt-desc">아픈 곳이 있거나 재활 안내가 필요할 때</div>
         </div>
         <div class="opt-arr">›</div>
       </div>
-      <div class="option" style="border-color:var(--green-border);background:var(--green-bg);" onclick="pSet('mode','wellness'); bc('웰니스 영역'); goS('s-p-wellness')">
+      <div class="option" style="border-color:var(--green-border);background:var(--green-bg);" onclick="chooseProgramPath_('wellness')">
         <div class="opt-ico">🟢</div>
         <div>
-          <div class="opt-name" style="color:var(--green);">몸을 더 좋게 만들고 싶어요</div>
-          <div class="opt-desc">자세·체형·기능·예방 관리가 목표</div>
+          <div class="opt-name" style="color:var(--green);">다른 프로그램을 원해요</div>
+          <div class="opt-desc">자세·움직임·기능을 더 좋게 하고 싶을 때</div>
         </div>
         <div class="opt-arr">›</div>
       </div>
@@ -7172,6 +7292,7 @@ const SYMPTOM_HUBS = {
 };
 
 const PROFILE_BRANCH_CHIP_LABEL = {
+  program: '내게 맞는 프로그램 찾아보기',
   treatment: '통증·재활',
   wellness: '움직임·자세',
   expert: '전문가 교육',
@@ -8385,6 +8506,10 @@ function selectProfileBranch(branch, options){
 function runProfileBranchAction(){
   const b = profileBranch;
   if(!b) return;
+  if(b === 'program'){
+    startFindProgram_();
+    return;
+  }
   if(b === 'treatment'){
     bc('통증·재활');
     startPatient();
@@ -8404,6 +8529,32 @@ function runProfileBranchAction(){
   if(b === 'psp'){
     startPspConcept();
   }
+}
+
+function startFindProgram_(){
+  P = {};
+  pSet('mode', '');
+  consultFlowKind = 'treatment';
+  bc('맞춤 프로그램');
+  goS('s-p1');
+}
+
+function chooseProgramPath_(kind){
+  if(kind === 'treatment'){
+    pSet('mode', 'treatment');
+    profileBranch = 'treatment';
+    consultFlowKind = 'treatment';
+    if(!P.painAreas) P.painAreas = [];
+    if(!P.diagnosis) P.diagnosis = [];
+    bc('통증·재활');
+    goS('s-p2');
+    return;
+  }
+  pSet('mode', 'wellness');
+  profileBranch = 'wellness';
+  consultFlowKind = 'wellness';
+  bc('움직임·자세');
+  goS('s-p-wellness');
 }
 
 function pSet(k,v){ P[k]=v; }
@@ -8812,6 +8963,11 @@ function resolveScreenForBcPrefix_(prefix){
   if(last === 'PSP 컨셉') return { screen: 's-psp1' };
   if(last === '전체 구조 상세보기') return { screen: 's-psp3' };
 
+  if(prefix[0] === '맞춤 프로그램'){
+    if(prefix.length === 1) return { screen: 's-p1' };
+    return resolveScreenForBcPrefix_(prefix.slice(1));
+  }
+
   if(prefix[0] && prefix[0].indexOf('증상 가이드') === 0){
     if(prefix.length === 1){
       const label = prefix[0].replace(/^증상 가이드\s*·\s*/, '');
@@ -8878,6 +9034,18 @@ function applyBcPrefixNavigate_(prefix, index){
   } else if(prefix[0] === '통증·재활' || prefix.indexOf('치료 영역') >= 0){
     profileBranch = 'treatment';
     pSet('mode', 'treatment');
+  } else if(prefix[0] === '맞춤 프로그램'){
+    if(prefix.indexOf('움직임·자세') >= 0 || prefix.indexOf('웰니스 영역') >= 0){
+      profileBranch = 'wellness';
+      pSet('mode', 'wellness');
+      if(resolved.goal) pSet('goal', resolved.goal);
+      syncPainAreasFromBc_(prefix);
+    } else if(prefix.indexOf('통증·재활') >= 0){
+      profileBranch = 'treatment';
+      pSet('mode', 'treatment');
+    } else {
+      profileBranch = 'program';
+    }
   } else if(prefix[0] === '전문가 교육'){
     profileBranch = 'expert';
   }
