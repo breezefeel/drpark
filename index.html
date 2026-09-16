@@ -3589,11 +3589,11 @@ body {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0;
-  padding: 14px 6px 12px;
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(220, 228, 240, 0.95);
-  border-radius: 14px;
-  box-shadow: 0 2px 10px rgba(30, 58, 110, 0.06);
+  padding: 2px 2px 4px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
 }
 .pl-trust-item {
   position: relative;
@@ -3618,12 +3618,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  margin-bottom: 2px;
-  border-radius: 10px;
-  background: #eff6ff;
-  color: #2563eb;
+  width: auto;
+  height: auto;
+  margin-bottom: 0;
+  border-radius: 0;
+  background: none;
+  color: #64748b;
+  opacity: 0.85;
 }
 .pl-trust-num {
   font-size: 22px;
@@ -3687,8 +3688,8 @@ body {
 }
 .pl-activity-set {
   display: flex;
-  gap: 12px;
-  padding-right: 12px;
+  gap: 18px;
+  padding-right: 18px;
 }
 .pl-activity-set img {
   display: block;
@@ -4439,6 +4440,10 @@ body:has(#s-home.active) { background: #cad6db; }
 .lt-thumb svg { width: 22px; height: 22px; }
 .lt-btn--wide { min-height: 76px; }
 .lt-btn--wide .lt-label { font-size: 14px; line-height: 1.4; }
+#s-home .lt-btn--wide[data-branch="program"] { min-height: 84px; }
+#s-home .lt-btn--wide[data-branch="program"] .lt-label { white-space: normal; }
+#s-home .lt-links > .lt-btn--wide { min-height: 84px; }
+#s-home .lt-links > .lt-btn--wide .lt-label { white-space: normal; }
 .lt-label {
   position: absolute;
   left: 62px;
@@ -4465,15 +4470,46 @@ body:has(#s-home.active) { background: #cad6db; }
   height: 22px;
 }
 .lt-btn--place .lt-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   font-size: 14px;
-  line-height: 1.4;
+  line-height: 1.25;
 }
-#s-home .pl-hero-top .pl-trust-strip { margin: 14px 0; }
+.lt-place-brand {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7484;
+}
+.lt-place-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111;
+}
+#s-home .pl-hero-top .pl-trust-strip {
+  margin: 2px 0 18px;
+  padding: 0 4px 2px;
+}
+#s-home .pl-trust-item { gap: 3px; }
+#s-home .pl-trust-item:not(:last-child)::after {
+  top: 6px;
+  bottom: 6px;
+  background: rgba(148, 163, 184, 0.35);
+}
 #s-home .pl-home-links {
   margin: 0 0 14px;
 }
-#s-home .pl-trust-num { font-size: 16px; }
-#s-home .pl-trust-label { font-size: 12px; }
+#s-home .pl-trust-num {
+  font-size: 15px;
+  font-weight: 800;
+  color: #1e3a6e;
+}
+#s-home .pl-trust-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #8a93a3;
+  letter-spacing: -0.01em;
+}
 #s-home .pl-home-link-cap { display: none; }
 #s-home .pl-home-link-item .pl-home-link-btn {
   min-height: 42px;
@@ -4865,43 +4901,6 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
           </a>
         </div>
 
-        <section id="profileBranchPickerAnchor" aria-label="관심 분야">
-          <div class="lt-links" role="group">
-            <button type="button" class="lt-btn lt-btn--wide" data-branch="program" aria-label="내게 맞는 프로그램 찾아보기" onclick="selectProfileBranch('program')">
-              <span class="lt-thumb" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-3.5-3.5"/></svg>
-              </span>
-              <span class="lt-label">내게 맞는 프로그램 찾아보기</span>
-            </button>
-            <div class="lt-places">
-            <a class="lt-btn lt-btn--place lt-btn--wide" href="https://naver.me/x2YstInq" target="_blank" rel="noopener noreferrer">
-              <span class="lt-thumb" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 21s7-6.2 7-11.2A7 7 0 0 0 5 9.8C5 14.8 12 21 12 21z"/>
-                  <circle cx="12" cy="9.6" r="2.2"/>
-                </svg>
-              </span>
-              <span class="lt-label">서울 약수점</span>
-            </a>
-            <a class="lt-btn lt-btn--place lt-btn--wide" href="https://naver.me/xYNbHrY9" target="_blank" rel="noopener noreferrer">
-              <span class="lt-thumb" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 21s7-6.2 7-11.2A7 7 0 0 0 5 9.8C5 14.8 12 21 12 21z"/>
-                  <circle cx="12" cy="9.6" r="2.2"/>
-                </svg>
-              </span>
-              <span class="lt-label">인천 계양점</span>
-            </a>
-            </div>
-            <button type="button" class="lt-btn lt-btn--wide" data-branch="expert" aria-label="[전문가 과정] CMT 도수치료, IFC 얼굴케어, Re:Al 움직임 과정" onclick="selectProfileBranch('expert')">
-              <span class="lt-thumb" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19V7l8-3 8 3v12"/><path d="M4 10l8 3 8-3"/><path d="M12 13v6"/></svg>
-              </span>
-              <span class="lt-label">[전문가 과정] CMT 도수치료 / IFC 얼굴케어 / Re:Al 움직임 과정</span>
-            </button>
-          </div>
-        </section>
-
         <div class="pl-trust-strip pl-hero-stats" aria-label="전문성">
           <div class="pl-trust-item">
             <span class="pl-trust-icon" aria-hidden="true">
@@ -4925,6 +4924,49 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
             <div class="pl-trust-label">움직임을 해석</div>
           </div>
         </div>
+
+        <section id="profileBranchPickerAnchor" aria-label="관심 분야">
+          <div class="lt-links" role="group">
+            <button type="button" class="lt-btn lt-btn--wide" data-branch="program" aria-label="건강 상태 체크하고, 나에게 적합한 프로그램 찾기" onclick="selectProfileBranch('program')">
+              <span class="lt-thumb" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-3.5-3.5"/></svg>
+              </span>
+              <span class="lt-label">건강 상태 체크하고, 나에게 적합한 프로그램 찾기</span>
+            </button>
+            <div class="lt-places">
+            <a class="lt-btn lt-btn--place lt-btn--wide" href="https://naver.me/x2YstInq" target="_blank" rel="noopener noreferrer" aria-label="리얼무브먼트 서울 약수점">
+              <span class="lt-thumb" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 21s7-6.2 7-11.2A7 7 0 0 0 5 9.8C5 14.8 12 21 12 21z"/>
+                  <circle cx="12" cy="9.6" r="2.2"/>
+                </svg>
+              </span>
+              <span class="lt-label">
+                <span class="lt-place-brand">리얼무브먼트</span>
+                <span class="lt-place-name">서울 약수점</span>
+              </span>
+            </a>
+            <a class="lt-btn lt-btn--place lt-btn--wide" href="https://naver.me/xYNbHrY9" target="_blank" rel="noopener noreferrer" aria-label="리얼무브먼트 인천 계양점">
+              <span class="lt-thumb" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 21s7-6.2 7-11.2A7 7 0 0 0 5 9.8C5 14.8 12 21 12 21z"/>
+                  <circle cx="12" cy="9.6" r="2.2"/>
+                </svg>
+              </span>
+              <span class="lt-label">
+                <span class="lt-place-brand">리얼무브먼트</span>
+                <span class="lt-place-name">인천 계양점</span>
+              </span>
+            </a>
+            </div>
+            <a class="lt-btn lt-btn--wide" href="https://breezefeel.github.io/academy/" target="_blank" rel="noopener noreferrer" aria-label="전문가를 위한 치료/운동 컨셉 알아보기">
+              <span class="lt-thumb" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19V7l8-3 8 3v12"/><path d="M4 10l8 3 8-3"/><path d="M12 13v6"/></svg>
+              </span>
+              <span class="lt-label">전문가를 위한 [치료/운동] 컨셉 알아보기</span>
+            </a>
+          </div>
+        </section>
 
         <div class="pl-activity-gallery" id="profileActivityGallery" aria-label="활동 사진" aria-live="off">
           <div class="pl-activity-track" id="profileActivityTrack"></div>
@@ -4971,7 +5013,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
       </section>
 
       <div class="pl-hero-actions pl-hero-actions--solo" id="profileHomeStickyBar">
-        <button type="button" class="pl-hero-btn pl-hero-btn--consult" onclick="openProfileQuickConsult()">빠른 상담 받기</button>
+        <a class="pl-hero-btn pl-hero-btn--consult" href="https://pf.kakao.com/_nVSxdn/chat" target="_blank" rel="noopener noreferrer" onclick="pushProfileViewLog_('빠른 상담 신청')">빠른 상담 받기</a>
       </div>
     </div>
   </div>
@@ -6939,11 +6981,14 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
 <div class="screen" id="s-p-wellness">
   <div class="wrap">
     <div class="q-header">
-      <div class="q-step wellness">웰니스 · 1단계</div>
+      <div class="q-step">1단계</div>
       <div class="q-title">어떤 프로그램을 원하세요?</div>
       <div class="q-sub">목표에 맞는 프로그램을 선택해주세요</div>
     </div>
     <div class="option-list">
+      <div class="option" style="border-color:var(--green-border);" onclick="pickWellnessGoal_('prevention')">
+        <div class="opt-ico">🌿</div><div><div class="opt-name">통증 예방·유지 관리 (셀프 통증 케어)</div><div class="opt-desc">또 아플까 봐 걱정되고, 스스로 관리하고 싶어요.</div></div><div class="opt-arr">›</div>
+      </div>
       <div class="option" style="border-color:var(--green-border);" onclick="pickWellnessGoal_('stretch')">
         <div class="opt-ico">🤸</div><div><div class="opt-name">유연성 향상</div><div class="opt-desc">몸이 너무 뻣뻣하고 무거워요.</div></div><div class="opt-arr">›</div>
       </div>
@@ -6955,9 +7000,6 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
       </div>
       <div class="option" style="border-color:var(--green-border);" onclick="pickWellnessGoal_('face')">
         <div class="opt-ico">✨</div><div><div class="opt-name">얼굴 교정·관리</div><div class="opt-desc">얼굴이 치우치거나 붓는 게 신경 쓰여요.</div></div><div class="opt-arr">›</div>
-      </div>
-      <div class="option" style="border-color:var(--green-border);" onclick="pickWellnessGoal_('prevention')">
-        <div class="opt-ico">🌿</div><div><div class="opt-name">예방·유지 관리 (셀프 통증 케어)</div><div class="opt-desc">또 아플까 봐 걱정되고, 스스로 관리하고 싶어요.</div></div><div class="opt-arr">›</div>
       </div>
     </div>
   </div>
@@ -7423,7 +7465,7 @@ const SYMPTOM_HUBS = {
 };
 
 const PROFILE_BRANCH_CHIP_LABEL = {
-  program: '내게 맞는 프로그램 찾아보기',
+  program: '건강 상태 체크하고, 나에게 적합한 프로그램 찾기',
   treatment: '통증·재활',
   wellness: '움직임·자세',
   expert: '전문가 교육',
@@ -8664,10 +8706,10 @@ function runProfileBranchAction(){
 
 function startFindProgram_(){
   P = {};
-  pSet('mode', '');
-  consultFlowKind = 'treatment';
+  pSet('mode', 'wellness');
+  consultFlowKind = 'wellness';
   bc('맞춤 프로그램');
-  goS('s-p1');
+  goS('s-p-wellness');
 }
 
 function chooseProgramPath_(kind){
@@ -8968,7 +9010,7 @@ function getTreatmentSummaryRows_(){
 }
 
 function getWellnessSummaryRows_(){
-  const goalKo = { stretch:'유연성 향상', posture:'자세·체형 교정', fitness:'기능·체력 향상', face:'얼굴 교정·관리', prevention:'예방·셀프 케어' };
+  const goalKo = { stretch:'유연성 향상', posture:'자세·체형 교정', fitness:'기능·체력 향상', face:'얼굴 교정·관리', prevention:'통증 예방·유지 관리 (셀프 통증 케어)' };
   const comfortKo = { none:'불편 없음', mild:'가벼운 불편', exercise:'운동·스트레칭 시 불편', daily:'일상생활 어려움' };
   const rows = [];
   if(P.goal) rows.push({ dt: '프로그램', dd: goalKo[P.goal] || P.goal });
@@ -9095,7 +9137,7 @@ function resolveScreenForBcPrefix_(prefix){
   if(last === '전체 구조 상세보기') return { screen: 's-psp3' };
 
   if(prefix[0] === '맞춤 프로그램'){
-    if(prefix.length === 1) return { screen: 's-p1' };
+    if(prefix.length === 1) return { screen: 's-p-wellness', flow: 'wellness' };
     return resolveScreenForBcPrefix_(prefix.slice(1));
   }
 
@@ -9368,7 +9410,7 @@ function buildConsultSelectionRows(opts){
   const sevKo = { mild:'경증 (VAS 1~3)', moderate:'중등도 (VAS 4~6)', severe:'중증 (VAS 7~10)' };
   const areaKo = { neck:'목 어깨 등', back:'허리 골반', arm:'팔꿈치 상지', leg:'무릎 하지', full:'여러 곳이 불편해요' };
   const qualKo = { aching:'뻐근·묵직', tight:'당김·뻣뻣', sharp:'찌릿·저림', sharp_local:'날카로운(한 점)', tear:'찢어지는 느낌' };
-  const goalKo = { stretch:'유연성 향상', posture:'자세·체형 교정', fitness:'기능·체력 향상', face:'얼굴 교정·관리', prevention:'예방·셀프 케어' };
+  const goalKo = { stretch:'유연성 향상', posture:'자세·체형 교정', fitness:'기능·체력 향상', face:'얼굴 교정·관리', prevention:'통증 예방·유지 관리 (셀프 통증 케어)' };
   const wantKo = { cmt:'CMT · 도수치료', ifc:'IFC 얼굴 교정', pstr:'Re:Al 움직임' };
   const typeKo = { medical:'의료인', wellness:'웰니스 전문가', beginner:'입문/공부 중', other:'기타', doctor:'의사·한의사', pt:'물리치료사', pt_student:'물리치료 학생' };
   const levelKo = { none:'처음', basic:'기초 있음', advanced:'실무 중' };
@@ -10115,8 +10157,7 @@ function updateProfileSticky(){
 
 function openProfileQuickConsult(){
   pushProfileViewLog_('빠른 상담 신청');
-  consultFlowKind = 'profile_quick';
-  openConsultModal();
+  window.open('https://pf.kakao.com/_nVSxdn/chat', '_blank', 'noopener,noreferrer');
 }
 
 function openConsultModal(opts){
@@ -11442,7 +11483,7 @@ const wellnessProgs = {
   posture:    { name:'자세·체형 교정 프로그램', desc:'불필요한 긴장을 없애고 편안한 호흡이 기준이 되는 바른 자세를 만들어갑니다. 누운 자세→앉기→서기 순으로 진행합니다.', next:'자세가 안정되면 기능운동·스포츠 활동으로 이어집니다.' },
   fitness:    { name:'기능·체력 향상 프로그램', desc:'PAR 시스템(Passive·Active·Resistive)으로 단계적으로 기능과 체력을 끌어올립니다. 림프 전신 운동과 근막경선 운동이 포함됩니다.', next:'기능이 향상되면 스포츠·고강도 훈련으로 연결할 수 있습니다.' },
   face:       { name:'IFC 얼굴 교정 프로그램',  desc:'두개골·안면 구조와 자세의 연결에서 접근합니다. 비수술 비침습으로 자연스러운 얼굴 균형을 회복합니다.', next:'얼굴 교정 후 자세·체형 관리와 병행하면 더욱 효과적입니다.' },
-  prevention: { name:'예방·셀프 케어 프로그램',  desc:'생활습관 코칭 중심으로 스스로 몸을 관리하는 법을 익힙니다. 재발 방지와 장기적인 건강 유지가 목표입니다.', next:'셀프 케어 습득 후 정기적인 체크업으로 유지합니다.' },
+  prevention: { name:'통증 예방·유지 관리 (셀프 통증 케어) 프로그램',  desc:'생활습관 코칭 중심으로 스스로 몸을 관리하는 법을 익힙니다. 재발 방지와 장기적인 건강 유지가 목표입니다.', next:'셀프 케어 습득 후 정기적인 체크업으로 유지합니다.' },
 };
 
 function renderWellnessResult(){
