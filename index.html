@@ -4499,6 +4499,11 @@ body:has(#s-home.active) { background: #cad6db; }
 #s-home .pl-home-links {
   margin: 0 0 14px;
 }
+#s-home .pl-home-academy {
+  min-height: 84px;
+  margin: 0 0 14px;
+}
+#s-home .pl-home-academy .lt-label { white-space: normal; }
 #s-home .pl-trust-num {
   font-size: 15px;
   font-weight: 800;
@@ -4927,6 +4932,12 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
 
         <section id="profileBranchPickerAnchor" aria-label="관심 분야">
           <div class="lt-links" role="group">
+            <button type="button" class="lt-btn lt-btn--wide" data-branch="program" aria-label="내 건강 상태 체크하고, 적합한 프로그램 찾기" onclick="selectProfileBranch('program')">
+              <span class="lt-thumb" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-3.5-3.5"/></svg>
+              </span>
+              <span class="lt-label">내 건강 상태 체크하고, 적합한 프로그램 찾기</span>
+            </button>
             <div class="lt-places">
             <a class="lt-btn lt-btn--place lt-btn--wide" href="https://naver.me/x2YstInq" target="_blank" rel="noopener noreferrer" aria-label="리얼무브먼트 서울 약수점">
               <span class="lt-thumb" aria-hidden="true">
@@ -4953,18 +4964,6 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
               </span>
             </a>
             </div>
-            <button type="button" class="lt-btn lt-btn--wide" data-branch="program" aria-label="내 건강 상태 체크하고, 적합한 프로그램 찾기" onclick="selectProfileBranch('program')">
-              <span class="lt-thumb" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-3.5-3.5"/></svg>
-              </span>
-              <span class="lt-label">내 건강 상태 체크하고, 적합한 프로그램 찾기</span>
-            </button>
-            <a class="lt-btn lt-btn--wide" href="https://breezefeel.github.io/academy/" target="_blank" rel="noopener noreferrer" aria-label="전문가를 위한 치료/운동 컨셉 알아보기">
-              <span class="lt-thumb" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19V7l8-3 8 3v12"/><path d="M4 10l8 3 8-3"/><path d="M12 13v6"/></svg>
-              </span>
-              <span class="lt-label">전문가를 위한 [치료/운동] 컨셉 살펴보기</span>
-            </a>
           </div>
         </section>
 
@@ -4972,13 +4971,19 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
           <div class="pl-activity-track" id="profileActivityTrack"></div>
         </div>
 
+        <a class="lt-btn lt-btn--wide pl-home-academy" href="https://breezefeel.github.io/academy/" target="_blank" rel="noopener noreferrer" aria-label="전문가를 위한 치료/운동 컨셉 알아보기">
+          <span class="lt-thumb" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19V7l8-3 8 3v12"/><path d="M4 10l8 3 8-3"/><path d="M12 13v6"/></svg>
+          </span>
+          <span class="lt-label">전문가를 위한 [치료/운동] 교육 과정</span>
+        </a>
         <div class="pl-home-links" id="profileHomeLinks" aria-label="약력·PSP">
           <div class="pl-home-links-grid">
             <div class="pl-home-link-item">
               <a class="pl-home-link-btn pl-home-link-btn--profile" id="profileNaverBlogLink" href="https://blog.naver.com/allenjoy/120205433765" target="_blank" rel="noopener noreferrer" onclick="openProfileNaverBlog_()">약력</a>
             </div>
             <div class="pl-home-link-item">
-              <button type="button" class="pl-home-link-btn pl-home-link-btn--psp" onclick="startPspConcept()">PSP 가이드</button>
+              <button type="button" class="pl-home-link-btn pl-home-link-btn--psp" onclick="startPspConcept()">PSP 컨셉</button>
             </div>
           </div>
         </div>
