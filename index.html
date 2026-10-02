@@ -2845,6 +2845,16 @@ body {
     background: #f3eef8;
     border: 1px solid #ddd0ee;
   }
+  #s-psp3 .proto-doc .mv-media-row a.yt.is-locked[data-gate="4"] {
+    color: #0f5f63;
+    background: #e7f6f4;
+    border: 1px solid #b7ddd8;
+  }
+  #s-psp3 .proto-doc .mv-media-row a.yt.is-locked[data-gate="5"] {
+    color: #8d3a4e;
+    background: #fbecef;
+    border: 1px solid #efc9d2;
+  }
   #s-psp3 .q-header {
     display: flex;
     align-items: center;
@@ -4080,7 +4090,45 @@ body {
     line-height: 1.3;
     text-decoration: none;
   }
-  #s-psp3 .proto-doc details.proto-acc > summary .acc-yt + .chev { margin-left: 8px; }
+  #s-psp3 .proto-doc details.proto-acc.step-2 > summary,
+  #s-psp3 .proto-doc details.proto-acc.step-3 > summary {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+  #s-psp3 .proto-doc details.proto-acc > summary .acc-name {
+    flex: 1 1 auto;
+    min-width: min(100%, 11em);
+    line-height: 1.35;
+  }
+  #s-psp3 .proto-doc details.proto-acc > summary .acc-name .sub {
+    margin-left: 6px;
+  }
+  #s-psp3 .proto-doc details.proto-acc > summary .acc-tail {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex: 0 0 auto;
+  }
+  #s-psp3 .proto-doc details.proto-acc > summary .acc-tail + .chev { margin-left: 8px; }
+  #s-psp3 .proto-doc details.proto-acc > summary .acc-cafe {
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+    background: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  #s-psp3 .proto-doc details.proto-acc > summary .acc-cafe--cmt { color: #2563eb; }
+  #s-psp3 .proto-doc details.proto-acc > summary .acc-cafe--ifc { color: #b06d1a; }
+  #s-psp3 .proto-doc details.proto-acc > summary .acc-cafe--real { color: #8a6a10; }
+  #s-psp3 .proto-doc details.proto-acc > summary .acc-cafe:hover { color: #fff; }
+  #s-psp3 .proto-doc details.proto-acc > summary .acc-cafe--cmt:hover { background: #2563eb; }
+  #s-psp3 .proto-doc details.proto-acc > summary .acc-cafe--ifc:hover { background: #b06d1a; }
+  #s-psp3 .proto-doc details.proto-acc > summary .acc-cafe--real:hover { background: #8a6a10; }
   #s-psp3 .proto-doc details.proto-acc > summary .chev {
     margin-left: auto;
     color: var(--text-dim);
@@ -6424,7 +6472,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
     <summary><span class="meta">P</span> 실전(Practice) <span class="sub">Manual Therapy · Movement</span><span class="chev">▾</span></summary>
     <div class="acc-body">
   <details class="proto-acc step-2">
-    <summary><span class="meta">STEP 01</span> Manual Therapy <span class="sub">연부조직·관절</span><span class="chev">▾</span></summary>
+    <summary><span class="meta">STEP 01</span><span class="acc-name">Manual Therapy <span class="sub">연부조직·관절</span></span><span class="acc-tail"><a class="acc-cafe acc-cafe--cmt" href="https://cafe.naver.com/ksnim/1076" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="CMT 영상 카페 공지">CMT</a><a class="acc-cafe acc-cafe--ifc" href="https://cafe.naver.com/ifc/51" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="IFC 영상 카페 공지">IFC</a></span><span class="chev">▾</span></summary>
     <div class="acc-body">
   <div class="section">
     <div class="step-header">
@@ -6584,7 +6632,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
     </div>
 
     <!-- Body · Face — CMT / IFC -->
-    <details class="proto-acc step-2-body" style="margin-top:16px;">
+    <details class="proto-acc step-2-body" data-video-gate="4" style="margin-top:16px;">
       <summary><span class="meta">Body</span> CMT 도수치료 <span class="sub">골반·고관절 · 흉추·요추 · 경추·어깨</span><span class="chev">▾</span></summary>
       <div class="acc-body">
         <p style="margin:0 0 12px;font-size:15px;line-height:1.7;color:var(--text);">CMT는 몸 부위를 나누어, 각 부위를 <strong style="color:#2563eb;">Fascia → Muscle → Joint</strong> 순으로 교육합니다. 표층 근막의 활주를 먼저 회복하고, 근육의 긴장과 기능을 맞춘 뒤, 관절 정렬과 가동으로 마무리합니다.</p>
@@ -6604,7 +6652,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
         </div>
       </div>
     </details>
-    <details class="proto-acc step-2-face" style="margin-top:10px;">
+    <details class="proto-acc step-2-face" data-video-gate="5" style="margin-top:10px;">
       <summary><span class="meta">Face</span> IFC 얼굴교정 <span class="sub">Fascia · Muscle · 심층 간질액 · Joint</span><span class="chev">▾</span></summary>
       <div class="acc-body">
         <p style="margin:0 0 12px;font-size:15px;line-height:1.7;color:var(--text);">IFC는 얼굴을 <strong style="color:#2563eb;">Fascia → Muscle → 심층 간질액 → Joint</strong> 순으로 교육합니다. 표층을 먼저 풀고, 근육과 깊은 조직의 흐름을 맞춘 뒤 관절을 다룹니다.</p>
@@ -6624,8 +6672,8 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   <hr class="divider">
 
   <!-- STEP 3: Passive Stretching -->
-  <details class="proto-acc step-3">
-    <summary><span class="meta">STEP 02</span> Movement <span class="sub">PAR · Position</span><span class="chev">▾</span></summary>
+  <details class="proto-acc step-3" data-video-gate="3">
+    <summary><span class="meta">STEP 02</span><span class="acc-name">Movement <span class="sub">PAR · Position</span></span><span class="acc-tail"><a class="acc-cafe acc-cafe--real" href="https://cafe.naver.com/koreaposture/359" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="Re:Al 영상 카페">Re:Al</a></span><span class="chev">▾</span></summary>
     <div class="acc-body">
   <div class="section">
     <div class="step-header">
@@ -12228,7 +12276,23 @@ function renderExpertResult(){
   `;
 }
 
-var PSP_ACCESS_KEY_ = 'pspVideoAccess.v1';
+var PSP_ACCESS_KEY_ = 'pspVideoAccess.v2';
+var PSP_GATE_LABELS_ = {
+  1: '1 누워서 하는 패시브 스트레칭',
+  2: '2 앉아서 하는 액티브 스트레칭',
+  3: '3 PAR 전체 영상',
+  4: '4 CMT 전체 영상',
+  5: '5 IFC 전체 영상'
+};
+
+function pspLinkGate_(anchor){
+  if(!anchor) return '3';
+  var explicit = anchor.getAttribute('data-gate');
+  if(explicit) return String(explicit);
+  var host = anchor.closest ? anchor.closest('[data-video-gate]') : null;
+  if(host && host.getAttribute('data-video-gate')) return String(host.getAttribute('data-video-gate'));
+  return '3';
+}
 
 function pspReadSession_(){
   try {
@@ -12255,23 +12319,29 @@ function pspClearSession_(){
 
 function pspGateAllowed_(gate, access){
   var list = (access || []).map(function(n){ return String(n); });
-  if(list.indexOf('3') >= 0) return true;
-  return list.indexOf(String(gate)) >= 0;
+  var g = String(gate);
+  if(list.indexOf(g) >= 0) return true;
+  if((g === '1' || g === '2') && list.indexOf('3') >= 0) return true;
+  return false;
 }
 
 function pspAccessLabel_(access){
-  var list = (access || []).map(function(n){ return Number(n); }).filter(function(n){
-    return n === 1 || n === 2 || n === 3;
+  var seen = {};
+  var list = [];
+  (access || []).forEach(function(n){
+    n = Number(n);
+    if(n < 1 || n > 5 || seen[n]) return;
+    seen[n] = true;
+    list.push(n);
   });
-  if(!list.length) return '허용 대기';
-  if(list.indexOf(3) >= 0) return '허용 3 · 전체';
-  return '허용 ' + list.join(',');
+  list.sort(function(a, b){ return a - b; });
+  if(!list.length) return '영상 대기';
+  if(list.length === 5) return '영상 1–5 전체';
+  return '영상 ' + list.join(', ');
 }
 
 function pspGateNeedLabel_(gate){
-  if(String(gate) === '1') return '허용 1 (누워서 하는 패시브 스트레칭)';
-  if(String(gate) === '2') return '허용 2 (앉아서 하는 패시브 스트레칭)';
-  return '허용 3 (전체 프로그램)';
+  return PSP_GATE_LABELS_[String(gate)] || PSP_GATE_LABELS_['3'];
 }
 
 function pspSetLoginMsg_(text, kind){
@@ -12292,7 +12362,9 @@ function pspApplyVideoAccess_(access){
   if(!root) return;
   root.querySelectorAll('a.yt').forEach(function(a){
     var src = a.getAttribute('data-src') || '';
-    var open = src && pspGateAllowed_(a.getAttribute('data-gate') || '3', access);
+    var gate = pspLinkGate_(a);
+    if(!a.getAttribute('data-gate')) a.setAttribute('data-gate', gate);
+    var open = src && pspGateAllowed_(gate, access);
     if(open){
       a.href = src;
       a.target = '_blank';
@@ -12304,7 +12376,7 @@ function pspApplyVideoAccess_(access){
       a.removeAttribute('target');
       a.classList.add('is-locked');
       a.setAttribute('aria-disabled', 'true');
-      a.title = pspGateNeedLabel_(a.getAttribute('data-gate') || '3');
+      a.title = pspGateNeedLabel_(gate);
     }
   });
 }
@@ -12384,7 +12456,7 @@ async function pspSubmitLogin_(event){
     return;
   }
   if(tail === '4596' || tail === '7785'){
-    pspFinishLogin_({ name: '', access: [1, 2, 3] });
+    pspFinishLogin_({ name: '', access: [1, 2, 3, 4, 5] });
     return;
   }
   if(typeof CONSULT_WEBHOOK_URL === 'undefined' || !CONSULT_WEBHOOK_URL){
@@ -12428,7 +12500,7 @@ function pspOnLockedVideo_(anchor){
     return;
   }
   pspSetLoginMsg_(
-    '이 영상은 ' + pspGateNeedLabel_(anchor.getAttribute('data-gate') || '3') + '이 필요합니다. 지금은 ' + pspAccessLabel_(session.access) + '입니다.',
+    '이 영상은 ' + pspGateNeedLabel_(pspLinkGate_(anchor)) + '이 필요합니다. 지금은 ' + pspAccessLabel_(session.access) + '입니다.',
     'err'
   );
 }
