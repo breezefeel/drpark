@@ -9970,16 +9970,17 @@ function renderSymptomHub_(hubId){
     '<div class="hub-eyebrow">증상 가이드 · ' + escapeHtml(hub.shortTitle) + '</div>' +
     '<h1 class="hub-title">' + escapeHtml(hub.title) + '</h1>' +
     '<p class="hub-summary">' + escapeHtml(hub.summary) + '</p>' +
+    '<section class="hub-section"><h3>지금 할 수 있는 한 가지</h3><p>' + escapeHtml(hub.selfCare) + '</p><p style="margin-top:8px;"><strong>주의:</strong> ' + escapeHtml(hub.caution) + '</p></section>' +
     '<section class="hub-section"><h3>먼저 확인해 보세요</h3><ul class="hub-check-list">' + checks + '</ul></section>' +
+    '<div class="hub-alert"><h3>병원 진료·검사를 먼저 권하는 경우</h3><ul class="hub-check-list">' + hospital + '</ul><p style="margin:10px 0 0;font-size:15px;line-height:1.55;">적신호가 있으면 운동·스트레칭을 늘리지 말고 병원 평가를 먼저 받으세요. 미카닥은 현재 병원 근무가 아니며, 필요한 경우 병원 연계를 안내합니다.</p></div>' +
     '<section class="hub-section"><h3>가능한 원인 (이해를 돕기 위한 일반 정보)</h3><p>' + escapeHtml(hub.causes) + '</p></section>' +
-    '<div class="hub-program"><h3>병원 우선 신호를 제외하면 — 운동·재활 프로그램 병행을 권합니다</h3><p>' + escapeHtml(hub.programText) + '</p><p class="hub-program-note">Real Movement에서는 체계적인 평가와 상담을 통해 현재 단계에서 진행 가능한 운동·재활 프로그램을 제안하고, 병원에서 함께 진행하면 좋은 부분도 안내해 드립니다.</p></div>' +
-    '<div class="hub-alert"><h3>병원 진료·검사를 먼저 권하는 경우</h3><ul class="hub-check-list">' + hospital + '</ul></div>' +
-    '<section class="hub-section"><h3>집에서 시도해 볼 수 있는 것 (통증 범위 안)</h3><p>' + escapeHtml(hub.selfCare) + '</p><p style="margin-top:8px;"><strong>주의:</strong> ' + escapeHtml(hub.caution) + '</p></section>' +
+    '<div class="hub-program"><h3>병원 우선 신호를 제외하면 — 운동·재활 프로그램 병행을 권합니다</h3><p>' + escapeHtml(hub.programText) + '</p><p class="hub-program-note">빠른 해결 약속이 아니라, 평가 후 움직임으로 단계를 맞춥니다. Real Movement는 현재 단계에서 가능한 프로그램과 병원과 병행할 부분을 함께 안내합니다.</p></div>' +
     '<section class="hub-section"><h3>근골격계 전문가 관점</h3><p>' + escapeHtml(hub.expertView) + '</p></section>' +
     '<section class="hub-section hub-faq"><h3>자주 묻는 질문</h3>' + faq + '</section>' +
     '<div class="hub-actions">' +
-      '<button type="button" class="hub-btn-primary" onclick="startHubTreatmentFlow_(\'' + hub.id + '\')">' + escapeHtml(hub.shortTitle) + ' 맞춤 문진 시작 →</button>' +
-      '<button type="button" class="hub-btn-ghost" onclick="openProfileQuickConsult()">빠른 상담 문의</button>' +
+      '<p style="margin:0 0 8px;font-size:15px;line-height:1.55;color:var(--dim);">문진은 진단이 아닙니다. 나에게 맞는지·다음 단계만 짧게 확인합니다.</p>' +
+      '<button type="button" class="hub-btn-primary" onclick="startHubTreatmentFlow_(\'' + hub.id + '\')">나에게 맞는지 문진으로 확인 →</button>' +
+      '<button type="button" class="hub-btn-ghost" onclick="openProfileQuickConsult()">빠른 상담 · 기대치 확인</button>' +
     '</div>' +
     '<p class="hub-disclaimer">※ 일반 정보 안내이며 진단·처방이 아닙니다. 미카닥 박준규는 현재 병원에서 근무하지 않습니다. 통증이 심하거나 적신호가 있으면 병원 진료를 먼저 받으세요.</p>';
 }
