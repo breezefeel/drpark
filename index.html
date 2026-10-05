@@ -2882,11 +2882,27 @@ body {
   }
   #s-psp3 .psp-login-btn:hover { background: #1e3a6e; color: #fff; }
   #s-psp3 .psp-login-who:not([hidden]) {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 4px;
     font-size: 13px;
     font-weight: 700;
     color: #1e3a6e;
-    white-space: nowrap;
+    line-height: 1.35;
+    text-align: right;
   }
+  #s-psp3 .psp-grade {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 999px;
+    font-weight: 800;
+  }
+  #s-psp3 .psp-grade--cmt { background: #D7E2F3; color: #1E3A6E; }
+  #s-psp3 .psp-grade--ifc { background: #F8DDE3; color: #B01030; }
+  #s-psp3 .psp-grade--real { background: #F3E4C4; color: #7A5A2B; }
+  #s-psp3 .psp-grade--passive { background: #E3F2EA; color: #1F7A5C; }
   #s-psp3 .psp-login-panel {
     display: flex;
     align-items: center;
@@ -10481,6 +10497,12 @@ function initProfileDeepLink_(launchSearch){
   const params = new URLSearchParams(launchSearch || window.location.search);
   const flow = (params.get('flow') || '').toLowerCase();
   if(flow === 'psp'){
+    const page = (params.get('page') || '1').toLowerCase();
+    if(page === '2' || page === 'detail'){
+      pushProfileViewLog_('딥링크: PSP 전체 구조');
+      goPsp3();
+      return;
+    }
     startPspConcept();
     return;
   }
@@ -12276,7 +12298,7 @@ function renderExpertResult(){
   `;
 }
 
-var PSP_ACCESS_KEY_ = 'pspVideoAccess.v2';
+var PSP_ACCESS_KEY_ = 'pspVideoAccess.v3';
 var PSP_GATE_LABELS_ = {
   1: '1 누워서 하는 패시브 스트레칭',
   2: '2 앉아서 하는 액티브 스트레칭',
@@ -12306,10 +12328,29 @@ function pspReadSession_(){
   }
 }
 
+function pspCourseList_(courses){
+  var order = ['CMT', 'IFC', 'Re:Al', '패시브 스트레칭'];
+  var have = {};
+  (courses || []).forEach(function(c){
+    var s = String(c || '').trim();
+    if(s) have[s] = true;
+  });
+  return order.filter(function(c){ return have[c]; });
+}
+
+function pspGradeClass_(name){
+  if(name === 'CMT') return 'psp-grade--cmt';
+  if(name === 'IFC') return 'psp-grade--ifc';
+  if(name === 'Re:Al') return 'psp-grade--real';
+  if(name === '패시브 스트레칭') return 'psp-grade--passive';
+  return '';
+}
+
 function pspWriteSession_(data){
   sessionStorage.setItem(PSP_ACCESS_KEY_, JSON.stringify({
     name: data.name || '',
-    access: data.access || []
+    access: data.access || [],
+    courses: data.courses || []
   }));
 }
 
@@ -12388,8 +12429,17 @@ function pspRenderLoginSlot_(session){
   if(!who || !panel) return;
   if(session){
     who.hidden = false;
-    var label = pspAccessLabel_(session.access);
-    who.textContent = session.name ? (session.name + ' · ' + label) : label;
+    var grades = pspCourseList_(session.courses);
+    if(grades.length){
+      var html = session.name ? (escapeHtml(session.name) + '<span>·</span>') : '';
+      html += grades.map(function(g){
+        return '<span class="psp-grade ' + pspGradeClass_(g) + '">' + escapeHtml(g) + '</span>';
+      }).join('');
+      who.innerHTML = html;
+    } else {
+      var label = pspAccessLabel_(session.access);
+      who.textContent = session.name ? (session.name + ' · ' + label) : label;
+    }
     panel.hidden = true;
     if(logout) logout.hidden = false;
   } else {
@@ -12480,7 +12530,8 @@ async function pspSubmitLogin_(event){
     }
     pspFinishLogin_({
       name: data.name || '',
-      access: Array.isArray(data.access) ? data.access : []
+      access: Array.isArray(data.access) ? data.access : [],
+      courses: Array.isArray(data.courses) ? data.courses : []
     });
   } catch (err) {
     pspShowApplyLink_(true);
