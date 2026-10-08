@@ -5653,11 +5653,11 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
 
         <section id="profileBranchPickerAnchor" aria-label="관심 분야">
           <div class="lt-links" role="group">
-            <button type="button" class="lt-btn lt-btn--wide" data-branch="program" aria-label="건강 상태 체크하고, 나에게 적합한 프로그램 찾기" onclick="selectProfileBranch('program')">
+            <button type="button" class="lt-btn lt-btn--wide" data-branch="program" aria-label="내 건강 상태 체크해보기" onclick="selectProfileBranch('program')">
               <span class="lt-thumb" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-3.5-3.5"/></svg>
               </span>
-              <span class="lt-label">건강 상태 체크하고, 나에게 적합한 프로그램 찾기</span>
+              <span class="lt-label">내 건강 상태 체크해보기</span>
             </button>
             <div class="lt-places">
             <a class="lt-btn lt-btn--place lt-btn--wide" href="https://naver.me/x2YstInq" target="_blank" rel="noopener noreferrer" aria-label="리얼무브먼트 서울 약수점">
@@ -5685,11 +5685,11 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
               </span>
             </a>
             </div>
-            <a class="lt-btn lt-btn--wide" href="https://breezefeel.github.io/academy/" target="_blank" rel="noopener noreferrer" aria-label="전문가 과정 살펴보기">
+            <a class="lt-btn lt-btn--wide" href="https://breezefeel.github.io/academy/" target="_blank" rel="noopener noreferrer" aria-label="전문가 과정">
               <span class="lt-thumb" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19V7l8-3 8 3v12"/><path d="M4 10l8 3 8-3"/><path d="M12 13v6"/></svg>
               </span>
-              <span class="lt-label">전문가 과정 살펴보기</span>
+              <span class="lt-label">전문가 과정</span>
             </a>
           </div>
         </section>
@@ -8085,7 +8085,7 @@ const SYMPTOM_HUBS = {
 };
 
 const PROFILE_BRANCH_CHIP_LABEL = {
-  program: '건강 상태 체크하고, 나에게 적합한 프로그램 찾기',
+  program: '내 건강 상태 체크해보기',
   treatment: '통증·재활',
   wellness: '움직임·자세',
   expert: '전문가 교육',
@@ -8126,6 +8126,21 @@ const WELLNESS_FLOW_BASE_ = ['s-p-intro', 's-p-wellness', 's-p-w-comfort'];
 
 const PROFILE_PUBLIC_URL = 'https://breezefeel.github.io/drpark/';
 const PROFILE_ACTIVITY_BASE = PROFILE_PUBLIC_URL;
+/** 로컬 미리보기: 15번부터는 ./profile-activity/ (배포 전에는 GitHub Pages 루트에 같은 파일명으로 업로드) */
+const PROFILE_ACTIVITY_LOCAL_FROM = 15;
+function profileActivitySrc_(name) {
+  var n = parseInt(String(name).replace(/\D/g, ''), 10) || 0;
+  var host = '';
+  try { host = String(location.hostname || ''); } catch (e0) {}
+  var local =
+    location.protocol === 'file:' ||
+    host === 'localhost' ||
+    host === '127.0.0.1';
+  if (local && n >= PROFILE_ACTIVITY_LOCAL_FROM) {
+    return './profile-activity/' + name;
+  }
+  return PROFILE_ACTIVITY_BASE + name;
+}
 const PROFILE_ACTIVITY_PHOTOS = [
   'activity-01.jpg',
   'activity-02.jpg',
@@ -8141,11 +8156,24 @@ const PROFILE_ACTIVITY_PHOTOS = [
   'activity-12.jpg',
   'activity-13.jpg',
   'activity-14.jpg',
-].map(function (name) { return PROFILE_ACTIVITY_BASE + name; });
+  'activity-15.jpg',
+  'activity-16.jpg',
+  'activity-17.jpg',
+  'activity-18.jpg',
+  'activity-19.jpg',
+  'activity-20.jpg',
+  'activity-21.jpg',
+  'activity-22.jpg',
+].map(profileActivitySrc_);
 
 const PROFILE_ACTIVITY_FOCUS = {
   'activity-01.jpg': 'center top',
   'activity-02.jpg': 'center top',
+  'activity-15.jpg': 'center 22%',
+  'activity-16.jpg': 'center 28%',
+  'activity-17.jpg': 'center 40%',
+  'activity-18.jpg': 'center 35%',
+  'activity-19.jpg': 'center 40%',
 };
 
 function buildProfileActivitySet_() {
