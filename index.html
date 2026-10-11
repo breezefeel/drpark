@@ -1374,6 +1374,19 @@ body {
 .zone-treatment .zone-title { color: var(--treat-title); }
 .zone-line-label { font-size: var(--fs-min); color: var(--dim); font-weight: 500; }
 .zone-line-dash { flex: 1; border-top: 1px dashed var(--border); }
+.zone-seq {
+  display: flex; align-items: baseline; flex-wrap: wrap;
+  gap: 3px 5px; margin-top: 6px;
+  font-size: 12.5px; line-height: 1.35; letter-spacing: -0.02em;
+}
+.zone-seq-k { font-weight: 600; margin-right: 1px; }
+.zone-seq-n { font-weight: 700; white-space: nowrap; }
+.zone-seq-ex { font-weight: 500; color: var(--dim); white-space: nowrap; }
+.zone-seq-a { color: var(--dim); font-weight: 400; opacity: 0.65; }
+.zone-wellness .zone-seq-k,
+.zone-wellness .zone-seq-n { color: var(--well-title); }
+.zone-treatment .zone-seq-k,
+.zone-treatment .zone-seq-n { color: var(--treat-title); }
 
 #s-psp3 .proto-doc .header .header-inner { position: relative; z-index: 1; }
 #s-psp3 .proto-doc .header .header-roadmap {
@@ -6071,6 +6084,14 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
           <div>
             <div class="zone-title">웰니스 영역</div>
             <div class="zone-desc">통증 없음: 더 좋은 상태로 끌어올리는 과정</div>
+            <div class="zone-seq" aria-label="움직임 순서. Passive, Active, Resistive">
+              <span class="zone-seq-k">움직임</span>
+              <span class="zone-seq-n">Passive</span>
+              <span class="zone-seq-a" aria-hidden="true">→</span>
+              <span class="zone-seq-n">Active</span>
+              <span class="zone-seq-a" aria-hidden="true">→</span>
+              <span class="zone-seq-n">Resistive</span>
+            </div>
           </div>
         </div>
         <div class="zone-line">
@@ -6083,6 +6104,13 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
           <div>
             <div class="zone-title">통증·재활 영역</div>
             <div class="zone-desc">통증 있음: 병원 연계·재활로 회복하는 과정</div>
+            <div class="zone-seq" aria-label="침습적 치료 수술·약 다음, 비침습적 치료 도수·운동">
+              <span class="zone-seq-n">침습</span>
+              <span class="zone-seq-ex">수술·약</span>
+              <span class="zone-seq-a" aria-hidden="true">→</span>
+              <span class="zone-seq-n">비침습</span>
+              <span class="zone-seq-ex">도수·운동</span>
+            </div>
           </div>
         </div>
       </div>
