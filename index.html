@@ -1909,6 +1909,15 @@ body {
 .consult-actions {
   display: flex; gap: 10px; margin-top: 16px; align-items: stretch;
 }
+.consult-actions.hidden { display: none; }
+.consult-anytime-btn {
+  flex: 1; display: inline-flex; align-items: center; justify-content: center;
+  padding: 15px 16px; font-size: 15px; font-weight: 700; font-family: inherit;
+  color: #374151; background: #fff; border: 1.5px solid #e5e7eb; border-radius: 12px;
+  cursor: pointer; white-space: nowrap;
+}
+.consult-anytime-btn:hover { border-color: var(--green-border); background: var(--green-bg); color: #2563eb; }
+.consult-anytime-btn:disabled { opacity: .5; cursor: not-allowed; }
 .consult-actions .consult-submit {
   flex: 1; width: auto; margin-top: 0;
   padding: 15px 16px; border-radius: 12px; font-size: 15px; font-family: inherit;
@@ -8227,7 +8236,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
     <h2 id="consultModalTitle" class="consult-modal-title">상담 신청</h2>
     <p id="consultQuickHint" class="consult-modal-sub consult-quick-hint hidden">휴대폰 번호 알려주시면 1시간 안에 연락드릴게요</p>
     <div class="consult-contact-block" id="consultContactBlock">
-      <div class="consult-field">
+      <div class="consult-field" id="consultPhoneField">
         <span class="consult-field-label-block">연락처</span>
         <div class="consult-phone-row" role="group" aria-label="휴대전화 번호">
           <input type="text" class="consult-phone-part consult-phone-prefix" id="consultPhoneP1" value="010" readonly inputmode="numeric" tabindex="-1" aria-label="앞자리 010">
@@ -8237,12 +8246,12 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
           <input type="tel" class="consult-phone-part" id="consultPhoneP3" maxlength="4" inputmode="numeric" pattern="[0-9]*" autocomplete="tel-national" aria-label="끝 네 자리" placeholder="0000" oninput="onConsultPhoneLastInput()" onkeydown="onConsultPhoneLastKeydown(event)">
         </div>
       </div>
-      <div class="consult-field">
+      <div class="consult-field" id="consultNameField">
         <label for="consultName" id="consultNameLabel">이름</label>
         <input type="text" id="consultName" autocomplete="name" placeholder="홍길동" maxlength="40">
       </div>
-      <div class="consult-field consult-schedule-field">
-        <span class="consult-field-label-block">검사/상담 일정 <span class="consult-schedule-optional">(선택)</span></span>
+      <div class="consult-field consult-schedule-field hidden" id="consultScheduleField">
+        <span class="consult-field-label-block">상담/검사 일정 <span class="consult-schedule-optional">(선택)</span></span>
         <div id="consultScheduleAdded" class="consult-schedule-added" aria-live="polite"></div>
         <div class="consult-schedule-builder">
           <div class="consult-schedule-group">
@@ -8283,8 +8292,12 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
       <textarea id="consultInquiry" maxlength="2000" placeholder="일정·비용·과정 내용 등 궁금하신 점을 적어 주세요."></textarea>
     </div>
     <div class="consult-actions" id="consultActionsRow">
-      <button type="button" class="consult-submit" id="consultSubmitBtn" onclick="submitConsultForm()">보내기</button>
+      <button type="button" class="consult-submit" id="consultSubmitBtn" onclick="goConsultScheduleStep_()">보내기</button>
       <a href="http://pf.kakao.com/_nVSxdn/chat" target="_blank" rel="noopener noreferrer" class="consult-chat-btn hidden" id="consultChatBtn">채팅 상담</a>
+    </div>
+    <div class="consult-actions hidden" id="consultScheduleActions">
+      <button type="button" class="consult-anytime-btn" id="consultAnytimeBtn" onclick="submitConsultForm('anytime')">아무때나</button>
+      <button type="button" class="consult-submit" id="consultScheduleSubmitBtn" onclick="submitConsultForm()">보내기</button>
     </div>
     <p id="consultSubmitting" class="consult-submitting hidden" aria-live="polite">전송 중…</p>
   </div>
@@ -8383,6 +8396,8 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   </div>
 </div>
 
+<script src="profile-reviews-db.js"></script>
+<script src="profile-beauty-reviews-db.js"></script>
 <script>
 // ── STATE ──
 let H = ['s-home'];
@@ -10717,6 +10732,8 @@ function getConsultPhoneCombined(){
 
 let consultScheduleEntries_ = [];
 let consultScheduleDraftDay_ = null;
+let consultAnytime_ = false;
+let consultOnScheduleStep_ = false;
 
 const CONSULT_SCHEDULE_DAY_ORDER_ = ['월','화','수','목','금','토'];
 const CONSULT_SCHEDULE_TIME_ORDER_ = ['오전','오후','저녁'];
@@ -10827,6 +10844,7 @@ function getConsultScheduleSelection_(){
 }
 
 function formatConsultScheduleDisplay_(){
+  if(consultAnytime_) return '아무때나';
   if(!consultScheduleEntries_.length) return '';
   return consultScheduleEntries_.map(function (e) {
     return e.day + '(' + e.times.join('·') + ')';
@@ -10834,6 +10852,11 @@ function formatConsultScheduleDisplay_(){
 }
 
 function appendConsultScheduleToText_(text){
+  if(text && text.indexOf('희망 일정') >= 0) return text;
+  if(consultAnytime_){
+    const anytimeLine = '희망 일정: 아무때나';
+    return text ? text + '\n\n' + anytimeLine : anytimeLine;
+  }
   const sched = formatConsultScheduleDisplay_();
   if(!sched) return text;
   const line = '희망 일정: ' + sched;
@@ -11054,6 +11077,21 @@ function initProfileDeepLink_(launchSearch){
   profileBranch = 'wellness';
   pSet('mode', 'wellness');
   consultFlowKind = 'wellness';
+  if((params.get('start') || '').toLowerCase() === 'q'){
+    document.querySelector('.screen.active').classList.remove('active');
+    document.getElementById('s-p-wellness').classList.add('active');
+    H = ['s-home', 's-p-wellness'];
+    bcPath = ['움직임·자세'];
+    updateBc();
+    updateQuestionStepBadges_('s-p-wellness');
+    recordNavCheckpoint_();
+    updateProgress('s-p-wellness');
+    updateProfileSticky();
+    window.scrollTo(0, 0);
+    history.replaceState(buildProfileHistoryState_('s-p-wellness'), '', window.location.pathname + (window.location.hash || ''));
+    pushProfileViewLog_('딥링크: 상담 질문');
+    return;
+  }
   document.querySelector('.screen.active').classList.remove('active');
   document.getElementById('s-p-intro').classList.add('active');
   H = ['s-home', 's-p-intro'];
@@ -11374,8 +11412,11 @@ function openConsultModal(opts){
   }
   document.getElementById('consultPhoneP2').value = '';
   document.getElementById('consultPhoneP3').value = '';
+  document.getElementById('consultName').value = '';
   resetConsultSchedulePicker_();
-  const schedField = document.querySelector('.consult-schedule-field');
+  consultAnytime_ = false;
+  setConsultModalStep_('contact');
+  const schedField = document.getElementById('consultScheduleField');
   if(schedField){
     schedField.classList.toggle('consult-schedule-field--focus', !!(opts.emphasizeSchedule || isWellness));
   }
@@ -11384,15 +11425,63 @@ function openConsultModal(opts){
   document.body.style.overflow = 'hidden';
   const submitBtn = document.getElementById('consultSubmitBtn');
   if(submitBtn) submitBtn.disabled = false;
+  const anytimeBtn = document.getElementById('consultAnytimeBtn');
+  const scheduleSubmitBtn = document.getElementById('consultScheduleSubmitBtn');
+  if(anytimeBtn) anytimeBtn.disabled = false;
+  if(scheduleSubmitBtn) scheduleSubmitBtn.disabled = false;
   const submittingEl = document.getElementById('consultSubmitting');
   if(submittingEl) submittingEl.classList.add('hidden');
   requestAnimationFrame(function () {
-    if(opts.emphasizeSchedule || isWellness){
-      const sf = document.querySelector('.consult-schedule-field');
-      if(sf) sf.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
     document.getElementById('consultPhoneP2').focus();
   });
+}
+
+function setConsultModalStep_(step){
+  consultOnScheduleStep_ = step === 'schedule';
+  const phoneField = document.getElementById('consultPhoneField');
+  const nameField = document.getElementById('consultNameField');
+  const schedField = document.getElementById('consultScheduleField');
+  const summaryBlock = document.getElementById('consultSummaryBlock');
+  const quickInquiryBlock = document.getElementById('consultQuickInquiryBlock');
+  const expertFields = document.getElementById('consultExpertFields');
+  const quickHint = document.getElementById('consultQuickHint');
+  const contactActions = document.getElementById('consultActionsRow');
+  const scheduleActions = document.getElementById('consultScheduleActions');
+  const title = document.getElementById('consultModalTitle');
+  const isQuick = consultFlowKind === 'profile_quick';
+  const isExpert = consultFlowKind === 'expert';
+  if(phoneField) phoneField.classList.toggle('hidden', consultOnScheduleStep_);
+  if(nameField) nameField.classList.toggle('hidden', consultOnScheduleStep_);
+  if(schedField) schedField.classList.toggle('hidden', !consultOnScheduleStep_);
+  if(summaryBlock) summaryBlock.classList.toggle('hidden', consultOnScheduleStep_ || isQuick);
+  if(quickInquiryBlock) quickInquiryBlock.classList.toggle('hidden', consultOnScheduleStep_ || !isQuick);
+  if(expertFields) expertFields.classList.toggle('hidden', consultOnScheduleStep_ || !isExpert);
+  if(quickHint) quickHint.classList.toggle('hidden', consultOnScheduleStep_ || !isQuick);
+  if(contactActions) contactActions.classList.toggle('hidden', consultOnScheduleStep_);
+  if(scheduleActions) scheduleActions.classList.toggle('hidden', !consultOnScheduleStep_);
+  if(title && consultOnScheduleStep_) title.textContent = '상담/검사 일정';
+}
+
+function goConsultScheduleStep_(){
+  if(consultSubmitting_) return;
+  const name = document.getElementById('consultName').value.trim();
+  const { digits: phone } = getConsultPhoneCombined();
+  if(!name && consultFlowKind !== 'profile_quick'){ alert('이름을 입력해 주세요.'); return; }
+  if(phone.length !== 11 || !/^010\d{8}$/.test(phone)){
+    alert('연락처를 확인해 주세요. (010 포함 11자리)');
+    return;
+  }
+  if(consultFlowKind === 'expert'){
+    const inquiryExpert = (document.getElementById('consultInquiry') && document.getElementById('consultInquiry').value || '').trim();
+    if(!inquiryExpert){
+      alert('문의 사항을 한 줄 이상 적어 주세요.');
+      return;
+    }
+  }
+  consultAnytime_ = false;
+  setConsultModalStep_('schedule');
+  const panel = document.querySelector('#consultModal .consult-modal-panel');
+  if(panel) panel.scrollTop = 0;
 }
 
 function closeConsultModal(){
@@ -11402,8 +11491,10 @@ function closeConsultModal(){
   document.body.style.overflow = '';
 }
 
-function submitConsultForm(){
+function submitConsultForm(mode){
   if(consultSubmitting_) return;
+  consultAnytime_ = mode === 'anytime';
+  if(consultAnytime_) resetConsultSchedulePicker_();
   const name = document.getElementById('consultName').value.trim();
   const { digits: phone, last4 } = getConsultPhoneCombined();
   const summaryText = buildConsultSummaryText();
@@ -11417,6 +11508,8 @@ function submitConsultForm(){
     return;
   }
   const btn = document.getElementById('consultSubmitBtn');
+  const anytimeBtn = document.getElementById('consultAnytimeBtn');
+  const scheduleSubmitBtn = document.getElementById('consultScheduleSubmitBtn');
   const inquiryExpert = consultFlowKind === 'expert'
     ? (document.getElementById('consultInquiry') && document.getElementById('consultInquiry').value || '').trim()
     : '';
@@ -11433,7 +11526,9 @@ function submitConsultForm(){
     flow: consultFlowKind,
     summaryText,
     adminSummaryText: buildConsultAdminSummaryText(),
-    schedulePrefer: getConsultScheduleSelection_(),
+    schedulePrefer: consultAnytime_
+      ? { anytime: true, entries: [], days: [], times: [] }
+      : getConsultScheduleSelection_(),
     inquiry: inquiryExpert || inquiryQuick || undefined,
     selections: buildConsultSelectionRows({ forAdmin: consultFlowKind === 'profile_quick' }),
     profileViewLog: profileViewLog.slice(),
@@ -11444,7 +11539,9 @@ function submitConsultForm(){
   };
   const submittingEl = document.getElementById('consultSubmitting');
   consultSubmitting_ = true;
-  btn.disabled = true;
+  if(btn) btn.disabled = true;
+  if(anytimeBtn) anytimeBtn.disabled = true;
+  if(scheduleSubmitBtn) scheduleSubmitBtn.disabled = true;
   if(submittingEl) submittingEl.classList.remove('hidden');
   (async function(){
     try {
@@ -11462,14 +11559,18 @@ function submitConsultForm(){
         }
       } else {
         alert((data && data.message) || '접수에 실패했습니다. 잠시 후 다시 시도해 주세요.');
-        btn.disabled = false;
+        if(btn) btn.disabled = false;
+        if(anytimeBtn) anytimeBtn.disabled = false;
+        if(scheduleSubmitBtn) scheduleSubmitBtn.disabled = false;
       }
     } catch (err) {
       const msg = (err && err.name === 'AbortError')
         ? '요청 시간이 초과되었습니다. 잠시 후 다시 시도해 주세요.'
         : '전송에 실패했습니다. 잠시 후 다시 시도해 주세요.';
       alert(msg);
-      btn.disabled = false;
+      if(btn) btn.disabled = false;
+      if(anytimeBtn) anytimeBtn.disabled = false;
+      if(scheduleSubmitBtn) scheduleSubmitBtn.disabled = false;
     } finally {
       consultSubmitting_ = false;
       if(submittingEl) submittingEl.classList.add('hidden');
