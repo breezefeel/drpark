@@ -10703,7 +10703,8 @@ function onConsultPhoneMidInput(){
   if(d.length > 4){
     p2.value = d.slice(0, 4);
     p3.value = d.slice(4, 8);
-    p3.focus();
+    if(p3.value.length >= 4) focusConsultName_();
+    else { p3.focus(); p3.select(); }
     return;
   }
   p2.value = d;
@@ -10713,8 +10714,16 @@ function onConsultPhoneMidInput(){
   }
 }
 
+function focusConsultName_(){
+  const name = document.getElementById('consultName');
+  if(!name || name.closest('.hidden')) return;
+  name.focus();
+}
+
 function onConsultPhoneLastInput(){
-  consultPhoneDigitsOnly(document.getElementById('consultPhoneP3'), 4);
+  const p3 = document.getElementById('consultPhoneP3');
+  consultPhoneDigitsOnly(p3, 4);
+  if(p3.value.length >= 4) focusConsultName_();
 }
 
 function onConsultPhoneLastKeydown(e){
