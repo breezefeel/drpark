@@ -5580,6 +5580,17 @@ body:has(#s-home.active) { background: #cad6db; }
   min-height: 60px;
 }
 #s-home .lt-btn--place { min-height: 64px; }
+#s-home .pl-academy-btn { margin-bottom: 8px; }
+#s-home .pl-activity-gallery { margin-top: 8px; margin-bottom: 8px; }
+#s-home .pl-home-links { scroll-margin-bottom: 128px; }
+@media (max-width: 430px) {
+  #s-home .profile-circle-wrap { width: 80px; height: 80px; margin-bottom: 8px; }
+  #s-home .hero-name { margin-bottom: 4px; }
+  #s-home .lt-social { margin-bottom: 12px; }
+  #s-home .pl-hero-top .pl-trust-strip { margin-bottom: 8px; }
+  #s-home .pl-activity-set img { height: 84px; }
+  body.profile-home-sticky .hero { padding-top: 8px; }
+}
 #s-home .pl-hero-top .pl-trust-strip {
   margin: 2px 0 18px;
   padding: 0 4px 2px;
@@ -5619,7 +5630,7 @@ body:has(#s-home.active) { background: #cad6db; }
 }
 body.profile-home-sticky .hero { padding-top: 12px; }
 body.profile-home-sticky #s-home .hero-inner {
-  padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px));
 }
 body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   position: fixed;
@@ -5683,7 +5694,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   min-height: 36px;
   padding: 8px 10px;
 }
-@media (max-width: 380px) {
+@media (max-width: 340px) {
   .pl-home-links-grid {
     grid-template-columns: 1fr;
     gap: 10px;
