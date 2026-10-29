@@ -4742,6 +4742,11 @@ body {
   gap: 18px;
   padding-right: 18px;
 }
+.pl-activity-shot {
+  margin: 0;
+  width: 198px;
+  flex-shrink: 0;
+}
 .pl-activity-set img {
   display: block;
   width: 198px;
@@ -4754,6 +4759,15 @@ body {
   box-shadow: 0 1px 4px rgba(30, 58, 110, 0.08);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+}
+.pl-activity-set figcaption {
+  margin: 6px 2px 0;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #1e3a6e;
+  letter-spacing: -0.03em;
+  word-break: keep-all;
 }
 .pl-activity-lightbox {
   position: fixed;
@@ -4799,10 +4813,19 @@ body {
 .pl-activity-lightbox-img {
   display: block;
   width: 100%;
-  max-height: calc(92vh - 58px);
+  max-height: calc(92vh - 110px);
   object-fit: contain;
   border-radius: 12px;
   background: #0f172a;
+}
+.pl-activity-lightbox-cap {
+  margin: 10px 0 0;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: center;
+  word-break: keep-all;
 }
 @keyframes plActivityScroll {
   from { transform: translateX(0); }
@@ -5555,6 +5578,35 @@ body:has(#s-home.active) { background: #cad6db; }
   font-weight: 700;
   color: #111;
 }
+#s-home .lt-links { gap: 8px; }
+#s-home .lt-places { gap: 8px; }
+#s-home .lt-btn {
+  min-height: 56px;
+  padding: 6px 12px 6px 8px;
+}
+#s-home .lt-thumb {
+  width: 40px;
+  height: 40px;
+}
+#s-home .lt-thumb svg { width: 20px; height: 20px; }
+#s-home .lt-label { left: 54px; right: 10px; }
+#s-home .lt-btn--wide,
+#s-home .lt-btn--wide[data-branch="program"],
+#s-home .lt-links > .lt-btn--wide,
+#s-home .pl-academy-btn {
+  min-height: 60px;
+}
+#s-home .pl-academy-btn { margin-bottom: 8px; }
+#s-home .pl-activity-gallery { margin-top: 8px; margin-bottom: 8px; }
+#s-home .pl-home-links { scroll-margin-bottom: 128px; }
+@media (max-width: 430px) {
+  #s-home .profile-circle-wrap { width: 80px; height: 80px; margin-bottom: 8px; }
+  #s-home .hero-name { margin-bottom: 4px; }
+  #s-home .lt-social { margin-bottom: 12px; }
+  #s-home .pl-hero-top .pl-trust-strip { margin-bottom: 8px; }
+  #s-home .pl-activity-set img { height: 84px; }
+  body.profile-home-sticky .hero { padding-top: 8px; }
+}
 #s-home .pl-hero-top .pl-trust-strip {
   margin: 2px 0 18px;
   padding: 0 4px 2px;
@@ -5594,7 +5646,7 @@ body:has(#s-home.active) { background: #cad6db; }
 }
 body.profile-home-sticky .hero { padding-top: 12px; }
 body.profile-home-sticky #s-home .hero-inner {
-  padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px));
 }
 body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   position: fixed;
@@ -5658,7 +5710,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   min-height: 36px;
   padding: 8px 10px;
 }
-@media (max-width: 380px) {
+@media (max-width: 340px) {
   .pl-home-links-grid {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -8226,6 +8278,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   <div class="pl-activity-lightbox-panel">
     <button type="button" class="pl-activity-lightbox-close">닫기</button>
     <img id="profileActivityLightboxImg" class="pl-activity-lightbox-img" src="" alt="">
+    <p id="profileActivityLightboxCap" class="pl-activity-lightbox-cap"></p>
   </div>
 </div>
 
@@ -8671,6 +8724,36 @@ const PROFILE_ACTIVITY_PHOTOS = [
   'activity-22.jpg',
 ].map(profileActivitySrc_);
 
+const PROFILE_ACTIVITY_CAPTIONS = {
+  'activity-01.jpg': '1:1로 스트랩 움직임을 맞추는 장면',
+  'activity-02.jpg': '창가에 앉아 함께하는 호흡 수업',
+  'activity-03.jpg': '센터에서 함께 찍은 사진',
+  'activity-04.jpg': '센터에서 함께 찍은 사진',
+  'activity-05.jpg': '베드 위에서 손 위치를 맞추는 실습',
+  'activity-06.jpg': '매트 위에서 동작을 따라 하는 수업',
+  'activity-07.jpg': '넓은 홀에서 앉아서 듣는 수업',
+  'activity-08.jpg': '강의실에서 화면을 보며 듣는 수업',
+  'activity-09.jpg': '책상에서 자료를 읽는 장면',
+  'activity-10.jpg': '프로필 사진',
+  'activity-11.jpg': '행사 무대에서 함께 찍은 사진',
+  'activity-12.jpg': '화면으로 골반 구조를 살펴보는 장면',
+  'activity-13.jpg': '자격증 앞에서 자료를 든 장면',
+  'activity-14.jpg': '행사장에서 함께 찍은 사진',
+  'activity-15.jpg': '거울 앞에서 1:1로 동작을 맞추는 장면',
+  'activity-16.jpg': '매트 위에서 1:1로 동작을 살피는 장면',
+  'activity-17.jpg': '창가 매트에서 1:1로 동작을 맞추는 장면',
+  'activity-18.jpg': '베드 옆에서 동작을 보여주는 실습',
+  'activity-19.jpg': '베드 위에서 다리 동작을 보여주는 실습',
+  'activity-20.jpg': '강의실에서 화면으로 설명하는 장면',
+  'activity-21.jpg': '강의실에서 화면을 가리키며 설명하는 장면',
+  'activity-22.jpg': '회의실에서 그림으로 설명하는 장면',
+};
+
+function profileActivityCaption_(src) {
+  var file = String(src || '').split('/').pop().split('?')[0];
+  return PROFILE_ACTIVITY_CAPTIONS[file] || '활동 사진';
+}
+
 const PROFILE_ACTIVITY_FOCUS = {
   'activity-01.jpg': 'center top',
   'activity-02.jpg': 'center top',
@@ -8685,18 +8768,25 @@ function buildProfileActivitySet_() {
   const set = document.createElement('div');
   set.className = 'pl-activity-set';
   PROFILE_ACTIVITY_PHOTOS.forEach(function (src, i) {
+    const shot = document.createElement('figure');
+    shot.className = 'pl-activity-shot';
     const img = document.createElement('img');
+    const caption = profileActivityCaption_(src);
     img.src = src;
-    img.alt = '활동 사진 ' + (i + 1);
+    img.alt = caption;
     img.width = 132;
     img.height = 100;
     img.loading = i < 2 ? 'eager' : 'lazy';
     img.decoding = 'async';
-    const file = src.split('/').pop();
+    const file = src.split('/').pop().split('?')[0];
     if (PROFILE_ACTIVITY_FOCUS[file]) {
       img.style.objectPosition = PROFILE_ACTIVITY_FOCUS[file];
     }
-    set.appendChild(img);
+    const cap = document.createElement('figcaption');
+    cap.textContent = caption;
+    shot.appendChild(img);
+    shot.appendChild(cap);
+    set.appendChild(shot);
   });
   return set;
 }
@@ -8709,7 +8799,9 @@ function openProfileActivityLightbox_(src, alt) {
   const img = document.getElementById('profileActivityLightboxImg');
   if (!modal || !img || !gallery || !src) return;
   img.src = src;
-  img.alt = alt || '활동 사진';
+  img.alt = alt || profileActivityCaption_(src);
+  const cap = document.getElementById('profileActivityLightboxCap');
+  if (cap) cap.textContent = img.alt;
   modal.hidden = false;
   modal.setAttribute('aria-hidden', 'false');
   gallery.classList.add('is-paused');
@@ -8733,6 +8825,8 @@ function closeProfileActivityLightbox_() {
     img.removeAttribute('src');
     img.alt = '';
   }
+  const cap = document.getElementById('profileActivityLightboxCap');
+  if (cap) cap.textContent = '';
 }
 
 function initProfileActivityLightbox_() {
