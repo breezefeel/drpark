@@ -4750,7 +4750,7 @@ body {
 .pl-activity-set img {
   display: block;
   width: 198px;
-  height: 150px;
+  height: 188px;
   object-fit: cover;
   object-position: center 28%;
   border-radius: 12px;
@@ -4813,20 +4813,12 @@ body {
 .pl-activity-lightbox-img {
   display: block;
   width: 100%;
-  max-height: calc(92vh - 110px);
+  max-height: calc(92vh - 70px);
   object-fit: contain;
   border-radius: 12px;
   background: #0f172a;
 }
-.pl-activity-lightbox-cap {
-  margin: 10px 0 0;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.45;
-  text-align: center;
-  word-break: keep-all;
-}
+.pl-activity-lightbox-cap { display: none; }
 @keyframes plActivityScroll {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -5611,7 +5603,7 @@ body:has(#s-home.active) { background: #cad6db; }
   #s-home .hero-name { margin-bottom: 4px; }
   #s-home .lt-social { margin-bottom: 12px; }
   #s-home .pl-hero-top .pl-trust-strip { margin-bottom: 8px; }
-  #s-home .pl-activity-set img { height: 84px; }
+  #s-home .pl-activity-set img { height: 122px; }
   body.profile-home-sticky .hero { padding-top: 8px; }
 }
 #s-home .pl-hero-top .pl-trust-strip {
@@ -6080,7 +6072,7 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
               </span>
             </button>
             <div class="lt-places">
-            <a class="lt-btn lt-btn--place lt-btn--wide" href="https://naver.me/x2YstInq" target="_blank" rel="noopener noreferrer" aria-label="리얼무브먼트 서울 약수점, 동호로7길 32, 4층">
+            <a class="lt-btn lt-btn--place lt-btn--wide" href="https://naver.me/x2YstInq" target="_blank" rel="noopener noreferrer" aria-label="리얼무브먼트 서울 약수점">
               <span class="lt-thumb" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M12 21s7-6.2 7-11.2A7 7 0 0 0 5 9.8C5 14.8 12 21 12 21z"/>
@@ -6090,10 +6082,9 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
               <span class="lt-label">
                 <span class="lt-place-brand">리얼무브먼트</span>
                 <span class="lt-place-name">서울 약수점</span>
-                <span class="lt-place-loc">동호로7길 32, 4층</span>
               </span>
             </a>
-            <a class="lt-btn lt-btn--place lt-btn--wide" href="https://naver.me/xYNbHrY9" target="_blank" rel="noopener noreferrer" aria-label="리얼무브먼트 인천 계양점, 힐스테이트자이계양 1층">
+            <a class="lt-btn lt-btn--place lt-btn--wide" href="https://naver.me/xYNbHrY9" target="_blank" rel="noopener noreferrer" aria-label="리얼무브먼트 인천 계양점">
               <span class="lt-thumb" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M12 21s7-6.2 7-11.2A7 7 0 0 0 5 9.8C5 14.8 12 21 12 21z"/>
@@ -6103,7 +6094,6 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
               <span class="lt-label">
                 <span class="lt-place-brand">리얼무브먼트</span>
                 <span class="lt-place-name">인천 계양점</span>
-                <span class="lt-place-loc">힐스테이트자이계양 1층</span>
               </span>
             </a>
             </div>
@@ -8287,7 +8277,6 @@ body.profile-home-sticky .pl-hero-actions.pl-hero-actions--solo {
   <div class="pl-activity-lightbox-panel">
     <button type="button" class="pl-activity-lightbox-close">닫기</button>
     <img id="profileActivityLightboxImg" class="pl-activity-lightbox-img" src="" alt="">
-    <p id="profileActivityLightboxCap" class="pl-activity-lightbox-cap"></p>
   </div>
 </div>
 
@@ -8791,10 +8780,7 @@ function buildProfileActivitySet_() {
     if (PROFILE_ACTIVITY_FOCUS[file]) {
       img.style.objectPosition = PROFILE_ACTIVITY_FOCUS[file];
     }
-    const cap = document.createElement('figcaption');
-    cap.textContent = caption;
     shot.appendChild(img);
-    shot.appendChild(cap);
     set.appendChild(shot);
   });
   return set;
@@ -8808,9 +8794,7 @@ function openProfileActivityLightbox_(src, alt) {
   const img = document.getElementById('profileActivityLightboxImg');
   if (!modal || !img || !gallery || !src) return;
   img.src = src;
-  img.alt = alt || profileActivityCaption_(src);
-  const cap = document.getElementById('profileActivityLightboxCap');
-  if (cap) cap.textContent = img.alt;
+  img.alt = alt || '활동 사진';
   modal.hidden = false;
   modal.setAttribute('aria-hidden', 'false');
   gallery.classList.add('is-paused');
