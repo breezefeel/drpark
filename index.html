@@ -4726,12 +4726,6 @@ body {
   .pl-activity-gallery {
     -webkit-mask-image: none;
     mask-image: none;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-  }
-  .pl-activity-set img {
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
   }
 }
 .pl-activity-gallery.is-paused .pl-activity-track {
@@ -5599,7 +5593,7 @@ body:has(#s-home.active) { background: #cad6db; }
 #s-home .pl-academy-btn {
   min-height: 60px;
 }
-#s-home .lt-btn--place { min-height: 84px; }
+#s-home .lt-btn--place { min-height: 60px; }
 #s-home .pl-academy-btn { margin-bottom: 8px; }
 #s-home .pl-activity-gallery { margin-top: 8px; margin-bottom: 8px; }
 #s-home .pl-home-links { scroll-margin-bottom: 128px; }
@@ -8848,6 +8842,9 @@ function initProfileActivityGallery_() {
   const clone = buildProfileActivitySet_();
   clone.setAttribute('aria-hidden', 'true');
   track.appendChild(clone);
+  track.style.animation = 'none';
+  void track.offsetWidth;
+  track.style.animation = '';
 
   if (gallery && !gallery.dataset.clickBound) {
     gallery.dataset.clickBound = '1';
